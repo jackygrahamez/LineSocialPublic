@@ -1,0 +1,39 @@
+<% include header %>
+
+<section class="content">
+    <header class="content-header">
+        <h1 class="light no-margin"><%= user.name.first %> <%= user.name.last %></h1>
+		<h2 class="light no-margin">Lines</h2>
+    </header>
+    <section class="bordered">
+		<ul>
+			<% for(var i=0; i<lines.length; i++) {%>
+			
+				   <%if (lines[i].check_in.line_length) { %>
+				   <%if (JSON.stringify(lines[i]._id) != JSON.stringify(user._id)) { %>				   
+			   		<li> 
+			   		<%= lines[i].check_in.location %> <%= lines[i].name.first %>
+			   		<form method="post" action="/<%= user.username %>/user_message/" class="form-skin">
+						<fieldset>
+						  <p id="demo">How Long Is The Line:</p>
+						  <label>cID:</label>
+						  <input id="cID" type="text" name="cID" value="<%= lines[i].check_in.cID  %>" />
+						  <label>tID:</label>
+						  <input id="tID" type="text" name="tID" value="<%= lines[i]._id %>" />
+						  <label>fID:</label>
+						  <input id="fID" type="text" name="fID" value="<%= user._id %>" />						  						  
+						</fieldset>
+						<p>
+						  <input type="submit" value="Message" class="btn btn-flat btn-blue no-radius"/>
+						</p>										   		
+			   		</form>				   
+				   		<!--<%= lines[i]._id %> <%= lines[i].check_in.location %> <%= lines[i].check_in.check_in_expire_time %>--> 
+				   <% } %>
+				   </li>
+			<% } %>				   
+			<% } %>
+		</ul>
+    </section>
+</section>
+
+<% include footer %>
