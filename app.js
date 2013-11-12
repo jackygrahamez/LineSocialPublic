@@ -13,6 +13,10 @@ var app    = express();
 var server = http.createServer(app);
 global.io  = require('socket.io').listen(server);
 
+console.log("using authenticator");
+//Authenticator
+app.use(express.basicAuth('friend', 'bli8ke'));
+
 // all environments
 app.set('port', process.env.PORT || 5000);
 app.set('views', __dirname + '/views');
