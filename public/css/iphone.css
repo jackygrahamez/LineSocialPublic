@@ -14,6 +14,10 @@ body {
 	font: normal 15px Arial;
 }
 
+header {
+	padding-bottom:20px;
+}
+
 h1 {
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#b4bfce), color-stop( 50%, #889bb3), color-stop(50%, #7f94b0), to(#6d83a1));
 	margin: 0px;
@@ -31,7 +35,10 @@ h2{
 	font-size: 19px;
 	margin-left: 12px;
 }
-
+a {
+	color: inherit !important;
+	text-decoration: none;
+}
 p{
 	margin: 1em;
 }
@@ -40,6 +47,11 @@ ul{
 	list-style: none;
 	margin: 10px;
 	padding: 0px;
+}
+
+menu {
+	-webkit-padding-start: 0px;
+	list-style-type: none;
 }
 
 li{
@@ -315,7 +327,7 @@ label.iOSCheckLabelOff {
 
 
 /* PAGE SPECIFIC */
-.home header div .button,
-.register header div .button {
+.home header a,
+.register header a {
 	display: none;
 }
