@@ -2,30 +2,36 @@
 
   <div class="container hero-unit">
       <form method="post" action="/login" class="form-horizontal form-skin">
-        <legend>Login</legend>
         <div class="control-group">
-          <label class="control-label" for="inputEmail">Email</label>
           <div class="controls">
             <input type="text" id="inputEmail" name="email" placeholder="Email">
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="inputPassword">Password</label>
           <div class="controls">
             <input type="password" id="inputPassword" name="password" placeholder="Password">
           </div>
         </div>
-        <div class="control-group">
+        <div class="control-group">      
           <div class="controls">
-            <label class="checkbox">
-              <input type="checkbox"> Remember me
+          <table>
+          <tr class="on_off">
+			<th><label for="on_off">Default</label></th>
+			  <td>
+			    <input type="checkbox" id="on_off" />
+			  </td>
+			</tr>
+		  </table>
+            <label class="checkboxon_off">
+              <input type="checkbox" id="on_off"> Remember me
             </label>
-            <button type="submit" class="btn btn-flat btn-blue no-radius">Sign in</button>
+            <button id="submit" type="submit" class="btn btn-flat btn-blue no-radius">Sign in</button>
             <p></p>
             <p class="help-block">If you don't have an account you can <a href="/register">register here</a></p>
           </div>
         </div>
       </form>
   </div>
+  
 
 <%include footer %>
