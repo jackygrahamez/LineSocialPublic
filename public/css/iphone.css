@@ -81,7 +81,7 @@ label {
 	text-align: left;
 }
 input, textarea, button {
-	width: 379px;
+	width: 280px;
 	background: #efefef;
 	border: 1px solid #ddd;
 	font-size: 0.9em;
@@ -96,12 +96,15 @@ input, textarea, button {
 textarea {
 	height: 213px;
 }
-
+table {
+	width: 300px;
+}
 input:focus, textarea:focus {
 	border:1px solid #99cc66;
 }
 
-#submit {
+#submit, 
+#register {
 
 	height:43px;
 	background: -webkit-gradient(linear, left top, left bottom, from(#b4bfce), color-stop( 50%, #889bb3), color-stop(50%, #7f94b0), to(#6d83a1));
@@ -157,8 +160,10 @@ input:focus, textarea:focus {
 .hide {
 	display:none;
 }
-
-/*checkbox*/
+.controls table {
+	margin: 0 auto;
+}
+/* iPhone checkbox*/
 .iPhoneCheckContainer {
   -webkit-transform:translate3d(0,0,0);
   position: relative;
@@ -306,6 +311,7 @@ label.iOSCheckLabelOff {
   width: 100%;
   background: url('../img/ios-style-checkboxes/slider_center.png?1284697268'); }
 /*end checkbox*/
+
 
 
 /* PAGE SPECIFIC */
