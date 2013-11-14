@@ -1,10 +1,4 @@
-<% include header %>
-
 <section class="content">
-    <header class="content-header">
-        <h1 class="light no-margin"><%= user.name.first %> <%= user.name.last %></h1>
-		<h2 class="light no-margin">Lines</h2>
-    </header>
     <section class="bordered">
 		<ul>
 			<% for(var i=0; i<lines.length; i++) {%>
@@ -35,5 +29,3 @@
 		</ul>
     </section>
 </section>
-
-<% include footer %>

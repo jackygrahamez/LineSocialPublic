@@ -50,8 +50,6 @@
 
   Chat.initialize('http://localhost/');
 
-
-	  console.log("timeout");
       $('.on_off :checkbox').iphoneStyle();
       $('.disabled :checkbox').iphoneStyle();
       $('.css_sized_container :checkbox').iphoneStyle({ resizeContainer: false, resizeHandle: false });
@@ -62,6 +60,15 @@
           $('span#status').html(value.toString());
         }
       });
+      
+   $("input, textarea").focus(function(){$(this).css("color", "black")});
+   
+   $("a").click(function(e){
+	   e.preventDefault();
+	   var url = $(this).attr("href");
+	   getPage(url);	   
+   });
+
   
 })(jQuery, this)
 
@@ -77,6 +84,7 @@ function getLocation(lLength)
   }
 function showPosition(position)
   {
+  console.log(position);
   x.innerHTML="Latitude: " + position.coords.latitude + 
   "<br>Longitude: " + position.coords.longitude;
   $("#coords").val(position.coords.latitude+", "+position.coords.longitude);
@@ -100,3 +108,24 @@ function showError(error)
       break;
     }
   }
+function getPage(url) {
+
+	     $.ajax({ 
+	           url: url,
+	           type: 'POST',
+	           cache: false, 
+	           success: function(data){
+	           	  markup = data;
+	           	  console.log(data);
+	           	  $("body > section").last().replaceWith(data);
+	           	  setTimeout(function(){
+	           		$("body > section").last().addClass("active");  
+	           	  }, 1000);           		  	           	  
+	           }
+	           , error: function(jqXHR, textStatus, err){
+	               //alert('text status '+textStatus+', err '+err)
+	               console.log('text status '+textStatus+', err '+err);
+	           }
+	        });
+  
+ }            
