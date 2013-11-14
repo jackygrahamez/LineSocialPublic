@@ -154,11 +154,12 @@ exports.user_lines = function(req, res) {
 	    	cID = "";
 	    } else {
 	    	cID = doc.check_in.cID;
-	    }	    
+	    }
+	    if (typeof(cID) == 'undefined') {
+	    	cID = "";	
+	    }
 	    console.log("user_lines cID "+cID);
 			account.findCurrent(cID, function(userLines) {
-				console.log("user lines "+userLines);
-				
 
 	        res.render('user_lines', {
 	          title: 'ZeeSocial',
