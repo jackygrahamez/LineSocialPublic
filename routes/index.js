@@ -127,15 +127,7 @@ exports.user_check_in = function(req, res) {
 	              return console.log(err);
 	            }
 				message.removeCheckinMessages(doc.check_in.cID, function(remove_messages_doc) {
-					/*
-		            res.render('user_check_in', {
-		                title: 'ZeeSocial',
-		                user: doc,
-		      		  	pagename: 'user_check_in',
-		      		  	checkin_status: 'checked in'
-		              });
-		            */
-					res.send("checked in at " + location);
+					res.send("checked in at " + location	);
 	          	});      		                             
 	          });      		
 	    	}

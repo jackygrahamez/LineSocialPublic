@@ -1,11 +1,8 @@
-<% include header %>
-
-
 <section class="content">
-    <header class="content-header">
-        <h1 class="light no-margin"><%= user.name.first %> <%= user.name.last %></h1>
-		<h2 class="light no-margin">Notifications</h2>
-    </header>
+
+<% include subpage_header %>
+<div id="wrapper">
+	<h2 class="light no-margin">Profile</h2>
     <section class="bordered">
 		<ul>
 		<% if (messages_doc[0]) { %>
@@ -41,6 +38,5 @@
 		<% } %>		
 		</ul>
     </section>
+</div>
 </section>
-
-<% include footer %>
