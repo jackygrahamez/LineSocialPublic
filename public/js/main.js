@@ -66,7 +66,7 @@
 	   $(this).css("color", "black");
    });
    
-   $("a:not([href='/register'])").click(function(e){
+   $("a:not([href='/register'], [href$='/message/'])").click(function(e){
 	   e.preventDefault();
 	   var url = $(this).attr("href");
 	   getPage(url);	   
@@ -136,8 +136,31 @@ function getPage(url) {
 	               console.log('text status '+textStatus+', err '+err);
 	           }
 	        });
-  
  }            
+function postPage(url) {
+	
+    $.ajax({ 
+          url: url,
+          type: 'POST',
+          data: $('form').serialize(),
+          cache: false, 
+          success: function(data){
+          	  markup = data;
+          	  console.log(data);
+          	  $("section.body.right").html(data);
+          	  setTimeout(function(){
+          		$("section.body.right").addClass("active");
+          	    $(".back.button").click(function(){
+          		  $(".body").removeClass("active"); 
+          	    });	           		
+          	  }, 1000);           		  	           	  
+          }
+          , error: function(jqXHR, textStatus, err){
+              //alert('text status '+textStatus+', err '+err)
+              console.log('text status '+textStatus+', err '+err);
+          }
+       });
+}      
 
 
 

@@ -8,17 +8,18 @@
 			
 				   <%if (lines[i].check_in.line_length) { %>
 				   <%if (JSON.stringify(lines[i]._id) != JSON.stringify(user._id)) { %>	
+				    <a href="/<%= user.username %>/user_message/">
 			   		<li class="arrow"> 
-			   		<%= lines[i].check_in.location %> <%= lines[i].name.first %>
 
+						<form id="form<%= i+1 %>">
 						  <input class="hide" id="cID" type="text" name="cID" value="<%= lines[i].check_in.cID  %>" />
 						  <input class="hide" id="tID" type="text" name="tID" value="<%= lines[i]._id %>" />
 						  <input class="hide" id="fID" type="text" name="fID" value="<%= user._id %>" />						  						  
-						  <span type="button" class="btn btn-flat btn-blue no-radius">Chat</span>
-		   
-				   		 
+						  <%= lines[i].check_in.location %> <%= lines[i].name.first %> <span type="button" class="right">Chat</span>
+						</form>
 				   <% } %>
 				   </li>
+				   </a>
 			<% } %>				   
 			<% } %>
 		</ul>

@@ -11,6 +11,23 @@ var x=document.getElementById("demo");
 		   console.log("focus");
 		   $(this).css("color", "black");
 	   });	   
+	   
+	   $("a:not([href='/register'], [href$='/user_message/'])").click(function(e){
+		   e.preventDefault();
+		   var url = $(this).attr("href");
+		   getPage(url);	  
+		   console.log("hyperlink"); 
+	   });
+	
+	   $("a[href$='/user_message/']").click(function(e){	
+		   e.preventDefault();
+		   var url = $(this).attr("href");
+		   postPage(url);	  
+	   });	   
+	
+	   $(".back.button").click(function(){
+		  $(".body").removeClass("active"); 
+	   });	   
    });
    
 function checkIn(location, geolocation, line_length) {
@@ -37,7 +54,31 @@ function checkIn(location, geolocation, line_length) {
 	        });
 	}     
  }            
-   
+
+function postPage(url) {
+	
+    $.ajax({ 
+          url: url,
+          type: 'POST',
+          data: $('form').serialize(),
+          cache: false, 
+          success: function(data){
+          	  markup = data;
+          	  console.log(data);
+          	  $("section.body.right").html(data);
+          	  setTimeout(function(){
+          		$("section.body.right").addClass("active");
+          	    $(".back.button").click(function(){
+          		  $(".body").removeClass("active"); 
+          	    });	           		
+          	  }, 1000);           		  	           	  
+          }
+          , error: function(jqXHR, textStatus, err){
+              //alert('text status '+textStatus+', err '+err)
+              console.log('text status '+textStatus+', err '+err);
+          }
+       });
+}               
 </script>
 
 <header>
