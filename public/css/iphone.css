@@ -125,6 +125,8 @@ input:focus, textarea:focus {
 
 section.body {
 	width:100%;
+	height: 100%;
+	
 }
 
 section.body.right {
@@ -141,15 +143,21 @@ section.body.right {
 
 section.body.right {
 	margin-left: 100%;
+	transition: margin-left 0.5s;
+	/* Safari */
+	-webkit-transition:margin-left 0.5s;	
 }
 
 section.body.left {
 	margin-right: 100%;
+	transition: margin-right 0.5s;
+	/* Safari */
+	-webkit-transition:margin-right 0.5s;	
 }
 
 
 section.body.right.active {
-	transition: margin-lef 0.5s;
+	transition: margin-left 0.5s;
 	/* Safari */
 	-webkit-transition:margin-left 0.5s;
 	margin-left:0%;
@@ -374,7 +382,7 @@ label.iOSCheckLabelOff {
 
 
 /* PAGE SPECIFIC */
-.home header a,
-.register header a {
+.home > header .back,
+.register > header .back {
 	display: none;
 }

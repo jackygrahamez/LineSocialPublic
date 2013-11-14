@@ -1,5 +1,8 @@
 <section class="content">
-    <section class="bordered">
+
+<% include subpage_header %>
+<div id="wrapper">
+	<h2>Lines</h2>
 		<ul>
 			<% for(var i=0; i<lines.length; i++) {%>
 			
@@ -21,11 +24,12 @@
 						  <input type="submit" value="Message" class="btn btn-flat btn-blue no-radius"/>
 						</p>										   		
 			   		</form>				   
-				   		<!--<%= lines[i]._id %> <%= lines[i].check_in.location %> <%= lines[i].check_in.check_in_expire_time %>--> 
+				   		 
 				   <% } %>
 				   </li>
 			<% } %>				   
 			<% } %>
 		</ul>
     </section>
+    </div>
 </section>

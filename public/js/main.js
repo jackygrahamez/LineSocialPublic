@@ -69,6 +69,10 @@
 	   getPage(url);	   
    });
 
+   $(".back.button").click(function(){
+	  $(".body").removeClass("active"); 
+   });
+   
   
 })(jQuery, this)
 
@@ -112,14 +116,17 @@ function getPage(url) {
 
 	     $.ajax({ 
 	           url: url,
-	           type: 'POST',
+	           type: 'GET',
 	           cache: false, 
 	           success: function(data){
 	           	  markup = data;
 	           	  console.log(data);
 	           	  $("section.body.right").html(data);
 	           	  setTimeout(function(){
-	           		$("section.body.right").addClass("active");  
+	           		$("section.body.right").addClass("active");
+	           	    $(".back.button").click(function(){
+	           		  $(".body").removeClass("active"); 
+	           	    });	           		
 	           	  }, 1000);           		  	           	  
 	           }
 	           , error: function(jqXHR, textStatus, err){
