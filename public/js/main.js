@@ -117,9 +117,9 @@ function getPage(url) {
 	           success: function(data){
 	           	  markup = data;
 	           	  console.log(data);
-	           	  $("body > section").last().replaceWith(data);
+	           	  $("section.body.right").html(data);
 	           	  setTimeout(function(){
-	           		$("body > section").last().addClass("active");  
+	           		$("section.body.right").addClass("active");  
 	           	  }, 1000);           		  	           	  
 	           }
 	           , error: function(jqXHR, textStatus, err){
