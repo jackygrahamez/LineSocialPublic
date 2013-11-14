@@ -66,7 +66,7 @@
 	   $(this).css("color", "black");
    });
    
-   $("a").click(function(e){
+   $("a:not([href='/register'])").click(function(e){
 	   e.preventDefault();
 	   var url = $(this).attr("href");
 	   getPage(url);	   
@@ -116,7 +116,6 @@ function showError(error)
     }
   }
 function getPage(url) {
-
 	     $.ajax({ 
 	           url: url,
 	           type: 'GET',
