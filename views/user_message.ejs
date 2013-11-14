@@ -1,13 +1,10 @@
+<section class="body right">
 
-
-<section class="content">
-    <header class="content-header">
-        <h1 class="light no-margin"><%= user.name.first %> <%= user.name.last %></h1>
-		<h2 class="light no-margin">Message</h2>
-    </header>
+<% include subpage_header %>
+<div id="wrapper">
+	<h2>Message</h2>
     <section class="bordered">
 		<form method="post" action="/<%= user.username %>/user_message/" class="form-skin">
-			<fieldset>
 			  <label class="hide" >Post a message:</label>
 			  <label class="hide" >Check-in ID: </label>
 			  <input class="hide" id="cID" type="text" name="cID" value="<%= cID %>" />
@@ -15,8 +12,7 @@
 			  <input class="hide" id="tID" type="text" name="tID" value="<%= tID %>" />
 			  <label class="hide" >From: </label>
 			  <input class="hide" id="fID" type="text" name="fID" value="<%= fID %>" />
-			  <textarea id="message" name="message" rows="4" cols="50"></textarea>
-			</fieldset>						
+			  <textarea id="message" name="message" rows="4" cols="50"></textarea>				
 			<p>
 			  <input id="post" type="button" value="Post Message" class="btn btn-flat btn-blue no-radius"/>
 			</p>

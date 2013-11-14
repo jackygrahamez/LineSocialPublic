@@ -114,7 +114,7 @@ input, textarea, button {
 	border-radius: 6px;
 }
 textarea {
-	height: 213px;
+	height: 30px;
 }
 table {
 	width: 300px;
@@ -172,7 +172,8 @@ section.body.left.active {
 #submit, 
 #register,
 #checkin,
-#chat {
+#chat,
+#post {
 
 	height:43px;
 	background: -webkit-gradient(linear, left top, left bottom, from(#b4bfce), color-stop( 50%, #889bb3), color-stop(50%, #7f94b0), to(#6d83a1));

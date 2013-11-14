@@ -73,7 +73,7 @@
    });
 
    $(".back.button").click(function(){
-	  $(".body").removeClass("active"); 
+	  $(".body").last().removeClass("active"); 
    });
 
   
@@ -147,9 +147,9 @@ function postPage(url) {
           success: function(data){
           	  markup = data;
           	  console.log(data);
-          	  $("section.body.right").html(data);
+          	  $("section.body").append(data);
           	  setTimeout(function(){
-          		$("section.body.right").addClass("active");
+          		$("section.body .right").last().addClass("active");
           	    $(".back.button").click(function(){
           		  $(".body").removeClass("active"); 
           	    });	           		

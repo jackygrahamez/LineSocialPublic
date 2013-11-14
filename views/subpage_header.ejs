@@ -65,11 +65,11 @@ function postPage(url) {
           success: function(data){
           	  markup = data;
           	  console.log(data);
-          	  $("section.body.right").html(data);
+          	  $("body").append(data);
           	  setTimeout(function(){
-          		$("section.body.right").addClass("active");
+          		$(".body.right").last().addClass("active");
           	    $(".back.button").click(function(){
-          		  $(".body").removeClass("active"); 
+          		  $(".body.right").last().removeClass("active"); 
           	    });	           		
           	  }, 1000);           		  	           	  
           }
