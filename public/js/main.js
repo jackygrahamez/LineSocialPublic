@@ -61,7 +61,10 @@
         }
       });
       
-   $("input, textarea").focus(function(){$(this).css("color", "black")});
+   $("input, textarea").focus(function(){
+	   console.log("focus");
+	   $(this).css("color", "black");
+   });
    
    $("a").click(function(e){
 	   e.preventDefault();
@@ -72,7 +75,7 @@
    $(".back.button").click(function(){
 	  $(".body").removeClass("active"); 
    });
-   
+
   
 })(jQuery, this)
 
@@ -136,3 +139,7 @@ function getPage(url) {
 	        });
   
  }            
+
+
+
+ 

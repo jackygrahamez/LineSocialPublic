@@ -1,3 +1,41 @@
+<script type="text/javascript">
+var x=document.getElementById("demo");
+	$(document).ready( function(){
+	   $("#checkin").click(function(e){
+		   var location = $("#location"),
+		   geolocation  = $("#geolocation"),
+		   line_length     = $("#line_length");
+	   });
+	   $("input, textarea").focus(function(){
+		   console.log("focus");
+		   $(this).css("color", "black");
+	   });	   
+   });
+   
+function checkIn(location, geolocation, line_length) {
+ 
+	if((location.length > 0) && (geolocation.length > 0) && (line_length.length > 0)) {
+	     $.ajax({ 
+	           url: '/<%= user.username %>/user_check_in/',
+	           type: 'POST',
+	           cache: false, 
+	           data: { location: location, geolocation: geolocation, line_length: line_length }, 
+	           success: function(data){
+	           	  markup = data;
+	              //alert('Success!');
+	              console.log("data "+data);
+	              //$("section ul").append(data);
+	           }
+	           , error: function(jqXHR, textStatus, err){
+	               alert('text status '+textStatus+', err '+err)
+	               console.log('text status '+textStatus+', err '+err);
+	           }
+	        });
+	}     
+ }            
+   
+</script>
+
         <header>
             <div class="container-fluid">
             	<% if ( typeof(user) != 'undefined' ) { %>
