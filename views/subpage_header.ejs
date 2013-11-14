@@ -26,7 +26,11 @@ var x=document.getElementById("demo");
 	   });	   
 	
 	   $(".back.button").click(function(){
-		  $(".body").removeClass("active"); 
+	   	var cObject = $(this);
+		  cObject.parent().parent().parent().removeClass("active");
+		  setTimeout(function(){
+		  	cObject.parent().parent().parent().remove();
+		  }, 1000);
 	   });	   
    });
    
@@ -64,13 +68,16 @@ function postPage(url) {
           cache: false, 
           success: function(data){
           	  markup = data;
-          	  console.log(data);
+          	  //console.log(data);
           	  $("body").append(data);
           	  setTimeout(function(){
           		$(".body.right").last().addClass("active");
+          		/*
           	    $(".back.button").click(function(){
+          	    	console.log("subpage ajax back");
           		  $(".body.right").last().removeClass("active"); 
-          	    });	           		
+          	    });
+          	    */	           		
           	  }, 1000);           		  	           	  
           }
           , error: function(jqXHR, textStatus, err){

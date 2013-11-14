@@ -116,13 +116,14 @@ function showError(error)
     }
   }
 function getPage(url) {
+	console.log("get message");
 	     $.ajax({ 
 	           url: url,
 	           type: 'GET',
 	           cache: false, 
 	           success: function(data){
 	           	  markup = data;
-	           	  console.log(data);
+	           	  //console.log(data);
 	           	  $("section.body.right").html(data);
 	           	  setTimeout(function(){
 	           		$("section.body.right").addClass("active");
@@ -137,30 +138,7 @@ function getPage(url) {
 	           }
 	        });
  }            
-function postPage(url) {
-	
-    $.ajax({ 
-          url: url,
-          type: 'POST',
-          data: $('form').serialize(),
-          cache: false, 
-          success: function(data){
-          	  markup = data;
-          	  console.log(data);
-          	  $("section.body").append(data);
-          	  setTimeout(function(){
-          		$("section.body .right").last().addClass("active");
-          	    $(".back.button").click(function(){
-          		  $(".body").removeClass("active"); 
-          	    });	           		
-          	  }, 1000);           		  	           	  
-          }
-          , error: function(jqXHR, textStatus, err){
-              //alert('text status '+textStatus+', err '+err)
-              console.log('text status '+textStatus+', err '+err);
-          }
-       });
-}      
+   
 
 
 
