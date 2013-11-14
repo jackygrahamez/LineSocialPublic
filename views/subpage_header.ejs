@@ -2,9 +2,10 @@
 var x=document.getElementById("demo");
 	$(document).ready( function(){
 	   $("#checkin").click(function(e){
-		   var location = $("#location"),
-		   geolocation  = $("#geolocation"),
-		   line_length     = $("#line_length");
+		   var location = $("#location").val(),
+		   geolocation  = $("#coords").val(),
+		   line_length     = $("#line_length").val();
+		   checkIn(location, geolocation, line_length);
 	   });
 	   $("input, textarea").focus(function(){
 		   console.log("focus");
@@ -13,7 +14,10 @@ var x=document.getElementById("demo");
    });
    
 function checkIn(location, geolocation, line_length) {
- 
+ console.log("checkIN clicked");
+ console.log("location "+location);
+ console.log("geolocation "+geolocation);
+ console.log("line_length "+line_length);
 	if((location.length > 0) && (geolocation.length > 0) && (line_length.length > 0)) {
 	     $.ajax({ 
 	           url: '/<%= user.username %>/user_check_in/',
