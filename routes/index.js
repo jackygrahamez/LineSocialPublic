@@ -105,14 +105,13 @@ exports.home = function(req, res) {
 exports.user_check_in = function(req, res) {
     var location = req.param('location', ''),
     geolocation  = req.param('geolocation', ''),
-    line_length     = req.param('line_length', '');
+    line_length  = req.param('line_length', '');
     
-  if ( req.session.loggedIn ) {
+ 	if ( req.session.loggedIn ) {
 	console.log("user logged in");
 	account.findUsernameById(req.session.accountId, function(username) {
 		if (req.params.username == username.username) {
 	    account.findById(req.session.accountId, function(doc) {
-	
 	    	if (location == null | location.length == 0) {
 	            res.render('user_check_in', {
 	                title: 'ZeeSocial',
@@ -128,12 +127,15 @@ exports.user_check_in = function(req, res) {
 	              return console.log(err);
 	            }
 				message.removeCheckinMessages(doc.check_in.cID, function(remove_messages_doc) {
+					/*
 		            res.render('user_check_in', {
 		                title: 'ZeeSocial',
 		                user: doc,
 		      		  	pagename: 'user_check_in',
 		      		  	checkin_status: 'checked in'
 		              });
+		            */
+					res.send("checked in at " + location);
 	          	});      		                             
 	          });      		
 	    	}
@@ -143,7 +145,6 @@ exports.user_check_in = function(req, res) {
 	    }
     });
   } else {
-
     res.send(401);
 
   }

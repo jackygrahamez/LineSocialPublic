@@ -28,7 +28,7 @@ function checkIn(location, geolocation, line_length) {
 	           	  markup = data;
 	              //alert('Success!');
 	              console.log("data "+data);
-	              //$("section ul").append(data);
+	              $("#demo").html(data);
 	           }
 	           , error: function(jqXHR, textStatus, err){
 	               alert('text status '+textStatus+', err '+err)
@@ -40,14 +40,14 @@ function checkIn(location, geolocation, line_length) {
    
 </script>
 
-        <header>
-            <div class="container-fluid">
-            	<% if ( typeof(user) != 'undefined' ) { %>
-				<div class="back button">Back</div>    
-				<% } %>      
-                <div id="branding" class="aligncenter">
-                	<h1 class="light no-margin">LineSocial</h1>
-                </div>
-                </button>
-            </div>
-        </header>
+<header>
+    <div class="container-fluid">
+    	<% if ( typeof(user) != 'undefined' ) { %>
+		<div class="back button">Back</div>    
+		<% } %>      
+        <div id="branding" class="aligncenter">
+        	<h1 class="light no-margin">LineSocial</h1>
+        </div>
+        </button>
+    </div>
+</header>
