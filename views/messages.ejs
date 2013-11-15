@@ -7,8 +7,11 @@
     <section class="bordered">
     <div id="content"'>
     </div>
-    <div class="controls">
-    		<input id="name" placeholder="name" /> 
+    <div class="message controls">
+    		<input class="hide" id="cID" placeholder="name" />       
+    		<input class="hide" id="fID" placeholder="name" />
+    		<input class="hide" id="tID" placeholder="name" />    		
+    		<input class="hide" id="name" placeholder="name" value="<%= user.name.first %>" /> 
             <input id="field" class="field" placeholder="field" />
             <input id="send" class="send" type="button"  value='send' />
     </div>
@@ -21,7 +24,7 @@
 $(document).ready(function(){
  	console.log("running messages");
     var messages = [];
-    var socket = io.connect('http://localhost:3700');
+    var socket = io.connect('http://localhost:5000');
     var field = document.getElementById("field");
     var sendButton = document.getElementById("send");
     var content = document.getElementById("content");
@@ -43,6 +46,9 @@ $(document).ready(function(){
  
     sendButton.onclick = function() {
     	console.log("click");
+    	var d = new Date(),
+    	time = " " + d.getHours() + ":" + d.getMinutes();
+    	text = text + time; 
         if(name.value == "") {
             alert("Please type your name!");
         } else {
