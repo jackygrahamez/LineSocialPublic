@@ -13,6 +13,7 @@ var app    = express();
 var server = http.createServer(app);
 global.io  = require('socket.io').listen(server);
 
+
 console.log("using authenticator");
 //Authenticator
 app.use(express.basicAuth('friend', 'bli8ke'));
@@ -45,6 +46,9 @@ app.post('/:username/user_check_in/', routes.user_check_in);
 app.get('/:username/user_lines/', routes.user_lines);
 app.get('/:username/user_points/', routes.user_points);
 app.get('/:username/user_profile/', routes.user_profile);
+
+app.get('/:username/messages/', routes.messages);
+app.post('/:username/messages/', routes.messages);
 
 app.get('/:username/user_message/', routes.user_message);
 app.post('/:username/user_message/', routes.user_message);

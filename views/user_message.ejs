@@ -21,8 +21,8 @@
 		<% if(message_doc != "") { %>
 			<% for(var i=0; i<message_doc[0].thread.length; i++) {%>
 				<li index="<%= i %>"> 
-					<%= message_doc[0].thread[i].username %>: <%= message_doc[0].thread[i].message %> <br />
-					<%= message_doc[0].thread[i].time %>			
+					<%= message_doc[0].thread[i].username %>: <%= message_doc[0].thread[i].message %> 
+					<%= message_doc[0].thread[i].time.getHours() %>:<%= message_doc[0].thread[i].time.getMinutes() %>			
 				</li>
 			<% } %>
 		<% } %>

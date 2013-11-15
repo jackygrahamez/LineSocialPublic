@@ -7,7 +7,7 @@ var x=document.getElementById("demo");
 		   line_length     = $("#line_length").val();
 		   checkIn(location, geolocation, line_length);
 	   });
-	   $("input, textarea").focus(function(){
+	   $("input[type='text'], textarea").focus(function(){
 		   console.log("focus");
 		   $(this).css("color", "black");
 	   });	   

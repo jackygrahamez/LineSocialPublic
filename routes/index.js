@@ -312,6 +312,32 @@ exports.user_profile = function(req, res) {
   }
 }
 
+exports.messages = function(req, res) {
+
+	  if ( req.session.loggedIn ) {
+		account.findUsernameById(req.session.accountId, function(username) {
+		if (req.params.username == username.username) {
+	    account.findById(req.session.accountId, function(doc) {
+
+	        res.render('messages', {
+	          title: 'ZeeSocial',
+	          user: doc,
+			  pagename: 'messages'
+	        });
+	    });
+	    } else {
+	    	res.redirect('/' +username.username);
+	    }	  
+	    });
+
+	  } else {
+
+	    res.send(401);
+
+	  }
+	}
+
+
 exports.user_message = function(req, res) {
 
     var user_message = req.param('message', ''),
@@ -339,7 +365,7 @@ exports.user_message = function(req, res) {
     			var ticker = counter.toString();
     			console.log("ticker "+ ticker);
 
-				var ajaxMessage ="<li>" + doc.name.first + ": " + user_message + "<br /> "+time+"</li>"; 
+				var ajaxMessage ="<li>" + doc.name.first + ": " + user_message + " "+time.getHours()+":"+time.getMinutes()+"</li>"; 
 
 				res.send(ajaxMessage);
 
