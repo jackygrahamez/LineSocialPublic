@@ -46,13 +46,14 @@ $(document).ready(function(){
  
     sendButton.onclick = function() {
     	console.log("click");
-    	var d = new Date(),
-    	time = " " + d.getHours() + ":" + d.getMinutes();
-    	text = text + time; 
+    	var d = new Date();
         if(name.value == "") {
             alert("Please type your name!");
         } else {
+    		var time = " " + d.getHours() + ":" + d.getMinutes();
             var text = field.value;
+	    	text = text + time; 
+	    	console.log("text: "+text);            
             socket.emit('send', { message: text, username: name.value });
         }
     };

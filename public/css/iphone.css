@@ -193,6 +193,8 @@ div#content {
 	margin: 0 0 20px 0;
 	border: solid 1px #999;
 	overflow-y: scroll;
+	text-align: left;
+	background: white;
 }
 
 /*CLASSES*/

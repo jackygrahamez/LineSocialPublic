@@ -69,5 +69,26 @@ app.post('/register', routes.register);
 
 server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+
+  global.io.sockets.on('connection', function (socket) {
+	  	console.log("sockets.on");
+	    socket.emit('message', { message: 'welcome to the chat' });
+		socket.on('send', function (data) {
+			global.io.sockets.emit('message', data);
+		}); 
+  });
 });
 
+
+/*
+var port = 5000;
+var io = require('socket.io').listen(app.listen(port));
+
+global.io.sockets.on('connection', function (socket) {
+	socket.emit('message', { message: 'welcome to the chat' });
+	socket.on('send', function (data) {
+		global.io.sockets.emit('message', data);
+	});
+});
+console.log("Listening on port " + port);  
+*/
