@@ -140,6 +140,29 @@ function getPage(url) {
 	        });
  }            
    
+function getNotifications(url) {
+	console.log("get message");
+	     $.ajax({ 
+	           url: url,
+	           type: 'GET',
+	           cache: false, 
+	           success: function(data){
+	           	  markup = data;
+	           	  //console.log(data);
+	           	  $("body .body").last().after(data);
+	           	  setTimeout(function(){
+	           		//$("section.body.right").addClass("active");
+	           	    $(".back.button").click(function(){
+	           		  $(".body").removeClass("active"); 
+	           	    });	           		
+	           	  }, 1000);           		  	           	  
+	           }
+	           , error: function(jqXHR, textStatus, err){
+	               //alert('text status '+textStatus+', err '+err)
+	               console.log('text status '+textStatus+', err '+err);
+	           }
+	        });
+ }            
 
 
 

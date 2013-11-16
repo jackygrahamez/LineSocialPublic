@@ -129,7 +129,8 @@ section.body {
 	
 }
 
-section.body.right {
+section.body.right,
+section.notifications.right {
 	position: absolute;
 	top: 0px;
 	background: url(../img/bg.png);
@@ -141,7 +142,8 @@ section.body.right {
 	font: normal 15px Arial;
 }
 
-section.body.right {
+section.body.right,
+section.notifications.right {
 	margin-left: 100%;
 	transition: margin-left 0.5s;
 	/* Safari */

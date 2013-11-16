@@ -14,3 +14,9 @@
 
 
 <% include footer %>
+
+<script type="text/javascript">
+
+var notification_url = "/<%= user.username %>/user_notifications/"; 
+getNotifications(notification_url);
+</script>
