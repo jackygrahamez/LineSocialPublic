@@ -12,8 +12,9 @@ var x=document.getElementById("demo");
 		   $(this).css("color", "black");
 	   });	   
 	   
-	   $("a:not([href='/register'], [href$='/message/'])").click(function(e){
+	   $("a").click(function(e){
 		   e.preventDefault();
+		   console.log("subpage header [href$='/messages/']");
 		   var url = $(this).attr("href");
 		   getPage(url);	  
 		   console.log("get page URL"); 

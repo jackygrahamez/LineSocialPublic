@@ -28,17 +28,16 @@
 </section>
 
 <script type="text/javascript">
-var markup;
-	   $("a[href$='/messages/']").click(function(e){	
-		   e.preventDefault();
-		   console.log("clicked messages");
-		   var url   = $(this).attr("href"),
-		   	   checkinID  = $(this).children().children().children("#cID").val(),
-		   	   toID  = $(this).children().children().children("#tID").val(),
-		   	   fromID  = $(this).children().children().children("#fID").val();
-		   postMessages(url, checkinID, toID, fromID);
-	   });	   
-	   
+var markup,
+global_cID,
+global_fID,
+global_tID;
+
+$(document).ready(function(){
+global_cID = $("#cID").val();
+global_fID = $("#fID").val();
+global_tID = $("#tID").val();
+});	   
 function postMessages(url, checkinID, toID, fromID) {
 	console.log("checkinID "+checkinID+" fromID "+fromID+" toID "+ toID);
     $.ajax({ 
@@ -47,11 +46,12 @@ function postMessages(url, checkinID, toID, fromID) {
           data: { checkinID: checkinID, fromID: fromID, toID: toID },
           success: function(data){
           	  markup = data;
-          	  console.log("postMessages data "+markup);
+          	  //console.log("postMessages data "+markup);
           	  //alert("success!");
           	  $("body > section.body").last().after(markup);
           	  setTimeout(function(){
-          		$(".body.right").last().addClass("active");          		
+          		$(".body.right").last().addClass("active"); 
+	
           	  }, 1000);           		  	           	  
           }
           , error: function(jqXHR, textStatus, err){

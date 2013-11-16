@@ -66,8 +66,9 @@
 	   $(this).css("color", "black");
    });
    
-   $("a:not([href='/register'], [href$='/message/'])").click(function(e){
+   $("a").click(function(e){
 	   e.preventDefault();
+	   console.log("test");
 	   var url = $(this).attr("href");
 	   getPage(url);	   
    });

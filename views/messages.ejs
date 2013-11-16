@@ -10,9 +10,9 @@
     <div id="content">
     </div>
     <div class="message controls">
-		<input class="hide" value='<%= checkinID %>' />       
-		<input class="hide" value="<%= fromID %>" />
-		<input class="hide" value="<%= toID %>" />    		
+		<input class="hide cID" />       
+		<input class="hide fID" />
+		<input class="hide tID"  />    		
 		<input id="name" placeholder="name" value="<%= user.name.first %>" /> 
         <input id="field" class="field" placeholder="field" />
         <input id="send" class="send" type="button"  value='send' />
@@ -31,15 +31,21 @@ $(document).ready(function(){
     var sendButton = document.getElementById("send");
     var content = document.getElementById("content");
     var name = document.getElementById("name");
- 
+	$(".message.controls .cID").val(global_cID);
+	$(".message.controls .tID").val(global_tID);
+	$(".message.controls .fID").val(global_fID);   
+	console.log("global_cID "+global_cID+" global_tID "+global_tID+" global_fID "+global_fID);      	 
     socket.on('message', function (data) {
         if(data.message) {
             messages.push(data);
             var html = '';
-            for(var i=0; i<messages.length; i++) {
-                html += '<b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
-                html += messages[i].message + '<br />';
-            }
+
+	            for(var i=0; i<messages.length; i++) {
+            		if (messages[i].cID == global_cID) {	            
+	                html += '<b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
+	                html += messages[i].message + '<br />';
+	                }
+	            }
             content.innerHTML = html;
         } else {
             console.log("There is a problem:", data);
@@ -56,7 +62,7 @@ $(document).ready(function(){
             var text = field.value;
 	    	text = text + time; 
 	    	console.log("text: "+text);            
-            socket.emit('send', { message: text, username: name.value });
+            socket.emit('send', { cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: name.value });
         }
     };
  
