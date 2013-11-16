@@ -313,18 +313,23 @@ exports.user_profile = function(req, res) {
 }
 
 exports.messages = function(req, res) {
-
+	var checkinID = req.param('checkinID', ''),
+	fromID = req.param('fromID', ''),
+	toID = req.param('toID', '');
+	
+	console.log("messages ");
 	  if ( req.session.loggedIn ) {
 		account.findUsernameById(req.session.accountId, function(username) {
 		if (req.params.username == username.username) {
 	    account.findById(req.session.accountId, function(doc) {
-  	
-	    	
-	    	
-	        res.render('messages', {
+	    	console.log("checkinID"+checkinID+" fromID "+fromID+" toID "+ toID);
+	    	res.render('messages', {
 	          title: 'ZeeSocial',
 	          user: doc,
-			  pagename: 'messages'
+			  pagename: 'messages',
+			  checkinID: checkinID,
+			  fromID: fromID,
+			  toID: toID
 	        });
 	    });
 	    } else {

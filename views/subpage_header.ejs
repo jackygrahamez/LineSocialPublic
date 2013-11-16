@@ -12,21 +12,14 @@ var x=document.getElementById("demo");
 		   $(this).css("color", "black");
 	   });	   
 	   
-	   $("a:not([href='/register'], [href$='/user_message/'])").click(function(e){
+	   $("a:not([href='/register'], [href$='/message/'])").click(function(e){
 		   e.preventDefault();
 		   var url = $(this).attr("href");
 		   getPage(url);	  
-		   console.log("hyperlink"); 
+		   console.log("get page URL"); 
 	   });
 	
-	   $("a[href$='/user_message/']").click(function(e){	
-		   e.preventDefault();
-		   console.log("user_message");
-		   var url   = $(this).attr("href"),
-		   	   form  = $(this).children().children().attr("id");
-		   	   console.log("form "+form);
-		   postPage(url, form);	  
-	   });	   
+
 	
 	   $(".back.button").click(function(){
 	   	var cObject = $(this);
@@ -38,10 +31,6 @@ var x=document.getElementById("demo");
    });
    
 function checkIn(location, geolocation, line_length) {
- console.log("checkIN clicked");
- console.log("location "+location);
- console.log("geolocation "+geolocation);
- console.log("line_length "+line_length);
 	if((location.length > 0) && (geolocation.length > 0) && (line_length.length > 0)) {
 	     $.ajax({ 
 	           url: '/<%= user.username %>/user_check_in/',
@@ -62,27 +51,7 @@ function checkIn(location, geolocation, line_length) {
 	}     
  }            
 
-function postPage(url, form) {
-	console.log( $('#'+form).serialize());
-    $.ajax({ 
-          url: url,
-          type: 'POST',
-          data: $('#'+form).serialize(),
-          cache: false, 
-          success: function(data){
-          	  markup = data;
-          	  //console.log(data);
-          	  $("body").append(data);
-          	  setTimeout(function(){
-          		$(".body.right").last().addClass("active");          		
-          	  }, 1000);           		  	           	  
-          }
-          , error: function(jqXHR, textStatus, err){
-              //alert('text status '+textStatus+', err '+err)
-              console.log('text status '+textStatus+', err '+err);
-          }
-       });
-}               
+
 </script>
 
 <header>
