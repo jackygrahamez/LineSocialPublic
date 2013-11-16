@@ -400,9 +400,6 @@ label.iOSCheckLabelOff {
 .register > header .back {
 	display: none;
 }
-.checkin li:hover {
-    cursor:pointer;
-}
 .message #name {
 	color:black;
 }

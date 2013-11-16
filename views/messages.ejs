@@ -1,21 +1,19 @@
-<section class="body right">
-<!--messages-->
+<section class="content">
+
 <% include subpage_header %>
 <div id="wrapper">
-	
-	<div id="wrapper">
-	<h2 class="light no-margin">Messages</h2>
+	<h2 class="light no-margin">Profile</h2>
 
     <section class="bordered">
-    <div id="content">
+    <div id="content"'>
     </div>
     <div class="message controls">
-		<input class="hide" value='<%= checkinID %>' />       
-		<input class="hide" value="<%= fromID %>" />
-		<input class="hide" value="<%= toID %>" />    		
-		<input id="name" placeholder="name" value="<%= user.name.first %>" /> 
-        <input id="field" class="field" placeholder="field" />
-        <input id="send" class="send" type="button"  value='send' />
+    		<input class="hide" id="cID" placeholder="name" />       
+    		<input class="hide" id="fID" placeholder="name" />
+    		<input class="hide" id="tID" placeholder="name" />    		
+    		<input class="hide" id="name" placeholder="name" value="<%= user.name.first %>" /> 
+            <input id="field" class="field" placeholder="field" />
+            <input id="send" class="send" type="button"  value='send' />
     </div>
     </section>
 </div>
