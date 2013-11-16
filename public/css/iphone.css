@@ -123,7 +123,8 @@ input:focus, textarea:focus {
 	border:1px solid #99cc66;
 }
 
-section.body {
+section.body,
+section.notifications {
 	width:100%;
 	height: 100%;
 	
@@ -158,13 +159,15 @@ section.body.left {
 }
 
 
-section.body.right.active {
+section.body.right.active,
+section.notifications.right.active {
 	transition: margin-left 0.5s;
 	/* Safari */
 	-webkit-transition:margin-left 0.5s;
 	margin-left:0%;
 }
-section.body.left.active {
+section.body.left.active,
+section.notifications.left.active {
 	transition: margin-right 0.5s;
 	/* Safari */
 	-webkit-transition:margin-right 0.5s;

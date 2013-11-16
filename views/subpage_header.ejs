@@ -16,7 +16,12 @@ var x=document.getElementById("demo");
 		   e.preventDefault();
 		   console.log("subpage header [href$='/messages/']");
 		   var url = $(this).attr("href");
-		   getPage(url);	  
+		   if (url.indexOf("notifications") > 0) {
+			   $(".notifications").addClass("active");
+		   } else {
+			   console.log("getPage");
+			   getPage(url);  
+		   }	
 		   console.log("get page URL"); 
 	   });
 	
@@ -26,7 +31,7 @@ var x=document.getElementById("demo");
 	   	var cObject = $(this);
 		  cObject.parent().parent().parent().removeClass("active");
 		  setTimeout(function(){
-		  	cObject.parent().parent().parent().remove();
+		  	cObject.parent().parent().parent().not(".notifications").remove();
 		  }, 1000);
 	   });	   
    });

@@ -70,7 +70,13 @@
 	   e.preventDefault();
 	   console.log("test");
 	   var url = $(this).attr("href");
-	   getPage(url);	   
+	   if (url.indexOf("notifications") > 0) {
+		   $(".notifications").addClass("active");
+	   } else {
+		   console.log("getPage");
+		   getPage(url);  
+	   }
+	   	   
    });
 
    $(".back.button").click(function(){
@@ -153,7 +159,7 @@ function getNotifications(url) {
 	           	  setTimeout(function(){
 	           		//$("section.body.right").addClass("active");
 	           	    $(".back.button").click(function(){
-	           		  $(".body").removeClass("active"); 
+	           		  $(".notifications").removeClass("active"); 
 	           	    });	           		
 	           	  }, 1000);           		  	           	  
 	           }
