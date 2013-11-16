@@ -4,32 +4,57 @@
 <div id="wrapper">
 	<h2 class="light no-margin">Notifications</h2>
     <section class="bordered">
-		<ul>
-		<% if (messages_doc[0]) { %>
-			<% for(var i=0; i<messages_doc[0].thread.length; i++) {%>
-			<!-- messages_doc[0].thread[i] <%= messages_doc[0].thread[i] %> -->
-				<% if (cID) {%> 
-					<!--
-					messages_doc[0].thread[i].fID <%= messages_doc[0].thread[i].fID %>
-					user._id <%= user._id %>
-					-->
-					<% if (true) {%> 
-						<a href="/<%= user.username %>/message/">			
-							<li>
-							<form id="form<%= i %>">
-							User: <%= messages_doc[0].thread[i].username %>
-							  <input class="hide" id="cID" type="text" name="cID" value="<%= cID %>" />
-							  <input class="hide" id="fID" type="text" name="fID" value="<%= cID %>" />
-							  <input class="hide" id="tID" type="text" name="tID" value="<%= messages_doc[0].thread[i].tID %>" />
-							  <span class="right">Message</span>
-							</form>
-							</li>
-						</a>
-					<% } %>			
-				<% } %>
-			<% } %>		
-		<% } %>		
-		</ul>
+    <div id="content">
+    </div>
+    <div class="message controls">
+		<input class="hide cID" />       
+		<input class="hide fID" />
+		<input class="hide tID"  />    		
+		<input id="name" placeholder="name" value="<%= user.name.first %>" /> 
+        <input id="field" class="field" placeholder="field" />
+        <input id="send" class="send" type="button"  value='send' />
+    </div>
     </section>
 </div>
 </section>
+
+<script type="text/javascript">
+$(document).ready(function(){
+ 	console.log("running messages");
+    var messages = [];
+    var socket = io.connect('http://localhost:5000');
+    var field = document.getElementById("field");
+    var sendButton = document.getElementById("send");
+    var content = document.getElementById("content");
+    var name = document.getElementById("name");   
+    socket.on('message', function (data) {
+        if(data.message) {
+            messages.push(data);
+            var html = '';
+
+	            for(var i=0; i<messages.length; i++) {
+	                html += '<b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
+	                html += messages[i].message + '<br />';
+	            }
+            content.innerHTML = html;
+        } else {
+            console.log("There is a problem:", data);
+        }
+    });
+ 
+    sendButton.onclick = function() {
+    	console.log("click");
+    	var d = new Date();
+        if(name.value == "") {
+            alert("Please type your name!");
+        } else {
+    		var time = " " + d.getHours() + ":" + d.getMinutes();
+            var text = field.value;
+	    	text = text + time; 
+	    	console.log("text: "+text);            
+            socket.emit('send', { cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: name.value });
+        }
+    };
+ 
+});
+</script>
