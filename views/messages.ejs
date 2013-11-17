@@ -45,9 +45,13 @@ $(document).ready(function(){
             var html = '';
             var chat_requests = '';            
             var fIDlist = [];
-			
+			global_fID = $(".message.controls .fID").attr("value");
+			console.log("global_fID "+global_fID);
 	            for(var i=0; i<messages.length; i++) {
-	            if (messages[i].cID == $(".message.controls .cID").attr("value")) {	
+	            if ((messages[i].cID == $(".message.controls .cID").attr("value")) && 
+	            	((messages[i].fID == $(".message.controls .fID").attr("value")) || 
+	            	(messages[i].tID == $(".message.controls .fID").attr("value"))	
+	            	)) {	
             		fIDlist.push(messages[i].username+"_"+messages[i].fID);
 	                html += '<p cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
 	                html += messages[i].message + '</p>';
