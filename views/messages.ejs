@@ -39,16 +39,17 @@ $(document).ready(function(){
     socket.on('message', function (data) {
         if(data.message) {
             messages.push(data);
+            console.log("data.message "+data.message);
             var html = '';
             var chat_requests = '';            
             var fIDlist = [];
  
 	            for(var i=0; i<messages.length; i++) {
-            		if (messages[i].cID == global_cID) {	
+	
             		fIDlist.push(messages[i].username+"_"+messages[i].fID);
 	                html += '<p class="'+messages[i].fID+'"><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
 	                html += messages[i].message + '</p>';
-	                }
+
 	            }
 
 	       var fIDlistArrayUnique = ArrNoDupe(fIDlist);        

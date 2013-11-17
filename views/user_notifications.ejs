@@ -83,7 +83,7 @@ $(document).ready(function(){
             var text = field.value;
 	    	text = text + time; 
 	    	console.log("text: "+text);            
-            socket.emit('send', { cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: name.value });
+            socket.emit('send', { cID: global_cID, message: text, username: name.value });
         }
     };
  
