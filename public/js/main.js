@@ -1,6 +1,7 @@
   //checkin
   var x=document.getElementById("demo");
-  var lineLength=0; 
+  var lineLength=0;
+  var global_cID="";
 (function($, window, undefined) {
  window.Chat = {
     socket : null,
@@ -70,13 +71,18 @@
 	   e.preventDefault();
 	   console.log("test");
 	   var url = $(this).attr("href");
-	   if (url.indexOf("notifications") > 0) {
-		   $(".notifications").addClass("active");
+	   if (url != "/register") {
+		   if (url.indexOf("notifications") > 0) {
+			   $(".notifications").addClass("active");
+		   } 
+		   else {
+			   console.log("getPage");
+			   getPage(url);  
+		   }
 	   } else {
-		   console.log("getPage");
-		   getPage(url);  
-	   }
-	   	   
+		   console.log("redirect");
+		   location.assign(url);
+	   }	   
    });
 
    $(".back.button").click(function(){
@@ -170,6 +176,14 @@ function getNotifications(url) {
 	        });
  }            
 
-
+function ArrNoDupe(a) {
+    var temp = {};
+    for (var i = 0; i < a.length; i++)
+        temp[a[i]] = true;
+    var r = [];
+    for (var k in temp)
+        r.push(k);
+    return r;
+}
 
  

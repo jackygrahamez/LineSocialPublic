@@ -18,7 +18,8 @@ var x=document.getElementById("demo");
 		   var url = $(this).attr("href");
 		   if (url.indexOf("notifications") > 0) {
 			   $(".notifications").addClass("active");
-		   } else {
+		   } 	   
+		   else {
 			   console.log("getPage");
 			   getPage(url);  
 		   }	
@@ -48,6 +49,7 @@ function checkIn(location, geolocation, line_length) {
 	              //alert('Success!');
 	              console.log("data "+data);
 	              $("#demo").html(data);
+	              global_cID = data;
 	           }
 	           , error: function(jqXHR, textStatus, err){
 	               alert('text status '+textStatus+', err '+err)

@@ -127,7 +127,10 @@ exports.user_check_in = function(req, res) {
 	              return console.log(err);
 	            }
 				message.removeCheckinMessages(doc.check_in.cID, function(remove_messages_doc) {
-					res.send("checked in at " + location	);
+				    account.findById(req.session.accountId, function(cID_doc) {
+				    	console.log("cID_doc");
+				    	res.send(cID_doc.check_in.cID);
+				    });
 	          	});      		                             
 	          });      		
 	    	}

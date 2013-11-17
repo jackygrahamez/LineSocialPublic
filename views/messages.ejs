@@ -6,7 +6,10 @@
 	<div id="wrapper">
 	<h2 class="light no-margin">Messages</h2>
 
-    <section class="bordered">
+    <section class="chat_requests bordered">
+    <ul>
+    
+    </ul>
     <div id="content">
     </div>
     <div class="message controls">
@@ -39,14 +42,27 @@ $(document).ready(function(){
         if(data.message) {
             messages.push(data);
             var html = '';
-
+            var chat_requests = '';            
+            var fIDlist = [];
+ 
 	            for(var i=0; i<messages.length; i++) {
-            		if (messages[i].cID == global_cID) {	            
-	                html += '<b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
-	                html += messages[i].message + '<br />';
+            		if (messages[i].cID == global_cID) {	
+            		fIDlist.push(messages[i].username+"_"+messages[i].fID);
+	                html += '<p class="'+messages[i].fID+'"><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
+	                html += messages[i].message + '</p>';
 	                }
 	            }
-            content.innerHTML = html;
+
+	       var fIDlistArrayUnique = ArrNoDupe(fIDlist);        
+           content.innerHTML = html;
+	            for(var i=0; i<fIDlistArrayUnique.length; i++) {
+	            console.log("fIDlistArrayUnique[i] "+fIDlistArrayUnique[i]);
+	            var ucID = fIDlistArrayUnique[i].split("_").pop();
+	            fIDlistArrayUnique[i].split("_").pop();
+	                chat_requests += '<li class="'+ucID+'">' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
+	            }
+	       $(".chat_requests ul").html(chat_requests);            
+	       
         } else {
             console.log("There is a problem:", data);
         }
