@@ -29,7 +29,7 @@ $(document).ready(function(){
 
     global_tID = ""; 	
     var messages = [];
-    var socket = io.connect('http://localhost:5000');
+    var socket = io.connect(location.origin);
     var field = document.getElementById("field");
     var sendButton = document.getElementById("send");
     var content = document.getElementById("content");
