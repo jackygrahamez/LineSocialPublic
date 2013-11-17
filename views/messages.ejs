@@ -7,9 +7,7 @@
 	<h2 class="light no-margin">Messages</h2>
 
     <section class="chat_requests bordered">
-    <ul>
-    
-    </ul>
+
     <div id="content">
     </div>
     <div class="message controls">
@@ -59,9 +57,9 @@ $(document).ready(function(){
 	            console.log("fIDlistArrayUnique[i] "+fIDlistArrayUnique[i]);
 	            var ucID = fIDlistArrayUnique[i].split("_").pop();
 	            fIDlistArrayUnique[i].split("_").pop();
-	                chat_requests += '<li class="'+ucID+'">' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
+	                chat_requests += '<li class="'+ufID+'">' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
 	            }
-	       $(".chat_requests ul").html(chat_requests);            
+	       //$(".chat_requests ul").html(chat_requests);            
 	       
         } else {
             console.log("There is a problem:", data);

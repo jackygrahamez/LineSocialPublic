@@ -3,16 +3,19 @@
 <% include subpage_header %>
 <div id="wrapper">
 	<h2 class="light no-margin">Notifications</h2>
-    <section class="bordered">
-    <div id="content">
-    </div>
-    <div class="message controls">
-		<input class="hide cID" />       
-		<input class="hide fID" />
-		<input class="hide tID"  />    		
-		<input id="name" placeholder="name" value="<%= user.name.first %>" /> 
-        <input id="field" class="field" placeholder="field" />
-        <input id="send" class="send" type="button"  value='send' />
+    <section class="chat_requests bordered">
+    <ul></ul>
+    <div class="accordion off">
+	    <div id="content">
+	    </div>
+	    <div class="message controls">
+			<input class="hide cID" />       
+			<input class="hide fID" />
+			<input class="hide tID"  />    		
+			<input id="name" placeholder="name" value="<%= user.name.first %>" /> 
+	        <input id="field" class="field" placeholder="field" />
+	        <input id="send" class="send" type="button"  value='send' />
+	    </div>
     </div>
     </section>
 </div>
@@ -33,14 +36,38 @@ $(document).ready(function(){
     var name = document.getElementById("name"); 
     socket.on('message', function (data) {
         if(data.message) {
+        console.log("user notification message");
             messages.push(data);
             var html = '';
+            var chat_requests = '';            
+            var fIDlist = [];
+ 
+	            for(var i=0; i<messages.length; i++) {	
+	            if (typeof(messages[i].username) != 'undefined') {
+            		fIDlist.push(messages[i].username+"_"+messages[i].fID);
+            		}
+	                html += '<p class="'+messages[i].fID+'"><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
+	                html += messages[i].message + '</p>';
 
-	            for(var i=0; i<messages.length; i++) {
-	                html += '<b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
-	                html += messages[i].message + '<br />';
 	            }
-            content.innerHTML = html;
+
+	       var fIDlistArrayUnique = ArrNoDupe(fIDlist);        
+           content.innerHTML = html;
+	            for(var i=0; i<fIDlistArrayUnique.length; i++) {
+		            console.log("fIDlistArrayUnique[i] "+fIDlistArrayUnique[i]);
+		            var ufID = fIDlistArrayUnique[i].split("_").pop();
+		            fIDlistArrayUnique[i].split("_").pop();
+		            chat_requests += '<li class="'+ufID+'">' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
+	            }
+	       $(".chat_requests ul").html(chat_requests);
+	       $(".chat_requests ul li").click(function() {
+	       		var notification_class = $(this).attr("class");
+	       		$(".accordion").toggleClass("off");
+	       		$(".accordion p").hide();
+	       		$(".accordion ."+notification_class).show();
+	       		console.log("this notification_class "+notification_class);	
+	       });            
+	       
         } else {
             console.log("There is a problem:", data);
         }
@@ -48,7 +75,6 @@ $(document).ready(function(){
  
     sendButton.onclick = function() {
     	console.log("click");
-    	global_fID = "<%= user._id %>";
     	var d = new Date();
         if(name.value == "") {
             alert("Please type your name!");
@@ -60,6 +86,7 @@ $(document).ready(function(){
             socket.emit('send', { cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: name.value });
         }
     };
+ 
  
 });
 </script>
