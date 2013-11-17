@@ -14,13 +14,16 @@ var x=document.getElementById("demo");
 	   
 	   $("a").click(function(e){
 		   e.preventDefault();
-		   console.log("subpage header [href$='/messages/']");
 		   var url = $(this).attr("href");
 		   if (url.indexOf("notifications") > 0) {
 			   $(".notifications").addClass("active");
 		   } 	   
 		   else {
-			   console.log("getPage");
+		   		if (url.indexOf("messages") > 0) {
+				 	global_cID = $(this).children().children().children("#cID").attr("value");
+					global_fID = $(this).children().children().children("#fID").attr("value");
+					global_tID = $(this).children().children().children("#tID").attr("value");					  
+				}		
 			   getPage(url);  
 		   }	
 		   console.log("get page URL"); 

@@ -44,6 +44,8 @@ $(document).ready(function(){
             var html = '';
             var chat_requests = '';            
             var fIDlist = [];
+		 	global_cID = $(".message.controls .cID").attr("value");
+			global_fID = $(".message.controls .fID").attr("value");              
  
 	            for(var i=0; i<messages.length; i++) {
 	

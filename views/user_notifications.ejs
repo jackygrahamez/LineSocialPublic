@@ -9,7 +9,7 @@
 	    <div id="content">
 	    </div>
 	    <div class="message controls">
-			<input class="hide cID" />       
+			<input class="hide cID" value="<%= user.check_in.cID %>" />       
 			<input class="hide fID" value="<%= user._id %>" />
 			<input class="hide tID"  />    		
 			<input id="name" placeholder="name" value="<%= user.name.first %>" /> 
@@ -36,24 +36,31 @@ $(document).ready(function(){
     var name = document.getElementById("name"); 
 	$(".message.controls .cID").val(global_cID);
 	$(".message.controls .tID").val(global_tID);
+	global_cID = $(".message.controls .cID").val();   
 	global_fID = $(".message.controls .fID").val();   
 	console.log("global_cID "+global_cID+" global_tID "+global_tID+" global_fID "+global_fID);      
 	    
     socket.on('message', function (data) {
         if(data.message) {
         console.log("user notification message");
+
             messages.push(data);
             var html = '';
             var chat_requests = '';            
             var fIDlist = [];
+		 	global_cID = $(".message.controls .cID").attr("value");
+			global_fID = $(".message.controls .fID").attr("value");              
  
-	            for(var i=0; i<messages.length; i++) {	
-	            if (typeof(messages[i].username) != 'undefined') {
-            		fIDlist.push(messages[i].username+"_"+messages[i].fID);
-            		}
-	                html += '<p cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"<b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
-	                html += messages[i].message + '</p>';
-
+	            for(var i=0; i<messages.length; i++) {
+	            console.log("messages[i].cID "+messages[i].cID);
+	            console.log("global_cID "+global_cID);	            
+	            if (messages[i].cID == global_cID) {
+		            if (typeof(messages[i].username) != 'undefined' && messages[i].fID != global_fID) {
+	            		fIDlist.push(messages[i].username+"_"+messages[i].fID);
+	            		}
+		                html += '<p cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"<b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
+		                html += messages[i].message + '</p>';
+					}
 	            }
 
 	       var fIDlistArrayUnique = ArrNoDupe(fIDlist);        
