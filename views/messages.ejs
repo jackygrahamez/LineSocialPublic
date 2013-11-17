@@ -12,7 +12,7 @@
     </div>
     <div class="message controls">
 		<input class="hide cID" />       
-		<input class="hide fID" />
+		<input class="hide fID" value="<%= user._id %>" />
 		<input class="hide tID"  />    		
 		<input id="name" placeholder="name" value="<%= user.name.first %>" /> 
         <input id="field" class="field" placeholder="field" />
@@ -35,7 +35,7 @@ $(document).ready(function(){
     var name = document.getElementById("name");
 	$(".message.controls .cID").val(global_cID);
 	$(".message.controls .tID").val(global_tID);
-	$(".message.controls .fID").val(global_fID);   
+	global_fID = $(".message.controls .fID").val();  
 	console.log("global_cID "+global_cID+" global_tID "+global_tID+" global_fID "+global_fID);      	 
     socket.on('message', function (data) {
         if(data.message) {
@@ -48,7 +48,7 @@ $(document).ready(function(){
 	            for(var i=0; i<messages.length; i++) {
 	
             		fIDlist.push(messages[i].username+"_"+messages[i].fID);
-	                html += '<p class="'+messages[i].fID+'"><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
+	                html += '<p cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
 	                html += messages[i].message + '</p>';
 
 	            }
@@ -59,7 +59,7 @@ $(document).ready(function(){
 	            console.log("fIDlistArrayUnique[i] "+fIDlistArrayUnique[i]);
 	            var ucID = fIDlistArrayUnique[i].split("_").pop();
 	            fIDlistArrayUnique[i].split("_").pop();
-	                chat_requests += '<li class="'+ufID+'">' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
+	                chat_requests += '<li class="'+ucID+'">' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
 	            }
 	       //$(".chat_requests ul").html(chat_requests);            
 	       

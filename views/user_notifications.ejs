@@ -10,7 +10,7 @@
 	    </div>
 	    <div class="message controls">
 			<input class="hide cID" />       
-			<input class="hide fID" />
+			<input class="hide fID" value="<%= user._id %>" />
 			<input class="hide tID"  />    		
 			<input id="name" placeholder="name" value="<%= user.name.first %>" /> 
 	        <input id="field" class="field" placeholder="field" />
@@ -34,6 +34,11 @@ $(document).ready(function(){
     var sendButton = document.getElementById("send");
     var content = document.getElementById("content");
     var name = document.getElementById("name"); 
+	$(".message.controls .cID").val(global_cID);
+	$(".message.controls .tID").val(global_tID);
+	global_fID = $(".message.controls .fID").val();   
+	console.log("global_cID "+global_cID+" global_tID "+global_tID+" global_fID "+global_fID);      
+	    
     socket.on('message', function (data) {
         if(data.message) {
         console.log("user notification message");
@@ -46,7 +51,7 @@ $(document).ready(function(){
 	            if (typeof(messages[i].username) != 'undefined') {
             		fIDlist.push(messages[i].username+"_"+messages[i].fID);
             		}
-	                html += '<p class="'+messages[i].fID+'"><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
+	                html += '<p cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"<b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
 	                html += messages[i].message + '</p>';
 
 	            }
@@ -57,11 +62,15 @@ $(document).ready(function(){
 		            console.log("fIDlistArrayUnique[i] "+fIDlistArrayUnique[i]);
 		            var ufID = fIDlistArrayUnique[i].split("_").pop();
 		            fIDlistArrayUnique[i].split("_").pop();
-		            chat_requests += '<li class="'+ufID+'">' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
+		            chat_requests += '<li ufid="'+ufID+'">' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
+					$(".message.controls .cID").val(global_cID);
+					$(".message.controls .tID").val(global_tID);
+					$(".message.controls .fID").val(global_fID); 		            
 	            }
 	       $(".chat_requests ul").html(chat_requests);
 	       $(".chat_requests ul li").click(function() {
-	       		var notification_class = $(this).attr("class");
+	       		var notification_class = $(this).attr("ufid");
+	       		global_tID = notification_class
 	       		$(".accordion").toggleClass("off");
 	       		$(".accordion p").hide();
 	       		$(".accordion ."+notification_class).show();
@@ -83,7 +92,7 @@ $(document).ready(function(){
             var text = field.value;
 	    	text = text + time; 
 	    	console.log("text: "+text);            
-            socket.emit('send', { cID: global_cID, message: text, username: name.value });
+            socket.emit('send', { cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: name.value });
         }
     };
  
