@@ -33,26 +33,25 @@ $(document).ready(function(){
     var sendButton = document.getElementById("send");
     var content = document.getElementById("content");
     var name = document.getElementById("name");
-	$(".message.controls .cID").val(global_cID);
-	$(".message.controls .tID").val(global_tID);
+	$(".message.controls .cID").attr("value", global_cID);
+	$(".message.controls .tID").attr("value", global_tID);
 	global_fID = $(".message.controls .fID").val();  
 	console.log("global_cID "+global_cID+" global_tID "+global_tID+" global_fID "+global_fID);      	 
     socket.on('message', function (data) {
         if(data.message) {
             messages.push(data);
+			console.log("global_cID "+global_cID);            
             console.log("data.message "+data.message);
             var html = '';
             var chat_requests = '';            
             var fIDlist = [];
-		 	global_cID = $(".message.controls .cID").attr("value");
-			global_fID = $(".message.controls .fID").attr("value");              
- 
+			
 	            for(var i=0; i<messages.length; i++) {
-	
+	            if (messages[i].cID == $(".message.controls .cID").attr("value")) {	
             		fIDlist.push(messages[i].username+"_"+messages[i].fID);
 	                html += '<p cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
 	                html += messages[i].message + '</p>';
-
+					}	                
 	            }
 
 	       var fIDlistArrayUnique = ArrNoDupe(fIDlist);        

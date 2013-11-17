@@ -10,9 +10,9 @@
         	<p><%= checkin_status %></p>
         	<ul class="checkin">
 			<li onclick="getLocation(30)">AT LEAST 30 MINUTES<span class="right">Check-In</span></li>
-			<li onclick="getLocation(30)">AT LEAST 1 HOUR<span class="right">Check-In</span></li>
-			<li onclick="getLocation(30)">MAYBE 2 HOURS!<span class="right">Check-In</span></li>
-			<li onclick="getLocation(30)">AT LEAST A DAY!<span class="right">Check-In</span></li>        
+			<li onclick="getLocation(60)">AT LEAST 1 HOUR<span class="right">Check-In</span></li>
+			<li onclick="getLocation(120)">MAYBE 2 HOURS!<span class="right">Check-In</span></li>
+			<li onclick="getLocation(1440)">AT LEAST A DAY!<span class="right">Check-In</span></li>        
 			<form method="post" action="/<%= user.username %>/user_check_in/" class="form-skin">
 				  <input id="location" type="text" name="location" placeholder="My Location" />
 				  <input class="hide" id="coords" type="text" name="geolocation" placeholder="geolocation" />

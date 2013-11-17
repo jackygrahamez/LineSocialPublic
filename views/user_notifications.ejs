@@ -77,7 +77,8 @@ $(document).ready(function(){
 	       $(".chat_requests ul").html(chat_requests);
 	       $(".chat_requests ul li").click(function() {
 	       		var notification_class = $(this).attr("ufid");
-	       		global_tID = notification_class
+	       		global_tID = notification_class;
+				$(".message.controls .tID").attr("value", global_tID);	       		
 	       		$(".accordion").toggleClass("off");
 	       		$(".accordion p").hide();
 	       		$(".accordion ."+notification_class).show();
@@ -98,7 +99,8 @@ $(document).ready(function(){
     		var time = " " + d.getHours() + ":" + d.getMinutes();
             var text = field.value;
 	    	text = text + time; 
-	    	console.log("text: "+text);            
+	    	console.log("text: "+text);      
+	    	global_tID = $(".message.controls .tID").attr("value");      
             socket.emit('send', { cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: name.value });
         }
     };
