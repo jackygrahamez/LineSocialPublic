@@ -12,6 +12,7 @@
     "stylus": "*",
     "mongoose": "*",
     "validator": "*",
-    "crypto": "*"
+    "crypto": "*",
+    "foursquarevenues": "*"
   }
 }

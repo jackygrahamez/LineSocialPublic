@@ -2,11 +2,15 @@ var mongoose = require('mongoose'),
     message  = require('../models/message')(mongoose),
 	account  = require('../models/account')(mongoose);
 
-//mongoose.connect('mongodb://localhost/ZeeSocial');
+mongoose.connect('mongodb://localhost/ZeeSocial');
 
-mongoose.connect('mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds053678.mongolab.com:53678/heroku_app19397517');
+//mongoose.connect('mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds053678.mongolab.com:53678/heroku_app19397517');
 
 var db = mongoose.connection;
+
+// foursquare
+var foursquare = (require('foursquarevenues'))('Q3Q5R5RIYDOJDS2ACP3XL1WKK5W1RR3SNJULY2VDU2PXNKAB', 'UWBQRUXO0NGPQGZGFFV2WLJGEUTRABRGZKGC5LC25SAUGYDJ');
+
 
 exports.index = function(req, res){
   res.render('index', 
@@ -500,3 +504,36 @@ exports.inbox = function(req, res) {
 
   }
 }
+
+
+exports.venues = function(req, res) {
+	var coord = req.param('coordinates', '');
+	  if ( req.session.loggedIn ) {
+	  account.findUsernameById(req.session.accountId, function(username) {
+		if (req.params.username == username.username) {
+	    account.findById(req.session.accountId, function(doc) {
+	    	
+	    	var params = {
+	    	        "ll": coord
+	    	    };
+	    		console.log("params "+params);
+	    	    foursquare.getVenues(params, function(error, venues) {
+	    	        if (!error) {
+	    	            console.log(venues.response.venues);
+	    	            res.send(venues.response.venues);
+	    	        }
+	    	    });
+	    });
+	    } else {
+	    	res.redirect('/' +username.username);
+	    }	  
+	    });
+
+	  } else {
+
+	    res.send(401);
+
+	  }
+	}
+
+

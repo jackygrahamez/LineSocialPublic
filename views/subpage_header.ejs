@@ -1,12 +1,7 @@
 <script type="text/javascript">
 var x=document.getElementById("demo");
 	$(document).ready( function(){
-	   $("#checkin").click(function(e){
-		   var location = $("#location").val(),
-		   geolocation  = $("#coords").val(),
-		   line_length     = $("#line_length").val();
-		   checkIn(location, geolocation, line_length);
-	   });
+
 	   $("input[type='text'], textarea").focus(function(){
 		   console.log("focus");
 		   $(this).css("color", "black");
@@ -47,6 +42,7 @@ var x=document.getElementById("demo");
    });
    
 function checkIn(location, geolocation, line_length) {
+
 	if((location.length > 0) && (geolocation.length > 0) && (line_length.length > 0)) {
 	     $.ajax({ 
 	           url: '/<%= user.username %>/user_check_in/',
@@ -59,6 +55,7 @@ function checkIn(location, geolocation, line_length) {
 	              console.log("data "+data);
 	              $("#demo").html(data);
 	              global_cID = data;
+	              $(".checkin.active .back").click();
 	           }
 	           , error: function(jqXHR, textStatus, err){
 	               alert('text status '+textStatus+', err '+err)
