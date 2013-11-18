@@ -2,7 +2,7 @@ var mongoose = require('mongoose'),
     message  = require('../models/message')(mongoose),
 	account  = require('../models/account')(mongoose);
 
-mongoose.connect('mongodb://localhost/ZeeSocial');
+mongoose.connect('mongodb://localhost/LineOut');
 
 //mongoose.connect('mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds053678.mongolab.com:53678/heroku_app19397517');
 
@@ -14,7 +14,7 @@ var foursquare = (require('foursquarevenues'))('Q3Q5R5RIYDOJDS2ACP3XL1WKK5W1RR3S
 
 exports.index = function(req, res){
   res.render('index', 
-		{ title: 'ZeeSocial',
+		{ title: 'LineOut',
 		  pagename: 'home' });
 };
 
@@ -80,7 +80,7 @@ exports.home = function(req, res) {
 	
 	    		var socket = require('./socket');
 		        res.render('home', {
-		          title: 'ZeeSocial',
+		          title: 'LineOut',
 		          user: doc,
 				  pagename: 'home'
 		        });
@@ -118,7 +118,7 @@ exports.user_check_in = function(req, res) {
 	    account.findById(req.session.accountId, function(doc) {
 	    	if (location == null | location.length == 0) {
 	            res.render('user_check_in', {
-	                title: 'ZeeSocial',
+	                title: 'LineOut',
 	                user: doc,
 	      		  	pagename: 'user_check_in',
 	          		checkin_status: ''
@@ -169,7 +169,7 @@ exports.user_lines = function(req, res) {
 			account.findCurrent(cID, function(userLines) {
 
 	        res.render('user_lines', {
-	          title: 'ZeeSocial',
+	          title: 'LineOut',
 	          user: doc,
 			  pagename: 'user_lines',
 			  lines: userLines
@@ -206,7 +206,7 @@ exports.user_notifications = function(req, res) {
 		message.findMessagesFrom(cID, function(messages_doc) {
 			console.log("messages_doc "+messages_doc);
 	        res.render('user_notifications', {
-	          title: 'ZeeSocial',
+	          title: 'LineOut',
 	          user: doc,
 			  pagename: 'user_notifications',
 			  messages_doc: messages_doc,
@@ -236,7 +236,7 @@ exports.user_points = function(req, res) {
 	    account.findById(req.session.accountId, function(doc) {
 
 	        res.render('user_points', {
-	          title: 'ZeeSocial',
+	          title: 'LineOut',
 	          user: doc,
 			  pagename: 'user_points'
 	        });
@@ -265,7 +265,7 @@ exports.ajax = function(req, res) {
 
     	if (field1 == null | field1 == 0) {
             res.render('ajax', {
-                title: 'ZeeSocial',
+                title: 'LineOut',
                 user: doc,
       		  	pagename: 'ajax'
               });    		
@@ -302,7 +302,7 @@ exports.user_profile = function(req, res) {
     account.findById(req.session.accountId, function(doc) {
 
         res.render('user_profile', {
-          title: 'ZeeSocial',
+          title: 'LineOut',
           user: doc,
 		  pagename: 'user_profile'
         });
@@ -331,7 +331,7 @@ exports.messages = function(req, res) {
 	    account.findById(req.session.accountId, function(doc) {
 	    	console.log("checkinID"+checkinID+" fromID "+fromID+" toID "+ toID);
 	    	res.render('messages', {
-	          title: 'ZeeSocial',
+	          title: 'LineOut',
 	          user: doc,
 			  pagename: 'messages',
 			  checkinID: checkinID,
@@ -401,7 +401,7 @@ exports.user_message = function(req, res) {
 		    		console.log("message_doc "+message_doc);
 	    			if (message_doc[0] && message_doc[0].thread) {  			
 			    	res.render('user_message', {
-			          title: 'ZeeSocial',
+			          title: 'LineOut',
 			          user: doc,
 			          message_doc: message_doc,
 			          cID: cID,
@@ -412,7 +412,7 @@ exports.user_message = function(req, res) {
 			        });
 	    			} else {
 			    	  res.render('user_message', {
-			          title: 'ZeeSocial',
+			          title: 'LineOut',
 			          user: doc,
 			          message_doc: "",
 			          cID: cID,
@@ -492,7 +492,7 @@ exports.inbox = function(req, res) {
     account.findById(req.session.accountId, function(doc) {
 
         res.render('inbox', {
-          title: 'ZeeSocial',
+          title: 'LineOut',
           user: doc
         });
 
