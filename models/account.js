@@ -38,7 +38,7 @@ module.exports = function(mongoose) {
 
   };
 
- var register = function(email, password, firstName, lastName, callback) {
+ var register = function(email, password, firstName, lastName, username, callback) {
     var shaSum = crypto.createHash('sha256');
     shaSum.update(password);
 
@@ -50,7 +50,7 @@ module.exports = function(mongoose) {
         first: firstName,
         last: lastName
       },
-      username: firstName.toLowerCase() + '.' + lastName.toLowerCase(),
+      username: username.toLowerCase(),
       password: shaSum.digest('hex'),
       check_in: ""
     });

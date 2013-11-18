@@ -21,6 +21,7 @@ exports.index = function(req, res){
 exports.register = function(req, res) {
     var firstName = req.param('firstName', ''),
         lastName  = req.param('lastName', ''),
+        username  = req.param('username', ''),        
         email     = req.param('email', null),
         password  = req.param('password', null);
 
@@ -29,7 +30,7 @@ exports.register = function(req, res) {
       return;
     }
 
-    account.register(email, password, firstName, lastName, function(err) {
+    account.register(email, password, firstName, lastName, username, function(err) {
 
       if (err) {
         return console.log(err);
