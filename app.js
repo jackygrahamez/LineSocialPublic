@@ -16,7 +16,7 @@ global.io  = require('socket.io').listen(server);
 
 console.log("using authenticator");
 //Authenticator
-//app.use(express.basicAuth('friend', 'bli8ke'));
+app.use(express.basicAuth('friend', 'bli8ke'));
 
 // all environments
 app.set('port', process.env.PORT || 5000);

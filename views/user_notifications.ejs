@@ -2,7 +2,7 @@
 <!--notifications -->
 <% include subpage_header %>
 <div id="wrapper">
-	<h2 class="light no-margin">Notifications</h2>
+	<h2 class="light no-margin">Line Pokes</h2>
     <section class="chat_requests bordered">
     <ul></ul>
     <div class="accordion off">
@@ -66,6 +66,11 @@ $(document).ready(function(){
 
 	       var fIDlistArrayUnique = ArrNoDupe(fIDlist);        
            content.innerHTML = html;
+           if (fIDlistArrayUnique.length > 0) {
+           		$(".line_pokes div").replaceWith("<div>"+fIDlistArrayUnique.length+"</div>");
+           } else {
+           		$(".line_pokes div").addClass("hide");
+           }
            if (global_tID) {
            		$(".accordion #content p").each(function(){
            			if (($(this).attr("fid") == global_tID) || ($(this).attr("tid") == global_tID)) {

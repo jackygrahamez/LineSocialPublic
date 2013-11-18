@@ -11,6 +11,11 @@ var x=document.getElementById("demo");
 		   console.log("focus");
 		   $(this).css("color", "black");
 	   });	   
+	   $("input, textarea").focus(function(){
+		   console.log("focus");
+		   $(this).css("color", "black");
+	   });	   
+	   
 	   
 	   $("a").click(function(e){
 		   e.preventDefault();

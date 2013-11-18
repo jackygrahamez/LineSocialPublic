@@ -424,3 +424,13 @@ label.iOSCheckLabelOff {
 .accordion #content p {
 	display:none;
 }
+.line_pokes div {
+	display: inline-block;
+	right: 30px;
+	position: absolute;
+	background: red;
+	width: 20px;
+	text-align: center;
+	color: white;
+	border-radius: 20px;
+}
