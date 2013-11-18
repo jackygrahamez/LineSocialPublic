@@ -50,13 +50,41 @@
    
    $("#user_register").click(function() {
 	   var email = $("input[name='email']").val();
+	   var cemail = $("input[name='cemail']").val();
 	   var password = $("input[name='password']").val();
+	   var cpassword = $("input[name='cpassword']").val();
 	   var firstName = $("input[name='firstName']").val();
 	   var lastName = $("input[name='lastName']").val();
 	   var username = $("input[name='username']").val();
-	   userRegister(email, password, firstName, lastName, username);
+	   if ((email === cemail) && 
+		   (password === cpassword)) {
+		   userRegister(email, password, firstName, lastName, username);
+	   } else if (email != cemail) {
+		   $("input[name='email']").addClass("invalid");
+		   $("input[name='cemail']").addClass("invalid");		   
+	   } else if (password != cpassword) {
+		   $("input[name='password']").addClass("invalid");
+		   $("input[name='cpassword']").addClass("invalid");	
+	   }
+	   $(".register > input").each(function(){
+		   	var object = $(this);
+		   	var value = object.val();
+		   if (value.length < 1) {
+			   object.addClass("invalid");
+		   }			   	
+	   });
    });
-   
+
+   $(".register input").focusout(function(){
+	   var object = $(this);
+	   console.log("this val "+object.val());
+	   console.log("focus out");
+	   if (object.val().length > 0) {
+		   console.log("value "+$(this).val());
+		   object.removeClass("invalid");
+	   }
+   });
+   	   
    $(".register input[name='username']").focusout(function(){
 	   var username = $(this).val();
 
@@ -248,7 +276,7 @@ function userRegister(email, password, firstName, lastName, username) {
 	        	   if (data == 'Account was created') {
 	        		   location.replace(location.origin);
 	        	   } else {
-		        	   $("form p").before(data);
+	        		   $("form > p").first().replaceWith(data);
 	        	   }
 	           	  
 	           }
