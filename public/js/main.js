@@ -56,23 +56,39 @@
 	   var firstName = $("input[name='firstName']").val();
 	   var lastName = $("input[name='lastName']").val();
 	   var username = $("input[name='username']").val();
-	   if ((email === cemail) && 
-		   (password === cpassword)) {
-		   userRegister(email, password, firstName, lastName, username);
-	   } else if (email != cemail) {
-		   $("input[name='email']").addClass("invalid");
-		   $("input[name='cemail']").addClass("invalid");		   
-	   } else if (password != cpassword) {
-		   $("input[name='password']").addClass("invalid");
-		   $("input[name='cpassword']").addClass("invalid");	
-	   }
+	   var valid = true;
 	   $(".register > input").each(function(){
 		   	var object = $(this);
 		   	var value = object.val();
 		   if (value.length < 1) {
 			   object.addClass("invalid");
+			   valid = false;
 		   }			   	
 	   });
+	   $(".register > input[type='email']").each(function(){
+		   	var object = $(this);
+		   	var value = object.val();
+		   if (!isValidEmail(value)) {
+			   object.addClass("invalid");
+			   valid = false;
+		   }			   	
+	   });
+
+	   if (email != cemail) {
+		   $("input[name='email']").addClass("invalid");
+		   $("input[name='cemail']").addClass("invalid");
+		   valid = false;
+	   } 
+	   
+	   if (password != cpassword) {
+		   $("input[name='password']").addClass("invalid");
+		   $("input[name='cpassword']").addClass("invalid");
+		   valid = false;
+	   }	   
+	   
+	   if (	valid && (email === cemail) && (password === cpassword)) {
+		   userRegister(email, password, firstName, lastName, username);
+		} 
    });
 
    $(".register input").focusout(function(){
@@ -332,3 +348,8 @@ function regCheckEmail(email) {
            }
         });
 }  
+
+function isValidEmail(emailText) {
+    var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+    return pattern.test(emailText);
+};

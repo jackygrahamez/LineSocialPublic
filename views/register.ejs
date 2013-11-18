@@ -3,13 +3,13 @@
 <div class="container hero-unit">
 
   <form method="post" action="/register" class="form-skin register">
-      <input type="text" name="firstName" placeholder="Your firstname here"/>
-      <input type="text" name="lastName" placeholder="Your lastname here"/>
-      <input type="text" name="username" placeholder="Your username here"/>
-      <input type="text" name="email" placeholder="Your Email here"/>
-      <input type="text" name="cemail" placeholder="Your Email (confirm) here"/>
-      <input type="password" name="password" placeholder="Your password here"/>
-      <input type="password" name="cpassword" placeholder="Your password (confirm) here"/>
+      <input type="text" name="firstName" required placeholder="Your firstname here"/>
+      <input type="text" name="lastName" required placeholder="Your lastname here"/>
+      <input type="text" name="username" required placeholder="Your username here"/>
+      <input type="email" name="email" required placeholder="Your Email here"/>
+      <input type="email" name="cemail" required placeholder="Your Email (confirm) here"/>
+      <input type="password" name="password" required placeholder="Your password here"/>
+      <input type="password" name="cpassword" required placeholder="Your password (confirm) here"/>
       <p></p>
       <p>
       <input id="user_register" type="button" value="Register Now" class="btn btn-flat btn-blue no-radius"/>
