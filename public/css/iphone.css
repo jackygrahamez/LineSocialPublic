@@ -184,8 +184,8 @@ section.notifications.left.active {
 #checkin,
 #chat,
 #post,
-#send {
-
+#send,
+input[type='button'] {
 	height:43px;
 	background: -webkit-gradient(linear, left top, left bottom, from(#b4bfce), color-stop( 50%, #889bb3), color-stop(50%, #7f94b0), to(#6d83a1));
 	border:none;

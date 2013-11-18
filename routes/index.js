@@ -33,11 +33,14 @@ exports.register = function(req, res) {
     account.register(email, password, firstName, lastName, username, function(err) {
 
       if (err) {
+    	  console.log("errors!");
+          res.send('<p class="warning">Could not register</p>');
         return console.log(err);
       }
 
       console.log('Account was created');
-      res.redirect('/');
+      res.send('Account was created');
+      //res.redirect('/');
 
     });
 }

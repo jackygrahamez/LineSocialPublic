@@ -20,7 +20,7 @@
       });
       
    $("input, textarea").focus(function(){
-	   console.log("focus");
+	   
 	   $(this).css("color", "black");
    });
    
@@ -47,6 +47,15 @@
 	  $(".checkin").remove();
    });
 
+   
+   $("#user_register").click(function() {
+	   var email = $("input[name='email']").val();
+	   var password = $("input[name='password']").val();
+	   var firstName = $("input[name='firstName']").val();
+	   var lastName = $("input[name='lastName']").val();
+	   var username = $("input[name='username']").val();
+	   userRegister(email, password, firstName, lastName, username);
+   });
   
 })(jQuery, this)
 
@@ -190,9 +199,37 @@ function getVenues(url, coord) {
 					   checkIn(location, geolocation, line_length);
 				   });
 			   	   $("input, textarea").focus(function(){
-			   		   console.log("focus");
+			   		   
 			   		   $(this).css("color", "black");
 			   	   });			   	   
+	           	  
+	           }
+	           , error: function(jqXHR, textStatus, err){
+	               //alert('text status '+textStatus+', err '+err)
+	               console.log('text status '+textStatus+', err '+err);
+	           }
+	        });
+ }  
+
+function userRegister(email, password, firstName, lastName, username) {
+		var url = "/register";
+	     $.ajax({ 
+	           url: url,
+	           type: 'POST',
+	           cache: false,
+	           data: { 
+	        	   email: email,
+	        	   password: password,
+	        	   firstName: firstName,
+	        	   lastName: lastName,
+	        	   username: username},
+	           success: function(data){ 
+	        	   console.log(data);
+	        	   if (data == 'Account was created') {
+	        		   location.replace(location.origin);
+	        	   } else {
+		        	   $("form p").before(data);
+	        	   }
 	           	  
 	           }
 	           , error: function(jqXHR, textStatus, err){

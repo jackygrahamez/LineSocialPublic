@@ -8,7 +8,7 @@ module.exports = function(mongoose) {
   var userSchema = new mongoose.Schema({
       email:     { type: String, unique: true },
       password:  { type: String },
-      username:  { type: String},
+      username:  { type: String, unique: true },
       name: {
         first:   { type: String },
         last:    { type: String }
@@ -54,9 +54,16 @@ module.exports = function(mongoose) {
       password: shaSum.digest('hex'),
       check_in: ""
     });
+    
+    account.findOne({username:username},function(err,doc){
+        callback(doc);
+        console.log('findOne doc ', doc);
+      });
 
     user.save(callback);
-    console.log('Save command was sent');
+    console.log('Save command was sent');         
+    
+
   };
   
   var checkInMethod = function(location, geolocation, line_length, accountId, callback) {
