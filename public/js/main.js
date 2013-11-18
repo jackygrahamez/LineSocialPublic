@@ -157,6 +157,7 @@ function ArrNoDupe(a) {
 function getVenues(url, coord) {
 	console.log("getVenues at "+coord);
 	var availableTags = [];
+    $(".checkin #wrapper > p").addClass("hide");
 	     $.ajax({ 
 	           url: url,
 	           type: 'POST',
@@ -188,6 +189,10 @@ function getVenues(url, coord) {
 					   line_length     = $("#line_length").val();
 					   checkIn(location, geolocation, line_length);
 				   });
+			   	   $("input, textarea").focus(function(){
+			   		   console.log("focus");
+			   		   $(this).css("color", "black");
+			   	   });			   	   
 	           	  
 	           }
 	           , error: function(jqXHR, textStatus, err){

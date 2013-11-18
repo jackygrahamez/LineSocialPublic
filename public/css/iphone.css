@@ -53,7 +53,10 @@ ul{
 	margin: 10px;
 	padding: 0px;
 }
-
+form {
+	width: 300px;
+	margin: 0 auto;
+}
 menu {
 	-webkit-padding-start: 0px;
 	list-style-type: none;
@@ -189,7 +192,9 @@ section.notifications.left.active {
 	margin-top:20px;
 	cursor:pointer;
 }
-
+input#checkin {
+	margin-left: 10px;
+}
 #submit:hover {
 	opacity:0.9;
 }
@@ -435,4 +440,12 @@ label.iOSCheckLabelOff {
 	text-align: center;
 	color: white;
 	border-radius: 20px;
+}
+
+
+@media only screen 
+and (min-width : 768px) { 
+	div#wrapper, li, input, textarea, form {
+		width: 700px;
+	}
 }
