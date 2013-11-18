@@ -68,6 +68,11 @@ app.post('/:username/ajax', routes.ajax);
 app.post('/login', routes.login);
 app.post('/register', routes.register);
 
+app.get('/register_value', routes.register_value);
+app.post('/register_value', routes.register_value);
+
+app.get('/register_email_value', routes.register_email_value);
+app.post('/register_email_value', routes.register_email_value);
 
 
 server.listen(app.get('port'), function(){

@@ -162,7 +162,16 @@ module.exports = function(mongoose) {
     });
 
   	};
-  
+
+    var findByEmail = function(user_email, callback) {
+
+        account.findOne({email: user_email}, function(err,doc) {
+          callback(doc);
+        });
+
+      	};
+        	
+  	
   var post_message = function(cID, accountId, message, username, callback) {
 	    console.log("post_message");
 	  	console.log("the cID " + accountId);
@@ -217,6 +226,7 @@ module.exports = function(mongoose) {
     post_message: post_message,
     findUsernameById: findUsernameById,
     findFirstnameById: findFirstnameById,
+    findByEmail: findByEmail,
     ajaxTest: ajaxTest
   }
 }

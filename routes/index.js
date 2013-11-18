@@ -45,6 +45,35 @@ exports.register = function(req, res) {
     });
 }
 
+exports.register_value = function(req, res) {
+	var value = req.param('username', '');	
+	console.log("value "+JSON.stringify(value));
+    account.findByUsername({username:value}, function(doc) {
+    	console.log("doc "+doc);
+    	if (doc) {
+    		res.send("username taken");
+    	} else {
+    		res.send("username ok");
+    	}
+	});	
+	
+}
+
+exports.register_email_value = function(req, res) {
+	var value = req.param('email', '');	
+	console.log("value "+value);
+    account.findByEmail(value, function(doc) {
+    	console.log("doc "+doc);
+    	if (doc) {
+    		res.send("email taken");
+    	} else {
+    		res.send("email ok");
+    	}
+	});	
+	
+}
+
+
 exports.login = function(req, res){
     var email    = req.body.email,
         password = req.body.password;

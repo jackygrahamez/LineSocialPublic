@@ -56,6 +56,26 @@
 	   var username = $("input[name='username']").val();
 	   userRegister(email, password, firstName, lastName, username);
    });
+   
+   $(".register input[name='username']").focusout(function(){
+	   var username = $(this).val();
+
+	   if (username.length > 0) {
+		   console.log(username);	
+		   var value = {username:username};
+		   regCheck(username);
+	   }
+   });
+   
+   $(".register input[name='email']").focusout(function(){
+	   var email = $(this).val();
+	   
+	   if (email.length > 0) {
+		   console.log(email);	
+		   var value = {email:email};
+		   regCheckEmail(email);
+	   }
+   });   
   
 })(jQuery, this)
 
@@ -238,3 +258,49 @@ function userRegister(email, password, firstName, lastName, username) {
 	           }
 	        });
  }  
+
+function regCheck(username) {
+	var url = "/register_value";
+     $.ajax({ 
+           url: url,
+           type: 'POST',
+           cache: false,
+           data: { 
+        	   username: username},
+           success: function(data){ 
+        	   console.log(data);
+        	   if (data == "username taken") {
+        		   $("input[name='username']").addClass("invalid");
+        	   } else {
+        		   $("input[name='username']").removeClass("invalid");
+        	   }
+           }
+           , error: function(jqXHR, textStatus, err){
+               //alert('text status '+textStatus+', err '+err)
+               console.log('text status '+textStatus+', err '+err);
+           }
+        });
+}  
+
+function regCheckEmail(email) {
+	var url = "/register_email_value";
+     $.ajax({ 
+           url: url,
+           type: 'POST',
+           cache: false,
+           data: { 
+        	   email: email},
+           success: function(data){ 
+        	   console.log(data);
+        	   if (data == "email taken") {
+        		   $("input[name='email']").addClass("invalid");
+        	   } else {
+        		   $("input[name='email']").removeClass("invalid");
+        	   }
+           }
+           , error: function(jqXHR, textStatus, err){
+               //alert('text status '+textStatus+', err '+err)
+               console.log('text status '+textStatus+', err '+err);
+           }
+        });
+}  
