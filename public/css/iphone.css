@@ -145,10 +145,11 @@ section.notifications.right {
 
 section.body.right,
 section.notifications.right {
+	width: 0%;
 	margin-left: 100%;
-	transition: margin-left 0.5s;
+	transition: margin-left 0.5s, width 2s;
 	/* Safari */
-	-webkit-transition:margin-left 0.5s;	
+	-webkit-transition:margin-left 0.5s, width 2s;	
 }
 
 section.body.left {
@@ -161,6 +162,7 @@ section.body.left {
 
 section.body.right.active,
 section.notifications.right.active {
+	width: 100%;
 	transition: margin-left 0.5s;
 	/* Safari */
 	-webkit-transition:margin-left 0.5s;

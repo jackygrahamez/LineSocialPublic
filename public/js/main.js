@@ -44,6 +44,7 @@
 
    $(".back.button").click(function(){
 	  $(".body").last().removeClass("active"); 
+	  $(".checkin").remove();
    });
 
   
@@ -106,7 +107,9 @@ function getPage(url) {
 	           	  setTimeout(function(){
 	           		$("section.body.right").addClass("active");
 	           	    $(".back.button").click(function(){
-	           		  $(".body").removeClass("active"); 
+	           	    	console.log("back button");
+	           		  $(".body").removeClass("active");
+	           		  $("section.checkin").remove();
 	           	    });	           		
 	           	  }, 1000);           		  	           	  
 	           }

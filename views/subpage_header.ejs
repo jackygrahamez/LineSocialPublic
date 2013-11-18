@@ -34,9 +34,11 @@ var x=document.getElementById("demo");
 	
 	   $(".back.button").click(function(){
 	   	var cObject = $(this);
+	   	console.log("cObject "+cObject);
 		  cObject.parent().parent().parent().removeClass("active");
 		  setTimeout(function(){
 		  	cObject.parent().parent().parent().not(".notifications").remove();
+		  	$(".checkin").remove();
 		  }, 1000);
 	   });	   
    });
