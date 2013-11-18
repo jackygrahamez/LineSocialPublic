@@ -152,7 +152,7 @@ section.notifications.right {
 	margin-left: 100%;
 	transition: margin-left 0.5s, width 2s;
 	/* Safari */
-	-webkit-transition:margin-left 0.5s, width 2s;	
+	-webkit-transition:margin-left 0.5s, width 0.5s;	
 }
 
 section.body.left {
@@ -177,6 +177,16 @@ section.notifications.left.active {
 	/* Safari */
 	-webkit-transition:margin-right 0.5s;
 	margin-right:0%;
+}
+
+section.notifications.right > header > *,
+section.notifications.right > #wrapper > * {
+	display: none;
+}
+
+section.notifications.right.active > header > *,
+section.notifications.right.active > #wrapper > * {
+	display: inherit;
 }
 
 #submit, 
