@@ -3,10 +3,10 @@ module.exports = function(mongoose) {
   ObjectId = Schema.ObjectId;
 	
   var messageSchema = new mongoose.Schema({ 
-	    _id: ObjectId,
-	    fID: ObjectId,
-	    tID: ObjectId,
-	    message: String
+	    _id: { type: ObjectId },
+	    fID: { type: ObjectId, unique: true },
+	    tID: { type: ObjectId, unique: true},
+	    message: { type: String}
   	});
   
   var message = mongoose.model('Message', messageSchema);  
