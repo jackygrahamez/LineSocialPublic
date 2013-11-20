@@ -24,7 +24,7 @@ module.exports = function(mongoose) {
       }
       
   });
-
+  
   var account = mongoose.model('Account', userSchema);
 
   var login = function(email, password, callback) {

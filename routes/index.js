@@ -236,18 +236,6 @@ exports.user_notifications = function(req, res) {
 	    } else {
 	    	cID = doc.check_in.cID;
 	    }	
-		message.findMessagesFrom(cID, function(messages_doc) {
-			console.log("messages_doc "+messages_doc);
-	        res.render('user_notifications', {
-	          title: 'LineOut',
-	          user: doc,
-			  pagename: 'user_notifications',
-			  messages_doc: messages_doc,
-			  cID: cID
-	        });
-    	
-    	});
-    	
 	    });
 	    } else {
 	    	res.redirect('/' +username.username);
@@ -356,21 +344,22 @@ exports.messages = function(req, res) {
 	var checkinID = req.param('checkinID', ''),
 	fromID = req.param('fromID', ''),
 	toID = req.param('toID', '');
-	
-	console.log("messages ");
+	messages = req.param('messages', '');
 	  if ( req.session.loggedIn ) {
 		account.findUsernameById(req.session.accountId, function(username) {
 		if (req.params.username == username.username) {
 	    account.findById(req.session.accountId, function(doc) {
 	    	console.log("checkinID"+checkinID+" fromID "+fromID+" toID "+ toID);
-	    	res.render('messages', {
-	          title: 'LineOut',
-	          user: doc,
-			  pagename: 'messages',
-			  checkinID: checkinID,
-			  fromID: fromID,
-			  toID: toID
-	        });
+			    //message.findMessages(cID, function(messages_doc) {});
+		    	res.render('messages', {
+			          title: 'LineOut',
+			          user: doc,
+			          //messages: messages_doc,
+					  pagename: 'messages',
+					  checkinID: checkinID,
+					  fromID: fromID,
+					  toID: toID			    
+	        });	    	
 	    });
 	    } else {
 	    	res.redirect('/' +username.username);
@@ -518,6 +507,9 @@ exports.user_next_message = function(req, res) {
   }
 }
 
+
+
+
 exports.inbox = function(req, res) {
 
   if ( req.session.loggedIn ) {
@@ -568,5 +560,27 @@ exports.venues = function(req, res) {
 
 	  }
 	}
+
+exports.update_messages = function(req, res) {
+	 var cID = req.param('cID', ''),
+	 fID = req.param('fID', ''),
+	 tID = req.param('tID', ''),
+	 messages = req.param('messages', '');
+	 console.log("messages route "+messages);
+	  if ( req.session.loggedIn ) {
+
+		   message.saveMessages(cID, fID, tID, messages, function(error, doc) {
+			   console.log("updated messages "+doc);
+			   res.send("updated messages");
+		   });
+
+		  } else {
+
+		    res.send(401);
+
+		  }	
+
+	}
+
 
 

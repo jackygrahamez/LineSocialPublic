@@ -57,6 +57,7 @@ function postMessages(url, checkinID, toID, fromID) {
           , error: function(jqXHR, textStatus, err){
               //alert('text status '+textStatus+', err '+err)
               console.log('text status '+textStatus+', err '+err);
+			  //updateMessages(global_cID, messages);              
           }
        });
 }               	   

@@ -50,6 +50,9 @@ app.get('/:username/user_profile/', routes.user_profile);
 app.get('/:username/messages/', routes.messages);
 app.post('/:username/messages/', routes.messages);
 
+app.get('/:username/update_messages', routes.update_messages);
+app.post('/:username/update_messages', routes.update_messages);
+
 app.get('/:username/user_message/', routes.user_message);
 app.post('/:username/user_message/', routes.user_message);
 
@@ -82,9 +85,11 @@ server.listen(app.get('port'), function(){
 	  	console.log("sockets.on");
 	    socket.emit('message', { message: 'welcome to the chat' });
 		socket.on('send', function (data) {
+		console.log("global.io.sockets.emit data "+data);
 			global.io.sockets.emit('message', data);
 		}); 
   });
+
 });
 
 
