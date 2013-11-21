@@ -606,12 +606,13 @@ exports.update_messages = function(req, res) {
 
 exports.update_notification_messages = function(req, res) {
 	 var cID = req.param('cID', ''),
-	 fID = req.param('fID', '');
-	 messages = req.param('messages', '');
+	 fID = req.param('fID', ''),
+	 messages = req.param('messages', ''),
+	 requests = req.param('requests', '');
 	 console.log("update_notification_messages "+messages);
 	  if ( req.session.loggedIn ) {
 		  if (messages){
-			   message.saveNotificationMessages(cID, fID, messages, function(error, doc) {
+			   message.saveNotificationMessages(cID, fID, messages, requests, function(error, doc) {
 				   console.log("updated messages "+doc);
 				   res.send("updated messages");
 			   });

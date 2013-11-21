@@ -6,7 +6,8 @@ module.exports = function(mongoose) {
 	    cID: { type: ObjectId },
 	    fID: { type: ObjectId, unique: true },
 	    tID: { type: ObjectId, unique: true},
-	    message: { type: String}
+	    message: { type: String},
+	    requests: { type: String}
   	});
   
   var message = mongoose.model('Message', messageSchema);  
@@ -38,11 +39,11 @@ module.exports = function(mongoose) {
 
   };
   
-  var saveNotificationMessages = function(cID, fID, user_messages, callback) {
+  var saveNotificationMessages = function(cID, fID, user_messages, user_requests, callback) {
 	  query = { cID: cID, fID: fID}
 	  console.log("query "+query);
 	  message.update(query, 
-			  {$set: {message: user_messages}}, 
+			  {$set: {message: user_messages, requests: user_requests}}, 
 			  {upsert: true},
 			  function(err,doc) {
 	  	  console.log("user_messages "+doc);	  	

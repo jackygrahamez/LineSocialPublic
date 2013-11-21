@@ -379,7 +379,7 @@ function updateMessages(cID, fID, tID, messages, url) {
         });
 } 
 
-function updateNotificationMessages(cID, fID, messages, url) {
+function updateNotificationMessages(cID, fID, messages, url, requests) {
 	console.log("updateNotificationMessages url "+url);
      $.ajax({ 
            url: url,
@@ -388,7 +388,8 @@ function updateNotificationMessages(cID, fID, messages, url) {
            data: { 
         	   cID: cID,
         	   fID: fID,
-        	   messages: messages},
+        	   messages: messages,
+        	   requests: requests},
            success: function(data){ 
         	   console.log(data);
 

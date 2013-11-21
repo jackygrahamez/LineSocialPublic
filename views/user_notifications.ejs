@@ -130,13 +130,14 @@ $(document).ready(function(){
     		var time = " " + d.getHours() + ":" + d.getMinutes();
             var text = field.value;
 	    	text = text + time; 
-            var all_content = $("#content").html();	    
+            var all_content = $("#content").html();
+            var requests = $(".chat_requests > ul ").html();	                	    
             var url = "/"+name.value+"/update_notification_messages/";
-            //console.log("url set "+url);	
+            console.log("requests set "+requests);	
 	    	//console.log("text: "+text);      
 	    	global_tID = $(".message.controls .tID").attr("value");      
             socket.emit('send', { cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: name.value });
-			updateNotificationMessages(global_cID, global_fID, all_content, url);
+			updateNotificationMessages(global_cID, global_fID, all_content, url, requests);
         }
     };
  
