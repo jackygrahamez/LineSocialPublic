@@ -237,14 +237,26 @@ exports.user_notifications = function(req, res) {
 	    	cID = doc.check_in.cID;
 	    }	
 	    message.findMessages(cID, fID, function(message_doc) {
-	    	console.log("route message_doc "+message_doc);
+	    	console.log("message_doc "+message_doc);
+	    	if(!message_doc[0]) {
+	    		console.log("message_doc empty");
+		        res.render('user_notifications', {
+		             title: 'LineOut',
+		             user: doc,
+			         pagename: 'user_notifications',
+			         cID: cID,
+			         message: ""
+		      		});		    		
+
+	    	} else {
 	        res.render('user_notifications', {
 	             title: 'LineOut',
 	             user: doc,
 		         pagename: 'user_notifications',
 		         cID: cID,
-		         message: message_doc
-	      		});	    
+		         message: message_doc[0].message
+	      		});	
+	    	}
 	    	});
     	});
 	    } else {

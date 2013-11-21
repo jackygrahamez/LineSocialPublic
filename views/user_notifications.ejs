@@ -1,12 +1,13 @@
 <section class="notifications right">
 <!--notifications -->
 <% include subpage_header %>
+message <% message = "" %>
 <div id="wrapper">
 	<h2 class="light no-margin">Line Pokes</h2>
     <section class="chat_requests bordered">
     <ul></ul>
     <div class="accordion off">
-	    <div id="content"><p>messages</p><%- message[0].message %></div>
+	    <div id="content"><p>messages</p><%- message %></div>
 	    <div class="message controls">
 			<input class="hide cID" value="<%= user.check_in.cID %>" />       
 			<input class="hide fID" value="<%= user._id %>" />
