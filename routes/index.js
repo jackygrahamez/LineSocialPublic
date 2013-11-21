@@ -163,12 +163,11 @@ exports.user_check_in = function(req, res) {
 	            if (err) {
 	              return console.log(err);
 	            }
-				message.removeCheckinMessages(doc.check_in.cID, function(remove_messages_doc) {
+
 				    account.findById(req.session.accountId, function(cID_doc) {
 				    	console.log("cID_doc");
 				    	res.send(cID_doc.check_in.cID);
 				    });
-	          	});      		                             
 	          });      		
 	    	}
 	    });
@@ -236,6 +235,12 @@ exports.user_notifications = function(req, res) {
 	    } else {
 	    	cID = doc.check_in.cID;
 	    }	
+	    
+	      res.render('user_notifications', {
+	             title: 'LineOut',
+	             user: doc,
+	         pagename: 'user_notifications',
+	         cID: cID});	    
 	    });
 	    } else {
 	    	res.redirect('/' +username.username);

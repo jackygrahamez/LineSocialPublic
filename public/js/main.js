@@ -201,7 +201,7 @@ function getNotifications(url) {
 	           cache: false, 
 	           success: function(data){
 	           	  markup = data;
-	           	  //console.log(data);
+	           	  console.log(data);
 	           	  $("body .body").last().after(data);
 	           	  setTimeout(function(){
 	           		//$("section.body.right").addClass("active");
