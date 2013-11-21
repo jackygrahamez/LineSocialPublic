@@ -587,5 +587,28 @@ exports.update_messages = function(req, res) {
 
 	}
 
+exports.update_notification_messages = function(req, res) {
+	 var cID = req.param('cID', ''),
+	 fID = req.param('fID', '');
+	 messages = req.param('messages', '');
+	 console.log("update_notification_messages "+messages);
+	  if ( req.session.loggedIn ) {
+		  if (messages){
+			   message.saveNotificationMessages(cID, fID, messages, function(error, doc) {
+				   console.log("updated messages "+doc);
+				   res.send("updated messages");
+			   });
+		  }
+		  else {
+			  res.send("no messages");
+		  }
 
+
+		  } else {
+
+		    res.send(401);
+
+		  }	
+
+	}
 

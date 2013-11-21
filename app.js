@@ -62,6 +62,9 @@ app.post('/:username/user_next_message/', routes.user_next_message);
 app.get('/:username/user_notifications/', routes.user_notifications);
 app.post('/:username/user_notifications/', routes.user_notifications);
 
+app.get('/:username/update_notification_messages/', routes.update_notification_messages);
+app.post('/:username/update_notification_messages/', routes.update_notification_messages);
+
 app.get('/:username/venues', routes.venues);
 app.post('/:username/venues', routes.venues);
 

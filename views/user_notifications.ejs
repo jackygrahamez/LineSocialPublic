@@ -38,11 +38,11 @@ $(document).ready(function(){
 	$(".message.controls .tID").val(global_tID);
 	global_cID = $(".message.controls .cID").val();   
 	global_fID = $(".message.controls .fID").val();   
-	console.log("global_cID "+global_cID+" global_tID "+global_tID+" global_fID "+global_fID);      
+	//console.log("global_cID "+global_cID+" global_tID "+global_tID+" global_fID "+global_fID);      
 	    
     socket.on('message', function (data) {
         if(data.message) {
-        console.log("user notification message");
+        //console.log("user notification message");
 
             messages.push(data);
             var html = '';
@@ -53,8 +53,8 @@ $(document).ready(function(){
  			global_tID = $(".message.controls .tID").attr("value");
  			   
 	            for(var i=0; i<messages.length; i++) {
-	            console.log("messages[i].cID "+messages[i].cID);
-	            console.log("global_cID "+global_cID);	            
+	            //console.log("messages[i].cID "+messages[i].cID);
+	            //console.log("global_cID "+global_cID);	            
 	            if (messages[i].cID == global_cID) {
 		            if (typeof(messages[i].username) != 'undefined' && messages[i].fID != global_fID) {
 	            		fIDlist.push(messages[i].username+"_"+messages[i].fID);
@@ -82,7 +82,7 @@ $(document).ready(function(){
            		});
            }
             for(var i=0; i<fIDlistArrayUnique.length; i++) {
-	            console.log("fIDlistArrayUnique[i] "+fIDlistArrayUnique[i]);
+	            //console.log("fIDlistArrayUnique[i] "+fIDlistArrayUnique[i]);
 	            var ufID = fIDlistArrayUnique[i].split("_").pop();
 	            fIDlistArrayUnique[i].split("_").pop();
 	            chat_requests += '<li ufid="'+ufID+'">' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
@@ -98,7 +98,7 @@ $(document).ready(function(){
 	       		$(".accordion").toggleClass("off");
 	       		$(".accordion p").hide();
 	       		$(".accordion ."+notification_class).show();
-	       		console.log("this notification_class "+notification_class);
+	       		//console.log("this notification_class "+notification_class);
            		$(".accordion #content p").each(function(){
            			if (($(this).attr("fid") == global_tID) || ($(this).attr("tid") == global_tID)) {
            				$(this).show();
@@ -115,7 +115,7 @@ $(document).ready(function(){
     });
  
     sendButton.onclick = function() {
-    	console.log("click");
+    	//console.log("click");
     	var d = new Date();
         if(name.value == "") {
             alert("Please type your name!");
@@ -123,9 +123,13 @@ $(document).ready(function(){
     		var time = " " + d.getHours() + ":" + d.getMinutes();
             var text = field.value;
 	    	text = text + time; 
-	    	console.log("text: "+text);      
+            var all_content = $("#content").html();	    
+            var url = "/"+name.value+"/update_notification_messages/";
+            //console.log("url set "+url);	
+	    	//console.log("text: "+text);      
 	    	global_tID = $(".message.controls .tID").attr("value");      
             socket.emit('send', { cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: name.value });
+			updateNotificationMessages(global_cID, global_fID, all_content, url);
         }
     };
  

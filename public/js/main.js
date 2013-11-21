@@ -201,8 +201,11 @@ function getNotifications(url) {
 	           cache: false, 
 	           success: function(data){
 	           	  markup = data;
-	           	  console.log(data);
+	           	  //console.log(data);
+	           	  console.log("after")
 	           	  $("body .body").last().after(data);
+	           	  //$("body .body").last().after("<p>test</p>");
+	           	  console.log("after after")
 	           	  setTimeout(function(){
 	           		//$("section.body.right").addClass("active");
 	           	    $(".back.button").click(function(){
@@ -355,7 +358,7 @@ function isValidEmail(emailText) {
 };
 
 function updateMessages(cID, fID, tID, messages, url) {
-	console.log("url "+url);
+	console.log("update Messages url "+url);
      $.ajax({ 
            url: url,
            type: 'POST',
@@ -374,4 +377,25 @@ function updateMessages(cID, fID, tID, messages, url) {
                console.log('text status '+textStatus+', err '+err);
            }
         });
-}  
+} 
+
+function updateNotificationMessages(cID, fID, messages, url) {
+	console.log("updateNotificationMessages url "+url);
+     $.ajax({ 
+           url: url,
+           type: 'POST',
+           cache: false,
+           data: { 
+        	   cID: cID,
+        	   fID: fID,
+        	   messages: messages},
+           success: function(data){ 
+        	   console.log(data);
+
+           }
+           , error: function(jqXHR, textStatus, err){
+               //alert('text status '+textStatus+', err '+err)
+               console.log('text status '+textStatus+', err '+err);
+           }
+        });
+} 
