@@ -3,10 +3,10 @@ module.exports = function(mongoose) {
   ObjectId = Schema.ObjectId;
 	
   var messageSchema = new mongoose.Schema({ 
-	    _id: { type: ObjectId },
-	    fID: { type: ObjectId, unique: true },
-	    tID: { type: ObjectId, unique: true},
-	    message: { type: String}
+	    cID: ObjectId,
+	    fID: ObjectId,
+	    tID: ObjectId,
+	    message: String
   	});
   
   var message = mongoose.model('Message', messageSchema);  
@@ -28,17 +28,15 @@ module.exports = function(mongoose) {
 	    });
   };
 
-  var saveMessages = function(cID, fID, tID, user_messages, callback) {
-	  console.log("cID "+cID+" user_messages "+user_messages);
-	  query = { _id: cID, fID: fID, tID: tID }
-	  message.update(query, 
-			  {$set: {message: user_messages}}, 
-			  {upsert: true},
-			  function(err,doc) {
-	  	  console.log("user_messages "+doc);	  	
-	      callback(doc);
-	    });
-	  //data.save(callback);
+  var saveMessages = function(cID, fID, tID, messages, callback) {
+	  console.log("cID "+cID+" user_messages "+messages);
+	  var data = new message();
+	  data.cID = cID;
+	  data.fID = fID;
+	  data.tID = tID;
+	  data.message = messages;
+
+	  data.save(callback);
 
   };
   

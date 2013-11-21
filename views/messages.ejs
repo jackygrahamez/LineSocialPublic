@@ -10,6 +10,7 @@
 
     <div id="content">
     </div>
+    <p>test <%= messages %></p>
     <div class="message controls">
 		<input class="hide cID" />       
 		<input class="hide fID" value="<%= user._id %>" />
@@ -86,7 +87,7 @@ $(document).ready(function(){
 	    	text = text + time; 
 	    	console.log("text: "+text);            
             socket.emit('send', { cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: name.value });
-			updateMessages(global_cID, global_fID, global_tID, all_content, url);
+			updateMessages(global_cID, global_fID, global_tID, text, url);
         }
     };
  
