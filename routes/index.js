@@ -245,16 +245,19 @@ exports.user_notifications = function(req, res) {
 		             user: doc,
 			         pagename: 'user_notifications',
 			         cID: cID,
-			         message: ""
+			         message: "",
+			         requests: ""
 		      		});		    		
 
 	    	} else {
+	    		console.log("message_doc[0].requests "+message_doc[0].requests );
 	        res.render('user_notifications', {
 	             title: 'LineOut',
 	             user: doc,
 		         pagename: 'user_notifications',
 		         cID: cID,
-		         message: message_doc[0].message
+		         message: message_doc[0].message,
+		         requests: message_doc[0].requests 
 	      		});	
 	    	}
 	    	});

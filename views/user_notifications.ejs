@@ -4,7 +4,7 @@
 <div id="wrapper">
 	<h2 class="light no-margin">Line Pokes</h2>
     <section class="chat_requests bordered">
-    <ul></ul>
+    <ul><%- requests %></ul>
     <div class="accordion off">
 	    <div id="content"><%- message %></div>
 	    <div class="message controls">
@@ -97,7 +97,10 @@ $(document).ready(function(){
 				$(".message.controls .tID").val(global_tID);
 				$(".message.controls .fID").val(global_fID); 		            
             }
-	       $(".chat_requests ul").html(chat_requests);
+            if (chat_requests.length > 0) {
+            	console.log("chat_requests "+chat_requests);
+	            $(".chat_requests ul").html(chat_requests);
+	        }
 	       $(".chat_requests ul li").click(function() {
 	       		var notification_class = $(this).attr("ufid");
 	       		global_tID = notification_class;
@@ -130,13 +133,13 @@ $(document).ready(function(){
     		var time = " " + d.getHours() + ":" + d.getMinutes();
             var text = field.value;
 	    	text = text + time; 
-            var all_content = $("#content").html();
-            var requests = $(".chat_requests > ul ").html();	                	    
-            var url = "/"+name.value+"/update_notification_messages/";
             console.log("requests set "+requests);	
 	    	//console.log("text: "+text);      
 	    	global_tID = $(".message.controls .tID").attr("value");      
             socket.emit('send', { cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: name.value });
+            var all_content = $("#content").html();
+            var requests = $(".chat_requests > ul ").html();	                	    
+            var url = "/"+name.value+"/update_notification_messages/";
 			updateNotificationMessages(global_cID, global_fID, all_content, url, requests);
         }
     };
