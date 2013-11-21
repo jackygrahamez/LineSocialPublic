@@ -57,8 +57,9 @@ $(document).ready(function(){
  			global_tID = $(".message.controls .tID").attr("value");
  			   
 	            for(var i=0; i<messages.length; i++) {
-	            //console.log("messages[i].cID "+messages[i].cID);
-	            //console.log("global_cID "+global_cID);	            
+	            console.log("messages[i].cID "+messages[i].cID);
+	            console.log(" messages[i].message "+ messages[i].message);
+				console.log(" messages[i].username "+ messages[i].username);
 	            if (messages[i].cID == global_cID) {
 		            if (typeof(messages[i].username) != 'undefined' && messages[i].fID != global_fID) {
 	            		fIDlist.push(messages[i].username+"_"+messages[i].fID);
@@ -69,7 +70,7 @@ $(document).ready(function(){
 	            }
 
 	       var fIDlistArrayUnique = ArrNoDupe(fIDlist);
-	       if (html > 0) {        
+	       if (html.length > 0) {        
            		content.innerHTML = html;
            }
            if (fIDlistArrayUnique.length > 0) {
