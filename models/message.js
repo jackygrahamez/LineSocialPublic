@@ -11,17 +11,13 @@ module.exports = function(mongoose) {
   
   var message = mongoose.model('Message', messageSchema);  
   
-  var findMessages = function(cID, fID, tID, callback) {
+  var findMessages = function(cID, fID, callback) {
 	  console.log("cID "+cID+" fID "+fID+" tID");
 	  var query = { "$or" : [
 	                      { "cID" : cID,
-	                    	"fID" : fID,  
-							"tID" : tID},
-	                      { "cID" : cID,
-						    "tID" : fID,
-						    "fID" : tID}
+	                    	"fID" : fID}
 	                    ] }
-	  console.log("query "+query);
+	  console.log("query "+JSON.stringify(query));
 	  	message.find( query, function(err,doc) {
 	  	  console.log("findMessages "+doc);	  	
 	      callback(doc);

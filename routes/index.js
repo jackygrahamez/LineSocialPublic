@@ -230,18 +230,23 @@ exports.user_notifications = function(req, res) {
 		if (req.params.username == username.username) {
     account.findById(req.session.accountId, function(doc) {
     	console.log("doc "+doc);
+    	var fID = doc._id;
 	    if (!doc.check_in) {
 	    	cID = "";
 	    } else {
 	    	cID = doc.check_in.cID;
 	    }	
-	    
-	      res.render('user_notifications', {
+	    message.findMessages(cID, fID, function(message_doc) {
+	    	console.log("route message_doc "+message_doc);
+	        res.render('user_notifications', {
 	             title: 'LineOut',
 	             user: doc,
-	         pagename: 'user_notifications',
-	         cID: cID});	    
-	    });
+		         pagename: 'user_notifications',
+		         cID: cID,
+		         message: message_doc
+	      		});	    
+	    	});
+    	});
 	    } else {
 	    	res.redirect('/' +username.username);
 	    }	        	

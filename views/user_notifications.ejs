@@ -6,8 +6,7 @@
     <section class="chat_requests bordered">
     <ul></ul>
     <div class="accordion off">
-	    <div id="content">
-	    </div>
+	    <div id="content"><p>messages</p><%- message[0].message %></div>
 	    <div class="message controls">
 			<input class="hide cID" value="<%= user.check_in.cID %>" />       
 			<input class="hide fID" value="<%= user._id %>" />
@@ -39,6 +38,11 @@ $(document).ready(function(){
 	global_cID = $(".message.controls .cID").val();   
 	global_fID = $(".message.controls .fID").val();   
 	//console.log("global_cID "+global_cID+" global_tID "+global_tID+" global_fID "+global_fID);      
+
+	if ($("#content").text().length > 0) {
+		$(".accordion").removeClass("off");
+		$("send").click();
+	}
 	    
     socket.on('message', function (data) {
         if(data.message) {
@@ -64,8 +68,10 @@ $(document).ready(function(){
 					}
 	            }
 
-	       var fIDlistArrayUnique = ArrNoDupe(fIDlist);        
-           content.innerHTML = html;
+	       var fIDlistArrayUnique = ArrNoDupe(fIDlist);
+	       if (html > 0) {        
+           		content.innerHTML = html;
+           }
            if (fIDlistArrayUnique.length > 0) {
            		$(".line_pokes div").replaceWith("<div>"+fIDlistArrayUnique.length+"</div>");
            } else {
