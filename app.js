@@ -80,6 +80,13 @@ app.post('/register_value', routes.register_value);
 app.get('/register_email_value', routes.register_email_value);
 app.post('/register_email_value', routes.register_email_value);
 
+//Partials
+
+//app.get('/partials/:name', routes.partials);
+//
+//JSON API
+//app.get('/api/posts', api.posts);
+
 
 server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
@@ -95,16 +102,3 @@ server.listen(app.get('port'), function(){
 
 });
 
-
-/*
-var port = 5000;
-var io = require('socket.io').listen(app.listen(port));
-
-global.io.sockets.on('connection', function (socket) {
-	socket.emit('message', { message: 'welcome to the chat' });
-	socket.on('send', function (data) {
-		global.io.sockets.emit('message', data);
-	});
-});
-console.log("Listening on port " + port);  
-*/
