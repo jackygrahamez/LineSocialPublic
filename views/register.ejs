@@ -2,21 +2,18 @@
 
 <div class="container hero-unit">
 
-  <form ng-submit="submit()" ng-controller="regCtrl">
-      <input type="text" name="firstName" ng-model="formData.firstname" required placeholder="Your firstname here"/>
-      <input type="text" name="lastName" ng-model="formData.lastname" required placeholder="Your lastname here"/>
-      <input type="text" name="username" ng-model="formData.username" required placeholder="Your username here"/>
-      <input type="email" name="email" ng-model="formData.email" required placeholder="Your Email here"/>
-      <input type="email" name="cemail" ng-model="cemail" required placeholder="Your Email (confirm) here"/>
-      <input type="password" name="password" ng-model="formData.password" required placeholder="Your password here"/>
-      <input type="password" name="cpassword" ng-model="cpassword" required placeholder="Your password (confirm) here"/>
+  <form method="post" action="/register" class="form-skin register">
+      <input type="text" name="firstName" required placeholder="Your firstname here"/>
+      <input type="text" name="lastName" required placeholder="Your lastname here"/>
+      <input type="text" name="username" required placeholder="Your username here"/>
+      <input type="email" name="email" required placeholder="Your Email here"/>
+      <input type="email" name="cemail" required placeholder="Your Email (confirm) here"/>
+      <input type="password" name="password" required placeholder="Your password here"/>
+      <input type="password" name="cpassword" required placeholder="Your password (confirm) here"/>
       <p></p>
       <p>
-      <input type="submit" id="submit" value="Submit" />
+      <input id="user_register" type="button" value="Register Now" class="btn btn-flat btn-blue no-radius"/>
       </p>
-	<pre>
-		{{ formData }}
-	</pre>      
   </form>
 </div>
 
