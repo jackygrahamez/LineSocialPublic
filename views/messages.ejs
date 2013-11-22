@@ -74,7 +74,7 @@ $(document).ready(function(){
             global_fID = $(".message.controls .fID").attr("value");
             global_tID = $(".message.controls .tID").attr("value");
             console.log("global_tID "+global_tID);
-			updateNotificationMessages(global_cID, global_fID, global_tID, all_content, url);
+			updateMessages(global_cID, global_fID, global_tID, all_content, url);
 	       
         } else {
             console.log("There is a problem:", data);

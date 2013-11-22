@@ -357,7 +357,7 @@ function isValidEmail(emailText) {
     return pattern.test(emailText);
 };
 
-function updateMessages(cID, fID, messages, url) {
+function updateMessages(cID, fID, tID, messages, url) {
 	console.log("update Messages url "+url);
 	
      $.ajax({ 
@@ -367,6 +367,7 @@ function updateMessages(cID, fID, messages, url) {
            data: { 
         	   cID: cID,
         	   fID: fID,
+        	   tID: tID,
         	   messages: messages},
            success: function(data){ 
         	   console.log(data);
@@ -379,7 +380,7 @@ function updateMessages(cID, fID, messages, url) {
         });
 } 
 
-function updateNotificationMessages(cID, fID, tID, messages, url, requests) {
+function updateNotificationMessages(cID, fID, messages, url, requests) {
 	console.log("updateNotificationMessages url "+url);
 	console.log("requests ajax "+requests);	
 	console.log("messages "+messages);		
@@ -390,7 +391,6 @@ function updateNotificationMessages(cID, fID, tID, messages, url, requests) {
            data: { 
         	   cID: cID,
         	   fID: fID,
-        	   tID: tID,
         	   messages: messages,
         	   requests: requests},
            success: function(data){ 

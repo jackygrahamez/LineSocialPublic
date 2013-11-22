@@ -24,9 +24,10 @@ module.exports = function(mongoose) {
 	    });
   };
 
-  var saveMessages = function(cID, fID, user_messages, callback) {
+  var saveMessages = function(cID, fID, tID, user_messages, callback) {
 	  console.log("cID "+cID+" user_messages "+user_messages);
-	  query = { cID: cID, fID: fID }
+	  console.log("tID model "+tID);
+	  query = { cID: cID, fID: fID, tID: tID }
 	  console.log("query "+ JSON.stringify(query));
 	  message.update(query, 
 			  {$set: {message: user_messages}}, 
