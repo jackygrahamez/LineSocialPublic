@@ -202,10 +202,10 @@ function getNotifications(url) {
 	           success: function(data){
 	           	  markup = data;
 	           	  //console.log(data);
-	           	  console.log("after")
+	           	  //console.log("after");
 	           	  $("body .body").last().after(data);
 	           	  //$("body .body").last().after("<p>test</p>");
-	           	  console.log("after after")
+	           	  //console.log("after after")
 	           	  setTimeout(function(){
 	           		//$("section.body.right").addClass("active");
 	           	    $(".back.button").click(function(){
@@ -357,8 +357,9 @@ function isValidEmail(emailText) {
     return pattern.test(emailText);
 };
 
-function updateMessages(cID, fID, tID, messages, url) {
+function updateMessages(cID, fID, messages, url) {
 	console.log("update Messages url "+url);
+	
      $.ajax({ 
            url: url,
            type: 'POST',
@@ -366,7 +367,6 @@ function updateMessages(cID, fID, tID, messages, url) {
            data: { 
         	   cID: cID,
         	   fID: fID,
-        	   tID: tID,
         	   messages: messages},
            success: function(data){ 
         	   console.log(data);
@@ -379,8 +379,10 @@ function updateMessages(cID, fID, tID, messages, url) {
         });
 } 
 
-function updateNotificationMessages(cID, fID, messages, url, requests) {
+function updateNotificationMessages(cID, fID, tID, messages, url, requests) {
 	console.log("updateNotificationMessages url "+url);
+	console.log("requests ajax "+requests);	
+	console.log("messages "+messages);		
      $.ajax({ 
            url: url,
            type: 'POST',
@@ -388,6 +390,7 @@ function updateNotificationMessages(cID, fID, messages, url, requests) {
            data: { 
         	   cID: cID,
         	   fID: fID,
+        	   tID: tID,
         	   messages: messages,
         	   requests: requests},
            success: function(data){ 

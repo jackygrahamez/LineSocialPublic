@@ -57,9 +57,9 @@ $(document).ready(function(){
  			global_tID = $(".message.controls .tID").attr("value");
  			   
 	            for(var i=0; i<messages.length; i++) {
-	            console.log("messages[i].cID "+messages[i].cID);
-	            console.log(" messages[i].message "+ messages[i].message);
-				console.log(" messages[i].username "+ messages[i].username);
+	            //console.log("messages[i].cID "+messages[i].cID);
+	            //console.log(" messages[i].message "+ messages[i].message);
+				//console.log(" messages[i].username "+ messages[i].username);
 	            if (messages[i].cID == global_cID) {
 		            if (typeof(messages[i].username) != 'undefined' && messages[i].fID != global_fID) {
 	            		fIDlist.push(messages[i].username+"_"+messages[i].fID);
@@ -116,7 +116,18 @@ $(document).ready(function(){
            			else {
            				$(this).hide();
            			}
-           		});	       			
+           		});	   
+            var all_content = $("#content").html();
+            var requests = $(".chat_requests > ul ").html();
+            console.log("requests "+requests);	                	    
+            var url = "/"+name.value+"/update_notification_messages/";
+            console.log("all_content "+all_content);            
+            global_fID = $(".message.controls .fID").attr("value"); 
+            global_cID = $(".message.controls .cID").attr("value"); 
+            console.log("user notification global_fID "+global_fID);
+            console.log("user notification global_cID "+global_cID); 
+            console.log("user notification all_content "+all_content);            
+			updateNotificationMessages(global_cID, global_fID, all_content, url, requests);           		    			
 	       });            
 	       
         } else {
@@ -133,14 +144,10 @@ $(document).ready(function(){
     		var time = " " + d.getHours() + ":" + d.getMinutes();
             var text = field.value;
 	    	text = text + time; 
-            console.log("requests set "+requests);	
+            //console.log("requests set "+requests);	
 	    	//console.log("text: "+text);      
 	    	global_tID = $(".message.controls .tID").attr("value");      
             socket.emit('send', { cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: name.value });
-            var all_content = $("#content").html();
-            var requests = $(".chat_requests > ul ").html();	                	    
-            var url = "/"+name.value+"/update_notification_messages/";
-			updateNotificationMessages(global_cID, global_fID, all_content, url, requests);
         }
     };
  

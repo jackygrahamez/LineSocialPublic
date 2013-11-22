@@ -67,6 +67,14 @@ $(document).ready(function(){
 	                chat_requests += '<li class="'+ucID+'">' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
 	            }
 	       //$(".chat_requests ul").html(chat_requests);            
+            var url = "/"+name.value+"/update_messages/";
+            console.log("url " +url);
+            var all_content = $("#content").html();
+            console.log("all_content "+all_content);
+            global_fID = $(".message.controls .fID").attr("value");
+            global_tID = $(".message.controls .tID").attr("value");
+            console.log("global_tID "+global_tID);
+			updateNotificationMessages(global_cID, global_fID, global_tID, all_content, url);
 	       
         } else {
             console.log("There is a problem:", data);
@@ -81,11 +89,8 @@ $(document).ready(function(){
         } else {
     		var time = " " + d.getHours() + ":" + d.getMinutes();
             var text = field.value;
-            var url = "/"+name.value+"/update_messages/";
-            var all_content = $("#content").html();
 	    	text = text + time;    
             socket.emit('send', { cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: name.value });
-			updateMessages(global_cID, global_fID, global_tID, all_content, url);
         }
     };
  

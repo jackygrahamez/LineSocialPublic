@@ -588,13 +588,13 @@ exports.venues = function(req, res) {
 
 exports.update_messages = function(req, res) {
 	 var cID = req.param('cID', ''),
-	 fID = req.param('fID', ''),
-	 tID = req.param('tID', ''),
+	 fID = req.param('fID', '');
+	 
 	 messages = req.param('messages', '');
 	 console.log("messages route "+messages);
 	  if ( req.session.loggedIn ) {
 
-		   message.saveMessages(cID, fID, tID, messages, function(error, doc) {
+		   message.saveMessages(cID, fID, messages, function(error, doc) {
 			   console.log("updated messages "+doc);
 			   res.send("updated messages");
 		   });
@@ -610,12 +610,15 @@ exports.update_messages = function(req, res) {
 exports.update_notification_messages = function(req, res) {
 	 var cID = req.param('cID', ''),
 	 fID = req.param('fID', ''),
+	 tID = req.param('tID', ''),
 	 messages = req.param('messages', ''),
 	 requests = req.param('requests', '');
+	 console.log("update_notification_messages");
+	 console.log("fID route "+fID);
 	 console.log("update_notification_messages "+messages);
 	  if ( req.session.loggedIn ) {
 		  if (messages){
-			   message.saveNotificationMessages(cID, fID, messages, requests, function(error, doc) {
+			   message.saveMessages(cID, fID, messages, function(error, doc) {
 				   console.log("updated messages "+doc);
 				   res.send("updated messages");
 			   });
