@@ -44,6 +44,9 @@ $(document).ready(function(){
 		$("send").click();
 	}
 	    
+	var nPokes = $(".chat_requests ul li").length;
+	$(".line_pokes div").text(nPokes);    
+	    
     socket.on('message', function (data) {
         if(data.message) {
         //console.log("user notification message");
