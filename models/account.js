@@ -32,7 +32,6 @@ module.exports = function(mongoose) {
     shaSum.update(password);
 
     account.findOne({email:email,password:shaSum.digest('hex')},function(err,doc){
-      console.log('doc ', doc);
       callback(doc);
     });
 
@@ -41,9 +40,6 @@ module.exports = function(mongoose) {
  var register = function(email, password, firstName, lastName, username, callback) {
     var shaSum = crypto.createHash('sha256');
     shaSum.update(password);
-
-    console.log('Registering ' + email);
-
     var user = new account({
       email: email,
       name: {
@@ -57,13 +53,9 @@ module.exports = function(mongoose) {
     
     account.findOne({username:username},function(err,doc){
         callback(doc);
-        console.log('findOne doc ', doc);
       });
 
     user.save(callback);
-    console.log('Save command was sent');         
-    
-
   };
   
   var checkInMethod = function(location, geolocation, line_length, accountId, callback) {
@@ -72,8 +64,6 @@ module.exports = function(mongoose) {
 	  	var line_length = line_length * 60 * 1000;
 	  	var expireTimeStamp = parseInt(d1.getTime()) + parseInt(line_length); 
 	  	d2.setTime( expireTimeStamp );
-
-	  	console.log('model checkInMethod ' + d1 + ' ' + location + ", " + geolocation + ", " + line_length);
 	    var checkIn = new Object();
 	    checkIn.cID = crypto.createHash('md5').update(Math.random().toString()).digest('hex').substring(0, 24);
 	    checkIn.location = location;
@@ -81,9 +71,6 @@ module.exports = function(mongoose) {
 	    checkIn.line_length = line_length;
 	    checkIn.check_in_time = d1;
 	    checkIn.check_in_expire_time = d2;
-	    
-	    console.log(checkIn);
-	    
 	    account.update(
 	    {"_id" : accountId},
 	    {"$set": { check_in : checkIn }},
@@ -105,9 +92,7 @@ module.exports = function(mongoose) {
 	  
   var findCurrent = function(id, callback) {
 	  var now = new Date();
-	  	console.log("id length "+id);
 	  	if (id && id.length > 0) {
-	  		console.log("id length > 0");
 		    account.find({'check_in.check_in_expire_time': {"$gt": now}, '_id': {'$ne': id}}, function(err,doc) {
 		    		
 			      callback(doc);
@@ -173,10 +158,6 @@ module.exports = function(mongoose) {
         	
   	
   var post_message = function(cID, accountId, message, username, callback) {
-	    console.log("post_message");
-	  	console.log("the cID " + accountId);
-	  	console.log("the accountID " + accountId);
-	  	console.log("username "+username);
 	  	var d1 = new Date();
 	    userMessage = new Object();
 	    userMessage.cID = cID;
@@ -184,9 +165,6 @@ module.exports = function(mongoose) {
 	    userMessage.message = message;
 	    userMessage.username = username;
 	    userMessage.time = d1;
-	    
-	    console.log('Posting message: ' + message);
-
 	    account.update(
 	    	    {"_id" : cID},
 	    	    {"$push": { 'check_in.check_in_message.message_thread' : userMessage }},

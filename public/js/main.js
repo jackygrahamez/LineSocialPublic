@@ -26,18 +26,15 @@
    
    $("a").click(function(e){
 	   e.preventDefault();
-	   console.log("test");
 	   var url = $(this).attr("href");
 	   if (url != "/register") {
 		   if (url.indexOf("notifications") > 0) {
 			   $(".notifications").addClass("active");
 		   } 
 		   else {
-			   console.log("getPage");
 			   getPage(url);  
 		   }
 	   } else {
-		   console.log("redirect");
 		   location.assign(url);
 	   }	   
    });
@@ -93,10 +90,7 @@
 
    $(".register input").focusout(function(){
 	   var object = $(this);
-	   console.log("this val "+object.val());
-	   console.log("focus out");
 	   if (object.val().length > 0) {
-		   console.log("value "+$(this).val());
 		   object.removeClass("invalid");
 	   }
    });
@@ -105,7 +99,6 @@
 	   var username = $(this).val();
 
 	   if (username.length > 0) {
-		   console.log(username);	
 		   var value = {username:username};
 		   regCheck(username);
 	   }
@@ -115,7 +108,6 @@
 	   var email = $(this).val();
 	   
 	   if (email.length > 0) {
-		   console.log(email);	
 		   var value = {email:email};
 		   regCheckEmail(email);
 	   }
@@ -136,14 +128,8 @@ function getLocation(lLength)
   }
 function showPosition(position)
   {
-  console.log(position);
-  /*
-  x.innerHTML="Latitude: " + position.coords.latitude + 
-  "<br>Longitude: " + position.coords.longitude;
-   */
   var url = location.pathname+"/venues/";
   var coord = position.coords.latitude+","+position.coords.longitude;
-  console.log(url);
   getVenues(url, coord);
   $("#coords").val(position.coords.latitude+", "+position.coords.longitude);
   $("#line_length").val(lineLength);
@@ -168,19 +154,16 @@ function showError(error)
     }
   }
 function getPage(url) {
-	console.log("get message");
 	     $.ajax({ 
 	           url: url,
 	           type: 'GET',
 	           cache: false, 
 	           success: function(data){
 	           	  markup = data;
-	           	  //console.log(data);
 	           	  $("section.body.right").html(data);
 	           	  setTimeout(function(){
 	           		$("section.body.right").addClass("active");
 	           	    $(".back.button").click(function(){
-	           	    	console.log("back button");
 	           		  $(".body").removeClass("active");
 	           		  $("section.checkin").remove();
 	           	    });	           		
@@ -188,26 +171,19 @@ function getPage(url) {
 	           }
 	           , error: function(jqXHR, textStatus, err){
 	               //alert('text status '+textStatus+', err '+err)
-	               console.log('text status '+textStatus+', err '+err);
-	           }
+	               console.log('text status '+textStatus+', err '+err);	           }
 	        });
  }            
    
 function getNotifications(url) {
-	console.log("get message");
 	     $.ajax({ 
 	           url: url,
 	           type: 'GET',
 	           cache: false, 
 	           success: function(data){
 	           	  markup = data;
-	           	  //console.log(data);
-	           	  //console.log("after");
 	           	  $("body .body").last().after(data);
-	           	  //$("body .body").last().after("<p>test</p>");
-	           	  //console.log("after after")
 	           	  setTimeout(function(){
-	           		//$("section.body.right").addClass("active");
 	           	    $(".back.button").click(function(){
 	           		  $(".notifications").removeClass("active"); 
 	           	    });	           		
@@ -231,7 +207,6 @@ function ArrNoDupe(a) {
 }
 
 function getVenues(url, coord) {
-	console.log("getVenues at "+coord);
 	var availableTags = [];
     $(".checkin #wrapper > p").addClass("hide");
 	     $.ajax({ 
@@ -241,10 +216,8 @@ function getVenues(url, coord) {
 	           data: { coordinates: coord},
 	           success: function(data){
 	           	  ajaxData = data;
-	           	  //console.log(data);
 	           	  	html = "";
 		           	for(var i=0; i<data.length; i++) {
-		           		console.log("assigning value");
 		           		if(typeof(data[i].name) != 'undefined') {
 		           			html += "<li><span>"+data[i].name+"</span></li>";
 		           			availableTags.push(data[i].name);
@@ -259,7 +232,6 @@ function getVenues(url, coord) {
 		          $("form").removeClass("hide");
 		          $("canvas").addClass("hide");
 			   	   $("#checkin").click(function(e){
-					   console.log("checkin");
 					   var location = $("#location").val(),
 					   geolocation  = $("#coords").val(),
 					   line_length     = $("#line_length").val();
@@ -358,8 +330,6 @@ function isValidEmail(emailText) {
 };
 
 function updateMessages(cID, fID, tID, messages, url) {
-	console.log("update Messages url "+url);
-	
      $.ajax({ 
            url: url,
            type: 'POST',
@@ -381,9 +351,6 @@ function updateMessages(cID, fID, tID, messages, url) {
 } 
 
 function updateNotificationMessages(cID, fID, messages, url, requests) {
-	console.log("updateNotificationMessages url "+url);
-	console.log("requests ajax "+requests);	
-	console.log("messages "+messages);		
      $.ajax({ 
            url: url,
            type: 'POST',

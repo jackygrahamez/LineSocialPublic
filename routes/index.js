@@ -38,7 +38,6 @@ exports.register = function(req, res) {
         return console.log(err);
       }
 
-      console.log('Account was created');
       res.send('Account was created');
       //res.redirect('/');
 
@@ -47,9 +46,7 @@ exports.register = function(req, res) {
 
 exports.register_value = function(req, res) {
 	var value = req.param('username', '');	
-	console.log("value "+JSON.stringify(value));
     account.findByUsername({username:value}, function(doc) {
-    	console.log("doc "+doc);
     	if (doc) {
     		res.send("username taken");
     	} else {
@@ -61,9 +58,7 @@ exports.register_value = function(req, res) {
 
 exports.register_email_value = function(req, res) {
 	var value = req.param('email', '');	
-	console.log("value "+value);
     account.findByEmail(value, function(doc) {
-    	console.log("doc "+doc);
     	if (doc) {
     		res.send("email taken");
     	} else {
@@ -89,16 +84,10 @@ exports.login = function(req, res){
       res.send(401);
       return;
     }
-
-    console.log('login was successful');
-
     req.session.loggedIn  = true;
     req.session.accountId = doc._id;
-
     res.redirect('/' + doc.username);
-
   });
-
 };
 
 exports.home = function(req, res) {
@@ -145,7 +134,6 @@ exports.user_check_in = function(req, res) {
     line_length  = req.param('line_length', '');
     
  	if ( req.session.loggedIn ) {
-	console.log("user logged in");
 	account.findUsernameById(req.session.accountId, function(username) {
 		if (req.params.username == username.username) {
 	    account.findById(req.session.accountId, function(doc) {
@@ -159,13 +147,11 @@ exports.user_check_in = function(req, res) {
 	    	}
 	    	else {
 	    		 account.checkInMethod(location, geolocation, line_length, req.session.accountId, function(err) {
-	    			 console.log("callback");
 	            if (err) {
 	              return console.log(err);
 	            }
 
 				    account.findById(req.session.accountId, function(cID_doc) {
-				    	console.log("cID_doc");
 				    	res.send(cID_doc.check_in.cID);
 				    });
 	          });      		
@@ -374,12 +360,9 @@ exports.messages = function(req, res) {
 		account.findUsernameById(req.session.accountId, function(username) {
 		if (req.params.username == username.username) {
 	    account.findById(req.session.accountId, function(doc) {
-	    	console.log("checkinID"+checkinID+" fromID "+fromID+" toID "+ toID);
-			    //message.findMessages(cID, function(messages_doc) {});
 		    	res.render('messages', {
 			          title: 'LineOut',
 			          user: doc,
-			          //messages: messages_doc,
 					  pagename: 'messages',
 					  checkinID: checkinID,
 					  fromID: fromID,
@@ -417,14 +400,10 @@ exports.user_message = function(req, res) {
     		message.sendMessages(cID, tID, fID, doc.name.first, user_message, time, function(message_doc) {
     			if (message_doc[0] && message_doc[0].thread) {
     			counter = message_doc[0].thread.length;
-    			console.log("message_doc thread length "+counter);
     			} else {
-    			console.log("setting counter to zero");
     			counter = 0;
     			}
-    			console.log("message length "+  counter);
     			var ticker = counter.toString();
-    			console.log("ticker "+ ticker);
 
 				var ajaxMessage ="<li>" + doc.name.first + ": " + user_message + " "+time.getHours()+":"+time.getMinutes()+"</li>"; 
 

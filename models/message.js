@@ -12,29 +12,31 @@ module.exports = function(mongoose) {
   var message = mongoose.model('Message', messageSchema);  
   
   var findMessages = function(cID, fID, callback) {
-	  console.log("cID "+cID+" fID "+fID+" tID");
 	  var query = { "$or" : [
 	                      { "cID" : cID,
 	                    	"fID" : fID}
 	                    ] }
-	  console.log("query "+JSON.stringify(query));
 	  	message.find( query, function(err,doc) {
-	  	  console.log("findMessages "+doc);	  	
 	      callback(doc);
 	    });
   };
 
   var saveMessages = function(cID, fID, tID, user_messages, callback) {
-	  console.log("cID "+cID+" user_messages "+user_messages);
-	  console.log("tID model "+tID);
 	  query = { cID: cID, fID: fID, tID: tID }
-	  console.log("query "+ JSON.stringify(query));
+	  console.log("query1 "+JSON.stringify(query));
+	  
 	  message.update(query, 
 			  {$set: {message: user_messages}}, 
 			  {upsert: true},
 			  function(err,doc) {
-	  	  console.log("user_messages "+doc);	  	
-	      callback(doc);
+			  query = { cID: cID, fID: tID, tID: fID }
+			  console.log("query2 "+JSON.stringify(query));			  
+			  message.update(query, 
+					  {$set: {message: user_messages}}, 
+					  {upsert: true},
+					  function(err,doc) {
+			      callback(doc);
+			    });
 	    });
 	  //data.save(callback);
 
@@ -42,14 +44,10 @@ module.exports = function(mongoose) {
   
   var saveNotificationMessages = function(cID, fID, user_messages, user_requests, callback) {
 	  query = { cID: cID, fID: fID}
-	  console.log("query "+ JSON.stringify(query));
-	  console.log("model user_messages "+user_messages);
-	  console.log("model user_requests "+user_requests);
 	  message.update(query, 
 			  {$set: {message: user_messages, requests: user_requests}}, 
 			  {upsert: true},
 			  function(err,doc) {
-	  	  console.log("user_messages "+doc);	  	
 	      callback(doc);
 	    });
 	  //data.save(callback);
