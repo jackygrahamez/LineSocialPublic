@@ -361,18 +361,30 @@ exports.messages = function(req, res) {
 		if (req.params.username == username.username) {
 	    account.findById(req.session.accountId, function(doc) {
 		    message.findMessages(cID, fID, function(message_doc) {
-		    	if (typeof(message_doc) == 'undefined') {
-		    		message_doc = "";
+		    	if ((typeof(message_doc) == 'undefined') || (typeof(message_doc[0]) == 'undefined')) {
+		    		console.log("undefined message_doc");
+			    	res.render('messages', {
+				          title: 'LineOut',
+				          user: doc,
+						  pagename: 'messages',
+						  cID: cID,
+						  message: '',
+						  fID: fID	    
+			    	});	  
 		    	}
-		    	console.log("message_doc "+message_doc);
-		    	res.render('messages', {
-			          title: 'LineOut',
-			          user: doc,
-					  pagename: 'messages',
-					  cID: cID,
-					  message: message_doc,
-					  fID: fID	    
-		    	});	  
+		    	else {
+		    		console.log("defined message_doc");
+		    		console.log("message_doc[0].message "+message_doc[0].message);
+		    		res.render('messages', {
+				          title: 'LineOut',
+				          user: doc,
+						  pagename: 'messages',
+						  cID: cID,
+						  message: message_doc[0].message,
+						  fID: fID	    
+			    	});			    		
+		    	}
+  
 	    	});	  		    	
 	    });
 	    } else {
