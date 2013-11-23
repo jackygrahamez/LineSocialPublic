@@ -456,7 +456,20 @@ label.iOSCheckLabelOff {
 	color: white;
 	border-radius: 20px;
 }
+.lines span {
+	display: inline-block;
+	overflow: hidden;
+}
+.lines .location {
+	/* essential */
+	text-overflow: ellipsis;
+	width: 280px;
+	white-space: nowrap;
+	overflow: hidden;
+	
+	/* for good looks */
 
+}
 
 @media only screen 
 and (min-width : 768px) { 

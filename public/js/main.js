@@ -32,9 +32,10 @@
 			   $(".notifications").addClass("active");
 		   } 
 		   else {
-			   getPage(url);  
+			   getPage(url);   
 		   }
-	   } else {
+	   }   
+	   else {
 		   location.assign(url);
 	   }	   
    });
@@ -154,6 +155,7 @@ function showError(error)
     }
   }
 function getPage(url) {
+		console.log("getPage(url) "+url);
 	     $.ajax({ 
 	           url: url,
 	           type: 'GET',
@@ -370,3 +372,30 @@ function updateNotificationMessages(cID, fID, messages, url, requests) {
            }
         });
 } 
+
+function getMessages(cID, fID, url) {
+    $.ajax({ 
+          url: url,
+          type: 'POST',
+          cache: false,
+          data: { 
+       	   cID: cID,
+       	   fID: fID},
+           success: function(data){
+	           	  markup = data;
+	           	  $("section.body.right").html(data);
+	           	  setTimeout(function(){
+	           		$("section.body.right").addClass("active");
+	           	    $(".back.button").click(function(){
+	           		  $(".body").removeClass("active");
+	           		  $("section.checkin").remove();
+	           	    });	           		
+	           	  }, 1000);           		  	           	  
+	           }
+          , error: function(jqXHR, textStatus, err){
+              //alert('text status '+textStatus+', err '+err)
+              console.log('text status '+textStatus+', err '+err);
+          }
+       });
+} 
+

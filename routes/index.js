@@ -352,22 +352,28 @@ exports.user_profile = function(req, res) {
 }
 
 exports.messages = function(req, res) {
-	var checkinID = req.param('checkinID', ''),
-	fromID = req.param('fromID', ''),
-	toID = req.param('toID', '');
-	messages = req.param('messages', '');
+	var cID = req.param('cID', ''),
+	fID = req.param('fID', '');
+	console.log("messages route cID "+cID);
+	console.log("messages route fID "+fID);
 	  if ( req.session.loggedIn ) {
 		account.findUsernameById(req.session.accountId, function(username) {
 		if (req.params.username == username.username) {
 	    account.findById(req.session.accountId, function(doc) {
+		    message.findMessages(cID, fID, function(message_doc) {
+		    	if (typeof(message_doc) == 'undefined') {
+		    		message_doc = "";
+		    	}
+		    	console.log("message_doc "+message_doc);
 		    	res.render('messages', {
 			          title: 'LineOut',
 			          user: doc,
 					  pagename: 'messages',
-					  checkinID: checkinID,
-					  fromID: fromID,
-					  toID: toID			    
-	        });	    	
+					  cID: cID,
+					  message: message_doc,
+					  fID: fID	    
+		    	});	  
+	    	});	  		    	
 	    });
 	    } else {
 	    	res.redirect('/' +username.username);

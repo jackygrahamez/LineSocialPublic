@@ -3,19 +3,21 @@
 <% include subpage_header %>
 <div id="wrapper">
 	<h2>Lines</h2>
-		<ul>
+		<ul class="lines">
 			<% for(var i=0; i<lines.length; i++) {%>
 			
 				   <%if (lines[i].check_in.line_length) { %>
 				   <%if (JSON.stringify(lines[i]._id) != JSON.stringify(user._id)) { %>	
-				    <a href="/<%= user.username %>/messages/">
+				    <a class="message" href="/<%= user.username %>/messages/">
 			   		<li class="arrow"> 
 
 						<form id="form<%= i %>">
 						  <input class="hide" id="cID" type="text" name="cID" value="<%= lines[i].check_in.cID  %>" />
 						  <input class="hide" id="tID" type="text" name="tID" value="<%= lines[i]._id %>" />
 						  <input class="hide" id="fID" type="text" name="fID" value="<%= user._id %>" />						  						  
-						  <%= lines[i].check_in.location %> <%= lines[i].name.first %> <span type="button" class="right">Chat</span>
+						  <span class="name" ><%= lines[i].name.first %></span><span type="button" class="right">Chat</span><br /> 
+						  <span class="location"><%= lines[i].check_in.location %></span> 
+
 						</form>
 				   <% } %>
 				   </li>
