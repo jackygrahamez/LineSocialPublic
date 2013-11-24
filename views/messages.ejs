@@ -88,7 +88,7 @@ $(document).ready(function(){
 			global_cID = $(".message.controls .cID").attr("value"); 
             socket.emit('send', { ts: timestamp, cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: name.value });
             var html = $(".content.messages").html();
-            html += '<p ts="'+timestamp+'" cID="'+global_cID+'" fID="'+global_fID+'" tID="'+global_tID+'"><b>' + name.value + ': </b>';
+            html += '<p ts="'+timestamp+'" name="'+name.value+'" cID="'+global_cID+'" fID="'+global_fID+'" tID="'+global_tID+'"><b>' + name.value + ': </b>';
             html += text + '</p>';
             console.log("html ");            
             var url = "/"+name.value+"/update_messages/";
