@@ -33,6 +33,7 @@ $(document).ready(function(){
     var sendButton = document.getElementById("send");
     var content = $(".content.messages");
     var name = document.getElementById("name");
+    var match = false;
 	$(".message.controls .cID").attr("value", global_cID);
 	$(".message.controls .tID").attr("value", global_tID);
 	global_fID = $(".message.controls .fID").val();      	 
@@ -42,7 +43,7 @@ $(document).ready(function(){
             messages.push(data);
 			console.log("global_cID "+global_cID);            
             console.log("data.message "+data.message);
-            var html = '';
+            var html = $(".content.messages").html();
             var chat_requests = '';            
             var fIDlist = [];
 			global_fID = $(".message.controls .fID").attr("value");
@@ -52,32 +53,22 @@ $(document).ready(function(){
 	            	((messages[i].fID == $(".message.controls .fID").attr("value")) || 
 	            	(messages[i].tID == $(".message.controls .fID").attr("value"))	
 	            	)) {	
-            		fIDlist.push(messages[i].username+"_"+messages[i].fID);
-	                html += '<p cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
-	                html += messages[i].message + '</p>';
+	            	$(".content.messages p").each(function(){
+	            		if ($(this).attr("ts") == messages[i].ts) {
+	            			match = true;
+	            		}
+	            	});
+		            	if (!match) {
+		                html += '<p ts="'+messages[i].ts+'" cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
+		                html += messages[i].message + '</p>';
+		                }
+		                match = false;
 					}	                
 	            }
 
-	       var fIDlistArrayUnique = ArrNoDupe(fIDlist);     
 	       console.log("html "+html);   
            //content.innerHTML = html;
            $(".content.messages").html(html);
-           
-	            for(var i=0; i<fIDlistArrayUnique.length; i++) {
-	            console.log("fIDlistArrayUnique[i] "+fIDlistArrayUnique[i]);
-	            var ucID = fIDlistArrayUnique[i].split("_").pop();
-	            fIDlistArrayUnique[i].split("_").pop();
-	                chat_requests += '<li class="'+ucID+'">' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
-	            }
-	       //$(".chat_requests ul").html(chat_requests);            
-            var url = "/"+name.value+"/update_messages/";
-            console.log("url " +url);
-            var all_content = $(".content.messages").html();
-            console.log("all_content "+all_content);
-            global_fID = $(".message.controls .fID").attr("value");
-            global_tID = $(".message.controls .tID").attr("value");
-            console.log("global_tID "+global_tID);
-			//updateMessages(global_cID, global_fID, global_tID, all_content, url);
 	       
         } else {
             console.log("There is a problem:", data);
@@ -91,11 +82,12 @@ $(document).ready(function(){
             alert("Please type your name!");
         } else {
     		var time = " " + d.getHours() + ":" + d.getMinutes();
+    		var timestamp = d.getTime();
             var text = field.value;
 	    	var text = text + time;    
-            socket.emit('send', { cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: name.value });
+            socket.emit('send', { ts: timestamp, cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: name.value });
             var html = $(".content.messages").html();
-            html += '<p cID="'+global_cID+'" fID="'+global_fID+'" tID="'+global_tID+'"><b>' + name.value + ': </b>';
+            html += '<p ts="'+timestamp+'" cID="'+global_cID+'" fID="'+global_fID+'" tID="'+global_tID+'"><b>' + name.value + ': </b>';
             html += text + '</p>';
             console.log("html ");            
             var url = "/"+name.value+"/update_messages/";
