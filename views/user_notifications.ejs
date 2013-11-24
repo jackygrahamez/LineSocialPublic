@@ -6,7 +6,9 @@
     <section class="chat_requests bordered">
     <ul><%- requests %></ul>
     <div class="notifications accordion off">
-	    <div class="content notifications"><%- message %></div>
+	    <div class="content notifications">
+	    	<%- message %>
+	    </div>
 	    <div class="notifications controls">
 			<input class="hide cID" value="<%= user.check_in.cID %>" />       
 			<input class="hide fID" value="<%= user._id %>" />
@@ -53,12 +55,14 @@ $(document).ready(function(){
             var html = '';
             var chat_requests = '';            
             var fIDlist = [];
-		 	global_cID = $(".message.controls .cID").attr("value");
-			global_fID = $(".message.controls .fID").attr("value");              
- 			global_tID = $(".message.controls .tID").attr("value");
- 			   
+		 	global_cID = $(".notifications.controls .cID").attr("value");
+			global_fID = $(".notifications.controls .fID").attr("value");              
+ 			global_tID = $(".notifications.controls .tID").attr("value");
+
 	            for(var i=0; i<messages.length; i++) {
-	            if (messages[i].cID == global_cID) {
+	            console.log('$(".notifications.controls .cID").attr("value")' + $(".notifications.controls .cID").attr("value"));
+	            console.log("messages[i].cID "+ messages[i].cID);
+	            if ($(".notifications.controls .cID").attr("value") == messages[i].cID) {
 		            if (typeof(messages[i].username) != 'undefined' && messages[i].fID != global_fID) {
 	            		fIDlist.push(messages[i].username+"_"+messages[i].fID);
 	            		}

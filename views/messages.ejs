@@ -35,7 +35,7 @@ $(document).ready(function(){
     var name = document.getElementById("name");
     var match = false;
 	$(".message.controls .cID").attr("value", global_cID);
-	$(".message.controls .tID").attr("value", global_tID);
+	$(".message.controls .tID").attr("value", global_tID);     		
 	global_fID = $(".message.controls .fID").val();      	 
     socket.on('message', function (data) {
     console.log("data "+data);
@@ -85,6 +85,7 @@ $(document).ready(function(){
     		var timestamp = d.getTime();
             var text = field.value;
 	    	var text = text + time;    
+			global_cID = $(".message.controls .cID").attr("value"); 
             socket.emit('send', { ts: timestamp, cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: name.value });
             var html = $(".content.messages").html();
             html += '<p ts="'+timestamp+'" cID="'+global_cID+'" fID="'+global_fID+'" tID="'+global_tID+'"><b>' + name.value + ': </b>';
