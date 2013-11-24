@@ -15,9 +15,9 @@
 		<input class="hide cID" />       
 		<input class="hide fID" value="<%= user._id %>" />
 		<input class="hide tID"  />    		
-		<input id="name" placeholder="name" value="<%= user.username %>" /> 
-        <input id="field" class="field" placeholder="field" />
-        <input id="send" class="send" type="button"  value='send' />
+		<input class="name message" placeholder="name" value="<%= user.username %>" /> 
+        <input class="field message" placeholder="field" />
+        <input class="send message" type="button"  value='send' />
     </div>
     </section>
 </div>
@@ -30,7 +30,6 @@ $(document).ready(function(){
     var messages = [];
     var socket = io.connect(location.origin);
     var field = document.getElementById("field");
-    var sendButton = document.getElementById("send");
     var content = $(".content.messages");
     var name = document.getElementById("name");
     var match = false;
@@ -59,7 +58,7 @@ $(document).ready(function(){
 	            		}
 	            	});
 		            	if (!match) {
-		                html += '<p ts="'+messages[i].ts+'" cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
+		                html += '<p ts="'+messages[i].ts+'" name="'+messages[i].username+'" cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
 		                html += messages[i].message + '</p>';
 		                }
 		                match = false;
@@ -75,27 +74,29 @@ $(document).ready(function(){
         }
     });
  
-    sendButton.onclick = function() {
+    $(".send.message").click(function() {
     	console.log("click");
+		var user = $(".name.message").val();    	
     	var d = new Date();
-        if(name.value == "") {
+        if(user == "") {
             alert("Please type your name!");
         } else {
     		var time = " " + d.getHours() + ":" + d.getMinutes();
     		var timestamp = d.getTime();
-            var text = field.value;
+            var text = $(".field.message").val();
 	    	var text = text + time;    
 			global_cID = $(".message.controls .cID").attr("value"); 
-            socket.emit('send', { ts: timestamp, cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: name.value });
+            socket.emit('send', { ts: timestamp, cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: user });
             var html = $(".content.messages").html();
-            html += '<p ts="'+timestamp+'" name="'+name.value+'" cID="'+global_cID+'" fID="'+global_fID+'" tID="'+global_tID+'"><b>' + name.value + ': </b>';
+			console.log("html "+html);            
+            html += '<p ts="'+timestamp+'" name="'+user+'" cID="'+global_cID+'" fID="'+global_fID+'" tID="'+global_tID+'"><b>' + user + ': </b>';
             html += text + '</p>';
             console.log("html ");            
-            var url = "/"+name.value+"/update_messages/";
+            var url = "/"+user+"/update_messages/";
             console.log("url " +url);
             updateMessages(global_cID, global_fID, global_tID, html, url);
         }
-    };
+    });
  
 });
 </script>

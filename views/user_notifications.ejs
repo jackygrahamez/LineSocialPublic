@@ -33,6 +33,7 @@ $(document).ready(function(){
     var sendButton = $(".send.notifications");
     var content = $(".content.notifications");
     var name = $(".send.notifications"); 
+    var match = false;    
 	$(".notifications.controls .cID").val(global_cID);
 	$(".notifications.controls .tID").val(global_tID);
 	global_cID = $(".notifications.controls .cID").val();   
@@ -49,18 +50,15 @@ $(document).ready(function(){
 	$(".line_pokes div").text(nPokes);    
 	}
 	
-	if ($(".notifications.content p").length > 0 && $(".chatrequests > ul > li").length < 1) {
+	if ($(".notifications.content p").length > 0 && $(".chat_requests > ul > li").length < 1) {
 	var fIDlist = [];  
 	$(".notifications.content p").each(function(){
 		fIDlist.push($(this).attr("name")+"_"+$(this).attr("fid"));
 	});
 	var fIDlistArrayUnique = ArrNoDupe(fIDlist);
 	var chat_requests = "";
-	console.log("fIDlist "+fIDlist);
-	console.log("fIDlistArrayUnique "+fIDlistArrayUnique);	
     if (fIDlistArrayUnique.length > 0) {
    		$(".line_pokes div").replaceWith("<div>"+fIDlistArrayUnique.length+"</div>");
-            console.log("fIDlistArrayUnique.length "+fIDlistArrayUnique.length);
    		    for(var i=0; i<fIDlistArrayUnique.length; i++) {
 	            var ufID = fIDlistArrayUnique[i].split("_").pop();
 	            fIDlistArrayUnique[i].split("_").pop();
@@ -73,35 +71,40 @@ $(document).ready(function(){
 	}
 	
     socket.on('message', function (data) {
-    console.log("data "+data);
         if(data.message) {
             messages.push(data);
-            var html = '';
+            var html = $(".content.notifications").html();
             var chat_requests = '';            
             var fIDlist = [];
 		 	global_cID = $(".notifications.controls .cID").attr("value");
 			global_fID = $(".notifications.controls .fID").attr("value");              
  			global_tID = $(".notifications.controls .tID").attr("value");
-
+			
 	            for(var i=0; i<messages.length; i++) {
-	            console.log('$(".notifications.controls .cID").attr("value")' + $(".notifications.controls .cID").attr("value"));
-	            console.log("messages[i].cID "+ messages[i].cID);
+	            console.log("messages[i] "+JSON.stringify(messages[i]));
 	            if ($(".notifications.controls .cID").attr("value") == messages[i].cID) {
-		            if (typeof(messages[i].username) != 'undefined' && messages[i].fID != global_fID) {
-	            		fIDlist.push(messages[i].username+"_"+messages[i].fID);
+		            if (typeof(messages[i].username) != 'undefined') {
+	            	$(".content.notifications p").each(function(){
+	            		if ($(this).attr("ts") == messages[i].ts) {
+	            			match = true;
 	            		}
-		                html += '<p cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"<b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
+	            	});
+            	if (!match) {		            
+	            		fIDlist.push(messages[i].username+"_"+messages[i].fID);
+		                html += '<p ts="'+messages[i].ts+'" name="'+messages[i].username+'" cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"<b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
 		                html += messages[i].message + '</p>';
+		            }
+		            match = false;		            
+	            		}
 					}
 	            }
 
 	       var fIDlistArrayUnique = ArrNoDupe(fIDlist);
-	       console.log("fIDlistArrayUnique "+fIDlistArrayUnique);
 	       if (html.length > 0) {        
-           		content.innerHTML = html;
-           		//$("#content").append(html);
+           		//content.innerHTML = html;
+           		console.log("html "+html);
+           		$(".content.notifications").html(html);
            }
-           console.log("fIDlistArrayUnique.length "+fIDlistArrayUnique.length);
            if (fIDlistArrayUnique.length > 0) {
            		$(".line_pokes div").replaceWith("<div>"+fIDlistArrayUnique.length+"</div>");
            } else {
@@ -121,7 +124,6 @@ $(document).ready(function(){
             for(var i=0; i<fIDlistArrayUnique.length; i++) {
 	            var ufID = fIDlistArrayUnique[i].split("_").pop();
 	            fIDlistArrayUnique[i].split("_").pop();
-	            console.log("creating a chat request");
 	            chat_requests += '<li ufid="'+ufID+'">' + fIDlistArrayUnique[i].split("_")[0] + '</li>';	            
             }
             if (chat_requests.length > 0) {
@@ -130,7 +132,7 @@ $(document).ready(function(){
 	       $(".chat_requests ul li").click(function() {
 	       		var notification_class = $(this).attr("ufid");
 	       		global_tID = notification_class;
-				$(".message.controls .tID").attr("value", global_tID);	       		
+				$(".notifications.controls .tID").attr("value", global_tID);	       		
 	       		$(".accordion").toggleClass("off");
 	       		$(".accordion p").hide();
 	       		$(".accordion ."+notification_class).show();
@@ -155,18 +157,32 @@ $(document).ready(function(){
         }
     });
  
-    sendButton.onclick = function() {
+    $(".send.notifications").click(function() {
     	var d = new Date();
         if(name.value == "") {
             alert("Please type your name!");
         } else {
     		var time = " " + d.getHours() + ":" + d.getMinutes();
-            var text = field.value;
+            var text = $(".field.notifications").val();
+    		var timestamp = d.getTime();            
+    		var user = $(".name.notifications").val();
+    		html = "";
 	    	text = text + time; 
-	    	global_tID = $(".message.controls .tID").attr("value");      
-            //socket.emit('send', { cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: name.value });
+	    	console.log("text "+text);
+	    	global_tID = $(".notifications.controls .tID").attr("value");
+	    	global_cID = $(".notifications.controls .cID").attr("value");      
+	    	global_fID = $(".notifications.controls .fID").attr("value");        	      
+            socket.emit('send', { ts: timestamp, cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: user });
+			var html = $(".content.notifications").html();
+			console.log("html "+html);
+            html += '<p ts="'+timestamp+'" name="'+user+'" cID="'+global_cID+'" fID="'+global_fID+'" tID="'+global_tID+'"><b>' + user + ': </b>';
+            html += text + '</p>\n';
+            console.log("html ");            
+            var url = "/"+name.value+"/update_messages/";
+            console.log("url " +url);
+            updateMessages(global_cID, global_fID, global_tID, html, url);
         }
-    };
+    });
  
  
 });

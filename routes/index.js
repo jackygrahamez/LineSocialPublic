@@ -256,13 +256,13 @@ exports.user_notifications = function(req, res) {
 	    		if (typeof(message_doc[0].requests) == 'undefined') {
 	    			message_doc[0].requests = '';
 	    		}
-	    		 console.log("message_doc "+message_doc.requests );
+	    		 console.log("message_doc "+message_doc[0].requests );
 	    		 res.render('user_notifications', {
 	             title: 'LineOut',
 	             user: doc,
 		         pagename: 'user_notifications',
 		         cID: cID,
-		         message: message_doc.message,
+		         message: message_doc[0].message,
 		         requests:message_doc.requests
 	      		});	
 	    	}
