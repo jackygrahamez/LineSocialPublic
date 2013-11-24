@@ -31,6 +31,10 @@
 		   if (url.indexOf("notifications") > 0) {
 			   $(".notifications").addClass("active");
 		   } 
+		   else if ($(this).hasClass("logout")) {
+			   console.log("logout!");
+			   location.assign(url);
+		   }
 		   else {
 			   getPage(url);   
 		   }
@@ -187,7 +191,7 @@ function getNotifications(url) {
 	           	  $("body .body").last().after(data);
 	           	  setTimeout(function(){
 	           	    $(".back.button").click(function(){
-	           		  $(".notifications").removeClass("active"); 
+	           		  $("section.notifications").removeClass("active"); 
 	           	    });	           		
 	           	  }, 1000);           		  	           	  
 	           }

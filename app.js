@@ -80,6 +80,7 @@ app.post('/register_value', routes.register_value);
 app.get('/register_email_value', routes.register_email_value);
 app.post('/register_email_value', routes.register_email_value);
 
+app.get('/logout', routes.logout);
 
 server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

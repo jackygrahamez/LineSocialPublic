@@ -5,15 +5,15 @@
 	<h2 class="light no-margin">Line Pokes</h2>
     <section class="chat_requests bordered">
     <ul><%- requests %></ul>
-    <div class="accordion off">
-	    <div id="content"><%- message %></div>
-	    <div class="message controls">
+    <div class="notifications accordion off">
+	    <div class="content notifications"><%- message %></div>
+	    <div class="notifications controls">
 			<input class="hide cID" value="<%= user.check_in.cID %>" />       
 			<input class="hide fID" value="<%= user._id %>" />
 			<input class="hide tID"  />    		
-			<input id="name" placeholder="name" value="<%= user.username %>" /> 
-	        <input id="field" class="field" placeholder="field" />
-	        <input id="send" class="send" type="button"  value='send' />
+			<input class="name notifications" placeholder="name" value="<%= user.username %>" /> 
+	        <input class="field notifications" placeholder="message" />
+	        <input class="send notifications" type="button"  value='send' />
 	    </div>
     </div>
     </section>
@@ -27,17 +27,17 @@ $(document).ready(function(){
     global_tID = ""; 	
     var messages = [];
     var socket = io.connect(location.origin);
-    var field = document.getElementById("field");
-    var sendButton = document.getElementById("send");
-    var content = document.getElementById("content");
-    var name = document.getElementById("name"); 
-	$(".message.controls .cID").val(global_cID);
-	$(".message.controls .tID").val(global_tID);
-	global_cID = $(".message.controls .cID").val();   
-	global_fID = $(".message.controls .fID").val();  
-	if ($("#content").text().length > 0) {
+    var field = $(".field.notfications");
+    var sendButton = $(".send.notifications");
+    var content = $(".content.notifications");
+    var name = $(".send.notifications"); 
+	$(".notifications.controls .cID").val(global_cID);
+	$(".notifications.controls .tID").val(global_tID);
+	global_cID = $(".notifications.controls .cID").val();   
+	global_fID = $(".notifications.controls .fID").val();  
+	if ($(".content.notifications").text().length > 0) {
 		$(".accordion").removeClass("off");
-		$("send").click();
+		$("notifications.controls .send").click();
 	}
 	    
 	var nPokes = $(".chat_requests ul li").length;
@@ -47,6 +47,7 @@ $(document).ready(function(){
 	}
 	    
     socket.on('message', function (data) {
+    console.log("data "+data);
         if(data.message) {
             messages.push(data);
             var html = '';
@@ -68,8 +69,8 @@ $(document).ready(function(){
 
 	       var fIDlistArrayUnique = ArrNoDupe(fIDlist);
 	       if (html.length > 0) {        
-           		//content.innerHTML = html;
-           		$("#content").append(html);
+           		content.innerHTML = html;
+           		//$("#content").append(html);
            }
            if (fIDlistArrayUnique.length > 0) {
            		$(".line_pokes div").replaceWith("<div>"+fIDlistArrayUnique.length+"</div>");
@@ -77,7 +78,7 @@ $(document).ready(function(){
            		$(".line_pokes div").addClass("hide");
            }
            if (global_tID) {
-           		$(".accordion #content p").each(function(){
+           		$(".accordion .content.notifications p").each(function(){
            			if (($(this).attr("fid") == global_tID) || ($(this).attr("tid") == global_tID)) {
            				$(this).show();
            			}
@@ -104,7 +105,7 @@ $(document).ready(function(){
 	       		$(".accordion").toggleClass("off");
 	       		$(".accordion p").hide();
 	       		$(".accordion ."+notification_class).show();
-           		$(".accordion #content p").each(function(){
+           		$(".accordion .content.notifications p").each(function(){
            			if (($(this).attr("fid") == global_tID) || ($(this).attr("tid") == global_tID)) {
            				$(this).show();
            			}
@@ -112,12 +113,12 @@ $(document).ready(function(){
            				$(this).hide();
            			}
            		});	   
-            var all_content = $("#content").html();
+            var all_content = $(".content").html();
             var requests = $(".chat_requests > ul ").html();    
             var url = "/"+name.value+"/update_notification_messages/";
             global_fID = $(".message.controls .fID").attr("value"); 
             global_cID = $(".message.controls .cID").attr("value");           
-			//updateNotificationMessages(global_cID, global_fID, all_content, url, requests);           		    			
+			updateNotificationMessages(global_cID, global_fID, all_content, url, requests);           		    			
 	       });            
 	       
         } else {
@@ -134,7 +135,7 @@ $(document).ready(function(){
             var text = field.value;
 	    	text = text + time; 
 	    	global_tID = $(".message.controls .tID").attr("value");      
-            socket.emit('send', { cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: name.value });
+            //socket.emit('send', { cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: name.value });
         }
     };
  

@@ -8,7 +8,7 @@
 
     <section class="chat_requests bordered">
 
-    <div id="content">
+    <div class="content messages">
     	<%- message %>
     </div>
     <div class="message controls">
@@ -32,7 +32,7 @@ $(document).ready(function(){
     var socket = io.connect(location.origin);
     var field = document.getElementById("field");
     var sendButton = document.getElementById("send");
-    var content = document.getElementById("content");
+    var content = $(".content.messages");
     var name = document.getElementById("name");
 	$(".message.controls .cID").attr("value", global_cID);
 	$(".message.controls .tID").attr("value", global_tID);
@@ -60,9 +60,10 @@ $(document).ready(function(){
 	            }
 
 	       var fIDlistArrayUnique = ArrNoDupe(fIDlist);     
-	       console.log("Existing content length "+$("#content p").length);
+	       console.log("Existing content length "+$(".content.messages p").length);
 	          
-           //content.innerHTML = html;
+           content.innerHTML = html;
+           //$("#content").append(html);
            
 	            for(var i=0; i<fIDlistArrayUnique.length; i++) {
 	            console.log("fIDlistArrayUnique[i] "+fIDlistArrayUnique[i]);
@@ -73,7 +74,7 @@ $(document).ready(function(){
 	       //$(".chat_requests ul").html(chat_requests);            
             var url = "/"+name.value+"/update_messages/";
             console.log("url " +url);
-            var all_content = $("#content").html();
+            var all_content = $(".content.messages").html();
             console.log("all_content "+all_content);
             global_fID = $(".message.controls .fID").attr("value");
             global_tID = $(".message.controls .tID").attr("value");
@@ -95,7 +96,8 @@ $(document).ready(function(){
             var text = field.value;
 	    	var text = text + time;    
             socket.emit('send', { cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: name.value });
-            var html = '<p cID="'+global_cID+'" fID="'+global_fID+'" tID="'+global_tID+'"><b>' + name.value + ': </b>';
+            var html = $(".content.messages").html();
+            html += '<p cID="'+global_cID+'" fID="'+global_fID+'" tID="'+global_tID+'"><b>' + name.value + ': </b>';
             html += text + '</p>';
             console.log("html ");            
             var url = "/"+name.value+"/update_messages/";

@@ -126,6 +126,16 @@ input:focus, textarea:focus {
 	border:1px solid #99cc66;
 }
 
+#branding > .button.logout {
+	display:none;
+}
+.home #branding > .button { 
+	color: white !important;
+	right: 6px;
+	left: auto;
+	display:inline-block;
+}
+
 section.body,
 section.notifications {
 	width:100%;
@@ -209,7 +219,7 @@ input#checkin {
 	opacity:0.9;
 }
 
-div#content {
+div.content {
 	width: 100%;
 	height: 200px;
 	margin: 0 0 20px 0;
@@ -443,7 +453,7 @@ label.iOSCheckLabelOff {
 	overflow: hidden;
 	transition: height 0.5s;
 }
-.accordion #content p {
+.accordion .content p {
 	display:none;
 }
 .line_pokes div {

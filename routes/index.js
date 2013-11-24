@@ -13,9 +13,26 @@ var foursquare = (require('foursquarevenues'))('Q3Q5R5RIYDOJDS2ACP3XL1WKK5W1RR3S
 
 
 exports.index = function(req, res){
-  res.render('index', 
-		{ title: 'LineOut',
-		  pagename: 'home' });
+	  if ( req.session.loggedIn ) {
+		  console.log("logging out");
+
+		  req.session.destroy(function(err){
+			  console.log("called destroy");
+			   // cannot access session here
+			  console.log(err);
+			  res.render('index', 
+						{ title: 'LineOut',
+						  pagename: 'login' });
+			 });
+
+		  } else {
+
+		  res.render('index', 
+					{ title: 'LineOut',
+					  pagename: 'login' });
+
+		  }		
+
 };
 
 exports.register = function(req, res) {
@@ -212,9 +229,9 @@ exports.user_lines = function(req, res) {
 exports.user_notifications = function(req, res) {
 
   if ( req.session.loggedIn ) {
-	account.findUsernameById(req.session.accountId, function(username) {
+	  	account.findUsernameById(req.session.accountId, function(username) {
 		if (req.params.username == username.username) {
-    account.findById(req.session.accountId, function(doc) {
+        account.findById(req.session.accountId, function(doc) {
     	console.log("doc "+doc);
     	var fID = doc._id;
 	    if (!doc.check_in) {
@@ -222,6 +239,7 @@ exports.user_notifications = function(req, res) {
 	    } else {
 	    	cID = doc.check_in.cID;
 	    }	
+	    console.log("user notifications cID "+cID+" fID "+fID)
 	    message.findMessages(cID, fID, function(message_doc) {
 	    	console.log("message_doc "+message_doc);
 	    	if(!message_doc[0]) {
@@ -234,10 +252,9 @@ exports.user_notifications = function(req, res) {
 			         message: "",
 			         requests: ""
 		      		});		    		
-
 	    	} else {
-	    		console.log("message_doc[0].requests "+message_doc[0].requests );
-	        res.render('user_notifications', {
+	    		 console.log("message_doc[0].requests "+message_doc[0].requests );
+	    		 res.render('user_notifications', {
 	             title: 'LineOut',
 	             user: doc,
 		         pagename: 'user_notifications',
@@ -626,6 +643,26 @@ exports.update_notification_messages = function(req, res) {
 		  }
 
 
+		  } else {
+
+		    res.send(401);
+
+		  }	
+
+	}
+
+exports.logout = function(req, res) {
+	  if ( req.session.loggedIn ) {
+		  console.log("logging out");
+		  res.render('logout');
+		  /*
+		  req.session.destroy(function(err){
+			  console.log("called destroy");
+			   // cannot access session here
+			  console.log(err);
+			  res.render('index');
+			 });
+		  */
 		  } else {
 
 		    res.send(401);
