@@ -27,7 +27,6 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
- 	console.log("running messages");
     var messages = [];
     var socket = io.connect(location.origin);
     var field = document.getElementById("field");
@@ -36,9 +35,9 @@ $(document).ready(function(){
     var name = document.getElementById("name");
 	$(".message.controls .cID").attr("value", global_cID);
 	$(".message.controls .tID").attr("value", global_tID);
-	global_fID = $(".message.controls .fID").val();  
-	console.log("global_cID "+global_cID+" global_tID "+global_tID+" global_fID "+global_fID);      	 
+	global_fID = $(".message.controls .fID").val();      	 
     socket.on('message', function (data) {
+    console.log("data "+data);
         if(data.message) {
             messages.push(data);
 			console.log("global_cID "+global_cID);            
@@ -60,10 +59,9 @@ $(document).ready(function(){
 	            }
 
 	       var fIDlistArrayUnique = ArrNoDupe(fIDlist);     
-	       console.log("Existing content length "+$(".content.messages p").length);
-	          
-           content.innerHTML = html;
-           //$("#content").append(html);
+	       console.log("html "+html);   
+           //content.innerHTML = html;
+           $(".content.messages").html(html);
            
 	            for(var i=0; i<fIDlistArrayUnique.length; i++) {
 	            console.log("fIDlistArrayUnique[i] "+fIDlistArrayUnique[i]);
