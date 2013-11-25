@@ -17,7 +17,7 @@ module.exports = function(mongoose) {
       check_in: {
     	  cID: ObjectId,
     	  location: { type: String },
-    	  geolocation: { type: String },
+    	  geolocation: { type: {}, index: '2dsphere', sparse: true },
     	  line_length: { type: Number },
     	  check_in_time: { type: Date, expires: '24h' },
     	  check_in_expire_time: { type: Date, expires: '24h' }
@@ -61,6 +61,7 @@ module.exports = function(mongoose) {
   var checkInMethod = function(location, geolocation, line_length, accountId, callback) {
 	  	var d1 = new Date(),
 	  	  	d2 = new Date(d1);	
+	  	console.log("geolocation "+geolocation);
 	  	var line_length = line_length * 60 * 1000;
 	  	var expireTimeStamp = parseInt(d1.getTime()) + parseInt(line_length); 
 	  	d2.setTime( expireTimeStamp );
@@ -71,6 +72,7 @@ module.exports = function(mongoose) {
 	    checkIn.line_length = line_length;
 	    checkIn.check_in_time = d1;
 	    checkIn.check_in_expire_time = d2;
+	    console.log("checkIn "+JSON.stringify(checkIn));
 	    account.update(
 	    {"_id" : accountId},
 	    {"$set": { check_in : checkIn }},
@@ -90,15 +92,41 @@ module.exports = function(mongoose) {
 
 	  };	  
 	  
-  var findCurrent = function(id, callback) {
+  var findCurrent = function(id, geolocation, callback) {
 	  var now = new Date();
+	  console.log(" geolocation.lat "+ geolocation.lat);
+	  console.log(" geolocation.lng "+ geolocation.lng);	  
+	  /*
+	  db.accounts.find( { "check_in.geolocation" : { $near :
+	  { $geometry :
+	  { type : "Point" ,
+	  coordinates: [ 42.714 , -74.006 ] } },
+	  $maxDistance : 500
+	  } } ).pretty();*/
+	  
+
+  
+	  	console.log("query "+JSON.stringify(query));
+	  
 	  	if (id && id.length > 0) {
-		    account.find({'check_in.check_in_expire_time': {"$gt": now}, '_id': {'$ne': id}}, function(err,doc) {
-		    		
+	  	  var query = { 
+	  			  'check_in.check_in_expire_time': {"$gt": now}, '_id': {'$ne': id},
+				  "check_in.geolocation" : { $near : { $geometry :
+			      { type : "Point" ,
+				        coordinates : [ parseFloat(geolocation.lat), parseFloat(geolocation.lng) ] } },
+				        $maxDistance : 500 }
+		  				};	  		
+	  		account.find(query, function(err,doc) {		    		
 			      callback(doc);
 			    });	  		
 	  	} else {
-		    account.find({'check_in.check_in_expire_time': {"$gt": now}}, function(err,doc) {
+	  	  var query = { 
+				  "check_in.geolocation" : { $near : { $geometry :
+			      { type : "Point" ,
+				        coordinates : [ parseFloat(geolocation.lat), parseFloat(geolocation.lng) ] } },
+				        $maxDistance : 500 }
+		  				};	  		
+		    account.find(query, function(err,doc) {
 			      callback(doc);
 			    });		  		
 	  	}

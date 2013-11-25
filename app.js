@@ -44,6 +44,8 @@ app.get('/:username/user_check_in/', routes.user_check_in);
 app.post('/:username/user_check_in/', routes.user_check_in);
 
 app.get('/:username/user_lines/', routes.user_lines);
+app.post('/:username/user_lines/', routes.user_lines);
+
 app.get('/:username/user_points/', routes.user_points);
 app.get('/:username/user_profile/', routes.user_profile);
 
