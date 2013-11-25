@@ -3,7 +3,15 @@ Design by predic8 GmbH
 http://www.predic8.de
 Released for free under a Creative Commons Attribution 2.5 License
 */
+html, root, body, p, li, ul, h1, h2, a, input[type='button'] {
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
 
+  /* No support for these yet, use at own risk */
+  -o-user-select: none;
+  user-select: none; 	
+}
 body {
 	background: url(../img/bg.png);
 	padding: 0px;
@@ -456,10 +464,14 @@ label.iOSCheckLabelOff {
 }
 .accordion .content p {
 	display:none;
-	margin:10px 0px;
+	margin:5px 2px;
 	padding:0px;
 }
 
+.content.messages p {
+	margin:5px 2px;
+	padding:0px;	
+}
 
 p.inbound > span,
 .messages p.notification_outbound span,
@@ -483,7 +495,7 @@ p.inbound > span,
 	text-align: right;
 	margin: 1px;
 	text-align: right;
-	margin: 10px 2px;	
+	margin: 5px 2px;	
 }
 p.outbound > span,
 .notifications p.notification_outbound span,

@@ -65,7 +65,7 @@ $(document).ready(function(){
    		    for(var i=0; i<fIDlistArrayUnique.length; i++) {
 	            var ufID = fIDlistArrayUnique[i].split("_").pop();
 	            fIDlistArrayUnique[i].split("_").pop();
-	            chat_requests += '<li ufid="'+ufID+'">' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
+	            chat_requests += '<li ufid="'+ufID+'">Message from ' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
             }
             $(".chat_requests ul").html(chat_requests);
     } else {
@@ -191,7 +191,6 @@ $(document).ready(function(){
         	m = checkTime(m);   
     		var time = " " + h + ":" + m + " "+td;
             var text = $(".field.notifications").val();
-			$(".field.notifications").val();            
     		var timestamp = d.getTime();            
     		var user = $(".name.notifications").val();	
     		html = "";
@@ -205,6 +204,7 @@ $(document).ready(function(){
             html += text + '</span></p>\n';          
             var url = "/"+name.value+"/update_messages/";
             updateMessages(global_cID, global_fID, global_tID, html, url);
+			$(".field.notifications").val("");                 
         }
     });
  
