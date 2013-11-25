@@ -106,7 +106,8 @@ $(document).ready(function(){
     		var time = " " + h + ":" + m + " "+td;
     		var timestamp = d.getTime();
             var text = $(".field.message").val();
-	    	var text = text + time;             	    	
+	    	var text = text + time;    
+	    	$(".field.message").val("");        	    	
 			global_cID = $(".message.controls .cID").attr("value"); 
             socket.emit('send', { ts: timestamp, cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: user });
             var html = $(".content.messages").html();
