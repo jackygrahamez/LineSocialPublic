@@ -172,7 +172,16 @@ $(document).ready(function(){
         if(name.value == "") {
             alert("Please type your name!");
         } else {
-    		var time = " " + d.getHours() + ":" + d.getMinutes();
+       		var d = new Date();
+        	var h = d.getHours();
+        	var td = "am";
+        	if (h > 12) { 
+        	h = h - 12;
+        	td = "pm"; 
+        	}
+        	var m = d.getMinutes();
+        	m = checkTime(m);   
+    		var time = " " + h + ":" + m + " "+td;
             var text = $(".field.notifications").val();
     		var timestamp = d.getTime();            
     		var user = $(".name.notifications").val();

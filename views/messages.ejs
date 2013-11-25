@@ -81,7 +81,16 @@ $(document).ready(function(){
         if(user == "") {
             alert("Please type your name!");
         } else {
-    		var time = " " + d.getHours() + ":" + d.getMinutes();
+       		var d = new Date();
+        	var h = d.getHours();
+        	var td = "am";
+        	if (h > 12) { 
+        	h = h - 12;
+        	td = "pm"; 
+        	}
+        	var m = d.getMinutes();
+        	m = checkTime(m);   
+    		var time = " " + h + ":" + m + " "+td;
     		var timestamp = d.getTime();
             var text = $(".field.message").val();
 	    	var text = text + time;    
