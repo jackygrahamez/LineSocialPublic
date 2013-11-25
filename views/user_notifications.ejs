@@ -91,10 +91,15 @@ $(document).ready(function(){
 	            			match = true;
 	            		}
 	            	});
-            	if (!match) {		            
+            	if (!match) {
+            			console.log("messages[i].fID "+messages[i].fID);
+            			console.log("fID "+$(".notifications.controls .fID").attr("value"));	
+            			if (messages[i].fID != $(".notifications.controls .fID").attr("value")) {	            
 	            		fIDlist.push(messages[i].username+"_"+messages[i].fID);
+		                }
 		                html += '<p ts="'+messages[i].ts+'" name="'+messages[i].username+'" cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"<b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
 		                html += messages[i].message + '</p>';
+
 		            }
 		            match = false;		            
 	            		}
@@ -104,7 +109,7 @@ $(document).ready(function(){
 	       var fIDlistArrayUnique = ArrNoDupe(fIDlist);
 	       if (html.length > 0) {        
            		//content.innerHTML = html;
-           		console.log("html "+html);
+           		
            		$(".content.notifications").html(html);
            }
            if (fIDlistArrayUnique.length > 0) {
@@ -173,18 +178,14 @@ $(document).ready(function(){
     		var user = $(".name.notifications").val();
     		html = "";
 	    	text = text + time; 
-	    	console.log("text "+text);
 	    	global_tID = $(".notifications.controls .tID").attr("value");
 	    	global_cID = $(".notifications.controls .cID").attr("value");      
 	    	global_fID = $(".notifications.controls .fID").attr("value");        	      
             socket.emit('send', { ts: timestamp, cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: user });
 			var html = $(".content.notifications").html();
-			console.log("html "+html);
             html += '<p ts="'+timestamp+'" name="'+user+'" cID="'+global_cID+'" fID="'+global_fID+'" tID="'+global_tID+'"><b>' + user + ': </b>';
-            html += text + '</p>\n';
-            console.log("html ");            
+            html += text + '</p>\n';          
             var url = "/"+name.value+"/update_messages/";
-            console.log("url " +url);
             updateMessages(global_cID, global_fID, global_tID, html, url);
         }
     });
