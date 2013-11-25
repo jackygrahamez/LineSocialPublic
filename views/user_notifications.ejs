@@ -10,9 +10,9 @@
 	    	<%- message %>
 	    </div>
 	    <div class="notifications controls">
-			<input class="hide cID" value="<%= user.check_in.cID %>" />       
-			<input class="hide fID" value="<%= user._id %>" />
-			<input class="hide tID"  />    		
+			<input class="hide cID notifications" value="<%= user.check_in.cID %>" />       
+			<input class="hide fID notifications" value="<%= user._id %>" />
+			<input class="hide tID notifications"  />    		
 			<input class="name notifications" placeholder="name" value="<%= user.username %>" /> 
 	        <input class="field notifications" placeholder="message" />
 	        <input class="send notifications" type="button"  value='send' />
@@ -53,7 +53,10 @@ $(document).ready(function(){
 	if ($(".notifications.content p").length > 0 && $(".chat_requests > ul > li").length < 1) {
 	var fIDlist = [];  
 	$(".notifications.content p").each(function(){
-		fIDlist.push($(this).attr("name")+"_"+$(this).attr("fid"));
+		if ( ($(this).attr("fid") != $(".notifications.fid").attr("value")) && 
+		($(this).attr("name") != $(".name.notifications").attr("value")) ) {
+			fIDlist.push($(this).attr("name")+"_"+$(this).attr("fid"));
+		}
 	});
 	var fIDlistArrayUnique = ArrNoDupe(fIDlist);
 	var chat_requests = "";
@@ -81,7 +84,6 @@ $(document).ready(function(){
  			global_tID = $(".notifications.controls .tID").attr("value");
 			
 	            for(var i=0; i<messages.length; i++) {
-	            console.log("messages[i] "+JSON.stringify(messages[i]));
 	            if ($(".notifications.controls .cID").attr("value") == messages[i].cID) {
 		            if (typeof(messages[i].username) != 'undefined') {
 	            	$(".content.notifications p").each(function(){
@@ -120,11 +122,14 @@ $(document).ready(function(){
            			}
            		});
            }
-           var chat_requests="";
+           var chat_requests = $(".chat_requests ul").html();
             for(var i=0; i<fIDlistArrayUnique.length; i++) {
 	            var ufID = fIDlistArrayUnique[i].split("_").pop();
 	            fIDlistArrayUnique[i].split("_").pop();
-	            chat_requests += '<li ufid="'+ufID+'">' + fIDlistArrayUnique[i].split("_")[0] + '</li>';	            
+	            if ((ufID != $(".notifications.fid").attr("value")) &&
+	            	($(".chat_requests ul li[ufid='"+ufID+"']").length < 1)){
+	            chat_requests += '<li ufid="'+ufID+'">' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
+	            }	            
             }
             if (chat_requests.length > 0) {
 	            $(".chat_requests ul").html(chat_requests);
