@@ -12,9 +12,9 @@
     	<%- message %>
     </div>
     <div class="message controls">
-		<input class="hide cID" />       
-		<input class="hide fID" value="<%= user._id %>" />
-		<input class="hide tID"  />    		
+		<input class="hide message cID" />       
+		<input class="hide message fID" value="<%= user._id %>" />
+		<input class="hide message tID"  />    		
 		<input class="name message hide" placeholder="name" value="<%= user.username %>" /> 
         <input class="field message" placeholder="field" />
         <input class="send message" type="button"  value='send' />
@@ -33,6 +33,7 @@ $(document).ready(function(){
     var content = $(".content.messages");
     var name = document.getElementById("name");
     var match = false;
+    var sender = "inbound";
 	$(".message.controls .cID").attr("value", global_cID);
 	$(".message.controls .tID").attr("value", global_tID);     		
 	global_fID = $(".message.controls .fID").val();  
@@ -50,6 +51,7 @@ $(document).ready(function(){
             var html = $(".content.messages").html();
             var chat_requests = '';            
             var fIDlist = [];
+            var sender = "inbound";
 			global_fID = $(".message.controls .fID").attr("value");
 			console.log("messages.length "+messages.length);
 			$('.content.messages').stop().animate({
@@ -66,8 +68,11 @@ $(document).ready(function(){
 	            		}
 	            	});
 		            	if (!match) {
-		                html += '<p ts="'+messages[i].ts+'" name="'+messages[i].username+'" cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
-		                html += messages[i].message + '</p>';
+		                if (messages[i].fID === $(".message.fID").attr("value")) {
+		                sender = "outbound";
+		                }		            	
+		                html += '<p ts="'+messages[i].ts+'" class="'+sender+'" name="'+messages[i].username+'" cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"><span><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
+		                html += messages[i].message + '</span></p>';
 		                }
 		                match = false;
 					}	                
@@ -101,13 +106,13 @@ $(document).ready(function(){
     		var time = " " + h + ":" + m + " "+td;
     		var timestamp = d.getTime();
             var text = $(".field.message").val();
-	    	var text = text + time;    
+	    	var text = text + time;             	    	
 			global_cID = $(".message.controls .cID").attr("value"); 
             socket.emit('send', { ts: timestamp, cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: user });
             var html = $(".content.messages").html();
 			console.log("html "+html);            
-            html += '<p ts="'+timestamp+'" name="'+user+'" cID="'+global_cID+'" fID="'+global_fID+'" tID="'+global_tID+'"><b>' + user + ': </b>';
-            html += text + '</p>';
+            html += '<p ts="'+timestamp+'" class="message_outbound" name="'+user+'" cID="'+global_cID+'" fID="'+global_fID+'" tID="'+global_tID+'"><span><b>' + user + ': </b>';
+            html += text + '</span></p>';
             console.log("html ");            
             var url = "/"+user+"/update_messages/";
             console.log("url " +url);

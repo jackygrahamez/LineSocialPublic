@@ -227,6 +227,7 @@ div.content {
 	overflow-y: scroll;
 	text-align: left;
 	background: white;
+	padding: 5px 0px;
 }
 
 /*CLASSES*/
@@ -455,7 +456,49 @@ label.iOSCheckLabelOff {
 }
 .accordion .content p {
 	display:none;
+	margin:10px 0px;
+	padding:0px;
 }
+
+
+p.inbound > span,
+.messages p.notification_outbound span,
+.notifications p.message_outbound span {
+	background: -webkit-linear-gradient(top, #f5f6f6 0%,#dbdce2 21%,#b8bac6 49%,#dddfe3 80%,#f5f6f6 100%); /* Chrome10+,Safari5.1+ */
+	display: inline-block;
+	font-size: 12px;
+	padding: 5px;
+	border-radius:10px;
+	box-shadow: 
+	  0 1px 2px #fff, /*bottom external highlight*/
+	  0 -1px 1px #666, /*top external shadow*/ 
+	  inset 0 -1px 1px rgba(0,0,0,0.5), /*bottom internal shadow*/ 
+	  inset 0 1px 1px rgba(255,255,255,0.8); /*top internal highlight*/	
+	
+}
+
+.outbound,
+.notifications .notification_outbound,
+.messages .message_outbound {
+	text-align: right;
+	margin: 1px;
+	text-align: right;
+	margin: 10px 2px;	
+}
+p.outbound > span,
+.notifications p.notification_outbound span,
+.messages p.message_outbound span {
+	background: -webkit-linear-gradient(top, #c9de96 0%,#8ab66b 44%,#398235 100%); /* Chrome10+,Safari5.1+ */	color: white;
+	border-radius: 10px;
+	font-size: 12px;	
+	padding:5px;
+	box-shadow: 
+	  0 1px 2px #fff, /*bottom external highlight*/
+	  0 -1px 1px #666, /*top external shadow*/ 
+	  inset 0 -1px 1px rgba(0,0,0,0.5), /*bottom internal shadow*/ 
+	  inset 0 1px 1px rgba(255,255,255,0.8); /*top internal highlight*/	
+}
+
 .line_pokes div {
 	display: inline-block;
 	right: 30px;
@@ -481,6 +524,16 @@ label.iOSCheckLabelOff {
 
 }
 
+.inbound {
+	text-align: left;
+	margin: 1px;	
+}
+.inbound > span {
+	background: lightgrey;
+	color: black;
+	padding: 5px;
+	border-radius: 10px;
+}
 @media only screen 
 and (min-width : 768px) { 
 	div#wrapper, li, input, textarea, form {

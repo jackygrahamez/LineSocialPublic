@@ -79,6 +79,7 @@ $(document).ready(function(){
             var html = $(".content.notifications").html();
             var chat_requests = '';            
             var fIDlist = [];
+            var sender = "inbound";
 		 	global_cID = $(".notifications.controls .cID").attr("value");
 			global_fID = $(".notifications.controls .fID").attr("value");              
  			global_tID = $(".notifications.controls .tID").attr("value");
@@ -97,8 +98,11 @@ $(document).ready(function(){
             			if (messages[i].fID != $(".notifications.controls .fID").attr("value")) {	            
 	            		fIDlist.push(messages[i].username+"_"+messages[i].fID);
 		                }
-		                html += '<p ts="'+messages[i].ts+'" name="'+messages[i].username+'" cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
-		                html += messages[i].message + '</p>';
+		                if (messages[i].fID === $(".fID.notifications").attr("value")) {
+		                sender = "outbound";
+		                }
+		                html += '<p ts="'+messages[i].ts+'" class="'+sender+'" name="'+messages[i].username+'" cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"><span><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
+		                html += messages[i].message + '</span></p>';
 
 		            }
 		            match = false;		            
@@ -188,16 +192,16 @@ $(document).ready(function(){
     		var time = " " + h + ":" + m + " "+td;
             var text = $(".field.notifications").val();
     		var timestamp = d.getTime();            
-    		var user = $(".name.notifications").val();
+    		var user = $(".name.notifications").val();	
     		html = "";
-	    	text = text + time; 
+	    	text = text + time; 	    	
 	    	global_tID = $(".notifications.controls .tID").attr("value");
 	    	global_cID = $(".notifications.controls .cID").attr("value");      
 	    	global_fID = $(".notifications.controls .fID").attr("value");        	      
             socket.emit('send', { ts: timestamp, cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: user });
 			var html = $(".content.notifications").html();
-            html += '<p ts="'+timestamp+'" name="'+user+'" cID="'+global_cID+'" fID="'+global_fID+'" tID="'+global_tID+'"><b>' + user + ': </b>';
-            html += text + '</p>\n';          
+            html += '<p ts="'+timestamp+'" class="notification_outbound" name="'+user+'" cID="'+global_cID+'" fID="'+global_fID+'" tID="'+global_tID+'"><span><b>' + user + ': </b>';
+            html += text + '</span></p>\n';          
             var url = "/"+name.value+"/update_messages/";
             updateMessages(global_cID, global_fID, global_tID, html, url);
         }
