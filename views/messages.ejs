@@ -4,7 +4,7 @@
 <div id="wrapper">
 	
 	<div id="wrapper">
-	<h2 class="light no-margin">Messages</h2>
+	<h2 class="light no-margin hide">Messages</h2>
 
     <section class="chat_requests bordered">
 
@@ -15,7 +15,7 @@
 		<input class="hide cID" />       
 		<input class="hide fID" value="<%= user._id %>" />
 		<input class="hide tID"  />    		
-		<input class="name message" placeholder="name" value="<%= user.username %>" /> 
+		<input class="name message hide" placeholder="name" value="<%= user.username %>" /> 
         <input class="field message" placeholder="field" />
         <input class="send message" type="button"  value='send' />
     </div>
@@ -35,7 +35,12 @@ $(document).ready(function(){
     var match = false;
 	$(".message.controls .cID").attr("value", global_cID);
 	$(".message.controls .tID").attr("value", global_tID);     		
-	global_fID = $(".message.controls .fID").val();      	 
+	global_fID = $(".message.controls .fID").val();  
+	
+	$('.content.messages').stop().animate({
+	  scrollTop: $(".content.messages")[0].scrollHeight
+	}, 800);  
+	    	 
     socket.on('message', function (data) {
     console.log("data "+data);
         if(data.message) {
@@ -47,6 +52,9 @@ $(document).ready(function(){
             var fIDlist = [];
 			global_fID = $(".message.controls .fID").attr("value");
 			console.log("messages.length "+messages.length);
+			$('.content.messages').stop().animate({
+			  scrollTop: $(".content.messages")[0].scrollHeight
+			}, 800);  			
 	            for(var i=0; i<messages.length; i++) {
 	            if ((messages[i].cID == $(".message.controls .cID").attr("value")) && 
 	            	((messages[i].fID == $(".message.controls .fID").attr("value")) || 

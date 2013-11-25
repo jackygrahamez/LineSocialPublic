@@ -2,7 +2,7 @@
 <!--notifications -->
 <% include subpage_header %>
 <div id="wrapper">
-	<h2 class="light no-margin">Line Pokes</h2>
+	<h2 class="light no-margin hide">Line Pokes</h2>
     <section class="chat_requests bordered">
     <ul><%- requests %></ul>
     <div class="notifications accordion off">
@@ -13,7 +13,7 @@
 			<input class="hide cID notifications" value="<%= user.check_in.cID %>" />       
 			<input class="hide fID notifications" value="<%= user._id %>" />
 			<input class="hide tID notifications"  />    		
-			<input class="name notifications" placeholder="name" value="<%= user.username %>" /> 
+			<input class="name notifications hide" placeholder="name" value="<%= user.username %>" /> 
 	        <input class="field notifications" placeholder="message" />
 	        <input class="send notifications" type="button"  value='send' />
 	    </div>
@@ -108,9 +108,10 @@ $(document).ready(function(){
 
 	       var fIDlistArrayUnique = ArrNoDupe(fIDlist);
 	       if (html.length > 0) {        
-           		//content.innerHTML = html;
-           		
            		$(".content.notifications").html(html);
+				$('.content.notifications').stop().animate({
+				  scrollTop: $(".content.notifications")[0].scrollHeight
+				}, 800);           		
            }
            if (fIDlistArrayUnique.length > 0) {
            		$(".line_pokes div").replaceWith("<div>"+fIDlistArrayUnique.length+"</div>");
@@ -146,6 +147,9 @@ $(document).ready(function(){
 	       		$(".accordion").toggleClass("off");
 	       		$(".accordion p").hide();
 	       		$(".accordion ."+notification_class).show();
+				$('.content.notifications').stop().animate({
+				  scrollTop: $(".content.notifications")[0].scrollHeight
+				}, 800); 	       		
            		$(".accordion .content.notifications p").each(function(){
            			if (($(this).attr("fid") == global_tID) || ($(this).attr("tid") == global_tID)) {
            				$(this).show();
