@@ -25,11 +25,13 @@ var x=document.getElementById("demo");
 					global_tID = $(this).children().children().children("#tID").attr("value");	
 					getMessages(global_cID, global_fID, url);				  
 				}
+				else if (url.indexOf("user_lines") > 0) {
+					
+				}
 				else {
 				    getPage(url);
 			   }  
 		   }	
-		   console.log("get page URL"); 
 	   });
 	
 
@@ -45,29 +47,7 @@ var x=document.getElementById("demo");
 	   });	   
    });
    
-function checkIn(location, geolocation, line_length) {
 
-	if((location.length > 0) && (geolocation.length > 0) && (line_length.length > 0)) {
-	     $.ajax({ 
-	           url: '/<%= user.username %>/user_check_in/',
-	           type: 'POST',
-	           cache: false, 
-	           data: { location: location, geolocation: geolocation, line_length: line_length }, 
-	           success: function(data){
-	           	  markup = data;
-	              //alert('Success!');
-	              console.log("data "+data);
-	              $("#demo").html(data);
-	              global_cID = data;
-	              $(".checkin.active .back").click();
-	           }
-	           , error: function(jqXHR, textStatus, err){
-	               alert('text status '+textStatus+', err '+err)
-	               console.log('text status '+textStatus+', err '+err);
-	           }
-	        });
-	}     
- }            
 
 
 </script>

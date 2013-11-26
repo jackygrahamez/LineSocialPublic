@@ -1,6 +1,7 @@
   //checkin
   var x=document.getElementById("demo");
   var lineLength=0;
+  var global_coords="";
   var global_cID="";
   var global_fID="";
   var global_tID="";
@@ -31,6 +32,11 @@
 		   if (url.indexOf("notifications") > 0) {
 			   $(".notifications").addClass("active");
 		   } 
+		   else if (url.indexOf("user_lines") > 0) {
+			   console.log("user Lines!");
+			   console.log("global_coords_lat "+global_coords_lat+" global_coords_lon "+global_coords_lon);
+			   getLines(url, global_coords_lat, global_coords_lon);   
+		   }		   
 		   else if ($(this).hasClass("logout")) {
 			   console.log("logout!");
 			   location.assign(url);
@@ -118,6 +124,10 @@
 	   }
    });   
   
+   
+   //set global coordinates
+   getLocation(0);
+   
 })(jQuery, this)
 
 
@@ -135,10 +145,16 @@ function showPosition(position)
   {
   var url = location.pathname+"/venues/";
   var coord = position.coords.latitude+","+position.coords.longitude;
-  getVenues(url, coord);
-  $("#coords").val(position.coords.latitude+", "+position.coords.longitude);
-  $("#line_length").val(lineLength);
+  global_coords = [position.coords.latitude+","+position.coords.longitude];
+  global_coords_lat = position.coords.latitude;
+  global_coords_lon = position.coords.longitude;
   
+  console.log(global_coords);
+	  if (parseInt(lineLength) > 0) {
+		  getVenues(url, coord);		  
+		  $("#coords").val(position.coords.latitude+", "+position.coords.longitude);
+		  $("#line_length").val(lineLength);	  
+	  }
   }
 function showError(error)
   {
@@ -240,8 +256,11 @@ function getVenues(url, coord) {
 			   	   $("#checkin").click(function(e){
 					   var location = $("#location").val(),
 					   geolocation  = $("#coords").val(),
+					   //geolocation  = global_coords,
 					   line_length     = $("#line_length").val();
-					   checkIn(location, geolocation, line_length);
+					   var url = $("form.checkin").attr("action");
+					   console.log("url "+url);
+					   checkIn(location, geolocation, line_length, global_coords_lat, global_coords_lon, url);
 				   });
 			   	   $("input, textarea").focus(function(){
 			   		   
@@ -409,3 +428,53 @@ function checkTime(i) {
     }
     return i;
 }
+
+function checkIn(location, geolocation, line_length, global_lat, global_lon, url) {
+
+	if((location.length > 0) && (geolocation.length > 0) && (line_length.length > 0)) {
+	     $.ajax({ 
+	           url: url,
+	           type: 'POST',
+	           cache: false, 
+	           data: { location: location, geolocation: geolocation, line_length: line_length, lat: global_lat, lon: global_lon }, 
+	           success: function(data){
+	           	  markup = data;
+	              //alert('Success!');
+	              console.log("data "+data);
+	              $("#demo").html(data);
+	              global_cID = data;
+	              $(".checkin.active .back").click();
+	           }
+	           , error: function(jqXHR, textStatus, err){
+	               alert('text status '+textStatus+', err '+err)
+	               console.log('text status '+textStatus+', err '+err);
+	           }
+	        });
+	}     
+ }            
+
+function getLines(url, lat, lon) {
+     $.ajax({ 
+           url: url,
+           type: 'POST',
+           cache: false,
+           data: { 
+        	   lat: lat,
+        	   lon: lon},
+	           success: function(data){
+		           	  markup = data;
+		           	  $("section.body.right").html(data);
+		           	  setTimeout(function(){
+		           		$("section.body.right").addClass("active");
+		           	    $(".back.button").click(function(){
+		           		  $(".body").removeClass("active");
+		           		  $("section.checkin").remove();
+		           	    });	           		
+		           	  }, 1000);           		  	           	  
+		           }
+           , error: function(jqXHR, textStatus, err){
+               //alert('text status '+textStatus+', err '+err)
+               console.log('text status '+textStatus+', err '+err);
+           }
+        });
+}  

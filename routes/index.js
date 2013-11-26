@@ -147,8 +147,12 @@ exports.home = function(req, res) {
 
 exports.user_check_in = function(req, res) {
     var location = req.param('location', ''),
-    geolocation  = req.param('geolocation', ''),
-    line_length  = req.param('line_length', '');
+    line_length  = req.param('line_length', ''),
+    lat  = parseFloat(req.param('lat', '')),
+    lon  = parseFloat(req.param('lon', '')),
+    geolocation = [lat, lon];
+    console.log("lat type "+typeof(lat));
+    geolocation = [lat, lon];
     
  	if ( req.session.loggedIn ) {
 	account.findUsernameById(req.session.accountId, function(username) {
@@ -167,7 +171,6 @@ exports.user_check_in = function(req, res) {
 	            if (err) {
 	              return console.log(err);
 	            }
-
 				    account.findById(req.session.accountId, function(cID_doc) {
 				    	res.send(cID_doc.check_in.cID);
 				    });
@@ -185,9 +188,18 @@ exports.user_check_in = function(req, res) {
 }
 
 exports.user_lines = function(req, res) {
+	console.log("user_lines");
+    var lat = req.param('lat', ''),
+    lon  = req.param('lon', ''),
+    geolocation = new Object();
+    geolocation.lat = lat,
+    geolocation.lng = lon;
+    
 
-  if ( req.session.loggedIn ) {
-	
+  if ((req.session.loggedIn) && (lat) && (lon)) {
+	    console.log("route geolocation "+geolocation);
+	    console.log("route geolocation type "+ typeof(geolocation));
+	    
 	account.findUsernameById(req.session.accountId, function(username) {
 		if (req.params.username == username.username) {
 	    account.findById(req.session.accountId, function(doc) {
@@ -201,8 +213,8 @@ exports.user_lines = function(req, res) {
 	    	cID = "";	
 	    }
 	    console.log("user_lines cID "+cID);
-			account.findCurrent(cID, function(userLines) {
-
+			account.findCurrent(cID, geolocation, function(userLines) {
+			console.log("userLines "+userLines);
 	        res.render('user_lines', {
 	          title: 'LineOut',
 	          user: doc,
