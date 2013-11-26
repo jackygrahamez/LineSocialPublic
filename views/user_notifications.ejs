@@ -72,6 +72,24 @@ $(document).ready(function(){
    		$(".line_pokes div").addClass("hide");
     }	
 	}
+   $(".chat_requests ul li").click(function() {
+   		var notification_class = $(this).attr("ufid");
+   		global_tID = notification_class;
+		$(".notifications.controls .tID").attr("value", global_tID);	       		
+   		$(".accordion").toggleClass("off");
+   		$(".accordion p").hide();
+   		$(".accordion ."+notification_class).show();
+		$('.content.notifications').stop().animate({
+		  scrollTop: $(".content.notifications")[0].scrollHeight
+		}, 800); 	       		
+   		$(".accordion .content.notifications p").each(function(){
+   			if (($(this).attr("fid") == global_tID) || ($(this).attr("tid") == global_tID)) {
+   				$(this).show();
+   			}
+   			else {
+   				$(this).hide();
+   			}
+   		});		
 	
     socket.on('message', function (data) {
         if(data.message) {
@@ -144,6 +162,7 @@ $(document).ready(function(){
             if (chat_requests.length > 0) {
 	            $(".chat_requests ul").html(chat_requests);
 	        }
+		   $( ".chat_requests ul li" ).unbind( "click"); 	        
 	       $(".chat_requests ul li").click(function() {
 	       		var notification_class = $(this).attr("ufid");
 	       		global_tID = notification_class;
