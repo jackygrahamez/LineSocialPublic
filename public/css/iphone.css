@@ -549,7 +549,10 @@ p.outbound > span,
 }
 @media only screen 
 and (min-width : 768px) { 
-	div#wrapper, li, input, textarea, form {
+	div#wrapper, li, textarea, form {
 		width: 700px;
+	}
+	input {
+		width: 680px;
 	}
 }

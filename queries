@@ -1,10 +1,10 @@
 function insertTestData() {
-var lat = 24.52;
 var lon = 66.95;
-for (var x=0;x<100;x++) {
-lon = lon + 0.005782;
-for (var y=0;y<100;y++) {
-lat = lat + 0.002486;
+for (var x=0;x<1000;x++) {
+lon = lon + 0.05782;
+var lat = 24.52;
+for (var y=0;y<1000;y++) {
+lat = lat + 0.02486;
 var d = new Date();
 var expire = d.getTime() + 86400000;
 var firstname = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed ornare felis. Nullam sed nulla dignissim, condimentum risus sit amet, sodales diam. Morbi eget adipiscing nunc, in varius felis. Phasellus consequat dapibus porta. Mauris congue ligula ut mi sagittis, sit amet ornare lectus consectetur. Etiam eget euismod mi, ac semper arcu. Vivamus ipsum orci, tincidunt nec purus eu, sagittis auctor lacus. Morbi vitae odio ultricies, rutrum turpis ac, sagittis quam. Curabitur laoreet leo sollicitudin arcu iaculis placerat. In enim lacus, suscipit a sodales a, elementum id felis.";
@@ -16,7 +16,7 @@ firstname = firstname.split(" ")[i];
 var i = Math.floor((Math.random()*lastname.split(" ").length)+1);
 lastname = lastname.split(" ")[i];
 var i = Math.floor((Math.random()*username.split(" ").length)+1);
-username = username.split(" ")[i];
+username = username.split(" ")[i] + "_"+ Math.floor((Math.random()*1000)+1);
 var i = Math.floor((Math.random()*location.split(" ").length)+1);
 location = location.split(" ")[i];
 var email = username + "@test.com";
@@ -45,4 +45,14 @@ db.accounts.insert(data);
 }
 }
 }
+
+
+
+
+db.accounts.find({ "check_in.geolocation" : { "$near" : { "$geometry" : { "type" : "Point", "coordinates" : [ 24.522486, 66.955782 ]}}, "$maxDistance":500}});
+
+mongo ds053678.mongolab.com:53678/heroku_app19397517 -u heroku_app19397517 -p 1kmoc0c3kdcib1g9v7hpejr8up
+
+
+mongoctl connect mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds053678.mongolab.com:53678/heroku_app19397517
 
