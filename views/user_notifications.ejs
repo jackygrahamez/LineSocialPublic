@@ -53,6 +53,7 @@ $(document).ready(function(){
 	if ($(".notifications.content p").length > 0 && $(".chat_requests > ul > li").length < 1) {
 	var fIDlist = [];  
 	$(".notifications.content p").each(function(){
+		console.log('$(this).attr("fid") '+ $(this).attr("fid"));
 		if ( ($(this).attr("fid") != $(".notifications.fid").attr("value")) && 
 		($(this).attr("name") != $(".name.notifications").attr("value")) ) {
 			fIDlist.push($(this).attr("name")+"_"+$(this).attr("fid"));
@@ -63,6 +64,7 @@ $(document).ready(function(){
     if (fIDlistArrayUnique.length > 0) {
    		$(".line_pokes div").replaceWith("<div>"+fIDlistArrayUnique.length+"</div>");
    		    for(var i=0; i<fIDlistArrayUnique.length; i++) {
+   		    	console.log("fIDlistArrayUnique[i] "+fIDlistArrayUnique[i]);
 	            var ufID = fIDlistArrayUnique[i].split("_").pop();
 	            fIDlistArrayUnique[i].split("_").pop();
 	            chat_requests += '<li ufid="'+ufID+'">Message from ' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
@@ -92,9 +94,7 @@ $(document).ready(function(){
 	            			match = true;
 	            		}
 	            	});
-            	if (!match) {
-            			console.log("messages[i].fID "+messages[i].fID);
-            			console.log("fID "+$(".notifications.controls .fID").attr("value"));	
+            	if (!match) {	
             			if (messages[i].fID != $(".notifications.controls .fID").attr("value")) {	            
 	            		fIDlist.push(messages[i].username+"_"+messages[i].fID);
 		                }
@@ -136,6 +136,7 @@ $(document).ready(function(){
             for(var i=0; i<fIDlistArrayUnique.length; i++) {
 	            var ufID = fIDlistArrayUnique[i].split("_").pop();
 	            fIDlistArrayUnique[i].split("_").pop();
+	            console.log('fIDlistArrayUnique[i].split("_").pop(); '+fIDlistArrayUnique[i].split("_").pop());
 	            if ((ufID != $(".notifications.fid").attr("value")) &&
 	            	($(".chat_requests ul li[ufid='"+ufID+"']").length < 1)){
 	            chat_requests += '<li ufid="'+ufID+'">' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
