@@ -139,12 +139,44 @@ $(document).ready(function(){
 	            console.log('fIDlistArrayUnique[i].split("_").pop(); '+fIDlistArrayUnique[i].split("_").pop());
 	            if ((ufID != $(".notifications.fid").attr("value")) &&
 	            	($(".chat_requests ul li[ufid='"+ufID+"']").length < 1)){
-	            chat_requests += '<li ufid="'+ufID+'">' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
+	            chat_requests = '<li ufid="'+ufID+'">' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
+	            console.log("appending");
+	            $(".chat_requests ul").append(chat_requests);
+	            console.log("adding click event");
+		       $(".chat_requests ul > li").last().click(function() {
+		       		var notification_class = $(this).attr("ufid");
+		       		global_tID = notification_class;
+					$(".notifications.controls .tID").attr("value", global_tID);	       		
+		       		$(".accordion").toggleClass("off");
+		       		$(".accordion p").hide();
+		       		$(".accordion ."+notification_class).show();
+					$('.content.notifications').stop().animate({
+					  scrollTop: $(".content.notifications")[0].scrollHeight
+					}, 800); 	       		
+	           		$(".accordion .content.notifications p").each(function(){
+	           			if (($(this).attr("fid") == global_tID) || ($(this).attr("tid") == global_tID)) {
+	           				$(this).show();
+	           			}
+	           			else {
+	           				$(this).hide();
+	           			}
+	           		});	   
+	            var all_content = $(".content").html();
+	            var requests = $(".chat_requests > ul ").html();    
+	            var url = "/"+name.value+"/update_notification_messages/";
+	            global_fID = $(".message.controls .fID").attr("value"); 
+	            global_cID = $(".message.controls .cID").attr("value");           
+				updateNotificationMessages(global_cID, global_fID, all_content, url, requests);           		    			
+		       });   
+	            console.log("added click event");
 	            }	            
             }
+
+
             if (chat_requests.length > 0) {
 	            $(".chat_requests ul").html(chat_requests);
-	        }        
+	        }     
+  
 	       $(".chat_requests ul li").click(function() {
 	       		var notification_class = $(this).attr("ufid");
 	       		global_tID = notification_class;
@@ -170,7 +202,7 @@ $(document).ready(function(){
             global_cID = $(".message.controls .cID").attr("value");           
 			updateNotificationMessages(global_cID, global_fID, all_content, url, requests);           		    			
 	       });            
-	       
+
         } else {
             console.log("There is a problem:", data);
         }
