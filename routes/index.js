@@ -622,7 +622,7 @@ exports.update_messages = function(req, res) {
 	 messages = req.param('messages', '');
 	 console.log("messages route "+messages);
 	 console.log("tID route "+tID);
-	  if ( req.session.loggedIn ) {
+	  if ( req.session.loggedIn && cID && tID && fID) {
 
 		   message.saveMessages(cID, fID, tID, messages, function(error, doc) {
 			   console.log("updated messages "+doc);

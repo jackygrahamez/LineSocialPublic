@@ -31,10 +31,39 @@ module.exports = function(mongoose) {
 			  function(err,doc) {
 			  query = { cID: cID, fID: tID, tID: fID }
 			  console.log("query2 "+JSON.stringify(query));			  
-			  message.update(query, 
-					  {$set: {message: user_messages}}, 
-					  {upsert: true},
-					  function(err,doc) {
+			  message.find(query,
+					  function(err,doc2) {
+				  		console.log("doc2 "+JSON.stringify(doc2));
+				  		if ((JSON.stringify(doc2) != "[]") && (JSON.stringify(doc2) != "undefined")) {
+							  doc2[0].message += user_messages;
+							  message.update(query, 
+									  {$set: {message: doc2[0].message}}, 
+									  {upsert: true},
+									  function(err,doc3) {
+										  callback(doc3);
+									  });					  			
+				  		} else {
+				  			console.log("doc2 not defined!");
+							  message.update(query, 
+									  {$set: {message: user_messages}}, 
+									  {upsert: true},
+									  function(err,doc3) {
+										  callback(doc3);
+									  });					  			
+				  		}
+				  		
+				  		/*
+					  if (typeof(doc2) != "") {
+						  console.log("doc2 "+doc2)
+						  doc2[0].message += user_messages;
+						  message.update(query, 
+								  {$set: {message: doc2[0].message}}, 
+								  {upsert: true},
+								  function(err,doc3) {
+									  callback(doc3);
+								  });	
+					  }
+							  */
 			      callback(doc);
 			    });
 	    });
