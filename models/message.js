@@ -23,7 +23,7 @@ module.exports = function(mongoose) {
 	                      { "cID" : cID,
 	                    	"tID" : fID}	                    	
 	                    ] }
-	  	message.find( query, function(err,doc) {
+	  	message.find(query).sort('messageDate').execFind(function(err, doc) {
 	      callback(doc);
 	    });
   };
