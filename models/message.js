@@ -2,11 +2,14 @@ module.exports = function(mongoose) {
   var Schema = mongoose.Schema,
   ObjectId = Schema.ObjectId;
 	
-  var messageSchema = new mongoose.Schema({ 
+  var messageSchema = new mongoose.Schema({
+	  	ts: {type: String },
 	    cID: { type: ObjectId },
 	    fID: { type: ObjectId },
+	    tID: { type: ObjectId },
 	    message: { type: String},
-	    requests: { type: String}
+	    requests: { type: String},
+	    user: { type: String}
   	});
   
   var message = mongoose.model('Message', messageSchema);  
@@ -14,59 +17,20 @@ module.exports = function(mongoose) {
   var findMessages = function(cID, fID, callback) {
 	  var query = { "$or" : [
 	                      { "cID" : cID,
-	                    	"fID" : fID}
+	                    	"fID" : fID},
+	                      { "cID" : cID,
+	                    	"tID" : fID}	                    	
 	                    ] }
 	  	message.find( query, function(err,doc) {
 	      callback(doc);
 	    });
   };
 
-  var saveMessages = function(cID, fID, tID, user_messages, callback) {
-	  query = { cID: cID, fID: fID, tID: tID }
-	  console.log("query1 "+JSON.stringify(query));
-	  
-	  message.update(query, 
-			  {$set: {message: user_messages}}, 
-			  {upsert: true},
-			  function(err,doc) {
-			  query = { cID: cID, fID: tID, tID: fID }
-			  console.log("query2 "+JSON.stringify(query));			  
-			  message.find(query,
-					  function(err,doc2) {
-				  		console.log("doc2 "+JSON.stringify(doc2));
-				  		if ((JSON.stringify(doc2) != "[]") && (JSON.stringify(doc2) != "undefined")) {
-							  doc2[0].message += user_messages;
-							  message.update(query, 
-									  {$set: {message: doc2[0].message}}, 
-									  {upsert: true},
-									  function(err,doc3) {
-										  callback(doc3);
-									  });					  			
-				  		} else {
-				  			console.log("doc2 not defined!");
-							  message.update(query, 
-									  {$set: {message: user_messages}}, 
-									  {upsert: true},
-									  function(err,doc3) {
-										  callback(doc3);
-									  });					  			
-				  		}
-				  		
-				  		/*
-					  if (typeof(doc2) != "") {
-						  console.log("doc2 "+doc2)
-						  doc2[0].message += user_messages;
-						  message.update(query, 
-								  {$set: {message: doc2[0].message}}, 
-								  {upsert: true},
-								  function(err,doc3) {
-									  callback(doc3);
-								  });	
-					  }
-							  */
-			      callback(doc);
-			    });
-	    });
+  var saveMessages = function(ts, cID, fID, tID, user_messages, user, callback) {
+	  query = { ts: ts, cID: cID, fID: fID, tID: tID, message: user_messages, user: user }
+	  var im = new message(query); 
+	  console.log("saveMEssages query "+JSON.stringify(query));
+	  im.save(callback)
 	  //data.save(callback);
 
   };

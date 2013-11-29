@@ -7,8 +7,14 @@
     <ul><%- requests %></ul>
     <div class="notifications accordion off">
 	    <div class="content notifications">
-	    	<%- message %>
-	    </div>
+	    <p><%= message %></p>
+    	<% for(var i=0;i < message.length;i++) { %>
+    	<% var senderClass = "inbound"; %>
+    	<p><%= message[i].fID %> <%=  user._id %></p>
+		<% if (JSON.stringify(message[i].fID) == JSON.stringify(user._id) ) { var senderClass = "outbound"; } %>    	
+    	<p name="<%= message[i].user %>" class="<%= senderClass %>" ts="<%= message[i].ts %>" cid="<%= message[i].cID %>" fid="<%= message[i].fID %>" tid="<%= message[i].tID %>"><span><b><%= message[i].user %>:</b> <%= message[i].message %></span></p>
+    	<% } %>	
+		</div>
 	    <div class="notifications controls">
 			<input class="hide cID notifications" value="<%= user.check_in.cID %>" />       
 			<input class="hide fID notifications" value="<%= user._id %>" />
@@ -166,7 +172,7 @@ $(document).ready(function(){
 	            var url = "/"+name.value+"/update_notification_messages/";
 	            global_fID = $(".message.controls .fID").attr("value"); 
 	            global_cID = $(".message.controls .cID").attr("value");           
-				updateNotificationMessages(global_cID, global_fID, all_content, url, requests);           		    			
+				//updateNotificationMessages(global_cID, global_fID, all_content, url, requests);           		    			
 		       });   
 	            console.log("added click event");
 	            }	            
@@ -194,13 +200,7 @@ $(document).ready(function(){
            			else {
            				$(this).hide();
            			}
-           		});	   
-            var all_content = $(".content").html();
-            var requests = $(".chat_requests > ul ").html();    
-            var url = "/"+name.value+"/update_notification_messages/";
-            global_fID = $(".message.controls .fID").attr("value"); 
-            global_cID = $(".message.controls .cID").attr("value");           
-			updateNotificationMessages(global_cID, global_fID, all_content, url, requests);           		    			
+           		});	      		    			
 	       });            
 
         } else {
@@ -228,15 +228,12 @@ $(document).ready(function(){
     		var user = $(".name.notifications").val();	
     		html = "";
 	    	text = text + time; 	    	
-	    	global_tID = $(".notifications.controls .tID").attr("value");
-	    	global_cID = $(".notifications.controls .cID").attr("value");      
-	    	global_fID = $(".notifications.controls .fID").attr("value");        	      
-            socket.emit('send', { ts: timestamp, cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: user });
-			var html = $(".content.notifications").html();
-            html += '<p ts="'+timestamp+'" class="notification_outbound" name="'+user+'" cID="'+global_cID+'" fID="'+global_fID+'" tID="'+global_tID+'"><span><b>' + user + ': </b>';
-            html += text + '</span></p>\n';          
+			var tID = $(".notifications.controls .tID").attr("value");
+	    	var cID = $(".notifications.controls .cID").attr("value");      
+	    	var fID = $(".notifications.controls .fID").attr("value");        	      
+            socket.emit('send', { ts: timestamp, cID: cID, fID: fID, tID: tID, message: text, username: user });
             var url = "/"+name.value+"/update_messages/";
-            updateMessages(global_cID, global_fID, global_tID, html, url);
+            updateMessages(timestamp, cID, fID, tID, text, user, url);
 			$(".field.notifications").val("");                 
         }
     });

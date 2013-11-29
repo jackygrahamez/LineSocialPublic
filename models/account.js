@@ -61,7 +61,6 @@ module.exports = function(mongoose) {
   var checkInMethod = function(location, geolocation, line_length, accountId, callback) {
 	  	var d1 = new Date(),
 	  	  	d2 = new Date(d1);	
-	  	console.log("geolocation "+geolocation);
 	  	var line_length = line_length * 60 * 1000;
 	  	var expireTimeStamp = parseInt(d1.getTime()) + parseInt(line_length); 
 	  	d2.setTime( expireTimeStamp );
@@ -114,7 +113,7 @@ module.exports = function(mongoose) {
 				  "check_in.geolocation" : { $near : { $geometry :
 			      { type : "Point" ,
 				        coordinates : [ parseFloat(geolocation.lat), parseFloat(geolocation.lng) ] } },
-				        $maxDistance : 500 }
+				        $maxDistance : 500000000000 }
 		  				};	  		
 	  		account.find(query, function(err,doc) {		    		
 			      callback(doc);

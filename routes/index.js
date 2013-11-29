@@ -2,9 +2,9 @@ var mongoose = require('mongoose'),
     message  = require('../models/message')(mongoose),
 	account  = require('../models/account')(mongoose);
 
-//mongoose.connect('mongodb://localhost/LineOut');
+mongoose.connect('mongodb://localhost/LineOut');
 
-mongoose.connect('mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds053678.mongolab.com:53678/heroku_app19397517');
+//mongoose.connect('mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds053678.mongolab.com:53678/heroku_app19397517');
 
 var db = mongoose.connection;
 
@@ -152,7 +152,6 @@ exports.user_check_in = function(req, res) {
     lon  = parseFloat(req.param('lon', '')),
     geolocation = [lat, lon];
     console.log("lat type "+typeof(lat));
-    geolocation = [lat, lon];
     
  	if ( req.session.loggedIn ) {
 	account.findUsernameById(req.session.accountId, function(username) {
@@ -253,7 +252,6 @@ exports.user_notifications = function(req, res) {
 	    }	
 	    console.log("user notifications cID "+cID+" fID "+fID)
 	    message.findMessages(cID, fID, function(message_doc) {
-	    	console.log("message_doc "+message_doc);
 	    	if(!message_doc[0]) {
 	    		console.log("message_doc empty");
 		        res.render('user_notifications', {
@@ -268,13 +266,13 @@ exports.user_notifications = function(req, res) {
 	    		if (typeof(message_doc[0].requests) == 'undefined') {
 	    			message_doc[0].requests = '';
 	    		}
-	    		 console.log("message_doc "+message_doc[0].requests );
+	    		console.log("message "+JSON.stringify(message_doc));
 	    		 res.render('user_notifications', {
 	             title: 'LineOut',
 	             user: doc,
 		         pagename: 'user_notifications',
 		         cID: cID,
-		         message: message_doc[0].message,
+		         message: message_doc,
 		         requests:message_doc.requests
 	      		});	
 	    	}
@@ -405,13 +403,13 @@ exports.messages = function(req, res) {
 		    	}
 		    	else {
 		    		console.log("defined message_doc");
-		    		console.log("message_doc[0].message "+message_doc[0].message);
+		    		console.log("message_doc[0].message "+message_doc);
 		    		res.render('messages', {
 				          title: 'LineOut',
 				          user: doc,
 						  pagename: 'messages',
 						  cID: cID,
-						  message: message_doc[0].message,
+						  message: message_doc,
 						  fID: fID	    
 			    	});			    		
 		    	}
@@ -615,16 +613,17 @@ exports.venues = function(req, res) {
 	}
 
 exports.update_messages = function(req, res) {
-	 var cID = req.param('cID', ''),
+	 var ts = req.param('ts', ''), 
+	 cID = req.param('cID', ''),
 	 tID = req.param('tID', ''),
-	 fID = req.param('fID', '');
+	 fID = req.param('fID', ''),
+	 messages = req.param('messages', ''),
+	 user = req.param('user', '');
 	 
-	 messages = req.param('messages', '');
 	 console.log("messages route "+messages);
 	 console.log("tID route "+tID);
-	  if ( req.session.loggedIn && cID && tID && fID) {
-
-		   message.saveMessages(cID, fID, tID, messages, function(error, doc) {
+	  if ( req.session.loggedIn && cID && tID && fID && messages) {
+		   message.saveMessages(ts, cID, fID, tID, messages, user, function(error, doc) {
 			   console.log("updated messages "+doc);
 			   res.send("updated messages");
 		   });

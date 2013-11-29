@@ -9,7 +9,11 @@
     <section class="chat_requests bordered">
 
     <div class="content messages">
-    	<%- message %>
+    	<% for(var i=0;i < message.length;i++) { %>
+    	<% var senderClass = "inbound"; %>
+		<% if (message[i].fID == fID) { var senderClass = "outbound"; } %>    	
+    	<p class="<%= senderClass %>" ts="<%= message[i].ts %>" cid="<%= message[i].cID %>" fid="<%= message[i].fID %>" tid="<%= message[i].tID %>"><span><b><%= message[i].user %>:</b> <%= message[i].message %></span></p>
+    	<% } %>	
     </div>
     <div class="message controls">
 		<input class="hide message cID" />       
@@ -107,17 +111,14 @@ $(document).ready(function(){
     		var timestamp = d.getTime();
             var text = $(".field.message").val();
 	    	var text = text + time;    
+	    	var cID = $(".message.controls .cID").val();
+	    	var tID = $(".message.controls .tID").val();
+	    	var fID = $(".message.controls .fID").val();
 	    	$(".field.message").val("");        	    	
 			global_cID = $(".message.controls .cID").attr("value"); 
-            socket.emit('send', { ts: timestamp, cID: global_cID, fID: global_fID, tID: global_tID, message: text, username: user });
-            var html = $(".content.messages").html();
-			console.log("html "+html);            
-            html += '<p ts="'+timestamp+'" class="message_outbound" name="'+user+'" cID="'+global_cID+'" fID="'+global_fID+'" tID="'+global_tID+'"><span><b>' + user + ': </b>';
-            html += text + '</span></p>';
-            console.log("html ");            
+            socket.emit('send', { ts: timestamp, cID: cID, fID: fID, tID: tID, message: text, username: user });
             var url = "/"+user+"/update_messages/";
-            console.log("url " +url);
-            updateMessages(global_cID, global_fID, global_tID, html, url);
+            updateMessages(timestamp, cID, fID, tID, text, user, url);
         }
     });
  
