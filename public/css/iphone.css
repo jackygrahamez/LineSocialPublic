@@ -481,12 +481,14 @@ p.inbound > span,
 	display: inline-block;
 	font-size: 12px;
 	padding: 5px;
-	border-radius:10px;
+	/*
 	box-shadow: 
 	  0 1px 2px #fff, /*bottom external highlight*/
 	  0 -1px 1px #666, /*top external shadow*/ 
 	  inset 0 -1px 1px rgba(0,0,0,0.5), /*bottom internal shadow*/ 
-	  inset 0 1px 1px rgba(255,255,255,0.8); /*top internal highlight*/	
+	  inset 0 1px 1px rgba(255,255,255,0.8); /*top internal highlight*/
+	*/  	
+	  margin-left:5px;
 	
 }
 
@@ -495,14 +497,12 @@ p.inbound > span,
 .messages .message_outbound {
 	text-align: right;
 	margin: 1px;
-	text-align: right;
 	margin: 5px 2px;	
 }
 p.outbound > span,
 .notifications p.notification_outbound span,
 .messages p.message_outbound span {
 	background: -webkit-linear-gradient(top, #c9de96 0%,#8ab66b 44%,#398235 100%); /* Chrome10+,Safari5.1+ */	color: white;
-	border-radius: 10px;
 	font-size: 12px;	
 	padding:5px;
 	box-shadow: 
@@ -510,7 +510,11 @@ p.outbound > span,
 	  0 -1px 1px #666, /*top external shadow*/ 
 	  inset 0 -1px 1px rgba(0,0,0,0.5), /*bottom internal shadow*/ 
 	  inset 0 1px 1px rgba(255,255,255,0.8); /*top internal highlight*/
-	  display: inline-block;	
+	  display: inline-block;
+	  border-radius: 5px 5px 0px 5px;
+	  margin-right:5px;
+	border-width: 5px 11px 5px 5px;
+	border-image: url(../img/speech_bubble_right.png) 5 11 5 5 stretch stretch;		
 }
 
 .line_pokes div {
@@ -537,16 +541,23 @@ p.outbound > span,
 	/* for good looks */
 
 }
-
+.field {
+	width: 250px;
+	padding: 10px 5px;
+}
+.send {
+	width: 50px;
+	display: inline-block;
+}
 .inbound {
-	text-align: left;
-	margin: 1px;	
+
 }
 .inbound > span {
-	background: lightgrey;
 	color: black;
 	padding: 5px;
-	border-radius: 10px;
+	border-radius: 5px 5px 5px 0px;	
+	border-width: 8px 10px 8px 17px; 
+	border-image: url(../img/speech_bubble_left_2.png) 8 10 8 17 stretch stretch;		
 }
 @media only screen 
 and (min-width : 768px) { 
@@ -555,5 +566,12 @@ and (min-width : 768px) {
 	}
 	input {
 		width: 680px;
+	}
+	.chat_requests ul {
+		margin:0px 0px 10px;
+	}
+	.chat_requests ul li {
+		padding-right: 0px;
+		width: 690px;	
 	}
 }

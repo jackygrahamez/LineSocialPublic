@@ -59,7 +59,6 @@ $(document).ready(function(){
 	if ($(".notifications.content p").length > 0 && $(".chat_requests > ul > li").length < 1) {
 	var fIDlist = [];  
 	$(".notifications.content p").each(function(){
-		console.log('$(this).attr("fid") '+ $(this).attr("fid"));
 		if ( ($(this).attr("fid") != $(".notifications.fid").attr("value")) && 
 		($(this).attr("name") != $(".name.notifications").attr("value")) ) {
 			fIDlist.push($(this).attr("name")+"_"+$(this).attr("fid"));
@@ -70,7 +69,6 @@ $(document).ready(function(){
     if (fIDlistArrayUnique.length > 0) {
    		$(".line_pokes div").replaceWith("<div>"+fIDlistArrayUnique.length+"</div>");
    		    for(var i=0; i<fIDlistArrayUnique.length; i++) {
-   		    	console.log("fIDlistArrayUnique[i] "+fIDlistArrayUnique[i]);
 	            var ufID = fIDlistArrayUnique[i].split("_").pop();
 	            fIDlistArrayUnique[i].split("_").pop();
 	            chat_requests += '<li ufid="'+ufID+'">Message from ' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
@@ -142,13 +140,10 @@ $(document).ready(function(){
             for(var i=0; i<fIDlistArrayUnique.length; i++) {
 	            var ufID = fIDlistArrayUnique[i].split("_").pop();
 	            fIDlistArrayUnique[i].split("_").pop();
-	            console.log('fIDlistArrayUnique[i].split("_").pop(); '+fIDlistArrayUnique[i].split("_").pop());
 	            if ((ufID != $(".notifications.fid").attr("value")) &&
 	            	($(".chat_requests ul li[ufid='"+ufID+"']").length < 1)){
 	            chat_requests = '<li ufid="'+ufID+'">' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
-	            console.log("appending");
 	            $(".chat_requests ul").append(chat_requests);
-	            console.log("adding click event");
 		       $(".chat_requests ul > li").last().click(function() {
 		       		var notification_class = $(this).attr("ufid");
 		       		global_tID = notification_class;
@@ -174,7 +169,6 @@ $(document).ready(function(){
 	            global_cID = $(".message.controls .cID").attr("value");           
 				//updateNotificationMessages(global_cID, global_fID, all_content, url, requests);           		    			
 		       });   
-	            console.log("added click event");
 	            }	            
             }
 

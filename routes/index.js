@@ -195,10 +195,7 @@ exports.user_lines = function(req, res) {
     geolocation.lng = lon;
     
 
-  if ((req.session.loggedIn) && (lat) && (lon)) {
-	    console.log("route geolocation "+geolocation);
-	    console.log("route geolocation type "+ typeof(geolocation));
-	    
+  if ((req.session.loggedIn)) {
 	account.findUsernameById(req.session.accountId, function(username) {
 		if (req.params.username == username.username) {
 	    account.findById(req.session.accountId, function(doc) {
@@ -212,17 +209,28 @@ exports.user_lines = function(req, res) {
 	    	cID = "";	
 	    }
 	    console.log("user_lines cID "+cID);
+	    console.log("route geolocation "+geolocation);
+	    console.log("route geolocation type "+ typeof(geolocation));
+	    if (lat != '' && lon != '') {
 			account.findCurrent(cID, geolocation, function(userLines) {
-			console.log("userLines "+userLines);
+				console.log("userLines "+userLines);
+				res.send(userLines);
+				/*
+		        res.render('user_lines', {
+		          title: 'LineOut',
+		          user: doc,
+				  pagename: 'user_lines',
+				  lines: userLines
+		        });*/	    	
+			});		
+	    } else {
 	        res.render('user_lines', {
-	          title: 'LineOut',
-	          user: doc,
-			  pagename: 'user_lines',
-			  lines: userLines
-	        });
-
-	    });		
-	    
+		          title: 'LineOut',
+		          user: doc,
+				  pagename: 'user_lines',
+				  lines: ""
+		        });	 	    	
+	    }
 	    });
 	    } else {
 	    	res.redirect('/' +username.username);

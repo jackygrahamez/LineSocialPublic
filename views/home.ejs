@@ -16,8 +16,6 @@
 <% include footer %>
 
 <script type="text/javascript">
-console.log("get user.notifications");
 var notification_url = "/<%= user.username %>/user_notifications/"; 
-console.log("notification_url "+notification_url);
 getNotifications(notification_url);
 </script>

@@ -31,12 +31,10 @@
 	   if (url != "/register") {
 		   if (url.indexOf("notifications") > 0) {
 			   $(".notifications").addClass("active");
-		   } 
+		   }
 		   else if (url.indexOf("user_lines") > 0) {
-			   console.log("user Lines!");
-			   console.log("global_coords_lat "+global_coords_lat+" global_coords_lon "+global_coords_lon);
-			   getLines(url, global_coords_lat, global_coords_lon);   
-		   }		   
+			   getLocation(0, url);   
+		   } 		   
 		   else if ($(this).hasClass("logout")) {
 			   console.log("logout!");
 			   location.assign(url);
@@ -126,12 +124,12 @@
   
    
    //set global coordinates
-   getLocation(0);
+   //getLocation(0);
    
 })(jQuery, this)
 
 
-function getLocation(lLength)
+function getLocation(lLength, pURL)
   {
 	$("ul.checkin").canvasLoader();
 	lineLength = lLength;
@@ -140,6 +138,11 @@ function getLocation(lLength)
     navigator.geolocation.getCurrentPosition(showPosition,showError);
     }
   else{x.innerHTML="Geolocation is not supported by this browser.";}
+  if (typeof(global_coords_lat) != 'undefined'){
+	  console.log(pURL + " lat "+global_coords_lat);	  
+	  getLines(pURL);
+  }
+
   }
 function showPosition(position)
   {
@@ -148,8 +151,8 @@ function showPosition(position)
   global_coords = [position.coords.latitude+","+position.coords.longitude];
   global_coords_lat = position.coords.latitude;
   global_coords_lon = position.coords.longitude;
-  
-  console.log(global_coords);
+
+
 	  if (parseInt(lineLength) > 0) {
 		  getVenues(url, coord);		  
 		  $("#coords").val(position.coords.latitude+", "+position.coords.longitude);
@@ -462,28 +465,55 @@ function checkIn(location, geolocation, line_length, global_lat, global_lon, url
 	}     
  }            
 
-function getLines(url, lat, lon) {
-     $.ajax({ 
-           url: url,
-           type: 'POST',
-           cache: false,
-           data: { 
-        	   lat: lat,
-        	   lon: lon},
-	           success: function(data){
-		           	  markup = data;
-		           	  $("section.body.right").html(data);
-		           	  setTimeout(function(){
-		           		$("section.body.right").addClass("active");
-		           	    $(".back.button").click(function(){
-		           		  $(".body").removeClass("active");
-		           		  $("section.checkin").remove();
-		           	    });	           		
-		           	  }, 1000);           		  	           	  
-		           }
-           , error: function(jqXHR, textStatus, err){
-               //alert('text status '+textStatus+', err '+err)
-               console.log('text status '+textStatus+', err '+err);
-           }
-        });
+function getLines(url) {
+	 if (typeof(global_coords_lat)!="undefined" && typeof(global_coords_lon)!="undefined") {
+	     $.ajax({ 
+	           url: url,
+	           type: 'POST',
+	           cache: false,
+	           data: { 
+	        	   lat: global_coords_lat,
+	        	   lon: global_coords_lon},
+		           success: function(data){
+			           	  markup = data;
+			           	  $("section.body.right").html(data);
+			           	  setTimeout(function(){
+			           		$("section.body.right").addClass("active");
+			           	    $(".back.button").click(function(){
+			           		  $(".body").removeClass("active");
+			           		  $("section.checkin").remove();
+			           	    });	           		
+			           	  }, 1000);           		  	           	  
+			           }
+	           , error: function(jqXHR, textStatus, err){
+	               //alert('text status '+textStatus+', err '+err)
+	               console.log('text status '+textStatus+', err '+err);
+	           }
+	        });		 
+	 } 	else {
+	     $.ajax({ 
+	           url: url,
+	           type: 'POST',
+	           cache: false,
+	           data: { 
+	        	   lat: "",
+	        	   lon: ""},
+		           success: function(data){
+			           	  markup = data;
+			           	  $("section.body.right").html(data);
+			           	  setTimeout(function(){
+			           		$("section.body.right").addClass("active");
+			           	    $(".back.button").click(function(){
+			           		  $(".body").removeClass("active");
+			           		  $("section.checkin").remove();
+			           	    });	           		
+			           	  }, 1000);           		  	           	  
+			           }
+	           , error: function(jqXHR, textStatus, err){
+	               //alert('text status '+textStatus+', err '+err)
+	               console.log('text status '+textStatus+', err '+err);
+	           }
+	        });			 
+	 }
+
 }  
