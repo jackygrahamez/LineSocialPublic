@@ -9,10 +9,10 @@
 	    <div class="content notifications">
 	    <p><%= message %></p>
     	<% for(var i=0;i < message.length;i++) { %>
-    	<% var senderClass = "inbound"; %>
+    	<% var senderClass = "bubbledLeft"; %>
     	<p><%= message[i].fID %> <%=  user._id %></p>
-		<% if (JSON.stringify(message[i].fID) == JSON.stringify(user._id) ) { var senderClass = "outbound"; } %>    	
-    	<p name="<%= message[i].user %>" class="<%= senderClass %>" ts="<%= message[i].ts %>" cid="<%= message[i].cID %>" fid="<%= message[i].fID %>" tid="<%= message[i].tID %>"><span><b><%= message[i].user %>:</b> <%= message[i].message %></span></p>
+		<% if (JSON.stringify(message[i].fID) == JSON.stringify(user._id) ) { var senderClass = "bubbledRight"; } %>    	
+    	<div name="<%= message[i].user %>" class="<%= senderClass %>" ts="<%= message[i].ts %>" cid="<%= message[i].cID %>" fid="<%= message[i].fID %>" tid="<%= message[i].tID %>"><span><b><%= message[i].user %>:</b> <%= message[i].message %></span></div>
     	<% } %>	
 		</div>
 	    <div class="notifications controls">
@@ -85,7 +85,7 @@ $(document).ready(function(){
             var html = $(".content.notifications").html();
             var chat_requests = '';            
             var fIDlist = [];
-            var sender = "inbound";
+            var sender = "bubbledLeft";
 		 	global_cID = $(".notifications.controls .cID").attr("value");
 			global_fID = $(".notifications.controls .fID").attr("value");              
  			global_tID = $(".notifications.controls .tID").attr("value");
@@ -103,10 +103,10 @@ $(document).ready(function(){
 	            		fIDlist.push(messages[i].username+"_"+messages[i].fID);
 		                }
 		                if (messages[i].fID === $(".fID.notifications").attr("value")) {
-		                sender = "outbound";
+		                sender = "bubbledRight";
 		                }
-		                html += '<p ts="'+messages[i].ts+'" class="'+sender+'" name="'+messages[i].username+'" cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"><span><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
-		                html += messages[i].message + '</span></p>';
+		                html += '<div ts="'+messages[i].ts+'" class="'+sender+'" name="'+messages[i].username+'" cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"><span><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
+		                html += messages[i].message + '</span></div>';
 
 		            }
 		            match = false;		            
