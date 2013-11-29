@@ -214,14 +214,13 @@ exports.user_lines = function(req, res) {
 	    if (lat != '' && lon != '') {
 			account.findCurrent(cID, geolocation, function(userLines) {
 				console.log("userLines "+userLines);
-				res.send(userLines);
-				/*
+				//res.send(userLines);
 		        res.render('user_lines', {
 		          title: 'LineOut',
 		          user: doc,
 				  pagename: 'user_lines',
 				  lines: userLines
-		        });*/	    	
+		        });	    	
 			});		
 	    } else {
 	        res.render('user_lines', {
