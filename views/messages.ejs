@@ -12,7 +12,7 @@
     	<% for(var i=0;i < message.length;i++) { %>
     	<% var senderClass = "bubbledLeft"; %>
 		<% if (message[i].fID == fID) { var senderClass = "bubbledRight"; } %>    	
-    	<div class="<%= senderClass %>" ts="<%= message[i].ts %>" cid="<%= message[i].cID %>" fid="<%= message[i].fID %>" tid="<%= message[i].tID %>"><span><b><%= message[i].user %>:</b> <%= message[i].message %></span></div>
+    	<div class="<%= senderClass %>" ts="<%= message[i].ts %>" cid="<%= message[i].cID %>" fid="<%= message[i].fID %>" tid="<%= message[i].tID %>"><span><b><%= message[i].user %>:</b> <%= message[i].message %> <%= message[i].time %></span></div>
     	<% } %>	
     </div>
     <div class="message controls">
@@ -37,7 +37,9 @@ $(document).ready(function(){
     var content = $(".content.messages");
     var name = document.getElementById("name");
     var match = false;
-    var sender = "inbound";
+    var sender = "bubbledLeft";
+
+    var text = $(".field.message").val();    
 	$(".message.controls .cID").attr("value", global_cID);
 	$(".message.controls .tID").attr("value", global_tID);     		
 	global_fID = $(".message.controls .fID").val();  
@@ -47,26 +49,40 @@ $(document).ready(function(){
 	}, 800);  
 	    	 
     socket.on('message', function (data) {
-    console.log("data "+data);
+    //console.log("data "+data);
         if(data.message) {
             messages.push(data);
-			console.log("global_cID "+global_cID);            
-            console.log("data.message "+data.message);
+			//console.log("global_cID "+global_cID);            
+            //console.log("data.message "+data.message);
             var html = $(".content.messages").html();
             var chat_requests = '';            
             var fIDlist = [];
-            var sender = "bubbledLeft";
+			var d = new Date();
+			var h = d.getHours();
+			var td = "am";
+			if (h > 12) { 
+			h = h - 12;
+			td = "pm"; 
+			}
+			var m = d.getMinutes();
+			m = checkTime(m);   
+			var time = " " + h + ":" + m + " "+td;
+			var timestamp = d.getTime();            
 			global_fID = $(".message.controls .fID").attr("value");
-			console.log("messages.length "+messages.length);
+			//console.log("messages.length "+messages.length);
 			$('.content.messages').stop().animate({
 			  scrollTop: $(".content.messages")[0].scrollHeight
 			}, 800);  			
 	            for(var i=0; i<messages.length; i++) {
+            	var sender = "bubbledLeft";
+            	match = false;
 	            if ((messages[i].cID == $(".message.controls .cID").attr("value")) && 
 	            	((messages[i].fID == $(".message.controls .fID").attr("value")) || 
 	            	(messages[i].tID == $(".message.controls .fID").attr("value"))	
 	            	)) {	
-	            	$(".content.messages p").each(function(){
+	            	$(".content.messages > div").each(function(){
+			            console.log('$(this).attr("ts") '+ $(this).attr("ts") + ' '+$(this).text());
+			            console.log('messages[i].ts '+messages[i].ts + ' '+messages[i].message);			            	
 	            		if ($(this).attr("ts") == messages[i].ts) {
 	            			match = true;
 	            		}
@@ -76,7 +92,7 @@ $(document).ready(function(){
 		                sender = "bubbledRight";
 		                }		            	
 		                html += '<div ts="'+messages[i].ts+'" class="'+sender+'" name="'+messages[i].username+'" cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"><span><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
-		                html += messages[i].message + '</span></div>';
+		                html += messages[i].message + ' ' + time +'</span></div>';
 		                }
 		                match = false;
 					}	                
@@ -110,15 +126,17 @@ $(document).ready(function(){
     		var time = " " + h + ":" + m + " "+td;
     		var timestamp = d.getTime();
             var text = $(".field.message").val();
-	    	var text = text + time;    
+	    	//var text = text + time;    
 	    	var cID = $(".message.controls .cID").val();
 	    	var tID = $(".message.controls .tID").val();
 	    	var fID = $(".message.controls .fID").val();
 	    	$(".field.message").val("");        	    	
 			global_cID = $(".message.controls .cID").attr("value"); 
+			console.log("sending message "+text);
             socket.emit('send', { ts: timestamp, cID: cID, fID: fID, tID: tID, message: text, username: user });
             var url = "/"+user+"/update_messages/";
             updateMessages(timestamp, cID, fID, tID, text, user, url);
+            text = "";
         }
     });
  

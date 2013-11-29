@@ -12,7 +12,7 @@
     	<% var senderClass = "bubbledLeft"; %>
     	<p><%= message[i].fID %> <%=  user._id %></p>
 		<% if (JSON.stringify(message[i].fID) == JSON.stringify(user._id) ) { var senderClass = "bubbledRight"; } %>    	
-    	<div name="<%= message[i].user %>" class="<%= senderClass %>" ts="<%= message[i].ts %>" cid="<%= message[i].cID %>" fid="<%= message[i].fID %>" tid="<%= message[i].tID %>"><span><b><%= message[i].user %>:</b> <%= message[i].message %></span></div>
+    	<div name="<%= message[i].user %>" class="<%= senderClass %>" ts="<%= message[i].ts %>" cid="<%= message[i].cID %>" fid="<%= message[i].fID %>" tid="<%= message[i].tID %>"><span><b><%= message[i].user %>:</b> <%= message[i].message %> <%= message[i].time %></span></div>
     	<% } %>	
 		</div>
 	    <div class="notifications controls">
@@ -56,9 +56,9 @@ $(document).ready(function(){
 	$(".line_pokes div").text(nPokes);    
 	}
 	
-	if ($(".notifications.content p").length > 0 && $(".chat_requests > ul > li").length < 1) {
+	if ($(".notifications.content div").length > 0 && $(".chat_requests > ul > li").length < 1) {
 	var fIDlist = [];  
-	$(".notifications.content p").each(function(){
+	$(".notifications.content div").each(function(){
 		if ( ($(this).attr("fid") != $(".notifications.fid").attr("value")) && 
 		($(this).attr("name") != $(".name.notifications").attr("value")) ) {
 			fIDlist.push($(this).attr("name")+"_"+$(this).attr("fid"));
@@ -89,11 +89,13 @@ $(document).ready(function(){
 		 	global_cID = $(".notifications.controls .cID").attr("value");
 			global_fID = $(".notifications.controls .fID").attr("value");              
  			global_tID = $(".notifications.controls .tID").attr("value");
-			
+			console.log("messages "+JSON.stringify(messages));
 	            for(var i=0; i<messages.length; i++) {
 	            if ($(".notifications.controls .cID").attr("value") == messages[i].cID) {
 		            if (typeof(messages[i].username) != 'undefined') {
-	            	$(".content.notifications p").each(function(){
+	            	$(".content.notifications div").each(function(){
+			            console.log('$(this).attr("ts") '+ $(this).attr("ts"));
+			            console.log('messages[i].ts '+messages[i].ts);			            	
 	            		if ($(this).attr("ts") == messages[i].ts) {
 	            			match = true;
 	            		}
@@ -105,8 +107,18 @@ $(document).ready(function(){
 		                if (messages[i].fID === $(".fID.notifications").attr("value")) {
 		                sender = "bubbledRight";
 		                }
+			       		var d = new Date();
+			        	var h = d.getHours();
+			        	var td = "am";
+			        	if (h > 12) { 
+			        	h = h - 12;
+			        	td = "pm"; 
+			        	}
+			        	var m = d.getMinutes();
+			        	m = checkTime(m);   
+			    		var time = " " + h + ":" + m + " "+td;		                
 		                html += '<div ts="'+messages[i].ts+'" class="'+sender+'" name="'+messages[i].username+'" cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"><span><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
-		                html += messages[i].message + '</span></div>';
+		                html += messages[i].message + ' ' + time + '</span></div>';
 
 		            }
 		            match = false;		            
@@ -221,14 +233,16 @@ $(document).ready(function(){
     		var timestamp = d.getTime();            
     		var user = $(".name.notifications").val();	
     		html = "";
-	    	text = text + time; 	    	
+	    	//text = text + time; 	    	
 			var tID = $(".notifications.controls .tID").attr("value");
 	    	var cID = $(".notifications.controls .cID").attr("value");      
-	    	var fID = $(".notifications.controls .fID").attr("value");        	      
+	    	var fID = $(".notifications.controls .fID").attr("value"); 
+	    	console.log("socket emit");       	      
             socket.emit('send', { ts: timestamp, cID: cID, fID: fID, tID: tID, message: text, username: user });
             var url = "/"+name.value+"/update_messages/";
             updateMessages(timestamp, cID, fID, tID, text, user, url);
-			$(".field.notifications").val("");                 
+			$(".field.notifications").val("");         
+            text = "";			        
         }
     });
  
