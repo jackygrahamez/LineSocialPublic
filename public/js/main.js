@@ -6,6 +6,7 @@
   var global_fID="";
   var global_tID="";
   var html, ajaxData;
+  var lURL;
 (function($, window, undefined) {
 
 
@@ -33,6 +34,9 @@
 			   $(".notifications").addClass("active");
 		   }
 		   else if (url.indexOf("user_lines") > 0) {
+			   var loader = '<div class="loader"></div>';
+			   $("body").append(loader);
+			   $(".loader").canvasLoader();
 			   getLocation(0, url);   
 		   } 		   
 		   else if ($(this).hasClass("logout")) {
@@ -131,6 +135,8 @@
 
 function getLocation(lLength, pURL)
   {
+	console.log("pURL "+pURL);
+	lURL = pURL;
 	$("ul.checkin").canvasLoader();
 	lineLength = lLength;
   if (navigator.geolocation)
@@ -151,12 +157,12 @@ function showPosition(position)
   global_coords = [position.coords.latitude+","+position.coords.longitude];
   global_coords_lat = position.coords.latitude;
   global_coords_lon = position.coords.longitude;
-
-
 	  if (parseInt(lineLength) > 0) {
 		  getVenues(url, coord);		  
 		  $("#coords").val(position.coords.latitude+", "+position.coords.longitude);
 		  $("#line_length").val(lineLength);	  
+	  } else {
+		  getLines(lURL);
 	  }
   }
 function showError(error)
@@ -466,6 +472,7 @@ function checkIn(location, geolocation, line_length, global_lat, global_lon, url
  }            
 
 function getLines(url) {
+	console.log("getLines "+url);
 	 if (typeof(global_coords_lat)!="undefined" && typeof(global_coords_lon)!="undefined") {
 	     $.ajax({ 
 	           url: url,
@@ -478,6 +485,7 @@ function getLines(url) {
 			           	  markup = data;
 			           	  $("section.body.right").html(data);
 			           	  setTimeout(function(){
+			           		$("body > canvas").remove();
 			           		$("section.body.right").addClass("active");
 			           	    $(".back.button").click(function(){
 			           		  $(".body").removeClass("active");
