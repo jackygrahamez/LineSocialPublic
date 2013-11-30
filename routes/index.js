@@ -2,9 +2,9 @@ var mongoose = require('mongoose'),
     message  = require('../models/message')(mongoose),
 	account  = require('../models/account')(mongoose);
 
-mongoose.connect('mongodb://localhost/LineOut');
+//mongoose.connect('mongodb://localhost/LineOut');
 
-//mongoose.connect('mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds053678.mongolab.com:53678/heroku_app19397517');
+mongoose.connect('mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds053678.mongolab.com:53678/heroku_app19397517');
 
 var db = mongoose.connection;
 
