@@ -68,6 +68,7 @@ $(document).ready(function(){
 	var chat_requests = "";
     if (fIDlistArrayUnique.length > 0) {
    		$(".line_pokes div").replaceWith("<div>"+fIDlistArrayUnique.length+"</div>");
+   			//$(".chat_requests ul").replaceWith("<li></li>");
    		    for(var i=0; i<fIDlistArrayUnique.length; i++) {
 	            var ufID = fIDlistArrayUnique[i].split("_").pop();
 	            fIDlistArrayUnique[i].split("_").pop();
@@ -82,6 +83,7 @@ $(document).ready(function(){
     socket.on('message', function (data) {
         if(data.message) {
             messages.push(data);
+            console.log("data "+JSON.stringify(data));
             var html = $(".content.notifications").html();
             var chat_requests = '';            
             var fIDlist = [];
@@ -90,16 +92,21 @@ $(document).ready(function(){
 			global_fID = $(".notifications.controls .fID").attr("value");              
  			global_tID = $(".notifications.controls .tID").attr("value");
 	            for(var i=0; i<messages.length; i++) {
+            			console.log("messages[i].fID "+messages[i].fID);    
 	            if ($(".notifications.controls .cID").attr("value") == messages[i].cID) {
 		            if (typeof(messages[i].username) != 'undefined') {
 	            	$(".content.notifications div").each(function(){			            	
 	            		if ($(this).attr("ts") == messages[i].ts) {
 	            			match = true;
 	            		}
-	            	});
+	            	});      
+	            	$(".chat_requests ul li").each(function(){			            	
+	            		if ($(this).attr("ufid") == messages[i].ts) {
+	            			match = true;
+	            		}
+	            	});      	            	  
             	if (!match) {	
             			if (messages[i].fID != $(".notifications.controls .fID").attr("value")) {	
-            			console.log("messages[i].fID "+messages[i].fID);            
 	            		fIDlist.push(messages[i].username+"_"+messages[i].fID);
 		                }
 		                if (messages[i].fID === $(".fID.notifications").attr("value")) {
@@ -148,38 +155,41 @@ $(document).ready(function(){
            		});
            }
            var chat_requests = $(".chat_requests ul").html();
+           console.log("chat_requests "+chat_requests);
             for(var i=0; i<fIDlistArrayUnique.length; i++) {
 	            var ufID = fIDlistArrayUnique[i].split("_").pop();
 	            fIDlistArrayUnique[i].split("_").pop();
 	            if ((ufID != $(".notifications.fid").attr("value")) &&
-	            	($(".chat_requests ul li[ufid='"+ufID+"']").length < 1)){
-	            chat_requests = '<li ufid="'+ufID+'">' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
-	            $(".chat_requests ul").append(chat_requests);
-		       $(".chat_requests ul > li").last().click(function() {
-		       		var notification_class = $(this).attr("ufid");
-		       		global_tID = notification_class;
-					$(".notifications.controls .tID").attr("value", global_tID);	       		
-		       		$(".accordion").toggleClass("off");
-		       		$(".accordion p").hide();
-		       		$(".accordion ."+notification_class).show();
-					$('.content.notifications').stop().animate({
-					  scrollTop: $(".content.notifications")[0].scrollHeight
-					}, 800); 	       		
-	           		$(".accordion .content.notifications p").each(function(){
-	           			if (($(this).attr("fid") == global_tID) || ($(this).attr("tid") == global_tID)) {
-	           				$(this).show();
-	           			}
-	           			else {
-	           				$(this).hide();
-	           			}
-	           		});	   
-	            var all_content = $(".content").html();
-	            var requests = $(".chat_requests > ul ").html();    
-	            var url = "/"+name.value+"/update_notification_messages/";
-	            global_fID = $(".message.controls .fID").attr("value"); 
-	            global_cID = $(".message.controls .cID").attr("value");           
-				//updateNotificationMessages(global_cID, global_fID, all_content, url, requests);           		    			
-		       });   
+		            	($(".chat_requests ul li[ufid='"+ufID+"']").length < 1)) {
+			            chat_requests += '<li ufid="'+ufID+'">Message from ' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
+			            $(".chat_requests ul").append(chat_requests);
+			            $(".chat_requests ul > li").unbind("click");
+				        $(".chat_requests ul > li").click(function() {
+			       		console.log("clicked chat requests");
+			       		var notification_class = $(this).attr("ufid");
+			       		global_tID = notification_class;
+						$(".notifications.controls .tID").attr("value", global_tID);	       		
+			       		$(".accordion").toggleClass("off");
+			       		$(".accordion div").hide();
+			       		$(".accordion ."+notification_class).show();
+						$('.content.notifications').stop().animate({
+						  scrollTop: $(".content.notifications")[0].scrollHeight
+						}, 800); 	       		
+		           		$(".accordion .content.notifications div").each(function(){
+		           			if (($(this).attr("fid") == global_tID) || ($(this).attr("tid") == global_tID)) {
+		           				$(this).show();
+		           			}
+		           			else {
+		           				$(this).hide();
+		           			}
+		           		});	   
+		            var all_content = $(".content").html();
+		            var requests = $(".chat_requests > ul ").html();    
+		            var url = "/"+name.value+"/update_notification_messages/";
+		            global_fID = $(".message.controls .fID").attr("value"); 
+		            global_cID = $(".message.controls .cID").attr("value");           
+					//updateNotificationMessages(global_cID, global_fID, all_content, url, requests);           		    			
+			       });   
 	            }	            
             }
 
@@ -189,16 +199,17 @@ $(document).ready(function(){
 	        }     
   
 	       $(".chat_requests ul li").click(function() {
+	       		console.log("line 202 toggle");
 	       		var notification_class = $(this).attr("ufid");
 	       		global_tID = notification_class;
 				$(".notifications.controls .tID").attr("value", global_tID);	       		
 	       		$(".accordion").toggleClass("off");
-	       		$(".accordion p").hide();
+	       		//$(".accordion div").hide();
 	       		$(".accordion ."+notification_class).show();
 				$('.content.notifications').stop().animate({
 				  scrollTop: $(".content.notifications")[0].scrollHeight
 				}, 800); 	       		
-           		$(".accordion .content.notifications p").each(function(){
+           		$(".accordion .content.notifications div").each(function(){
            			if (($(this).attr("fid") == global_tID) || ($(this).attr("tid") == global_tID)) {
            				$(this).show();
            			}
