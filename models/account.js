@@ -122,8 +122,6 @@ module.exports = function(mongoose) {
 	  
 	  
 	  var checkOut = function(id, geolocation, callback) {
-		  console.log(" geolocation.lat "+ geolocation.lat);
-		  console.log(" geolocation.lng "+ geolocation.lng);	  
 		  	if (id && id.length > 0) {
 
 		  	  var query = { 
@@ -133,22 +131,17 @@ module.exports = function(mongoose) {
 					        coordinates : [ parseFloat(geolocation.lat), parseFloat(geolocation.lng) ] } },
 					        $maxDistance : 500 }
 			  				};	 
-	
-			  	 // var query = {'_id': id};		  		
-			  	console.log("query "+JSON.stringify(query));
-		  	  
+
 		  		account.find(query, function(err,doc) {	
 		  			  if (doc.length) {
-		  				  console.log("doc find "+JSON.stringify(doc));
-		  				  callback(doc);
+		  				  callback("not checkedout");
 		  			  } else {
-		  				  console.log("out of line");
 		  			      account.update(
 			  			    	    {"_id" : id},
 			  			    	    {"$set": { 'check_in' : '' }},
 			  			    	        function(error, account){
 			  			    	           if( error ) callback(error);
-			  			    	           else callback(null, doc);
+			  			    	           else callback("checked out");
 			  			    	    });			  				  
 		  			  }
 				    });	  		
