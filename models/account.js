@@ -140,7 +140,7 @@ module.exports = function(mongoose) {
 		  		account.find(query, function(err,doc) {	
 		  			  if (doc.length) {
 		  				  console.log("doc find "+JSON.stringify(doc));
-		  		  				  
+		  				  callback(doc);
 		  			  } else {
 		  				  console.log("out of line");
 		  			      account.update(
@@ -148,7 +148,7 @@ module.exports = function(mongoose) {
 			  			    	    {"$set": { 'check_in' : '' }},
 			  			    	        function(error, account){
 			  			    	           if( error ) callback(error);
-			  			    	           else callback(null, account);
+			  			    	           else callback(null, doc);
 			  			    	    });			  				  
 		  			  }
 				    });	  		

@@ -133,7 +133,7 @@
    // autocheckout
    setInterval(function(){
 	   getLocation(1);
-   },600000);
+   },60000);
    
 })(jQuery, this)
 
@@ -171,6 +171,7 @@ function showPosition(position)
 		  var url = location.pathname+"/auto_checkout/";
 		  console.log("url "+url);
 		  console.log("auto check "+d);
+		  console.log("positions "+position.coords.latitude + " lon "+position.coords.longitude);
 		  auto_checkout(url, position.coords.latitude, position.coords.longitude);
 	  } 
 	  else {
