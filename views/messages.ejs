@@ -12,7 +12,7 @@
     	<% for(var i=0;i < message.length;i++) { %>
     	<% var senderClass = "bubbledLeft"; %>
 		<% if (message[i].fID == fID) { var senderClass = "bubbledRight"; } %>    	
-    	<div class="<%= senderClass %>" ts="<%= message[i].ts %>" cid="<%= message[i].cID %>" fid="<%= message[i].fID %>" tid="<%= message[i].tID %>"><span><b><%= message[i].user %>:</b> <%= message[i].message %> <%= message[i].time %></span></div>
+    	<div class="<%= senderClass %>" ts="<%= message[i].ts %>" cid="<%= message[i].cID %>" fid="<%= message[i].fID %>" tid="<%= message[i].tID %>"><span><b><%= message[i].user %>:</b> <%= message[i].message %> <time><%= message[i].time %></time></span></div>
     	<% } %>	
     </div>
     <div class="message controls">
@@ -92,7 +92,7 @@ $(document).ready(function(){
 		                sender = "bubbledRight";
 		                }		            	
 		                html += '<div ts="'+messages[i].ts+'" class="'+sender+'" name="'+messages[i].username+'" cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"><span><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
-		                html += messages[i].message + ' ' + time +'</span></div>';
+		                html += messages[i].message + ' <time>' + time +'</time></span></div>';
 		                }
 		                match = false;
 					}	                

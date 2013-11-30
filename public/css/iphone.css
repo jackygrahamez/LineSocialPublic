@@ -69,7 +69,10 @@ menu {
 	-webkit-padding-start: 0px;
 	list-style-type: none;
 }
-
+time {
+	font-style: italic;
+	font-size: 12px;
+}
 li{
 	background-color: white;
 	border: 1px solid #ababab;
