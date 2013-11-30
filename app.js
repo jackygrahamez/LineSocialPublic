@@ -73,6 +73,9 @@ app.post('/:username/venues', routes.venues);
 app.get('/:username/ajax', routes.ajax);
 app.post('/:username/ajax', routes.ajax);
 
+app.get('/:username/auto_checkout', routes.auto_checkout);
+app.post('/:username/auto_checkout', routes.auto_checkout);
+
 app.post('/login', routes.login);
 app.post('/register', routes.register);
 

@@ -51,6 +51,9 @@ db.accounts.insert(data);
 
 db.accounts.find({ "check_in.geolocation" : { "$near" : { "$geometry" : { "type" : "Point", "coordinates" : [ 24.522486, 66.955782 ]}}, "$maxDistance":500}});
 
+db.accounts.find({ "check_in.geolocation" : { "$near" : { "$geometry" : { "type" : "Point", "coordinates" : [ 41.88723408627484, -74.81166246868779 ]}}, "$maxDistance":500}});
+
+
 mongo ds053678.mongolab.com:53678/heroku_app19397517 -u heroku_app19397517 -p 1kmoc0c3kdcib1g9v7hpejr8up
 
 

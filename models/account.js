@@ -95,25 +95,14 @@ module.exports = function(mongoose) {
 	  var now = new Date();
 	  console.log(" geolocation.lat "+ geolocation.lat);
 	  console.log(" geolocation.lng "+ geolocation.lng);	  
-	  /*
-	  db.accounts.find( { "check_in.geolocation" : { $near :
-	  { $geometry :
-	  { type : "Point" ,
-	  coordinates: [ 42.714 , -74.006 ] } },
-	  $maxDistance : 500
-	  } } ).pretty();*/
-	  
-
-  
 	  	console.log("query "+JSON.stringify(query));
-	  
 	  	if (id && id.length > 0) {
 	  	  var query = { 
 	  			  'check_in.check_in_expire_time': {"$gt": now}, '_id': {'$ne': id},
 				  "check_in.geolocation" : { $near : { $geometry :
 			      { type : "Point" ,
 				        coordinates : [ parseFloat(geolocation.lat), parseFloat(geolocation.lng) ] } },
-				        $maxDistance : 500000000000 }
+				        $maxDistance : 500 }
 		  				};	  		
 	  		account.find(query, function(err,doc) {		    		
 			      callback(doc);
@@ -129,18 +118,47 @@ module.exports = function(mongoose) {
 			      callback(doc);
 			    });		  		
 	  	}
-
-
 	  };	  
 	  
-// db.accounts.find({'check_in.check_in_expire_time': {"$lt": now}});	  
 	  
-  var findById = function(id, callback) {
+	  var checkOut = function(id, geolocation, callback) {
+		  console.log(" geolocation.lat "+ geolocation.lat);
+		  console.log(" geolocation.lng "+ geolocation.lng);	  
+		  	if (id && id.length > 0) {
 
+		  	  var query = { 
+		  			  '_id': id,
+					  "check_in.geolocation" : { $near : { $geometry :
+				      { type : "Point" ,
+					        coordinates : [ parseFloat(geolocation.lat), parseFloat(geolocation.lng) ] } },
+					        $maxDistance : 500 }
+			  				};	 
+	
+			  	 // var query = {'_id': id};		  		
+			  	console.log("query "+JSON.stringify(query));
+		  	  
+		  		account.find(query, function(err,doc) {	
+		  			  if (doc.length) {
+		  				  console.log("doc find "+JSON.stringify(doc));
+		  		  				  
+		  			  } else {
+		  				  console.log("out of line");
+		  			      account.update(
+			  			    	    {"_id" : id},
+			  			    	    {"$set": { 'check_in' : '' }},
+			  			    	        function(error, account){
+			  			    	           if( error ) callback(error);
+			  			    	           else callback(null, account);
+			  			    	    });			  				  
+		  			  }
+				    });	  		
+		  	}
+	  };
+
+ var findById = function(id, callback) {
   account.findOne({_id:id}, function(err,doc) {
       callback(doc);
   });
-
   };
 
   var findBycId = function(cID, callback) {
@@ -228,6 +246,7 @@ module.exports = function(mongoose) {
     checkInMethod: checkInMethod,
     findAll: findAll,
     findCurrent: findCurrent,
+    checkOut: checkOut,
     post_message: post_message,
     findUsernameById: findUsernameById,
     findFirstnameById: findFirstnameById,

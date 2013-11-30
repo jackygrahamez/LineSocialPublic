@@ -619,6 +619,29 @@ exports.venues = function(req, res) {
 	  }
 	}
 
+
+exports.auto_checkout = function(req, res) {
+	var lat = req.param('lat', ''),
+    lon  = req.param('lon', ''),
+    geolocation = new Object();
+    geolocation.lat = lat,
+    geolocation.lng = lon;	
+	  if ( req.session.loggedIn ) {
+	  account.findUsernameById(req.session.accountId, function(username) {
+		  
+		  account.checkOut(req.session.accountId, geolocation, function(error, doc) {
+			   console.log("auto checkout "+JSON.stringify(doc));
+			   //res.send(doc);
+		   });
+	    });
+
+	  } else {
+
+	    res.send(401);
+
+	  }
+	}
+
 exports.update_messages = function(req, res) {
 	 var ts = req.param('ts', ''), 
 	 cID = req.param('cID', ''),

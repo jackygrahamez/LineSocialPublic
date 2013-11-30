@@ -130,6 +130,11 @@
    //set global coordinates
    //getLocation(0);
    
+   // autocheckout
+   setInterval(function(){
+	   getLocation(1);
+   },600000);
+   
 })(jQuery, this)
 
 
@@ -144,24 +149,31 @@ function getLocation(lLength, pURL)
     navigator.geolocation.getCurrentPosition(showPosition,showError);
     }
   else{x.innerHTML="Geolocation is not supported by this browser.";}
-  if (typeof(global_coords_lat) != 'undefined'){
-	  console.log(pURL + " lat "+global_coords_lat);	  
-	  getLines(pURL);
-  }
+
 
   }
 function showPosition(position)
   {
-  var url = location.pathname+"/venues/";
+  
   var coord = position.coords.latitude+","+position.coords.longitude;
   global_coords = [position.coords.latitude+","+position.coords.longitude];
   global_coords_lat = position.coords.latitude;
   global_coords_lon = position.coords.longitude;
-	  if (parseInt(lineLength) > 0) {
+  console.log("lineLength "+lineLength);
+  console.log("lineLength type "+typeof(lineLength));
+	  if (parseInt(lineLength) > 1) {
+		  var url = location.pathname+"/venues/";
 		  getVenues(url, coord);		  
 		  $("#coords").val(position.coords.latitude+", "+position.coords.longitude);
 		  $("#line_length").val(lineLength);	  
-	  } else {
+	  } else if (lineLength == 1) {
+		  var d = new Date()
+		  var url = location.pathname+"/auto_checkout/";
+		  console.log("url "+url);
+		  console.log("auto check "+d);
+		  auto_checkout(url, position.coords.latitude, position.coords.longitude);
+	  } 
+	  else {
 		  getLines(lURL);
 	  }
   }
@@ -469,7 +481,32 @@ function checkIn(location, geolocation, line_length, global_lat, global_lon, url
 	           }
 	        });
 	}     
- }            
+ } 
+
+function auto_checkout(url, lat, lon) {
+	console.log("auto_checkout");
+	console.log("url "+url);
+	if(lat) {
+		console.log("lat "+lat);
+	     $.ajax({ 
+	           url: url,
+	           type: 'POST',
+	           cache: false, 
+	           data: { lat: lat,
+	        	   	   lon: lon}, 
+	           success: function(data){
+	           	  markup = data;
+	              //alert('Success!');
+	              console.log("auto_checkout data count "+JSON.stringify(data));
+	           }
+	           , error: function(jqXHR, textStatus, err){
+	               //alert('text status '+textStatus+', err '+err)
+	               console.log('text status '+textStatus+', err '+err);
+	           }
+	        });
+	}     
+ }
+
 
 function getLines(url) {
 	console.log("getLines "+url);
