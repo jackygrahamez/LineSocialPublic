@@ -89,19 +89,17 @@ $(document).ready(function(){
 		 	global_cID = $(".notifications.controls .cID").attr("value");
 			global_fID = $(".notifications.controls .fID").attr("value");              
  			global_tID = $(".notifications.controls .tID").attr("value");
-			console.log("messages "+JSON.stringify(messages));
 	            for(var i=0; i<messages.length; i++) {
 	            if ($(".notifications.controls .cID").attr("value") == messages[i].cID) {
 		            if (typeof(messages[i].username) != 'undefined') {
-	            	$(".content.notifications div").each(function(){
-			            console.log('$(this).attr("ts") '+ $(this).attr("ts"));
-			            console.log('messages[i].ts '+messages[i].ts);			            	
+	            	$(".content.notifications div").each(function(){			            	
 	            		if ($(this).attr("ts") == messages[i].ts) {
 	            			match = true;
 	            		}
 	            	});
             	if (!match) {	
-            			if (messages[i].fID != $(".notifications.controls .fID").attr("value")) {	            
+            			if (messages[i].fID != $(".notifications.controls .fID").attr("value")) {	
+            			console.log("messages[i].fID "+messages[i].fID);            
 	            		fIDlist.push(messages[i].username+"_"+messages[i].fID);
 		                }
 		                if (messages[i].fID === $(".fID.notifications").attr("value")) {
@@ -125,8 +123,9 @@ $(document).ready(function(){
 	            		}
 					}
 	            }
-
+			console.log("fIDlist "+fIDlist);
 	       var fIDlistArrayUnique = ArrNoDupe(fIDlist);
+	       console.log("fIDlistArrayUnique "+fIDlistArrayUnique);
 	       if (html.length > 0) {        
            		$(".content.notifications").html(html);
 				$('.content.notifications').stop().animate({
