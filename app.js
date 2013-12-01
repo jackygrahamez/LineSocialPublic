@@ -6,6 +6,7 @@
 var express = require('express'),
     routes = require('./routes'), 
     user = require('./routes/user'),
+    account = require('./models/account'),
     http = require('http'),
     path = require('path'),
     passport = require('passport'),
@@ -60,9 +61,14 @@ passport.use(new FacebookStrategy({
           return done(err, user);
         });
         */
+      var firstname = profile.name.givenName, 
+      	  lastname = profile.name.familyName;
       
-      if (typeof(user) != "undefined") {
-          user.findOrCreate({ _id: profile.id, username: profile.username }, function (err, user) {
+      console.log("firstname "+firstname);
+      console.log("lastname"+lastname);
+      
+      if (typeof(account) != "undefined") {
+          account.findOrCreate({ _id: profile.id, username: profile.username }, function (err, user) {
               return done(err, user);
             });
       }
