@@ -132,6 +132,10 @@
 	   }
    });   
   
+   //REMOVE FB HASH
+   if (window.location.href.indexOf('#_=_') > 0) {
+	    window.location = window.location.href.replace(/#.*/, '');
+	}   
    
    //set global coordinates
    //getLocation(0);
