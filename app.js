@@ -50,7 +50,7 @@ passport.use(new FacebookStrategy({
     // asynchronous verification, for effect...
     process.nextTick(function () {
       console.log("profile "+JSON.stringify(profile));
-      console.log("profile username "+pofile.displayName);
+      console.log("profile username "+profile.username);
       // To keep the example simple, the user's Facebook profile is returned to
       // represent the logged-in user.  In a typical application, you would want
       // to associate the Facebook account with a user record in your database,
@@ -60,7 +60,7 @@ passport.use(new FacebookStrategy({
           return done(err, user);
         });
         */      
-      account.findOrCreate({ _id: profile.id, username: profile.displayName }, function (err, user) {
+      account.findOrCreate({ _id: profile.id, username: profile.username, name.first: profile.name.givenName, name.last: profile.name.familyName  }, function (err, user) {
           return done(err, user);
         });
       
