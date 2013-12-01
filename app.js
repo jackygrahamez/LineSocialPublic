@@ -10,8 +10,11 @@ var express = require('express'),
     http = require('http'),
     path = require('path'),
     passport = require('passport'),
+    findOrCreate = require('mongoose-findorcreate'),
     util = require('util'),
     FacebookStrategy = require('passport-facebook').Strategy;
+
+account.plugin(findOrCreate);
 
 var app    = express();
 var server = http.createServer(app);
