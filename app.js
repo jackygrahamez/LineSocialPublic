@@ -8,6 +8,7 @@ var express = require('express'),
     user = require('./routes/user'),
     http = require('http'),
     path = require('path'),
+    mongoose = require('mongoose'),
     passport = require('passport'),
     findOrCreate = require('mongoose-findorcreate'),
     util = require('util'),
@@ -16,6 +17,11 @@ var express = require('express'),
 var app    = express();
 var server = http.createServer(app);
 global.io  = require('socket.io').listen(server);
+
+
+mongoose.connect('mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds053678.mongolab.com:53678/heroku_app19397517');
+var db = mongoose.connection;
+
 
 /* FACEBOOK AUTHENTICATION */
 var FACEBOOK_APP_ID = "698217933545116"
@@ -51,6 +57,7 @@ passport.use(new FacebookStrategy({
     // asynchronous verification, for effect...
     process.nextTick(function () {
 
+    	
     	  var Schema = mongoose.Schema,
     	  ObjectId = Schema.ObjectId;
     		
