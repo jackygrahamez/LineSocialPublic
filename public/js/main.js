@@ -35,9 +35,11 @@
 		   }
 		   else if (url.indexOf("user_lines") > 0) {
 			   var loader = '<div class="loader"></div>';
-			   $("body").append(loader);
-			   $(".loader").canvasLoader();
-			   getLocation(0, url);   
+			   if ($("body > canvas").length < 1) {
+				   $("body").append(loader);
+				   $(".loader").canvasLoader();
+				   getLocation(0, url); 						   
+			   }
 		   } 		   
 		   else if ($(this).hasClass("logout")) {
 			   console.log("logout!");
