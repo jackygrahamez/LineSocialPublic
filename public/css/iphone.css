@@ -658,6 +658,13 @@ p.outbound > span,
 	display:none;	
 }
 
+/*
+.facebook {
+background: url(../img/login-with-facebook.png) no-repeat 0 0;
+background-size: 100%;
+}
+*/
+
 /* END MESSAGE BUBBLE */
 
 @media only screen 
