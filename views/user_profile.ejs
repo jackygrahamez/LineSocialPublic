@@ -6,17 +6,34 @@
 
     <section class="bordered">
     <% if(user.check_in.location != undefined) { %>
-    <p>You checked in to <%= user.check_in.location %></p>
-    <p>At <%= user.check_in.check_in_time %></p>
+	<% var d = new Date(user.check_in.check_in_time.getTime()) %>
+	<% if (d.getHours() > 12) { var h = d.getHours() - 12; var td = "pm";} else { var h = d.getHours(); var td = "am"; } %>
+	<% if (d.getMinutes() < 10) { var m = "0"+ d.getMinutes(); } else { var m = d.getMinutes(); }%>
+	<% var time = d.toDateString() + " "+h+":"+m+" "+td; %>    
+	<% var d = new Date(user.check_in.check_in_expire_time.getTime()) %>
+	<% if (d.getHours() > 12) { var h = d.getHours() - 12; var td = "pm";} else { var h = d.getHours(); var td = "am"; } %>
+	<% if (d.getMinutes() < 10) { var m = "0"+ d.getMinutes(); } else { var m = d.getMinutes(); }%>
+	<% var etime = d.toDateString() + " "+h+":"+m+" "+td; %> 
     <% } %>
 
 	  <form method="post" action="/register" class="form-skin register">
-    <ul>	  
-	      <input class="hide" value="<%= user._id %>" type="text" name="id" required  />	  
+    <% if(user.check_in.location != undefined) { %>	  
+    <p>Check-in Info:</p>
+    <ul>	 
+    	  <li>Check-in: <%= time %></li>
+    	  <li>Expires: <%= etime %></li>
+    	  <li><%= user.check_in.location %></li>
+    </ul>    	      	  
+    <% } %>    	   
+    <p>User Info:</p>
+	      <input class="hide" value="<%= user._id %>" type="text" name="id" required  />
+	<ul>      	  
 	      <li>Name: <%= user.name.first %> <%= user.name.last %></li>
 	      <li>Username: <%= user.username %></li>
 	      <li>Email: <%= user.email %></li>
-	      <p>Change your password?</p> 
+    </ul>
+          <p>Change your password?</p>
+    <ul>       
 	      <input type="password" name="password" required placeholder="Your password here"/>
 	      <input type="password" name="cpassword" required placeholder="Your password (confirm) here"/>
 	      <p></p>
