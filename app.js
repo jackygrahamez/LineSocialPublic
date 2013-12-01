@@ -9,6 +9,7 @@ var express = require('express'),
     http = require('http'),
     path = require('path'),
     passport = require('passport'),
+    findOrCreate = require('mongoose-findorcreate'),
     util = require('util'),
     FacebookStrategy = require('passport-facebook').Strategy;
 
@@ -49,6 +50,34 @@ passport.use(new FacebookStrategy({
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
     process.nextTick(function () {
+
+    	  var Schema = mongoose.Schema,
+    	  ObjectId = Schema.ObjectId;
+    		
+    	  var userSchema = new mongoose.Schema({
+    	      email:     { type: String, unique: true },
+    	      password:  { type: String },
+    	      username:  { type: String, unique: true },
+    	      name: {
+    	        first:   { type: String },
+    	        last:    { type: String }
+    	      },
+    	      photoUrl:  { type: String },
+    	      check_in: {
+    	    	  cID: ObjectId,
+    	    	  location: { type: String },
+    	    	  geolocation: { type: {}, index: '2dsphere', sparse: true },
+    	    	  line_length: { type: Number },
+    	    	  check_in_time: { type: Date, expires: '24h' },
+    	    	  check_in_expire_time: { type: Date, expires: '24h' }
+    	      }
+    	      
+    	  });
+    	  
+    	  userSchema.plugin(findOrCreate);
+    	  
+    	  var account = mongoose.model('Account', userSchema);    	
+    	
       console.log("profile "+JSON.stringify(profile));
       console.log("profile username "+profile.username);
       // To keep the example simple, the user's Facebook profile is returned to
