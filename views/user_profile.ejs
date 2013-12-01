@@ -30,7 +30,9 @@
 	<ul>      	  
 	      <li>Name: <%= user.name.first %> <%= user.name.last %></li>
 	      <li>Username: <%= user.username %></li>
+    <% if(user.email != undefined) { %>	  	      
 	      <li>Email: <%= user.email %></li>
+    <% } %>    		      
     </ul>
           <p>Change your password?</p>
     <ul>       
