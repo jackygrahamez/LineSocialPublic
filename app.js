@@ -4,7 +4,7 @@
  */
 
 var express = require('express'),
-    routes = require('./routes'),
+    routes = require('./routes'), 
     user = require('./routes/user'),
     http = require('http'),
     path = require('path'),
@@ -61,8 +61,8 @@ passport.use(new FacebookStrategy({
         });
         */
       
-      if (typeof(account) != "undefined") {
-          account.findOrCreate({ _id: profile.id, username: profile.username }, function (err, user) {
+      if (typeof(user) != "undefined") {
+          user.findOrCreate({ _id: profile.id, username: profile.username }, function (err, user) {
               return done(err, user);
             });
       }
