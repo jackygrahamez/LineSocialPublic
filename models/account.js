@@ -1,4 +1,5 @@
-var crypto = require('crypto');
+var crypto = require('crypto'),
+findOrCreate = require('mongoose-findorcreate');
 
 module.exports = function(mongoose) {
 	
@@ -24,6 +25,8 @@ module.exports = function(mongoose) {
       }
       
   });
+  
+  userSchema.plugin(findOrCreate);
   
   var account = mongoose.model('Account', userSchema);
 

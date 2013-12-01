@@ -15,6 +15,7 @@
     "crypto": "*",
     "foursquarevenues": "*",
     "passport": ">= 0.0.0",
-    "passport-facebook": ">= 0.0.0"
+    "passport-facebook": ">= 0.0.0",
+    "mongoose-findorcreate": ">= 0.1.2"
   }
 }

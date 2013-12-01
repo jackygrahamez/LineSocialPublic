@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
     message  = require('../models/message')(mongoose),
-	account  = require('../models/account')(mongoose);
+	account  = require('../models/account')(mongoose),
+	findOrCreate = require('mongoose-findorcreate');
 
 //mongoose.connect('mongodb://localhost/LineOut');
 
