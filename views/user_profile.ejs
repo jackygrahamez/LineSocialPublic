@@ -5,7 +5,22 @@
 	<h2 class="light no-margin">Profile</h2>
 
     <section class="bordered">
-
+    <% if(user.check_in.location != undefined) { %>
+    <p>You checked in to <%= user.check_in.location %></p>
+    <p>At <%= user.check_in.check_in_time %></p>
+    <% } %>
+	  <form method="post" action="/register" class="form-skin register">
+	      <input value="<%= user.name.first %>" type="text" name="firstName" required  />
+	      <input value="<%= user.name.last %>" type="text" name="lastName" required />
+	      <input value="<%= user.username %>" type="text" name="username" required />
+	      <input value="<%= user.email %>" type="email" name="email" required />
+	      <input type="password" name="password" required placeholder="Your password here"/>
+	      <input type="password" name="cpassword" required placeholder="Your password (confirm) here"/>
+	      <p></p>
+	      <p>
+	      <input id="profile_update" type="button" value="Update Now" class="btn btn-flat btn-blue no-radius"/>
+	      </p>
+	  </form>
     </section>
 </div>
 </section>
