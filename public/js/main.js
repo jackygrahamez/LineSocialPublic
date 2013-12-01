@@ -133,10 +133,11 @@
    //getLocation(0);
    
    // autocheckout
+   /*
    setInterval(function(){
 	   getLocation(1);
    },60000);
-   
+   */
 })(jQuery, this)
 
 
