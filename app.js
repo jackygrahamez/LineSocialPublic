@@ -60,7 +60,7 @@ passport.use(new FacebookStrategy({
           return done(err, user);
         });
         */      
-      account.findOrCreate({ _id: profile.id, username: profile.username, "name.first": profile.name.givenName, "name.last": profile.name.familyName  }, function (err, user) {
+      account.findOrCreate({ _id: profile.id, username: profile.username }, function (err, user) {
           return done(err, user);
         });
       
