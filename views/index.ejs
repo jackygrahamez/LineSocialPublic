@@ -32,7 +32,12 @@
       </form>
       <br />
       <a class="facebook" href="/auth/facebook"><img src="/img/login-with-facebook.png" width="154" height="22"></a>
+<pre>USER:
+<%if (typeof(user) != "undefined") { %> 
+ <%= user %> 
+<% } %>
+</pre>
   </div>
-  
+
 
 <%include footer %>
