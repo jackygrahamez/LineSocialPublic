@@ -59,15 +59,15 @@ passport.use(new FacebookStrategy({
       account.findOrCreate({ _id: profile.id, username: profile.displayName, name.first: profile.name.givenName, name.last: profile.name.familyName }, function (err, user) {
           return done(err, user);
         });
-        */      
-      var mongoose = require('mongoose'),    
-  		account  = require('../models/account')(mongoose),
-  		findOrCreate = require('mongoose-findorcreate');
+        */
       
-      account.findOrCreate({ _id: profile.id, username: profile.username }, function (err, user) {
-          return done(err, user);
-        });
+      if (typeof(account) != "undefined") {
+          account.findOrCreate({ _id: profile.id, username: profile.username }, function (err, user) {
+              return done(err, user);
+            });
+      }
       
+
       return done(null, profile);
     });
   }
