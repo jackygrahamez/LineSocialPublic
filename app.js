@@ -6,7 +6,7 @@
 var express = require('express'),
     routes = require('./routes'), 
     user = require('./routes/user'),
-    account = require('./models/account'),
+    mongoose = require('mongoose'),
     http = require('http'),
     path = require('path'),
     passport = require('passport'),
@@ -14,7 +14,8 @@ var express = require('express'),
     util = require('util'),
     FacebookStrategy = require('passport-facebook').Strategy;
 
-account.plugin(findOrCreate);
+
+//account.plugin(findOrCreate);
 
 var app    = express();
 var server = http.createServer(app);
@@ -41,6 +42,25 @@ passport.deserializeUser(function(obj, done) {
 });
 
 
+console.log("using authenticator");
+//Authenticator
+app.use(express.basicAuth('friend', 'bli8ke'));
+
+//all environments
+app.set('port', process.env.PORT || 5000);
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+app.use(express.favicon());
+app.use(express.logger('dev'));
+app.use(express.bodyParser());
+app.use(express.methodOverride());
+app.use(express.cookieParser('your secret here'));
+app.use(express.session({ secret: 'keyboard cat' }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(app.router);
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Use the FacebookStrategy within Passport.
 //   Strategies in Passport require a `verify` function, which accept
 //   credentials (in this case, an accessToken, refreshToken, and Facebook
@@ -48,7 +68,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new FacebookStrategy({
     clientID: FACEBOOK_APP_ID,
     clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: "http://lineout.herokuapp.com/auth/facebook/callback"
+    callbackURL: "http://localhost:5000/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
@@ -66,17 +86,8 @@ passport.use(new FacebookStrategy({
         */
       var firstname = profile.name.givenName, 
       	  lastname = profile.name.familyName;
-      
-      console.log("firstname "+firstname);
-      console.log("lastname"+lastname);
-      
-      if (typeof(account) != "undefined") {
-          account.findOrCreate({ _id: profile.id, username: profile.username }, function (err, user) {
-              return done(err, user);
-            });
-      }
-      
 
+      routes.fb_register(profile.id, firstname, lastname, profile.username);
       return done(null, profile);
     });
   }
@@ -86,30 +97,12 @@ passport.use(new FacebookStrategy({
 /* END FACEBOOK AUTHENTICATION */
 
 
-console.log("using authenticator");
-//Authenticator
-app.use(express.basicAuth('friend', 'bli8ke'));
 
-// all environments
-app.set('port', process.env.PORT || 5000);
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
-app.use(express.session({ secret: 'keyboard cat' }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
-
 app.get('/', routes.index);
 app.get('/:id', routes.home);
 app.get('/:username/inbox/', routes.inbox);
@@ -185,6 +178,14 @@ function(req, res){
 app.get('/auth/facebook/callback', 
 passport.authenticate('facebook', { failureRedirect: '/login' }),
 function(req, res) {
+	routes.fb_login(req.session.passport.user.id, req, res);
+	//console.log("session JSON session "+JSON.stringify(req.session));
+	//var homepage = '/'+req.session.passport.user.username;
+	//console.log("homepage "+homepage);
+
+    //req.session.loggedIn  = true;
+    //req.session.accountId = req.session.passport.user.username;	
+	//res.redirect(homepage);
 });
 
 
