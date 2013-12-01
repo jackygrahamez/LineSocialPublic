@@ -62,6 +62,43 @@ exports.register = function(req, res) {
     });
 }
 
+exports.fb_register = function(id, firstname, lastname, username) {
+	console.log("fb_register id "+id);
+
+	account.findByFBId(id, function(doc) {
+	  console.log("doc " + JSON.stringify(doc));
+	  console.log("doc type "+typeof(doc));
+	  if (typeof(doc) == 'undefined' || doc == null) {
+			console.log("user is undefined!");
+			account.fb_register(id, firstname, lastname, username, 
+					function (err, user_created) {
+			console.log("user created! "+user_created);
+			account.findByFBId(id, function(doc) {
+		        return doc;			
+			});
+			return done(err, user_created);
+			});    			  
+	  }
+        return doc;
+	});
+}	
+
+
+exports.fb_login = function(id, req, res) {
+	console.log("fb_register id "+id);
+	account.findByFBId(id, function(doc) {
+		//console.log("login doc " + JSON.stringify(doc));
+	  	var homepage = '/'+doc.username;
+		console.log("homepage "+homepage);
+
+	    req.session.loggedIn  = true;
+	    req.session.accountId = doc._id;	
+		res.redirect(homepage);	  
+        return doc;
+	});
+}	
+
+
 exports.update_password = function(req, res) {
     var id = req.param('id', ''),
     password  = req.param('password', null);

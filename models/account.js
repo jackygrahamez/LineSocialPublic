@@ -7,6 +7,7 @@ module.exports = function(mongoose) {
   ObjectId = Schema.ObjectId;
 	
   var userSchema = new mongoose.Schema({
+	  fb_id:	 { type: String, unique: true },
       email:     { type: String, unique: true },
       password:  { type: String },
       username:  { type: String, unique: true },
@@ -60,6 +61,24 @@ module.exports = function(mongoose) {
 
     user.save(callback);
   };
+  
+  var fb_register = function(id, firstName, lastName, username, callback) {
+	    var user = new account({
+	      fb_id: id,
+	      name: {
+	        first: firstName,
+	        last: lastName
+	      },
+	      username: username.toLowerCase(),
+	      check_in: ""
+	    });
+	    
+	    account.findOne({username:username},function(err,doc){
+	        callback(doc);
+	      });
+
+	    user.save(callback);
+	  };  
   
   var passwordUpdate = function(id, password, callback) {
 	  console.log("id "+id);
@@ -166,11 +185,21 @@ module.exports = function(mongoose) {
 	  };
 
  var findById = function(id, callback) {
-  account.findOne({_id:id}, function(err,doc) {
-      callback(doc);
-  });
+	 console.log("find by id "+id);
+	  account.findOne({_id:id}, function(err,doc) {
+		  console.log("user found "+JSON.stringify(doc));
+	      callback(doc);
+	  });
   };
 
+  var findByFBId = function(id, callback) {
+		 console.log("find by id "+id);
+		  account.findOne({fb_id:id}, function(err,doc) {
+			  console.log("user found "+JSON.stringify(doc));
+		      callback(doc);
+		  });
+	  };  
+  
   var findBycId = function(cID, callback) {
 
 	  account.findOne({_id:cID}, function(err,doc) {
@@ -262,6 +291,8 @@ module.exports = function(mongoose) {
     findUsernameById: findUsernameById,
     findFirstnameById: findFirstnameById,
     findByEmail: findByEmail,
-    ajaxTest: ajaxTest
+    ajaxTest: ajaxTest,
+    fb_register: fb_register,
+    findByFBId: findByFBId
   }
 }
