@@ -41,6 +41,10 @@
 				   getLocation(0, url); 						   
 			   }
 		   } 		   
+		   else if ($(this).hasClass("facebook")) {
+			   console.log("facebook!");
+			   location.assign(url);
+		   }
 		   else if ($(this).hasClass("logout")) {
 			   console.log("logout!");
 			   location.assign(url);

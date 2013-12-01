@@ -44,7 +44,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new FacebookStrategy({
     clientID: FACEBOOK_APP_ID,
     clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/callback"
+    callbackURL: "http://localhost:5000/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
@@ -138,6 +138,31 @@ app.get('/register_email_value', routes.register_email_value);
 app.post('/register_email_value', routes.register_email_value);
 
 app.get('/logout', routes.logout);
+
+
+//GET /auth/facebook
+//Use passport.authenticate() as route middleware to authenticate the
+//request.  The first step in Facebook authentication will involve
+//redirecting the user to facebook.com.  After authorization, Facebook will
+//redirect the user back to this application at /auth/facebook/callback
+app.get('/auth/facebook',
+passport.authenticate('facebook'),
+function(req, res){
+// The request will be redirected to Facebook for authentication, so this
+// function will not be called.
+});
+
+//GET /auth/facebook/callback
+//Use passport.authenticate() as route middleware to authenticate the
+//request.  If authentication fails, the user will be redirected back to the
+//login page.  Otherwise, the primary route function function will be called,
+//which, in this example, will redirect the user to the home page.
+app.get('/auth/facebook/callback', 
+passport.authenticate('facebook', { failureRedirect: '/login' }),
+function(req, res) {
+res.redirect('/');
+});
+
 
 server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
