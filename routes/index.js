@@ -61,6 +61,29 @@ exports.register = function(req, res) {
     });
 }
 
+exports.update_password = function(req, res) {
+    var id = req.param('id', ''),
+    password  = req.param('password', null);
+
+    console.log("id "+id);    
+    console.log("password "+password);
+
+if ( null == password || password.length < 1 ) {
+  res.send(400);
+  return;
+}
+
+  account.passwordUpdate(id, password, function(err) {
+  if (err) {
+	  console.log("errors!");
+  }
+
+  res.send('password updated!');
+  //res.redirect('/');
+
+});
+}
+
 exports.register_value = function(req, res) {
 	var value = req.param('username', '');	
     account.findByUsername({username:value}, function(doc) {

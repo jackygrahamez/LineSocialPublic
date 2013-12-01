@@ -9,18 +9,44 @@
     <p>You checked in to <%= user.check_in.location %></p>
     <p>At <%= user.check_in.check_in_time %></p>
     <% } %>
+
 	  <form method="post" action="/register" class="form-skin register">
-	      <input value="<%= user.name.first %>" type="text" name="firstName" required  />
-	      <input value="<%= user.name.last %>" type="text" name="lastName" required />
-	      <input value="<%= user.username %>" type="text" name="username" required />
-	      <input value="<%= user.email %>" type="email" name="email" required />
+    <ul>	  
+	      <input class="hide" value="<%= user._id %>" type="text" name="id" required  />	  
+	      <li>Name: <%= user.name.first %> <%= user.name.last %></li>
+	      <li>Username: <%= user.username %></li>
+	      <li>Email: <%= user.email %></li>
+	      <p>Change your password?</p> 
 	      <input type="password" name="password" required placeholder="Your password here"/>
 	      <input type="password" name="cpassword" required placeholder="Your password (confirm) here"/>
 	      <p></p>
 	      <p>
 	      <input id="profile_update" type="button" value="Update Now" class="btn btn-flat btn-blue no-radius"/>
 	      </p>
+	</ul>	      
 	  </form>
+	 
     </section>
 </div>
 </section>
+
+
+<script type="text/javascript">
+   $("#profile_update").click(function(){
+   	console.log("profile update");
+	   var valid = true;	   
+	   var password = $("input[name='password']").val();
+	   var cpassword = $("input[name='cpassword']").val();
+	   var id = $("input[name='id']").val();
+	   var url = "/<%= user.username %>/update_password/";
+	   console.log("url "+url);
+	   console.log("password length "+password.length);
+	   if (password != cpassword || password.length == 0) {
+		   $("input[name='password']").addClass("invalid");
+		   $("input[name='cpassword']").addClass("invalid");
+		   valid = false;
+	   }
+	   if (valid) {
+		   updatePassword(id, password, url);
+		} 	   
+   });

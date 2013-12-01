@@ -59,7 +59,7 @@
 	  $(".checkin").remove();
    });
 
-   
+
    $("#user_register").click(function() {
 	   var email = $("input[name='email']").val();
 	   var cemail = $("input[name='cemail']").val();
@@ -299,26 +299,20 @@ function getVenues(url, coord) {
 	        });
  }  
 
-function userRegister(email, password, firstName, lastName, username) {
-		var url = "/register";
+function updatePassword(id, password, url) {
+		console.log("password "+password);
 	     $.ajax({ 
 	           url: url,
 	           type: 'POST',
 	           cache: false,
 	           data: { 
-	        	   email: email,
-	        	   password: password,
-	        	   firstName: firstName,
-	        	   lastName: lastName,
-	        	   username: username},
+	        	   id: id,
+	        	   password: password},
 	           success: function(data){ 
 	        	   console.log(data);
-	        	   if (data == 'Account was created') {
-	        		   location.replace(location.origin);
-	        	   } else {
-	        		   $("form > p").first().replaceWith(data);
+	        	   if (data === "password updated!") {
+	        		   $(".body .back").click();
 	        	   }
-	           	  
 	           }
 	           , error: function(jqXHR, textStatus, err){
 	               //alert('text status '+textStatus+', err '+err)
@@ -326,6 +320,8 @@ function userRegister(email, password, firstName, lastName, username) {
 	           }
 	        });
  }  
+
+
 
 function regCheck(username) {
 	var url = "/register_value";

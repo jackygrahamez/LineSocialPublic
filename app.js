@@ -49,6 +49,9 @@ app.post('/:username/user_lines/', routes.user_lines);
 app.get('/:username/user_points/', routes.user_points);
 app.get('/:username/user_profile/', routes.user_profile);
 
+app.get('/:username/update_password/', routes.update_password);
+app.post('/:username/update_password/', routes.update_password);
+
 app.get('/:username/messages/', routes.messages);
 app.post('/:username/messages/', routes.messages);
 

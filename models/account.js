@@ -58,6 +58,20 @@ module.exports = function(mongoose) {
     user.save(callback);
   };
   
+  var passwordUpdate = function(id, password, callback) {
+	  console.log("id "+id);
+	    var shaSum = crypto.createHash('sha256');
+	    shaSum.update(password);
+	    var shaPassword = shaSum.digest('hex');
+	    var query = { "_id" : id };
+	    account.update(query, {"$set" : { "password" : shaPassword }}, function(err,doc){
+	    	console.log("update doc "+doc);
+	        callback(doc);
+	    });
+
+	  };
+  
+  
   var checkInMethod = function(location, geolocation, line_length, accountId, callback) {
 	  	var d1 = new Date(),
 	  	  	d2 = new Date(d1);	
@@ -232,6 +246,7 @@ module.exports = function(mongoose) {
   return {
     login: login,
     register: register,
+    passwordUpdate: passwordUpdate,
     findById: findById,
     findBycId: findBycId,
     findByUsername: findByUsername,
