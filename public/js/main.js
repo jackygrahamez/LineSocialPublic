@@ -42,11 +42,9 @@
 			   }
 		   } 		   
 		   else if ($(this).hasClass("facebook")) {
-			   console.log("facebook!");
 			   location.assign(url);
 		   }
 		   else if ($(this).hasClass("logout")) {
-			   console.log("logout!");
 			   location.assign(url);
 		   }
 		   else {
@@ -147,12 +145,12 @@
    },60000);
    */
    
+   $("html").removeClass("disabled");
 })(jQuery, this)
 
 
 function getLocation(lLength, pURL)
   {
-	console.log("pURL "+pURL);
 	lURL = pURL;
 	$("ul.checkin").canvasLoader();
 	lineLength = lLength;
@@ -171,8 +169,6 @@ function showPosition(position)
   global_coords = [position.coords.latitude+","+position.coords.longitude];
   global_coords_lat = position.coords.latitude;
   global_coords_lon = position.coords.longitude;
-  console.log("lineLength "+lineLength);
-  console.log("lineLength type "+typeof(lineLength));
 	  if (parseInt(lineLength) > 1) {
 		  var url = location.pathname+"/venues/";
 		  getVenues(url, coord);		  
@@ -181,9 +177,6 @@ function showPosition(position)
 	  } else if (lineLength == 1) {
 		  var d = new Date()
 		  var url = location.pathname+"/auto_checkout/";
-		  console.log("url "+url);
-		  console.log("auto check "+d);
-		  console.log("positions "+position.coords.latitude + " lon "+position.coords.longitude);
 		  auto_checkout(url, position.coords.latitude, position.coords.longitude);
 	  } 
 	  else {
@@ -209,7 +202,6 @@ function showError(error)
     }
   }
 function getPage(url) {
-		console.log("getPage(url) "+url);
 	     $.ajax({ 
 	           url: url,
 	           type: 'GET',
@@ -293,7 +285,6 @@ function getVenues(url, coord) {
 					   //geolocation  = global_coords,
 					   line_length     = $("#line_length").val();
 					   var url = $("form.checkin").attr("action");
-					   console.log("url "+url);
 					   checkIn(location, geolocation, line_length, global_coords_lat, global_coords_lon, url);
 				   });
 			   	   $("input, textarea").focus(function(){
@@ -310,7 +301,6 @@ function getVenues(url, coord) {
  }  
 
 function updatePassword(id, password, url) {
-		console.log("password "+password);
 	     $.ajax({ 
 	           url: url,
 	           type: 'POST',
@@ -319,7 +309,6 @@ function updatePassword(id, password, url) {
 	        	   id: id,
 	        	   password: password},
 	           success: function(data){ 
-	        	   console.log(data);
 	        	   if (data === "password updated!") {
 	        		   $(".body .back").click();
 	        	   }
@@ -344,7 +333,6 @@ function userRegister(email, password, firstName, lastName, username) {
         	   lastName: lastName,
         	   username: username},
            success: function(data){ 
-        	   console.log(data);
         	   if (data == 'Account was created') {
         		   location.replace(location.origin);
         	   } else {
@@ -368,7 +356,6 @@ function regCheck(username) {
            data: { 
         	   username: username},
            success: function(data){ 
-        	   console.log(data);
         	   if (data == "username taken") {
         		   $("input[name='username']").addClass("invalid");
         	   } else {
@@ -391,7 +378,6 @@ function regCheckEmail(email) {
            data: { 
         	   email: email},
            success: function(data){ 
-        	   console.log(data);
         	   if (data == "email taken") {
         		   $("input[name='email']").addClass("invalid");
         	   } else {
@@ -410,13 +396,6 @@ function isValidEmail(emailText) {
     return pattern.test(emailText);
 };
 function updateMessages(timestamp, cID, fID, tID, messages, user, url) {
-	console.log("timestamp "+timestamp);	
-	console.log("cID "+cID);	
-	console.log("fID "+fID);	
-	console.log("tID "+tID);	
-	console.log("messages "+messages);
-	console.log("user "+user);
-	console.log("url "+url);
      $.ajax({ 
            url: url,
            type: 'POST',
@@ -429,8 +408,6 @@ function updateMessages(timestamp, cID, fID, tID, messages, user, url) {
         	   user: user,
         	   messages: messages},
            success: function(data){ 
-        	   console.log(data);
-
            }
            , error: function(jqXHR, textStatus, err){
                //alert('text status '+textStatus+', err '+err)
@@ -450,7 +427,6 @@ function updateNotificationMessages(cID, fID, messages, url, requests) {
         	   messages: messages,
         	   requests: requests},
            success: function(data){ 
-        	   console.log(data);
 
            }
            , error: function(jqXHR, textStatus, err){
@@ -496,7 +472,6 @@ function checkTime(i) {
 function checkIn(location, geolocation, line_length, global_lat, global_lon, url) {
 
 	if((location.length > 0) && (geolocation.length > 0) && (line_length.length > 0)) {
-		console.log("line length "+line_length);
 	     $.ajax({ 
 	           url: url,
 	           type: 'POST',
@@ -505,7 +480,6 @@ function checkIn(location, geolocation, line_length, global_lat, global_lon, url
 	           success: function(data){
 	           	  markup = data;
 	              //alert('Success!');
-	              console.log("data "+data);
 	              $("#demo").html(data);
 	              global_cID = data;
 	              $(".checkin.active .back").click();
@@ -519,10 +493,7 @@ function checkIn(location, geolocation, line_length, global_lat, global_lon, url
  } 
 
 function auto_checkout(url, lat, lon) {
-	console.log("auto_checkout");
-	console.log("url "+url);
 	if(lat) {
-		console.log("lat "+lat);
 	     $.ajax({ 
 	           url: url,
 	           type: 'POST',
@@ -532,7 +503,6 @@ function auto_checkout(url, lat, lon) {
 	           success: function(data){
 	           	  markup = data;
 	              //alert('Success!');
-	              console.log("auto_checkout data count "+JSON.stringify(data));
 	           }
 	           , error: function(jqXHR, textStatus, err){
 	               //alert('text status '+textStatus+', err '+err)
@@ -544,7 +514,6 @@ function auto_checkout(url, lat, lon) {
 
 
 function getLines(url) {
-	console.log("getLines "+url);
 	 if (typeof(global_coords_lat)!="undefined" && typeof(global_coords_lon)!="undefined") {
 	     $.ajax({ 
 	           url: url,

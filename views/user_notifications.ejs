@@ -83,7 +83,6 @@ $(document).ready(function(){
     socket.on('message', function (data) {
         if(data.message) {
             messages.push(data);
-            console.log("data "+JSON.stringify(data));
             var html = $(".content.notifications").html();
             var chat_requests = '';            
             var fIDlist = [];
@@ -92,7 +91,6 @@ $(document).ready(function(){
 			global_fID = $(".notifications.controls .fID").attr("value");              
  			global_tID = $(".notifications.controls .tID").attr("value");
 	            for(var i=0; i<messages.length; i++) {
-            			console.log("messages[i].fID "+messages[i].fID);    
 	            if ($(".notifications.controls .cID").attr("value") == messages[i].cID) {
 		            if (typeof(messages[i].username) != 'undefined') {
 	            	$(".content.notifications div").each(function(){			            	
@@ -130,9 +128,7 @@ $(document).ready(function(){
 	            		}
 					}
 	            }
-			console.log("fIDlist "+fIDlist);
 	       var fIDlistArrayUnique = ArrNoDupe(fIDlist);
-	       console.log("fIDlistArrayUnique "+fIDlistArrayUnique);
 	       if (html.length > 0) {        
            		$(".content.notifications").html(html);
 				$('.content.notifications').stop().animate({
@@ -155,7 +151,6 @@ $(document).ready(function(){
            		});
            }
            var chat_requests = $(".chat_requests ul").html();
-           console.log("chat_requests "+chat_requests);
             for(var i=0; i<fIDlistArrayUnique.length; i++) {
 	            var ufID = fIDlistArrayUnique[i].split("_").pop();
 	            fIDlistArrayUnique[i].split("_").pop();
@@ -165,7 +160,6 @@ $(document).ready(function(){
 			            $(".chat_requests ul").append(chat_requests);
 			            $(".chat_requests ul > li").unbind("click");
 				        $(".chat_requests ul > li").click(function() {
-			       		console.log("clicked chat requests");
 			       		var notification_class = $(this).attr("ufid");
 			       		global_tID = notification_class;
 						$(".notifications.controls .tID").attr("value", global_tID);	       		
@@ -199,7 +193,6 @@ $(document).ready(function(){
 	        }     
   
 	       $(".chat_requests ul li").click(function() {
-	       		console.log("line 202 toggle");
 	       		var notification_class = $(this).attr("ufid");
 	       		global_tID = notification_class;
 				$(".notifications.controls .tID").attr("value", global_tID);	       		
@@ -247,7 +240,6 @@ $(document).ready(function(){
 			var tID = $(".notifications.controls .tID").attr("value");
 	    	var cID = $(".notifications.controls .cID").attr("value");      
 	    	var fID = $(".notifications.controls .fID").attr("value"); 
-	    	console.log("socket emit");       	      
             socket.emit('send', { ts: timestamp, cID: cID, fID: fID, tID: tID, message: text, username: user });
             var url = "/"+name.value+"/update_messages/";
             updateMessages(timestamp, cID, fID, tID, text, user, url);

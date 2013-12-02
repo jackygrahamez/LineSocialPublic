@@ -12,6 +12,12 @@ html, root, body, p, li, ul, h1, h2, a, input[type='button'] {
   -o-user-select: none;
   user-select: none; 	
 }
+
+html {
+	transition: opacity 0.5s;
+	transition-delay: 0s;
+}
+
 body {
 	background: url(../img/bg.png);
 	padding: 0px;
@@ -671,7 +677,6 @@ p.outbound > span,
 	top: 0px;
 	left: 0px;
 	opacity: 1;
-	transition: opacity 1s;
 }
 
 .overlay canvas {
@@ -685,6 +690,11 @@ p.outbound > span,
 	transition: opacity 2s, width 0.1s, height 0.1s;
 	transition-delay: 0s, 2s, 2s;
 }
+
+.disabled {
+	opacity: 0;
+}
+
 
 /*
 .facebook {
