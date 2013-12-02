@@ -709,7 +709,7 @@ p.outbound > span,
 
 .message.collapsed {
 	height: 0px;
-	transition: height 5s;
+	transition: height 0.1s;
 	padding: 0px;
 	overflow: hidden;
 	border: none;
