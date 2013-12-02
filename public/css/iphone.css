@@ -83,7 +83,7 @@ time {
 	font-style: italic;
 	font-size: 12px;
 }
-li{
+li {
 	background-color: white;
 	border: 1px solid #ababab;
 	margin-bottom: -2px;
@@ -96,13 +96,19 @@ li{
 	position: relative;
 }
 
-li.arrow{
+li.arrow:after {
+	content: "";
 	background-image: url(../img/arrow.png);
-  	background-position: right center;
-  	background-repeat: no-repeat;	
+	background-position: right center;
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 20px;
+	height: 19px;
+	position: absolute;
+	right: 5px;
 }
 
-li span.right{
+li span.right {
 	position:absolute;
 	right: 45px;
 	text-align: right;
@@ -110,7 +116,7 @@ li span.right{
 	font-weight: normal;
 }
 
-li:first-child{
+li:first-child {
    -webkit-border-top-left-radius: 12px;
    -webkit-border-top-right-radius: 12px;
 }
@@ -699,6 +705,33 @@ p.outbound > span,
 	color: #228B22;
 	right: 30px;
 	position: absolute;
+}
+
+.message.collapsed {
+	height: 0px;
+	transition: height 5s;
+	padding: 0px;
+	overflow: hidden;
+	border: none;
+	color: transparent;
+}
+
+.message {
+	background: #efefef;
+	border: 1px solid #ddd;
+	height: 30px;
+	color: black;
+	transition: height 1s, color 1s;
+	transition-delay: 0s, 1s;	
+}
+
+.down:after {
+	transition: transform 1s;
+	-webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	transform: rotate(90deg);
 }
 
 /*
