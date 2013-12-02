@@ -146,6 +146,7 @@
 	   getLocation(1);
    },60000);
    */
+   
 })(jQuery, this)
 
 
