@@ -36,10 +36,13 @@
 
 
 <%include footer %>
- <div class="overlay"></div>
+ <div class="overlay"><div></div></div>
 <script type="text/javascript">
 $(document).ready(function(){
+$(".overlay > div").canvasLoader();
+setTimeout(function() {
    $(".overlay").addClass("disable");
+   }, 500);
 });
 </script>
 

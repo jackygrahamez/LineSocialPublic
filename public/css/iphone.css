@@ -670,6 +670,10 @@ p.outbound > span,
 	transition: opacity 1s;
 }
 
+.overlay canvas {
+	margin-top: 100px;
+}
+
 .overlay.disable {
 	opacity: 0;
 	width: 0px;
