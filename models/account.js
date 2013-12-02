@@ -23,7 +23,8 @@ module.exports = function(mongoose) {
     	  line_length: { type: Number },
     	  check_in_time: { type: Date, expires: '24h' },
     	  check_in_expire_time: { type: Date, expires: '24h' }
-      }
+      },
+      points: { type: Number }
       
   });
   
@@ -52,7 +53,8 @@ module.exports = function(mongoose) {
       },
       username: username.toLowerCase(),
       password: shaSum.digest('hex'),
-      check_in: ""
+      check_in: "",
+      points: 1000
     });
     
     account.findOne({username:username},function(err,doc){

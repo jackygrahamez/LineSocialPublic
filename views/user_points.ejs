@@ -5,7 +5,11 @@
 	<h2 class="light no-margin">Points</h2>
 
     <section class="bordered">
-
+	<ul>
+	<% if (user.points != undefined) { %>
+	<li> <%= user.points %>  </li>
+	<% } %>
+	</ul>
     </section>
 </div>
 </section>
