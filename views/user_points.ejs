@@ -7,8 +7,9 @@
     <section class="bordered">
 	<ul>
 	<% if (user.points != undefined) { %>
-	<li> <%= user.points %>  </li>
+	<li>Points: <%= user.points %>  <span class="green">+1 weekly</span></li>
 	<% } %>
+	<li class="arrow">Buy Points</li> 
 	</ul>
     </section>
 </div>

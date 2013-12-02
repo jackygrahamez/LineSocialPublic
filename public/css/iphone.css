@@ -695,6 +695,11 @@ p.outbound > span,
 	opacity: 0;
 }
 
+.green {
+	color: #228B22;
+	right: 30px;
+	position: absolute;
+}
 
 /*
 .facebook {
