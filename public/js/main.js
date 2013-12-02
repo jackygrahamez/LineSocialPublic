@@ -330,7 +330,33 @@ function updatePassword(id, password, url) {
 	        });
  }  
 
-
+function userRegister(email, password, firstName, lastName, username) {
+	var url = "/register";
+     $.ajax({ 
+           url: url,
+           type: 'POST',
+           cache: false,
+           data: { 
+        	   email: email,
+        	   password: password,
+        	   firstName: firstName,
+        	   lastName: lastName,
+        	   username: username},
+           success: function(data){ 
+        	   console.log(data);
+        	   if (data == 'Account was created') {
+        		   location.replace(location.origin);
+        	   } else {
+        		   $("form > p").first().replaceWith(data);
+        	   }
+           	  
+           }
+           , error: function(jqXHR, textStatus, err){
+               //alert('text status '+textStatus+', err '+err)
+               console.log('text status '+textStatus+', err '+err);
+           }
+        });
+} 
 
 function regCheck(username) {
 	var url = "/register_value";
