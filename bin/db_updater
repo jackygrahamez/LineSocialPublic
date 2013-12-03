@@ -1,0 +1,48 @@
+var mongoose = require('mongoose');
+
+mongoose.connect('mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds053678.mongolab.com:53678/heroku_app19397517');
+
+  var Schema = mongoose.Schema,
+  ObjectId = Schema.ObjectId;
+	
+  var userSchema = new mongoose.Schema({
+	  fb_id:	 { type: String, unique: true },
+      email:     { type: String, unique: true },
+      password:  { type: String },
+      username:  { type: String, unique: true },
+      name: {
+        first:   { type: String },
+        last:    { type: String }
+      },
+      photoUrl:  { type: String },
+      check_in: {
+    	  cID: ObjectId,
+    	  location: { type: String },
+    	  geolocation: { type: {}, index: '2dsphere', sparse: true },
+    	  line_length: { type: Number },
+    	  check_in_time: { type: Date, expires: '24h' },
+    	  check_in_expire_time: { type: Date, expires: '24h' }
+      },
+      points: { type: Number }
+      
+  });
+  var account = mongoose.model('Account', userSchema);
+
+var addPoints = function( callback) {
+	var query = {};
+	var update = { $inc: { points: 1 }};
+	account.update(query, update,
+	        function(error, account){
+		console.log("account "+account);
+        if( error ) callback(error);
+        else callback(null, account);
+	});
+}	
+
+function db_update() {
+console.log("db_update");
+    addPoints(function(err) {
+		console.log('added points');
+    });
+}
+db_update();
