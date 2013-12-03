@@ -65,12 +65,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 //   Strategies in Passport require a `verify` function, which accept
 //   credentials (in this case, an accessToken, refreshToken, and Facebook
 //   profile), and invoke a callback with a user object.
+console.log("about to use passport");
 passport.use(new FacebookStrategy({
     clientID: FACEBOOK_APP_ID,
     clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: "http://lineout.herokuapp.com/auth/facebook/callback"
+    callbackURL: "http://localhost:5000/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
+	 console.log("passport callback function");
     // asynchronous verification, for effect...
     process.nextTick(function () {
       console.log("profile "+JSON.stringify(profile));
@@ -86,7 +88,7 @@ passport.use(new FacebookStrategy({
         */
       var firstname = profile.name.givenName, 
       	  lastname = profile.name.familyName;
-
+      console.log("registering id: "+profile.id+ " " + " firstname: " + firstname + " lastname: "+ lastname + " username: "+ profile.username);
       routes.fb_register(profile.id, firstname, lastname, profile.username);
       return done(null, profile);
     });
@@ -176,8 +178,9 @@ function(req, res){
 //login page.  Otherwise, the primary route function function will be called,
 //which, in this example, will redirect the user to the home page.
 app.get('/auth/facebook/callback', 
-passport.authenticate('facebook', { failureRedirect: '/login' }),
+passport.authenticate('facebook'),
 function(req, res) {
+	console.log("/auth/facebook/callback");
 	routes.fb_login(req.session.passport.user.id, req, res);
 	//console.log("session JSON session "+JSON.stringify(req.session));
 	//var homepage = '/'+req.session.passport.user.username;

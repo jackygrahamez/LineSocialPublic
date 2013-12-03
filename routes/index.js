@@ -66,10 +66,12 @@ exports.fb_register = function(id, firstname, lastname, username) {
 	console.log("fb_register id "+id);
 
 	account.findByFBId(id, function(doc) {
-	  console.log("doc " + JSON.stringify(doc));
+	  console.log("findByFBId " + JSON.stringify(doc));
 	  console.log("doc type "+typeof(doc));
 	  if (typeof(doc) == 'undefined' || doc == null) {
 			console.log("user is undefined!");
+ 	        console.log("registering id: "+id+ " " + " firstname: " + firstname + " lastname: "+ lastname + " username: "+ username);
+			
 			account.fb_register(id, firstname, lastname, username, 
 					function (err, user_created) {
 			console.log("user created! "+user_created);
@@ -85,7 +87,7 @@ exports.fb_register = function(id, firstname, lastname, username) {
 
 
 exports.fb_login = function(id, req, res) {
-	console.log("fb_register id "+id);
+	console.log("fb_login id "+id);
 	account.findByFBId(id, function(doc) {
 		//console.log("login doc " + JSON.stringify(doc));
 	  	var homepage = '/'+doc.username;
