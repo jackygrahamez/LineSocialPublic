@@ -31,7 +31,8 @@ mongoose.connect('mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds0536
 var addPoints = function( callback) {
 	var query = {};
 	var update = { $inc: { points: 1 }};
-	account.update(query, update,
+	var options = { usert: true, multi: true };
+	account.update(query, update, options,
 	        function(error, account){
 		console.log("account "+account);
         if( error ) callback(error);
