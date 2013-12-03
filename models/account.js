@@ -116,7 +116,16 @@ module.exports = function(mongoose) {
 	    {"$set": { check_in : checkIn }},
 	        function(error, account){
 	           if( error ) callback(error);
-	           else callback(null, account);}
+	           else {
+	        	   var query = {"_id" : accountId};
+	        	   var update = {"$inc": { points: -1 }};
+	        	   account.update(query, update,
+	        		        function(error, account){
+	    	           if( error ) callback(error);
+	    	           else callback(doc);
+	        	   });
+	           }
+	        }
 	    );
 	    
 	    //callback();
