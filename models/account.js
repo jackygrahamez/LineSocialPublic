@@ -72,7 +72,8 @@ module.exports = function(mongoose) {
 	        last: lastName
 	      },
 	      username: username.toLowerCase(),
-	      check_in: ""
+	      check_in: "",
+	      points: 1000
 	    });
 	    
 	    account.findOne({username:username},function(err,doc){
