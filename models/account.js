@@ -78,7 +78,8 @@ module.exports = function(mongoose) {
 	      points: 1000
 	    });
 	    console.log("saving "+user);
-	    user.save(callback);	    
+	    user.save();	    
+	    console.log("user save")
 	    account.findOne({username:username},function(err,doc){
 	    	console.log("findOne after register "+doc);
 	        callback(doc);
