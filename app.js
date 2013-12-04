@@ -69,7 +69,7 @@ console.log("about to use passport");
 passport.use(new FacebookStrategy({
     clientID: FACEBOOK_APP_ID,
     clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:5000/auth/facebook/callback"
+    callbackURL: "http://lineout.herokuapp.com/0/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
 	 console.log("passport callback function");
