@@ -8,7 +8,7 @@ module.exports = function(mongoose) {
 	
   var userSchema = new mongoose.Schema({
 	  fb_id:	 { type: String, unique: true },
-      email:     { type: String, unique: true },
+      email:     { type: String },
       password:  { type: String },
       username:  { type: String, unique: true },
       name: {
@@ -65,6 +65,8 @@ module.exports = function(mongoose) {
   };
   
   var fb_register = function(id, firstName, lastName, username, callback) {
+       //console.log("registering id: "+id+ " " + " firstname: " + firstName + " lastname: "+ lastName + " username: "+ username);
+
 	    var user = new account({
 	      fb_id: id,
 	      name: {
@@ -75,12 +77,13 @@ module.exports = function(mongoose) {
 	      check_in: "",
 	      points: 1000
 	    });
-	    
+	    console.log("saving "+user);
+	    user.save(callback);	    
 	    account.findOne({username:username},function(err,doc){
+	    	console.log("findOne after register "+doc);
 	        callback(doc);
 	      });
 
-	    user.save(callback);
 	  };  
   
   var passwordUpdate = function(id, password, callback) {
@@ -199,6 +202,9 @@ module.exports = function(mongoose) {
 		 console.log("find by id "+id);
 		  account.findOne({fb_id:id}, function(err,doc) {
 			  console.log("user found "+JSON.stringify(doc));
+			  if (JSON.stringify(doc) == null) {
+				  console.log("user is null!!!");
+			  }
 		      callback(doc);
 		  });
 	  };  
