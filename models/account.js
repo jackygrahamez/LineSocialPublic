@@ -202,7 +202,7 @@ module.exports = function(mongoose) {
   var findByFBId = function(id, callback) {
 		 console.log("find by id "+id);
 		  account.findOne({fb_id:id}, function(err,doc) {
-			  console.log("user found "+JSON.stringify(doc));
+			  console.log("findByFBId user found "+JSON.stringify(doc));
 			  if (JSON.stringify(doc) == null) {
 				  console.log("user is null!!!");
 			  }
