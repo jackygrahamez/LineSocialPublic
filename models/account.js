@@ -7,10 +7,10 @@ module.exports = function(mongoose) {
   ObjectId = Schema.ObjectId;
 	
   var userSchema = new mongoose.Schema({
-	  fb_id:	 { type: String, unique: true },
+	  fb_id:	 { type: String },
       email:     { type: String },
       password:  { type: String },
-      username:  { type: String, unique: true },
+      username:  { type: String },
       name: {
         first:   { type: String },
         last:    { type: String }
