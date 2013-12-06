@@ -8,7 +8,7 @@
 			
 				   <%if (lines[i].check_in.line_length) { %>
 				   <%if (JSON.stringify(lines[i]._id) != JSON.stringify(user._id)) { %>	
-				    <a class="message" href="/<%= user.username %>/messages/">
+				    <a href="/<%= user.username %>/messages/">
 			   		<li class="arrow"> 
 
 						<form id="form<%= i %>">
