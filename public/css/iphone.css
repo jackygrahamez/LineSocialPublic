@@ -122,7 +122,8 @@ li:first-child {
    -webkit-border-top-right-radius: 12px;
 }
 
-li:last-child {
+li:last-child,
+li.arrow[name='contact']:not(.down) {
    -webkit-border-bottom-left-radius: 12px;
    -webkit-border-bottom-right-radius: 12px;
 }
