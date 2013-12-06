@@ -103,9 +103,10 @@ li.arrow:after {
 	background-repeat: no-repeat;
 	display: inline-block;
 	width: 20px;
-	height: 19px;
+	height: 100%;
 	position: absolute;
 	right: 5px;
+	top: 0px;
 }
 
 li span.right {
@@ -717,7 +718,6 @@ p.outbound > span,
 }
 
 .message {
-	background: #efefef;
 	border: 1px solid #ddd;
 	height: 30px;
 	color: black;
