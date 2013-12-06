@@ -751,6 +751,7 @@ p.outbound > span,
 	border: 0px;
 	transition: height 2s;
 	transition-delay: 0s;
+	padding: 0 10px;
 }
 
 .section.expanded.about {
