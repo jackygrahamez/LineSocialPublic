@@ -158,6 +158,7 @@ app.get('/register_email_value', routes.register_email_value);
 app.post('/register_email_value', routes.register_email_value);
 
 app.get('/logout', routes.logout);
+app.get('/terms', routes.terms);
 
 
 //GET /auth/facebook

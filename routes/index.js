@@ -158,6 +158,10 @@ exports.register_email_value = function(req, res) {
 }
 
 
+exports.terms = function(req, res){
+	 res.render('terms');
+};
+
 exports.login = function(req, res){
     var email    = req.body.email,
         password = req.body.password;
@@ -208,6 +212,10 @@ exports.home = function(req, res) {
       res.render('register', {
 		  title: 'register'	,
 		  pagename: 'register'});
+
+  }  else if( url === 'terms' ) {
+
+      res.render('terms');
 
   }  else {
 

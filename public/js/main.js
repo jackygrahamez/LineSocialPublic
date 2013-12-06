@@ -29,7 +29,7 @@
    $("a").click(function(e){
 	   e.preventDefault();
 	   var url = $(this).attr("href");
-	   if (url != "/register") {
+	   if (url != "/register" && url != "/terms") {
 		   if (url.indexOf("notifications") > 0) {
 			   $(".notifications").addClass("active");
 		   }
@@ -70,6 +70,7 @@
 	   var firstName = $("input[name='firstName']").val();
 	   var lastName = $("input[name='lastName']").val();
 	   var username = $("input[name='username']").val();
+	   var terms = $("input[name='terms']").val();
 	   var valid = true;
 	   $(".register > input").each(function(){
 		   	var object = $(this);
@@ -99,6 +100,10 @@
 		   $("input[name='cpassword']").addClass("invalid");
 		   valid = false;
 	   }	   
+	   
+	   if (terms != "on") {
+		   valid = false;
+	   }
 	   
 	   if (	valid && (email === cemail) && (password === cpassword)) {
 		   userRegister(email, password, firstName, lastName, username);
@@ -134,6 +139,15 @@
    if (window.location.href.indexOf('#_=_') > 0) {
 	    window.location = window.location.href.replace(/#.*/, '');
 	}   
+   
+   //TERMS
+   $(".termsButton").click(function(){
+	   $(".terms").toggleClass("expanded");
+	   var top =  $(".terms").position().top;
+	   console.log("top "+top);
+	   $('html, body').animate({scrollTop:top - 50}, 'slow');	   
+   });
+   
    
    //set global coordinates
    //getLocation(0);

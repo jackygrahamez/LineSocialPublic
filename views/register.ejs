@@ -12,9 +12,28 @@
       <input type="password" name="cpassword" required placeholder="Your password (confirm) here"/>
       <p></p>
       <p>
+	  <label>Accept Terms & Conditions</label>
+	  <br />
+	  <input id="terms" name="terms" type="checkbox"/>
+	  <br />   
       <input id="user_register" type="button" value="Register Now" class="btn btn-flat btn-blue no-radius"/>
       </p>
+	<p><a href="/terms">Terms & Conditions</a></p>
+	<ul>
+		<li class="termsButton">Terms & Conditions</li>
+	</ul>
+	<ul class="terms">	
+		<li><% include terms %></li>
+	</ul>
+	  
   </form>
 </div>
 
 <% include footer %>
+
+<script>
+$(document).ready(function(){
+$(".iPhoneCheckLabelOn > span").text("Yes");
+$(".iPhoneCheckLabelOff > span").text("No");
+});
+</script>

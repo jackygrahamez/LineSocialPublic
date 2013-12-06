@@ -734,6 +734,34 @@ p.outbound > span,
 	transform: rotate(90deg);
 }
 
+.terms {
+	height: 0px;
+	overflow: hidden;
+	padding: 0px;
+	border: 0px;
+	transition: height 0.5s;
+	transition-delay: 0s;	
+}
+
+.terms.expanded {
+	height: auto;
+	overflow: hidden;
+	padding: 0px;
+	border: 0px;
+	transition: height 2s;
+	transition-delay: 0s;
+	min-height: 4670px;	
+}
+
+.terms.expanded li li {
+	border: none;
+	width: 200px
+}
+
+.terms.expanded li li li {
+	width: 170px
+}
+
 /*
 .facebook {
 background: url(../img/login-with-facebook.png) no-repeat 0 0;
