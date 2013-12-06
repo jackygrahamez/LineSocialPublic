@@ -89,7 +89,7 @@ passport.use(new FacebookStrategy({
       var firstname = profile.name.givenName, 
       	  lastname = profile.name.familyName;
       console.log("registering id: "+profile.id+ " " + " firstname: " + firstname + " lastname: "+ lastname + " username: "+ profile.username);
-      routes.fb_register(profile.id, firstname, lastname, profile.username);
+      //routes.fb_register(profile.id, firstname, lastname, profile.username);
       return done(null, profile);
     });
   }
@@ -181,7 +181,15 @@ app.get('/auth/facebook/callback',
 passport.authenticate('facebook'),
 function(req, res) {
 	console.log("/auth/facebook/callback");
-	routes.fb_login(req.session.passport.user.id, req, res);
+	console.log("user "+JSON.stringify(req.session.passport.user));
+    var firstname = req.session.passport.user.name.givenName, 
+	  lastname = req.session.passport.user.name.familyName,
+	  id = req.session.passport.user.id,
+	  username = req.session.passport.user.username;
+	routes.fb_register(id, firstname, lastname, username, req, res);
+	//routes.fb_login(req.session.passport.user.id, req, res, function(doc){
+	//	console.log("app user created "+doc);
+	//});
 	//console.log("session JSON session "+JSON.stringify(req.session));
 	//var homepage = '/'+req.session.passport.user.username;
 	//console.log("homepage "+homepage);

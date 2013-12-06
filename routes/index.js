@@ -62,24 +62,30 @@ exports.register = function(req, res) {
     });
 }
 
-exports.fb_register = function(id, firstname, lastname, username) {
+exports.fb_register = function(id, firstname, lastname, username, req, res) {
 	account.findByFBId(id, function(doc) {
 		console.log("doc "+doc)
 	  if (typeof(doc) == 'undefined' || doc == null) {
 			account.fb_register(id, firstname, lastname, username, function (err, user_created) {
 				account.findByFBId(id, function(doc_after_reg) {
 					console.log("doc_after_reg "+doc_after_reg);
-					/*
+
 				  	var homepage = '/'+doc_after_reg.username;
 					console.log("homepage "+homepage);
 				    req.session.loggedIn  = true;
 				    req.session.accountId = doc_after_reg._id;	
-					res.redirect(homepage);			*/				
+					res.redirect(homepage);					
 			        return doc_after_reg;			
 				});
 				console.log("returning user created");
 				return user_created;
 			});    			  
+	  } else {
+		  	var homepage = '/'+doc.username;
+			console.log("homepage "+homepage);
+		    req.session.loggedIn  = true;
+		    req.session.accountId = doc._id;	
+			res.redirect(homepage);				  
 	  }
         return doc;
 	});

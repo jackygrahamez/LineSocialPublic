@@ -80,7 +80,9 @@ module.exports = function(mongoose) {
 	    console.log("saving "+user);
 	    user.save();	    
 	    console.log("user save")
-	    account.findOne({username:username},function(err,doc){
+	    var query = {username: username};
+	    console.log("find one query "+ JSON.stringify(query));
+	    account.findOne(query, function(err,doc){
 	    	console.log("findOne after register "+doc);
 	        callback(doc);
 	      });
