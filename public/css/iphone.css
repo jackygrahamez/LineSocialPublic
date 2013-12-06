@@ -734,7 +734,7 @@ p.outbound > span,
 	transform: rotate(90deg);
 }
 
-.terms {
+.section {
 	height: 0px;
 	overflow: hidden;
 	padding: 0px;
@@ -743,23 +743,38 @@ p.outbound > span,
 	transition-delay: 0s;	
 }
 
-.terms.expanded {
+.section.expanded {
 	height: auto;
 	overflow: hidden;
 	padding: 0px;
 	border: 0px;
 	transition: height 2s;
 	transition-delay: 0s;
+}
+
+.section.expanded.about {
+	min-height: 2200px;
+}
+
+.section.expanded.terms {
 	min-height: 4670px;	
 }
 
-.terms.expanded li li {
-	border: none;
-	width: 200px
+
+.section.expanded.contact {
+	min-height: 200px;
 }
 
-.terms.expanded li li li {
-	width: 170px
+.section.expanded li,
+.section.expanded ol li {
+	border: none !important;
+	width: 200px !important;
+}
+
+.section.expanded li li,
+.section.expanded li ol li {
+	border:none !important;
+	width: 170px !important;
 }
 
 /*

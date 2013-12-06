@@ -141,11 +141,19 @@
 	}   
    
    //TERMS
-   $(".termsButton").click(function(){
-	   $(".terms").toggleClass("expanded");
-	   var top =  $(".terms").position().top;
-	   console.log("top "+top);
-	   $('html, body').animate({scrollTop:top - 50}, 'slow');	   
+   $("menu.footer li").click(function(){
+
+	   var section = $(this).next();
+	   if ($(section).hasClass("expanded")) {
+		   $(section).removeClass("expanded");
+	   }
+	   else {
+		   $(".section").removeClass("expanded");
+		   $(section).addClass("expanded");
+		   var top =  $(section).position().top;
+		   $('html, body').animate({scrollTop:top - 50}, 'slow');		   
+	   }
+	   
    });
    
    
