@@ -64,7 +64,6 @@ var user = new account({
 	"password": "6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090",
 	"username": username,
 	"check_in": {
-	"cID": ObjectId(),
 	"location": location,
 	"geolocation": [
 	lat,
