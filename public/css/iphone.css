@@ -3,6 +3,10 @@ Design by predic8 GmbH
 http://www.predic8.de
 Released for free under a Creative Commons Attribution 2.5 License
 */
+
+::-moz-selection { background: transparent; color: transparent; text-shadow: none; }
+::selection { background: transparent; color: transparent; text-shadow: none; }
+
 html, root, body, p, li, ul, h1, h2, a, input[type='button'] {
   -webkit-user-select: none;  /* Chrome all / Safari all */
   -moz-user-select: none;     /* Firefox all */
@@ -12,6 +16,10 @@ html, root, body, p, li, ul, h1, h2, a, input[type='button'] {
   -o-user-select: none;
   user-select: none; 
   overflow-x: hidden;	
+}
+
+a:focus, a:active{
+    outline:none;
 }
 
 html {
@@ -468,6 +476,24 @@ label.iOSCheckLabelOff {
 .home > header .back{
 	display: none;
 }
+
+html:not(.iphone) .register form label {
+	width: 200px;
+	display: inline-block;
+	margin-top: 5px;
+}
+
+html:not(.iphone) .register form label + br {
+	display: none;
+}
+
+html:not(.iphone) .register form #terms {
+	color: rgb(0, 0, 0);
+	display: inline-block;
+	width: 30px;
+	float: left;
+}
+
 .checkin li:hover {
     cursor:pointer;
 }
