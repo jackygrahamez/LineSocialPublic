@@ -85,7 +85,7 @@ function insertTestData() {
 	account.remove(query);
 	
 	for (var x=0;x<100;x++) {
-		lon = lon - 0.005;
+		lon = lon + 0.005;
 		var lat = min_lat;
 		for (var y=0;y<100;y++) {
 			lat = lat + 0.005;
@@ -126,7 +126,7 @@ function insertTestData() {
 			      "test_group": city				
 			});
 			
-			console.log(user);
+			console.log(user.check_in.geolocation);
 			user.save();
 			}
 		}
