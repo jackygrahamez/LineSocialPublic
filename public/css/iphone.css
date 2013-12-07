@@ -464,8 +464,7 @@ label.iOSCheckLabelOff {
 
 
 /* PAGE SPECIFIC */
-.home > header .back,
-.register > header .back {
+.home > header .back{
 	display: none;
 }
 .checkin li:hover {

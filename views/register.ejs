@@ -31,5 +31,9 @@
 $(document).ready(function(){
 $(".iPhoneCheckLabelOn > span").text("Yes");
 $(".iPhoneCheckLabelOff > span").text("No");
+$("header > div").prepend('<div class="back button">Back</div>');
+$(".back").click(function(){ window.location.replace("/"); 
+});
+
 });
 </script>
