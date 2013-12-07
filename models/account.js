@@ -25,7 +25,7 @@ module.exports = function(mongoose) {
     	  check_in_expire_time: { type: Date, expires: '24h' }
       },
       points: { type: Number },
-      tester: { type: Boolean },
+      tester: Boolean,
       test_group: { type: String}
       
   });

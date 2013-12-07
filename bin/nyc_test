@@ -25,7 +25,7 @@ mongoose.connect('mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds0536
     	  check_in_expire_time: { type: Date, expires: '24h' }
       },
       points: { type: Number },
-      tester: { type: Boolean },
+      tester: Boolean,
       test_group: { type: String}
       
   });
@@ -120,7 +120,9 @@ function insertTestData() {
 				"line_length": 86400000,
 				"check_in_time": d,
 				"check_in_expire_time": expire
-				}
+				},
+			      "tester": true,
+			      "test_group": city				
 			});
 			
 			console.log(user);
