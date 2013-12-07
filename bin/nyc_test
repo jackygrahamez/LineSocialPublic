@@ -23,12 +23,15 @@ mongoose.connect('mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds0536
     	  check_in_time: { type: Date, expires: '24h' },
     	  check_in_expire_time: { type: Date, expires: '24h' }
       },
-      points: { type: Number }
+      points: { type: Number },
+      tester: { type: Boolean },
+      test_group: { type: String}
       
   });
   var account = mongoose.model('Account', userSchema);
 
 function insertTestData() {
+
 var city = "nyc";
 var center = [40.767022,-73.976641]
 var center_lat = parseFloat(center[0]);
@@ -36,6 +39,10 @@ var center_lon = parseFloat(center[1]);
 var min_lat = parseFloat(center_lat) - parseFloat(center_lat)*0.005;
 var max_lon = parseFloat(center[1]) + parseFloat(center[1])*0.005;
 var lon = max_lon;
+
+/* CLEAN UP */
+var query = {test_group: city};
+account.remove(query);
 
 for (var x=0;x<100;x++) {
 lon = lon - 0.005;
@@ -77,7 +84,7 @@ var user = new account({
 	test_group: city
 });
 
-printjson (user);
+console.log(user);
 user.save();
 }
 }
