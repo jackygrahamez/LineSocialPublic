@@ -10,7 +10,8 @@ html, root, body, p, li, ul, h1, h2, a, input[type='button'] {
 
   /* No support for these yet, use at own risk */
   -o-user-select: none;
-  user-select: none; 	
+  user-select: none; 
+  overflow-x: hidden;	
 }
 
 html {
