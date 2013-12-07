@@ -103,6 +103,7 @@ function insertTestData() {
 			location = location.split(" ")[i];
 			var email = username + "@test.com";
 	
+			if (username) {
 			var user = new account({
 				"email": email,
 				"name": {
@@ -127,6 +128,7 @@ function insertTestData() {
 			
 			console.log(user);
 			user.save();
+			}
 		}
 	}
 

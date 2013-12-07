@@ -40,7 +40,7 @@ mongoose.connect('mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds0536
 
 function insertTestData() {
 
-	var city = "nyc";
+	var city = "austin";
 	var center = [30.318359,-97.741442]
 	var center_lat = parseFloat(center[0]);
 	var center_lon = parseFloat(center[1]);
@@ -103,6 +103,7 @@ function insertTestData() {
 			location = location.split(" ")[i];
 			var email = username + "@test.com";
 	
+			if (username) {
 			var user = new account({
 				"email": email,
 				"name": {
@@ -127,6 +128,7 @@ function insertTestData() {
 			
 			console.log(user);
 			user.save();
+			}
 		}
 	}
 
