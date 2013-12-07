@@ -6,10 +6,10 @@ mongoose.connect('mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds0536
   ObjectId = Schema.ObjectId;
 	
   var userSchema = new mongoose.Schema({
-	  fb_id:	 { type: String, unique: true },
-      email:     { type: String, unique: true },
+	  fb_id:	 { type: String },
+      email:     { type: String },
       password:  { type: String },
-      username:  { type: String, unique: true },
+      username:  { type: String },
       name: {
         first:   { type: String },
         last:    { type: String }
@@ -23,8 +23,9 @@ mongoose.connect('mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds0536
     	  check_in_time: { type: Date, expires: '24h' },
     	  check_in_expire_time: { type: Date, expires: '24h' }
       },
-      points: { type: Number }
-      
+      points: { type: Number },
+      tester: Boolean,
+      test_group: { type: String}
   });
   var account = mongoose.model('Account', userSchema);
 
