@@ -8,12 +8,12 @@
   var html, ajaxData;
   var lURL;
 (function($, window, undefined) {
-
-
-      $('.on_off :checkbox').iphoneStyle();
-      $('.disabled :checkbox').iphoneStyle();
-      $('.css_sized_container :checkbox').iphoneStyle({ resizeContainer: false, resizeHandle: false });
-      $('.long_tiny :checkbox').iphoneStyle({ checkedLabel: 'Very Long Text', uncheckedLabel: 'Tiny' });
+	deviceType();
+	//iOS checkbox
+      $('html.iphone .on_off :checkbox').iphoneStyle();
+      $('html.iphone .disabled :checkbox').iphoneStyle();
+      $('html.iphone .css_sized_container :checkbox').iphoneStyle({ resizeContainer: false, resizeHandle: false });
+      $('html.iphone .long_tiny :checkbox').iphoneStyle({ checkedLabel: 'Very Long Text', uncheckedLabel: 'Tiny' });
       
       var onchange_checkbox = ($('.onchange :checkbox')).iphoneStyle({
         onChange: function(elem, value) { 
@@ -157,6 +157,8 @@
 	   }
 	   
    });
+
+   
    
    
    //set global coordinates
@@ -590,3 +592,24 @@ function getLines(url) {
 	 }
 
 }  
+function deviceType() {
+	console.log("checking device types");
+    var ua = navigator.userAgent;
+    var checker = {
+      iphone: ua.match(/(iPhone|iPod|iPad)/),
+      windows_phone: ua.match(/IEMobile/),
+      android: ua.match(/Android/)
+    };
+    if (checker.android){
+        $('html').addClass("android");
+    }
+    else if (checker.iphone){
+        $('html').addClass("iphone");
+    }
+    else if (checker.blackberry){
+        $('html').addClass("blackberry");
+    }
+    else if (checker.windows_phone){
+        $('html').addClass("IEMobile");
+    }
+}
