@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
 	account  = require('../models/account')(mongoose),
 	findOrCreate = require('mongoose-findorcreate');
 
-//mongoose.connect('mongodb://localhost/LineOut');
+//mongoose.connect('mongodb://localhost/LineSocial');
 
 mongoose.connect('mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds053678.mongolab.com:53678/heroku_app19397517');
 
@@ -22,14 +22,14 @@ exports.index = function(req, res){
 			   // cannot access session here
 			  console.log(err);
 			  res.render('index', 
-						{ title: 'LineOut',
+						{ title: 'LineSocial',
 						  pagename: 'login' });
 			 });
 
 		  } else {
 
 		  res.render('index', 
-					{ title: 'LineOut',
+					{ title: 'LineSocial',
 					  pagename: 'login' });
 
 		  }		
@@ -195,7 +195,7 @@ exports.home = function(req, res) {
 	
 	    		var socket = require('./socket');
 		        res.render('home', {
-		          title: 'LineOut',
+		          title: 'LineSocial',
 		          user: doc,
 				  pagename: 'home'
 		        });
@@ -239,7 +239,7 @@ exports.user_check_in = function(req, res) {
 	    account.findById(req.session.accountId, function(doc) {
 	    	if (location == null | location.length == 0) {
 	            res.render('user_check_in', {
-	                title: 'LineOut',
+	                title: 'LineSocial',
 	                user: doc,
 	      		  	pagename: 'user_check_in',
 	          		checkin_status: ''
@@ -296,7 +296,7 @@ exports.user_lines = function(req, res) {
 				console.log("userLines "+userLines);
 				//res.send(userLines);
 		        res.render('user_lines', {
-		          title: 'LineOut',
+		          title: 'LineSocial',
 		          user: doc,
 				  pagename: 'user_lines',
 				  lines: userLines
@@ -304,7 +304,7 @@ exports.user_lines = function(req, res) {
 			});		
 	    } else {
 	        res.render('user_lines', {
-		          title: 'LineOut',
+		          title: 'LineSocial',
 		          user: doc,
 				  pagename: 'user_lines',
 				  lines: ""
@@ -342,7 +342,7 @@ exports.user_notifications = function(req, res) {
 	    	if(!message_doc[0]) {
 	    		console.log("message_doc empty");
 		        res.render('user_notifications', {
-		             title: 'LineOut',
+		             title: 'LineSocial',
 		             user: doc,
 			         pagename: 'user_notifications',
 			         cID: cID,
@@ -355,7 +355,7 @@ exports.user_notifications = function(req, res) {
 	    		}
 	    		console.log("message "+JSON.stringify(message_doc));
 	    		 res.render('user_notifications', {
-	             title: 'LineOut',
+	             title: 'LineSocial',
 	             user: doc,
 		         pagename: 'user_notifications',
 		         cID: cID,
@@ -385,7 +385,7 @@ exports.user_points = function(req, res) {
 	    account.findById(req.session.accountId, function(doc) {
 
 	        res.render('user_points', {
-	          title: 'LineOut',
+	          title: 'LineSocial',
 	          user: doc,
 			  pagename: 'user_points'
 	        });
@@ -414,7 +414,7 @@ exports.ajax = function(req, res) {
 
     	if (field1 == null | field1 == 0) {
             res.render('ajax', {
-                title: 'LineOut',
+                title: 'LineSocial',
                 user: doc,
       		  	pagename: 'ajax'
               });    		
@@ -451,7 +451,7 @@ exports.user_profile = function(req, res) {
     account.findById(req.session.accountId, function(doc) {
 
         res.render('user_profile', {
-          title: 'LineOut',
+          title: 'LineSocial',
           user: doc,
 		  pagename: 'user_profile'
         });
@@ -480,7 +480,7 @@ exports.messages = function(req, res) {
 		    message.findMessages(cID, fID, function(message_doc) {
 		    	if ((typeof(message_doc) == 'undefined') || (typeof(message_doc[0]) == 'undefined')) {
 			    	res.render('messages', {
-				          title: 'LineOut',
+				          title: 'LineSocial',
 				          user: doc,
 						  pagename: 'messages',
 						  cID: cID,
@@ -492,7 +492,7 @@ exports.messages = function(req, res) {
 		    		console.log("defined message_doc");
 		    		console.log("message_doc[0].message "+message_doc);
 		    		res.render('messages', {
-				          title: 'LineOut',
+				          title: 'LineSocial',
 				          user: doc,
 						  pagename: 'messages',
 						  cID: cID,
@@ -561,7 +561,7 @@ exports.user_message = function(req, res) {
 		    		console.log("message_doc "+message_doc);
 	    			if (message_doc[0] && message_doc[0].thread) {  			
 			    	res.render('user_message', {
-			          title: 'LineOut',
+			          title: 'LineSocial',
 			          user: doc,
 			          message_doc: message_doc,
 			          cID: cID,
@@ -572,7 +572,7 @@ exports.user_message = function(req, res) {
 			        });
 	    			} else {
 			    	  res.render('user_message', {
-			          title: 'LineOut',
+			          title: 'LineSocial',
 			          user: doc,
 			          message_doc: "",
 			          cID: cID,
@@ -655,7 +655,7 @@ exports.inbox = function(req, res) {
     account.findById(req.session.accountId, function(doc) {
 
         res.render('inbox', {
-          title: 'LineOut',
+          title: 'LineSocial',
           user: doc
         });
 
