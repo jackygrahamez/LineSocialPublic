@@ -18,7 +18,7 @@ h1 {
 text-shadow: none;
 }
 
-body, section.body.right, section.notifications.right {
+html, section.body.right, section.notifications.right {
 background: #feffe8; /* Old browsers */
 background: -moz-linear-gradient(top,  #feffe8 0%, #d6dbbf 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#feffe8), color-stop(100%,#d6dbbf)); /* Chrome,Safari4+ */
@@ -31,6 +31,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#feffe8', end
 
 input, textarea, button {
 background: #FFF;
+}
+
+.home #branding > .button {
+color:black;
 }
 
 li.arrow:after {

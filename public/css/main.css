@@ -27,10 +27,11 @@ a:focus, a:active{
 html {
 	transition: opacity 0.5s;
 	transition-delay: 0s;
+	height:100%;
+	background: url(../img/bg.png);
 }
 
 body {
-	background: url(../img/bg.png);
 	padding: 0px;
 	margin: 0px;
 	color: #4c566c;
