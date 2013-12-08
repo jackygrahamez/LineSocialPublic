@@ -1,6 +1,12 @@
 <script type="text/javascript">
 var x=document.getElementById("demo");
 	$(document).ready( function(){
+		//$("body").height($(document).height());
+	   //Themes
+	   $("menu.themes li").click(function(){
+		   var themeColor = $(this).attr("rel");
+		   setActiveStyleSheet(themeColor);
+	   });	
 
 	   $("input[type='text'], textarea").focus(function(){
 		   $(this).css("color", "black");
@@ -61,4 +67,9 @@ var x=document.getElementById("demo");
         </div>
         </button>
     </div>
+	<menu class="themes">
+	    <li class="red_theme" rel="red"></li>
+	    <li class="blue_theme" rel="blue"></li>
+	    <li class="gold_theme" rel="gold"></li>
+	</menu>
 </header>
