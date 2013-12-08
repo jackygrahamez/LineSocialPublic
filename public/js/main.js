@@ -8,18 +8,7 @@
   var html, ajaxData;
   var lURL;
 (function($, window, undefined) {
-	deviceType();
-	//iOS checkbox
-      $('html.iphone .on_off :checkbox').iphoneStyle();
-      $('html.iphone .disabled :checkbox').iphoneStyle();
-      $('html.iphone .css_sized_container :checkbox').iphoneStyle({ resizeContainer: false, resizeHandle: false });
-      $('html.iphone .long_tiny :checkbox').iphoneStyle({ checkedLabel: 'Very Long Text', uncheckedLabel: 'Tiny' });
-      
-      var onchange_checkbox = ($('.onchange :checkbox')).iphoneStyle({
-        onChange: function(elem, value) { 
-          $('span#status').html(value.toString());
-        }
-      });
+	deviceType(iosCheckbox);
       
    $("input, textarea").focus(function(){
 	   
@@ -70,7 +59,7 @@
 	   var firstName = $("input[name='firstName']").val();
 	   var lastName = $("input[name='lastName']").val();
 	   var username = $("input[name='username']").val();
-	   var terms = $("input[name='terms']").val();
+	   var terms = $("input[name='terms']").is(":checked");
 	   var valid = true;
 	   $(".register > input").each(function(){
 		   	var object = $(this);
@@ -100,8 +89,9 @@
 		   $("input[name='cpassword']").addClass("invalid");
 		   valid = false;
 	   }	   
-	   
-	   if (terms != "on") {
+	   if (terms === false) {
+		   $("input[name='terms']").addClass("invalid");
+		   $("form label").addClass("invalid");
 		   valid = false;
 	   }
 	   
@@ -121,7 +111,6 @@
 	   var username = $(this).val();
 
 	   if (username.length > 0) {
-		   var value = {username:username};
 		   regCheck(username);
 	   }
    });
@@ -135,6 +124,12 @@
 	   }
    });   
   
+   $("input[name='terms']").click(function(){
+	   $(this).removeClass("invalid");
+	   $("form label").removeClass("invalid");
+   });
+   
+   
    //REMOVE FB HASH
    if (window.location.href.indexOf('#_=_') > 0) {
 	    window.location = window.location.href.replace(/#.*/, '');
@@ -592,7 +587,7 @@ function getLines(url) {
 	 }
 
 }  
-function deviceType() {
+function deviceType(callback) {
 	console.log("checking device types");
     var ua = navigator.userAgent;
     var checker = {
@@ -605,6 +600,7 @@ function deviceType() {
     }
     else if (checker.iphone){
         $('html').addClass("iphone");
+        callback();        
     }
     else if (checker.blackberry){
         $('html').addClass("blackberry");
@@ -612,4 +608,17 @@ function deviceType() {
     else if (checker.windows_phone){
         $('html').addClass("IEMobile");
     }
+}
+
+function iosCheckbox() {
+	//iOS checkbox
+    $('.on_off :checkbox').iphoneStyle();
+    $('.disabled :checkbox').iphoneStyle();
+    $('.css_sized_container :checkbox').iphoneStyle({ resizeContainer: false, resizeHandle: false });
+    $('.long_tiny :checkbox').iphoneStyle({ checkedLabel: 'Very Long Text', uncheckedLabel: 'Tiny' });
+    var onchange_checkbox = ($('.onchange :checkbox')).iphoneStyle({
+        onChange: function(elem, value) { 
+          $('span#status').html(value.toString());
+        }
+      });    
 }
