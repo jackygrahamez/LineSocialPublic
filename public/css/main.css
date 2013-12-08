@@ -39,10 +39,6 @@ body {
 	font: normal 15px Arial;
 }
 
-header {
-	padding-bottom:20px;
-}
-
 section {
 	padding-bottom: 10px;
 }
@@ -701,6 +697,10 @@ section.chat_requests.bordered .message {
 }
 
 /*colors*/
+
+.normal_theme {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#b4bfce), color-stop( 50%, #889bb3), color-stop(50%, #7f94b0), to(#6d83a1));
+}
 
 .red_theme {
 	background: #f85032; /* Old browsers */

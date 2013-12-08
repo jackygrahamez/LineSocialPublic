@@ -23,10 +23,17 @@
 			   $(".notifications").addClass("active");
 		   }
 		   else if (url.indexOf("user_lines") > 0) {
-			   var loader = '<div class="loader"></div>';
+			   var loader = '<div class="loader" style="'
+				    +"position: fixed;"
+				    +"height: 100%;"
+				    +"width: 100%;"
+				    +"top: 0px;"
+				    +"left: 0px;"
+				    +"background: rgba(0,0,0, 0.2);"
+				    +'"><div></div></div>';
 			   if ($("body > canvas").length < 1) {
 				   $("body").append(loader);
-				   $(".loader").canvasLoader();
+				   $(".loader > div").canvasLoader();
 				   getLocation(0, url); 						   
 			   }
 		   } 		   
@@ -551,7 +558,7 @@ function getLines(url) {
 			           	  markup = data;
 			           	  $("section.body.right").html(data);
 			           	  setTimeout(function(){
-			           		$("body > canvas").remove();
+			           		$("body > .loader").remove();
 			           		$("section.body.right").addClass("active");
 			           	    $(".back.button").click(function(){
 			           		  $(".body").removeClass("active");
