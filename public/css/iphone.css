@@ -760,7 +760,7 @@ p.outbound > span,
 	color: red;
 }
 
-.chat_requests.message {
+section.chat_requests.bordered .message {
 	border: none;
 }
 
