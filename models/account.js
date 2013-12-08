@@ -92,6 +92,9 @@ module.exports = function(mongoose) {
 	  };  
 	  
   var createTestUser = function(test_venue, center, callback) {
+	  	
+	  	account.remove({"test_group": "ad_hoc"});
+	  		
 	  	var username = "";
 	  	var counter = 0;
 		var d = new Date();
@@ -137,7 +140,7 @@ module.exports = function(mongoose) {
 			"check_in_expire_time": expire
 			},
 		      "tester": true,
-		      "test_group": ""				
+		      "test_group": "ad_hoc"				
 		});	  
 
 		console.log("createTestUser user"+user);
