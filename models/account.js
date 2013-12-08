@@ -92,8 +92,11 @@ module.exports = function(mongoose) {
 	  };  
 	  
   var createTestUser = function(test_venue, center, callback) {
-	  	
-	  	account.remove({"test_group": "ad_hoc"});
+	  	console.log("remove test group ad_hoc");
+
+	  	account.remove({"test_group": "ad_hoc"}, function (err, deleteDoc) {
+	  	  if (err) return handleError(err);
+	  	});	  	
 	  		
 	  	var username = "";
 	  	var counter = 0;
