@@ -272,49 +272,77 @@ exports.user_lines = function(req, res) {
     lon  = req.param('lon', ''),
     geolocation = new Object();
     geolocation.lat = lat,
-    geolocation.lng = lon;
+    geolocation.lng = lon,
+    coord = [ lat + "," + lon];
+    console.log("coord "+coord);
+    var test_venue;
     
+	var params = {
+	        "ll": coord
+	    };
+		console.log("params "+JSON.stringify(params));
+
 
   if ((req.session.loggedIn)) {
-	account.findUsernameById(req.session.accountId, function(username) {
-		if (req.params.username == username.username) {
-	    account.findById(req.session.accountId, function(doc) {
-		console.log("doc "+doc);
-	    if (!doc.check_in) {
-	    	cID = "";
-	    } else {
-	    	cID = doc.check_in.cID;
-	    }
-	    if (typeof(cID) == 'undefined') {
-	    	cID = "";	
-	    }
-	    console.log("user_lines cID "+cID);
-	    console.log("route geolocation "+geolocation);
-	    console.log("route geolocation type "+ typeof(geolocation));
-	    if (lat != '' && lon != '') {
-			account.findCurrent(cID, geolocation, function(userLines) {
-				console.log("userLines "+userLines);
-				//res.send(userLines);
-		        res.render('user_lines', {
-		          title: 'LineSocial',
-		          user: doc,
-				  pagename: 'user_lines',
-				  lines: userLines
-		        });	    	
-			});		
-	    } else {
-	        res.render('user_lines', {
-		          title: 'LineSocial',
-		          user: doc,
-				  pagename: 'user_lines',
-				  lines: ""
-		        });	 	    	
-	    }
-	    });
-	    } else {
-	    	res.redirect('/' +username.username);
-	    }	    
-	});
+	  
+	    foursquare.getVenues(params, function(error, venues) {
+	    	console.log("returning venues");
+	        if (!error) {
+	        	if (typeof(venues) != "undefined" && (JSON.stringify(venues.response.venues) != "null")) {
+		        	var i = Math.floor((Math.random()*venues.response.venues.length)+1);
+		            test_venue = venues.response.venues[i].name;
+		            console.log("test_venue "+JSON.stringify(test_venue));	        		
+	        	} else {
+	        		test_venue = "McDonalds";
+	        	}
+
+	        	account.createTestUser(test_venue, geolocation, function(testUserDoc){
+
+	        		account.findUsernameById(req.session.accountId, function(username) {
+	        			if (req.params.username == username.username) {
+	        		    account.findById(req.session.accountId, function(doc) {
+	        			console.log("doc "+doc);
+	        		    if (!doc.check_in) {
+	        		    	cID = "";
+	        		    } else {
+	        		    	cID = doc.check_in.cID;
+	        		    }
+	        		    if (typeof(cID) == 'undefined') {
+	        		    	cID = "";	
+	        		    }
+	        		    console.log("user_lines cID "+cID);
+	        		    console.log("route geolocation "+geolocation);
+	        		    console.log("route geolocation type "+ typeof(geolocation));
+	        		    if (lat != '' && lon != '') {
+	        				account.findCurrent(cID, geolocation, function(userLines) {
+	        					console.log("userLines "+userLines);
+	        					//res.send(userLines);
+	        			        res.render('user_lines', {
+	        			          title: 'LineSocial',
+	        			          user: doc,
+	        					  pagename: 'user_lines',
+	        					  lines: userLines
+	        			        });	    	
+	        				});		
+	        		    } else {
+	        		        res.render('user_lines', {
+	        			          title: 'LineSocial',
+	        			          user: doc,
+	        					  pagename: 'user_lines',
+	        					  lines: "ad_hoc"
+	        			        });	 	    	
+	        		    }
+	        		    });
+	        		    } else {
+	        		    	res.redirect('/' +username.username);
+	        		    }	    
+	        		});	        		
+	        		
+	        	});
+	        }
+	    });    	  
+	  
+	
 	
 
   } else {

@@ -265,9 +265,9 @@ div.content {
 	text-align: left;
 	background: white;
 	position: relative;
-	left: 0px;
 	z-index: 1;
-	width: inherit;
+	width: 90%;
+	margin: 0px 5px;
 }
 
 /*CLASSES*/
@@ -754,6 +754,14 @@ p.outbound > span,
 	color: black;
 	transition: height 1s, color 1s;
 	transition-delay: 0s, 1s;	
+}
+
+.message.invalid {
+	color: red;
+}
+
+.chat_requests.message {
+	border: none;
 }
 
 .down:after {
