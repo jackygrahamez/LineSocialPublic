@@ -154,7 +154,11 @@
    });
 
    
-   
+   //Themes
+   $("menu.themes li").click(function(){
+	   var themeColor = $(this).attr("rel");
+	   setActiveStyleSheet(themeColor);
+   });
    
    //set global coordinates
    //getLocation(0);

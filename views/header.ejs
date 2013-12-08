@@ -3,7 +3,10 @@
   <head>
     <title><%= title %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	<link rel='stylesheet' href='/css/iphone.css' /> 
+	<link rel='stylesheet' href='/css/main.css' />
+	<link rel="alternate stylesheet" type="text/css" href="/css/red.css" title="red" />
+	<link rel="alternate stylesheet" type="text/css" href="/css/blue.css" title="blue" />
+	<link rel="alternate stylesheet" type="text/css" href="/css/gold.css" title="gold" />
 	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
   </head>
   <body class="<%= pagename %>">
@@ -18,4 +21,9 @@
                 <a class="button right logout" href="/">Logout</a>
                 </div>
             </div>
+			<menu class="themes">
+			    <li class="red_theme" rel="red"></li>
+			    <li class="blue_theme" rel="blue"></li>
+			    <li class="gold_theme" rel="gold"></li>
+			</menu>            
         </header>

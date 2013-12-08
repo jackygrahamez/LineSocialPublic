@@ -1,343 +1,20 @@
-/*
-Design by predic8 GmbH
-http://www.predic8.de
-Released for free under a Creative Commons Attribution 2.5 License
-*/
 
-::-moz-selection { background: transparent; color: transparent; text-shadow: none; }
-::selection { background: transparent; color: transparent; text-shadow: none; }
-
-html, root, body, p, li, ul, h1, h2, a, label, input[type='button'], :after {
-  -webkit-user-select: none;  /* Chrome all / Safari all */
-  -moz-user-select: none;     /* Firefox all */
-  -ms-user-select: none;      /* IE 10+ */
-
-  /* No support for these yet, use at own risk */
-  -o-user-select: none;
-  user-select: none; 
-  overflow-x: hidden;	
-}
-
-a:focus, a:active{
-    outline:none;
-}
-
-html {
-	transition: opacity 0.5s;
-	transition-delay: 0s;
-}
-
-body {
-	background: url(../img/bg.png);
-	padding: 0px;
-	margin: 0px;
-	color: #4c566c;
-	text-shadow: 0px 1px -1px #fff;
-	text-align: center;
-	font: normal 15px Arial;
-}
-
-header {
-	padding-bottom:20px;
-}
-
-section {
-	padding-bottom: 10px;
-}
-
-div#wrapper,
-div.wrapper {
-	width: 320px;
-	margin: 0 auto;
-}
-
-h1 {
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#b4bfce), color-stop( 50%, #889bb3), color-stop(50%, #7f94b0), to(#6d83a1));
-	margin: 0px;
-	height: 34px;
-	font-size: 22px;
-	text-shadow: 0px -1px 1px #000;
-	border-bottom: 1px solid black;
-	color: white;
-	padding: 8px 0px 0px 0px;
-	text-align: center;
-}
-
-h2{
-	text-align: left;
-	font-size: 19px;
-	margin-left: 12px;
-}
-a {
-	color: inherit !important;
-	text-decoration: none;
-}
-p{
-	margin: 1em;
-}
-
-ul{
-	list-style: none;
-	margin: 10px 10px 10px 0px;
-	padding: 0px;
-}
-form {
-	width: 300px;
-	margin: 0 auto;
-}
-menu {
-	-webkit-padding-start: 0px;
-	list-style-type: none;
-}
-time {
-	font-style: italic;
-	font-size: 12px;
-}
-li {
-	background-color: white;
-	border: 1px solid #ababab;
-	margin-bottom: -2px;
-	padding: 12px 10px;
-	text-align: left;
-	color: black;
-	font-weight: bold;
-	width: 280px;
-	margin: 1px auto;	
-	position: relative;
-}
-
-li.arrow:after {
-	content: "";
-	background-image: url(../img/arrow.png);
-	background-position: right center;
-	background-repeat: no-repeat;
-	display: inline-block;
-	width: 20px;
-	height: 100%;
-	position: absolute;
-	right: 5px;
-	top: 0px;
-}
-
-li span.right {
-	position:absolute;
-	right: 45px;
-	text-align: right;
-	color: #385487;
-	font-weight: normal;
-}
-
-li:first-child {
-   -webkit-border-top-left-radius: 12px;
-   -webkit-border-top-right-radius: 12px;
-}
-
-li:last-child,
-li.arrow[name='contact']:not(.down) {
-   -webkit-border-bottom-left-radius: 12px;
-   -webkit-border-bottom-right-radius: 12px;
-}
-label {
-	display: block;
-	margin-top: 20px;
-	text-align: left;
-}
-input, textarea, button {
-	width: 280px;
-	background: #efefef;
-	border: 1px solid #ddd;
-	font-size: 0.9em;
-	color: #ccc;
-	height: 25px;
-	padding: 10px;
-	margin-top: 3px;
-	-mox-border-radius: 6px;
-	-weblit-border-radius: 6px;
-	border-radius: 6px;
-}
-textarea {
-	height: 30px;
-}
-table {
-	width: 300px;
-}
-input:focus, textarea:focus {
-	border:1px solid #99cc66;
-}
-
-#branding > .button.logout {
-	display:none;
-}
-.home #branding > .button { 
-	color: white !important;
-	right: 6px;
-	left: auto;
-	display:inline-block;
-}
-
-section.body,
-section.notifications {
-	width:100%;
-	height: 100%;
-	
-}
-
-section.body.right,
-section.notifications.right {
-	position: absolute;
-	top: 0px;
-	background: url(../img/bg.png);
-	padding: 0px 0px 50px;
-	margin: 0px;
-	color: #4c566c;
-	text-shadow: 0px 1px -1px #fff;
-	text-align: center;
-	font: normal 15px Arial;
-}
-
-section.body.right,
-section.notifications.right {
-	width: 0%;
-	margin-left: 100%;
-	transition: margin-left 0.5s, width 2s;
-	/* Safari */
-	-webkit-transition:margin-left 0.5s, width 0.5s;	
-}
-
-section.body.left {
-	margin-right: 100%;
-	transition: margin-right 0.5s;
-	/* Safari */
-	-webkit-transition:margin-right 0.5s;	
-}
-
-
-section.body.right.active,
-section.notifications.right.active {
-	width: 100%;
-	transition: margin-left 0.5s;
-	/* Safari */
-	-webkit-transition:margin-left 0.5s;
-	margin-left:0%;
-}
-section.body.left.active,
-section.notifications.left.active {
-	transition: margin-right 0.5s;
-	/* Safari */
-	-webkit-transition:margin-right 0.5s;
-	margin-right:0%;
-}
-
-section.notifications.right > header > *,
-section.notifications.right > #wrapper > * {
-	display: none;
-}
-
-section.notifications.right.active > header > *,
-section.notifications.right.active > #wrapper > * {
-	display: inherit;
-}
-
-#submit, 
-#register,
-#checkin,
-#chat,
-#post,
-#send,
-input[type='button'] {
-	height:43px;
-	background: -webkit-gradient(linear, left top, left bottom, from(#b4bfce), color-stop( 50%, #889bb3), color-stop(50%, #7f94b0), to(#6d83a1));
-	border:none;
-	margin-top:20px;
-	cursor:pointer;
-}
-input#checkin {
-	margin-left: 10px;
-}
-#submit:hover {
-	opacity:0.9;
-}
-
-div.content {
-	height: 200px;
-	border: solid 1px #999;
-	overflow-y: scroll;
-	text-align: left;
-	background: white;
-	position: relative;
-	z-index: 1;
-	width: 90%;
-	margin: 0px 5px;
-}
-
-/*CLASSES*/
-.invalid {
-	color: red;
-	border: 1px solid red;
-	font-weight: bold;	
-}
-label.invalid {
-	border:none;
-}
-.button{
-	-webkit-box-shadow: 0px -1px 1px #2f3740, 0px 1px 1px #bfcbdb;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#8aa1bf), color-stop( 50%, #5877a2), color-stop(50%, #476999), to(#4a6c9b));
-	-webkit-border-radius: 4px;
-	font: bold 12px Arial;
-	text-align: center;
-	line-height: 28px;
-	color: white;
-	text-shadow: rgba(0,0,0,0.5) 0px -1px 0px;
-	white-space: nowrap;
-	overflow: hidden;
-	-webkit-tap-highlight-color: white;
-	padding: 2px;
-	position: absolute;
-	top: 4px;
-	left: 6px;
-	border: 1px solid #3e444c;
-	
-}
-
-.button-bold{
-	-webkit-box-shadow: 0px -1px 1px #2f3740, 0px 1px 1px #bfcbdb;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#8aa1bf), color-stop( 50%, #5877a2), color-stop(50%, #476999), to(#4a6c9b));
-	-webkit-border-radius: 4px;
-	font: bold 32px Arial;
-	width: 27px;
-	text-align: center;
-	line-height: 28px;
-	color: white;
-	text-shadow: rgba(0,0,0,0.5) 0px -1px 0px;
-	white-space: nowrap;
-	overflow: hidden;
-	-webkit-tap-highlight-color: white;
-	padding: 2px;
-	position: absolute;
-	top: 4px;
-	right: 6px;
-	border: 1px solid #3e444c;
-}
-.hide {
-	display:none;
-}
-.controls table {
-	margin: 0 auto;
-}
 /* iPhone checkbox*/
-.iPhoneCheckContainer {
+html.iphone .iPhoneCheckContainer {
   -webkit-transform:translate3d(0,0,0);
   position: relative;
   height: 27px;
   cursor: pointer;
   overflow: hidden; }
-  .iPhoneCheckContainer input {
+  
+html.iphone .iPhoneCheckContainer input {
     position: absolute;
     top: 5px;
     left: 30px;
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
     opacity: 0; }
-  .iPhoneCheckContainer label {
+    
+html.iphone .iPhoneCheckContainer label {
     white-space: nowrap;
     font-size: 17px;
     line-height: 17px;
@@ -351,7 +28,8 @@ label.invalid {
     top: 0;
     padding-top: 5px;
     overflow: hidden; }
-  .iPhoneCheckContainer, .iPhoneCheckContainer label {
+  
+html.iphone .iPhoneCheckContainer, .iPhoneCheckContainer label {
    	margin-top: 0px; 
     user-select: none;
     -moz-user-select: none;
@@ -361,24 +39,27 @@ label.invalid {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   opacity: 0.5; }
 
-label.iPhoneCheckLabelOn {
+html.iphone label.iPhoneCheckLabelOn {
   color: white;
   background: url('../img/iphone-style-checkboxes/on.png?1284697268') no-repeat;
   text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.6);
   left: 0;
   padding-top: 5px; }
-  label.iPhoneCheckLabelOn span {
+  
+html.iphone label.iPhoneCheckLabelOn span {
     padding-left: 8px; }
-label.iPhoneCheckLabelOff {
+
+html.iphone label.iPhoneCheckLabelOff {
   color: #8b8b8b;
   background: url('../img/iphone-style-checkboxes/off.png?1284697268') no-repeat right 0;
   text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.6);
   text-align: right;
   right: 0; }
-  label.iPhoneCheckLabelOff span {
+  
+html.iphone label.iPhoneCheckLabelOff span {
     padding-right: 8px; }
 
-.iPhoneCheckHandle {
+html.iphone .iPhoneCheckHandle {
   display: block;
   height: 27px;
   cursor: pointer;
@@ -389,29 +70,31 @@ label.iPhoneCheckLabelOff {
   background: url('../img/iphone-style-checkboxes/slider_left.png?1284697268') no-repeat;
   padding-left: 3px; }
 
-.iPhoneCheckHandleRight {
+html.iphone .iPhoneCheckHandleRight {
   height: 100%;
   width: 100%;
   padding-right: 3px;
   background: url('../img/iphone-style-checkboxes/slider_right.png?1284697268') no-repeat right 0; }
 
-.iPhoneCheckHandleCenter {
+html.iphone .iPhoneCheckHandleCenter {
   height: 100%;
   width: 100%;
   background: url('../img/iphone-style-checkboxes/slider_center.png?1284697268'); }
 
-.iOSCheckContainer {
+html.iphone .iOSCheckContainer {
   position: relative;
   height: 27px;
   cursor: pointer;
   overflow: hidden; }
-  .iOSCheckContainer input {
+  
+html.iphone .iOSCheckContainer input {
     position: absolute;
     top: 5px;
     left: 30px;
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
     opacity: 0; }
-  .iOSCheckContainer label {
+  
+html.iphone .iOSCheckContainer label {
     white-space: nowrap;
     font-size: 17px;
     line-height: 17px;
@@ -425,33 +108,38 @@ label.iPhoneCheckLabelOff {
     top: 0;
     padding-top: 5px;
     overflow: hidden; }
-  .iOSCheckContainer, .iOSCheckContainer label {
+  
+html.iphone .iOSCheckContainer, 
+html.iphone .iOSCheckContainer label {
     user-select: none;
     -moz-user-select: none;
     -khtml-user-select: none; }
 
-.iOSCheckDisabled {
+html.iphone .iOSCheckDisabled {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   opacity: 0.5; }
 
-label.iOSCheckLabelOn {
+html.iphone label.iOSCheckLabelOn {
   color: white;
   background: url('../img/ios-style-checkboxes/on.png?1284697268') no-repeat;
   text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.6);
   left: 0;
   padding-top: 5px; }
-  label.iOSCheckLabelOn span {
+  
+html.iphone label.iOSCheckLabelOn span {
     padding-left: 8px; }
-label.iOSCheckLabelOff {
+    
+html.iphone label.iOSCheckLabelOff {
   color: #8b8b8b;
   background: url('../img/ios-style-checkboxes/off.png?1284697268') no-repeat right 0;
   text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.6);
   text-align: right;
   right: 0; }
-  label.iOSCheckLabelOff span {
+  
+html.iphone label.iOSCheckLabelOff span {
     padding-right: 8px; }
 
-.iOSCheckHandle {
+html.iphone .iOSCheckHandle {
   display: block;
   height: 27px;
   cursor: pointer;
@@ -462,386 +150,14 @@ label.iOSCheckLabelOff {
   background: url('../img/ios-style-checkboxes/slider_left.png?1284697268') no-repeat;
   padding-left: 3px; }
 
-.iOSCheckHandleRight {
+html.iphone .iOSCheckHandleRight {
   height: 100%;
   width: 100%;
   padding-right: 3px;
   background: url('../img/ios-style-checkboxes/slider_right.png?1284697268') no-repeat right 0; }
 
-.iOSCheckHandleCenter {
+html.iphone .iOSCheckHandleCenter {
   height: 100%;
   width: 100%;
   background: url('../img/ios-style-checkboxes/slider_center.png?1284697268'); }
 /*end checkbox*/
-
-
-
-/* PAGE SPECIFIC */
-.home > header .back{
-	display: none;
-}
-
-html:not(.iphone) .register form label {
-	width: 200px;
-	display: inline-block;
-	margin-top: 5px;
-}
-
-html:not(.iphone) .register form label + br {
-	display: none;
-}
-
-html:not(.iphone) .register form #terms {
-	color: rgb(0, 0, 0);
-	display: inline-block;
-	width: 30px;
-	float: left;
-}
-
-.checkin li:hover {
-    cursor:pointer;
-}
-.message #name {
-	color:black;
-}
-.accordion.off {
-	height: 0px;
-	overflow: hidden;
-	transition: height 0.5s;
-}
-.accordion {
-	height: auto;
-	overflow: hidden;
-	transition: height 0.5s;
-}
-.accordion .content p {
-	display:none;
-	margin:5px 2px;
-	padding:0px;
-	color:black;
-}
-
-.content.messages p {
-	margin:5px 2px;
-	padding:0px;	
-	display: none;
-}
-
-p.inbound > span,
-.messages p.notification_outbound span,
-.notifications p.message_outbound span {
-	background: -webkit-linear-gradient(top, #f5f6f6 0%,#dbdce2 21%,#b8bac6 49%,#dddfe3 80%,#f5f6f6 100%); /* Chrome10+,Safari5.1+ */
-	display: inline-block;
-	font-size: 12px;
-	padding: 5px;
-	/*
-	box-shadow: 
-	  0 1px 2px #fff, /*bottom external highlight*/
-	  0 -1px 1px #666, /*top external shadow*/ 
-	  inset 0 -1px 1px rgba(0,0,0,0.5), /*bottom internal shadow*/ 
-	  inset 0 1px 1px rgba(255,255,255,0.8); /*top internal highlight*/
-	*/  	
-	  margin-left:5px;
-	
-}
-
-.outbound,
-.notifications .notification_outbound,
-.messages .message_outbound {
-	text-align: right;
-	margin: 1px;
-	margin: 5px 2px;	
-}
-p.outbound > span,
-.notifications p.notification_outbound span,
-.messages p.message_outbound span {
-	background: -webkit-linear-gradient(top, #c9de96 0%,#8ab66b 44%,#398235 100%); /* Chrome10+,Safari5.1+ */	color: white;
-	font-size: 12px;	
-	padding:5px;
-	box-shadow: 
-	  0 1px 2px #fff, /*bottom external highlight*/
-	  0 -1px 1px #666, /*top external shadow*/ 
-	  inset 0 -1px 1px rgba(0,0,0,0.5), /*bottom internal shadow*/ 
-	  inset 0 1px 1px rgba(255,255,255,0.8); /*top internal highlight*/
-	  display: inline-block;
-	  border-radius: 5px 5px 0px 5px;
-	  margin-right:5px;
-	border-width: 5px 11px 5px 5px;
-	border-image: url(../img/speech_bubble_right.png) 5 11 5 5 stretch stretch;		
-}
-
-.line_pokes div {
-	display: inline-block;
-	right: 30px;
-	position: absolute;
-	background: red;
-	width: 20px;
-	text-align: center;
-	color: white;
-	border-radius: 20px;
-}
-.lines span {
-	display: inline-block;
-	overflow: hidden;
-}
-.lines .location {
-	/* essential */
-	text-overflow: ellipsis;
-	width: 280px;
-	white-space: nowrap;
-	overflow: hidden;
-	
-	/* for good looks */
-
-}
-.field {
-	width: 210px;
-	padding: 10px 5px;
-}
-.send {
-	width: 50px;
-	display: inline-block;
-}
-.inbound {
-
-}
-.inbound > span {
-	color: black;
-	padding: 5px;
-	border-radius: 5px 5px 5px 0px;	
-	border-width: 8px 10px 8px 17px; 
-	border-image: url(../img/speech_bubble_left_2.png) 8 10 8 17 stretch stretch;		
-}
-
-/* MESSAGE BUBBLE */
-
-.bubbledLeft,.bubbledRight{
-	position: relative;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	max-width: 80%;
-}
-
-.bubbledLeft{
-	float: left;
-	margin-right: auto;
-	margin-left: 5px;
-	padding: 4px 10px 4px 15px; /*position within the border*/
-
-	clear: left;
-}
-
-.bubbledLeft:before{
-	z-index: -1;
-	position: absolute;
-	top: 0px;
-	right: 0px;
-	bottom: 0px;
-	left: 0px;
-	content: "";
-
-	border-width: 8px 10px 8px 17px; 
-	border-image: url(../img/speech_bubble_left_2.png) 8 10 8 17 stretch stretch;
-	-webkit-border-image: url(../img/speech_bubble_left_2.png) 8 10 8 17 stretch stretch;
-	-moz-border-image: url(../img/speech_bubble_left_2.png) 8 10 8 17 stretch stretch;
-	-o-border-image: url(../img/speech_bubble_left_2.png) 8 10 8 17 stretch stretch;
-}
-
-.bubbledLeft:after{
-	z-index: -1;
-	position: absolute;
-	left: -36px;
-	width: 32px;
-	bottom: 0px;
-	height: 32px;
-	content:"";
-	background-image: url(../img/left_chatter.png);
-	background-size: 32px 32px;
-	background-position: bottom left;
-	border-radius: 3px;
-	-webkit-border-radius: 3px;
-	display:none;	
-}
-
-.bubbledRight{
-	float: right;
-	margin-left: auto;
-	text-align: right;
-
-	margin-right: 5px;
-	padding: 4px 15px 4px 10px; /*position within the border*/	
-	
-	clear: right;
-}
-
-.bubbledRight:before{
-	z-index: -1;
-	position: absolute;
-	top: 0px;
-	right: 0px;
-	bottom: 0px;
-	left: 0px;
-	content: "";
-
-	border-width: 8px 17px 8px 10px; 
-	border-image: url(../img/speech_bubble_right_2.png) 8 17 8 10 stretch stretch ;
-	-webkit-border-image: url(../img/speech_bubble_right_2.png) 8 17 8 10 stretch stretch ;
-	-moz-border-image: url(../img/speech_bubble_right_2.png) 8 17 8 10 stretch stretch ;
-	-o-border-image: url(../img/speech_bubble_right_2.png) 8 17 8 10 stretch stretch ;
-}
-
-.bubbledRight:after{
-	z-index: -1;
-	position: absolute;
-	right: -36px;
-	width: 32px;
-	bottom: 0px;
-	height: 32px;
-	content:"";
-	background-image: url(../img/right_chatter.png);
-	background-size: 32px 32px;
-	background-position: bottom left;
-	border-radius: 3px;
-	-webkit-border-radius: 3px;
-	display:none;	
-}
-
-.overlay {
-	width: 100%;
-	height: 100%;
-	display: block;
-	background: white;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	opacity: 1;
-}
-
-.overlay canvas {
-	margin-top: 100px;
-}
-
-.overlay.disable {
-	opacity: 0;
-	width: 0px;
-	height: 0px;
-	transition: opacity 2s, width 0.1s, height 0.1s;
-	transition-delay: 0s, 2s, 2s;
-}
-
-.disabled {
-	opacity: 0;
-}
-
-.green {
-	color: #228B22;
-	right: 30px;
-	position: absolute;
-}
-
-.message.collapsed {
-	height: 0px;
-	transition: height 0.1s;
-	padding: 0px;
-	overflow: hidden;
-	border: none;
-	color: transparent;
-}
-
-.message {
-	border: 1px solid #ddd;
-	height: 30px;
-	color: black;
-	transition: height 1s, color 1s;
-	transition-delay: 0s, 1s;	
-}
-
-.message.invalid {
-	color: red;
-}
-
-section.chat_requests.bordered .message {
-	border: none;
-}
-
-.down:after {
-	transition: transform 1s;
-	-webkit-transform: rotate(90deg);
-	-moz-transform: rotate(90deg);
-	-ms-transform: rotate(90deg);
-	-o-transform: rotate(90deg);
-	transform: rotate(90deg);
-}
-
-.section {
-	height: 0px;
-	overflow: hidden;
-	padding: 0px;
-	border: 0px;
-	transition: height 0.5s;
-	transition-delay: 0s;	
-}
-
-.section.expanded {
-	height: auto;
-	overflow: hidden;
-	padding: 0px;
-	border: 0px;
-	transition: height 2s;
-	transition-delay: 0s;
-	padding: 0 10px;
-}
-
-.section.expanded.about {
-	min-height: 1891px;
-}
-
-.section.expanded.terms {
-	min-height: 4370px;	
-}
-
-
-.section.expanded.contact {
-	min-height: 200px;
-}
-
-.section.expanded li,
-.section.expanded ol li {
-	border: none !important;
-	width: 200px !important;
-}
-
-.section.expanded li li,
-.section.expanded li ol li {
-	border:none !important;
-	width: 170px !important;
-}
-
-/*
-.facebook {
-background: url(../img/login-with-facebook.png) no-repeat 0 0;
-background-size: 100%;
-}
-*/
-
-/* END MESSAGE BUBBLE */
-
-@media only screen 
-and (min-width : 768px) { 
-	div#wrapper, li, textarea, form {
-		width: 700px;
-	}
-	input {
-		width: 680px;
-	}
-	.chat_requests ul {
-		margin:0px 0px 10px;
-	}
-	.chat_requests ul li {
-		padding-right: 0px;
-		width: 690px;	
-	}
-	div.wrapper {
-		width: auto;
-	}
-}
