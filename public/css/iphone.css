@@ -45,7 +45,8 @@ section {
 	padding-bottom: 10px;
 }
 
-div#wrapper {
+div#wrapper,
+div.wrapper {
 	width: 320px;
 	margin: 0 auto;
 }
@@ -186,7 +187,7 @@ section.notifications.right {
 	position: absolute;
 	top: 0px;
 	background: url(../img/bg.png);
-	padding: 0px;
+	padding: 0px 0px 50px;
 	margin: 0px;
 	color: #4c566c;
 	text-shadow: 0px 1px -1px #fff;
