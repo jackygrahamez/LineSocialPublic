@@ -841,4 +841,7 @@ and (min-width : 768px) {
 		padding-right: 0px;
 		width: 690px;	
 	}
+	div.wrapper {
+		width: auto;
+	}
 }
