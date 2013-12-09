@@ -187,6 +187,7 @@ exports.login = function(req, res){
     else {
         req.session.loggedIn  = true;
         req.session.accountId = doc._id;
+        console.log("req.session "+ JSON.stringify(req.session));
         res.redirect('/' + doc.username);    	
     }
 

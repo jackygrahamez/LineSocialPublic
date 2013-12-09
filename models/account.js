@@ -26,7 +26,8 @@ module.exports = function(mongoose) {
       },
       points: { type: Number },
       tester: Boolean,
-      test_group: { type: String}
+      test_group: { type: String},
+      session_id: { type: String }
       
   });
   
@@ -36,11 +37,21 @@ module.exports = function(mongoose) {
 
   var login = function(email, password, callback) {
     var shaSum = crypto.createHash('sha256');
+    var session_id = crypto.createHash('md5').update(Math.random().toString()).digest('hex').substring(0, 24);
     shaSum.update(password);
 
     account.findOne({email:email,password:shaSum.digest('hex')},function(err,doc){
-      callback(doc);
-    });
+    	console.log("doc "+doc._id);
+    	console.log("session_id "+session_id);
+    	var user_id = doc._id;
+    	var query = { _id : doc._id };
+		    account.update(query, {"$set" : { "session_id" : session_id }}, function(err,doc_session){
+		    	console.log("update doc "+doc_session);
+		    	account.findOne({_id:user_id},function(err,updated_doc){
+		    		callback(updated_doc);
+			    });    		        
+		    });    
+	    });
 
   };
 
