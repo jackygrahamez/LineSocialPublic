@@ -145,6 +145,7 @@ menu.themes li {
 display: inline-block;
 width: 20px;
 border-radius: 0px;
+margin: 5px;
 }
 
 menu.themes li:first-of-type {
