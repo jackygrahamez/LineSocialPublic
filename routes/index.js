@@ -512,7 +512,9 @@ exports.user_profile = function(req, res) {
 exports.messages = function(req, res) {
 	var cID = req.param('cID', ''),
 	fID = req.param('fID', ''),
-	tester = req.param('tester', '');
+	tester = req.param('tester', ''),
+	session_id = req.param('session_id', '');
+	console.log("session_id "+session_id);
 	console.log("messages route cID "+cID);
 	console.log("messages route fID "+fID);
 	  if ( req.session.loggedIn ) {
@@ -528,7 +530,8 @@ exports.messages = function(req, res) {
 						  cID: cID,
 						  message: '',
 						  fID: fID,
-						  tester: tester
+						  tester: tester,
+						  session_id: session_id
 			    	});	  
 		    	}
 		    	else {
@@ -541,7 +544,8 @@ exports.messages = function(req, res) {
 						  cID: cID,
 						  message: message_doc,
 						  fID: fID,
-						  tester: tester	    
+						  tester: tester,
+						  session_id: session_id	    
 			    	});			    		
 		    	}
   

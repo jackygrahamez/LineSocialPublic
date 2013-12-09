@@ -472,8 +472,8 @@ function updateNotificationMessages(cID, fID, messages, url, requests) {
         });
 } 
 
-function getMessages(cID, fID, tester, url) {
-	console.log("tester "+tester);
+function getMessages(cID, fID, tester, session_id, url) {
+	console.log("session_id "+session_id);
     $.ajax({ 
           url: url,
           type: 'POST',
@@ -481,7 +481,8 @@ function getMessages(cID, fID, tester, url) {
           data: { 
        	   cID: cID,
        	   fID: fID,
-       	   tester: tester },
+       	   tester: tester,
+       	   session_id: session_id },
            success: function(data){
 	           	  markup = data;
 	           	  $("section.body.right").html(data);

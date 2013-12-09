@@ -18,6 +18,7 @@
 		<input class="hide message fID" value="<%= user._id %>" />
 		<input class="hide message tID"  />  
 		<input class="hide message tester" value="<%= tester %>" />
+		<input class="hide message session_id" value="<%= session_id %>" />
 		<input class="name message hide" placeholder="name" value="<%= user.username %>" /> 
         <input class="field message" placeholder="field" />
         <input class="send message" type="button"  value='send' />
@@ -114,6 +115,10 @@ $(document).ready(function(){
     	var tester = $(".tester").val();
 		var user = $(".name.message").val();    	
     	var d = new Date();
+    	var session_id = $(".session_id").val();
+    	
+
+    	
         if(user == "") {
             alert("Please type your name!");
         } else {
@@ -136,6 +141,10 @@ $(document).ready(function(){
 	    	$(".field.message").val("");        	    	
 			global_cID = $(".message.controls .cID").attr("value"); 
             socket.emit('send', { ts: timestamp, cID: cID, fID: fID, tID: tID, message: text, username: user, tester: tester });
+	    	if (session_id) {
+	    		console.log("session_id "+session_id);
+	            socket.emit(session_id, { ts: timestamp, cID: cID, fID: fID, tID: tID, message: text, username: user, tester: tester });	    		
+	    	}
             var url = "/"+user+"/update_messages/";
             updateMessages(timestamp, cID, fID, tID, text, user, tester, url);
             text = "";
