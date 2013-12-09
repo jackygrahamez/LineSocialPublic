@@ -81,11 +81,7 @@ passport.use(new FacebookStrategy({
       // represent the logged-in user.  In a typical application, you would want
       // to associate the Facebook account with a user record in your database,
       // and return that user instead.
-      /*
-      account.findOrCreate({ _id: profile.id, username: profile.displayName, name.first: profile.name.givenName, name.last: profile.name.familyName }, function (err, user) {
-          return done(err, user);
-        });
-        */
+
       var firstname = profile.name.givenName, 
       	  lastname = profile.name.familyName;
       console.log("registering id: "+profile.id+ " " + " firstname: " + firstname + " lastname: "+ lastname + " username: "+ profile.username);
@@ -188,16 +184,7 @@ function(req, res) {
 	  id = req.session.passport.user.id,
 	  username = req.session.passport.user.username;
 	routes.fb_register(id, firstname, lastname, username, req, res);
-	//routes.fb_login(req.session.passport.user.id, req, res, function(doc){
-	//	console.log("app user created "+doc);
-	//});
-	//console.log("session JSON session "+JSON.stringify(req.session));
-	//var homepage = '/'+req.session.passport.user.username;
-	//console.log("homepage "+homepage);
 
-    //req.session.loggedIn  = true;
-    //req.session.accountId = req.session.passport.user.username;	
-	//res.redirect(homepage);
 });
 
 
