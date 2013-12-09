@@ -151,9 +151,12 @@
 		   $(section).removeClass("expanded");
 	   }
 	   else {
-		   $(".section").removeClass("expanded");
+		   console.log("remove down");
+		   $(".down").removeClass("down");
+		   $(".expanded").removeClass("expanded");
 		   $(this).addClass("down");
 		   $(section).addClass("expanded");
+		   
 		   var top =  $(section).position().top;
 		   $('html, body').animate({scrollTop:top - 50}, 'slow');		   
 	   }
