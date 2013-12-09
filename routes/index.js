@@ -169,19 +169,27 @@ exports.login = function(req, res){
         password = req.body.password;
 
   if ( !email || !password ) {
-    res.send(400);
+	console.log("email and password blank!");
+    //res.send(400);
+	//res.send("blank");
+	res.redirect('/?invalid=true');
     return;
   }
 
   account.login(email, password, function(doc) {
 
     if ( !doc ) {
-      res.send(401);
+    	console.log("could not find user!");
+      //res.send(401);
+    	res.redirect('/?invalid=true');    	
       return;
     }
-    req.session.loggedIn  = true;
-    req.session.accountId = doc._id;
-    res.redirect('/' + doc.username);
+    else {
+        req.session.loggedIn  = true;
+        req.session.accountId = doc._id;
+        res.redirect('/' + doc.username);    	
+    }
+
   });
 };
 
