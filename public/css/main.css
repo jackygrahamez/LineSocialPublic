@@ -674,7 +674,7 @@ section.chat_requests.bordered .message {
 }
 
 .section.expanded.about {
-	min-height: 1891px;
+	min-height: 400px;
 }
 
 .section.expanded.terms {
@@ -684,6 +684,10 @@ section.chat_requests.bordered .message {
 
 .section.expanded.contact {
 	min-height: 200px;
+}
+
+.section.expanded ol {
+	-webkit-padding-start: 0px;
 }
 
 .section.expanded li,
