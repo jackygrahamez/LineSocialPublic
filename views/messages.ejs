@@ -16,7 +16,8 @@
     <div class="message controls">
 		<input class="hide message cID" />       
 		<input class="hide message fID" value="<%= user._id %>" />
-		<input class="hide message tID"  />    		
+		<input class="hide message tID"  />  
+		<input class="hide message tester" value="<%= tester %>" />
 		<input class="name message hide" placeholder="name" value="<%= user.username %>" /> 
         <input class="field message" placeholder="field" />
         <input class="send message" type="button"  value='send' />
@@ -46,6 +47,8 @@ $(document).ready(function(){
 	}, 800);  
 	    	 
     socket.on('message', function (data) {
+    
+    	var tester = $(".tester").val();
         if(data.message) {
             messages.push(data);
             var html = $(".content.messages").html();
@@ -89,6 +92,18 @@ $(document).ready(function(){
 					}	                
 	            }
            $(".content.messages").html(html);
+           if (tester) {
+				html = $(".content.messages").html();
+				if($(".content.messages div").length < 3) {           
+                html += '<div class="bubbledLeft"><span><b> System: </b>';
+                html += 'User Left! Sorry <time>' + time +'</time></span></div>';
+                $(".content.messages").html(html);   
+                } else if (($(".content.messages div").length > 2) && ($(".content.messages div").length < 5)) {
+                html += '<div class="bubbledLeft"><span><b> System: </b>';
+                html += 'Sorry I will give you some points!<time>' + time +'</time></span></div>';
+                $(".content.messages").html(html);                   
+                }       	
+           }
 	       
         } else {
             console.log("There is a problem:", data);
@@ -96,6 +111,7 @@ $(document).ready(function(){
     });
  
     $(".send.message").click(function() {
+    	var tester = $(".tester").val();
 		var user = $(".name.message").val();    	
     	var d = new Date();
         if(user == "") {
@@ -119,9 +135,9 @@ $(document).ready(function(){
 	    	var fID = $(".message.controls .fID").val();
 	    	$(".field.message").val("");        	    	
 			global_cID = $(".message.controls .cID").attr("value"); 
-            socket.emit('send', { ts: timestamp, cID: cID, fID: fID, tID: tID, message: text, username: user });
+            socket.emit('send', { ts: timestamp, cID: cID, fID: fID, tID: tID, message: text, username: user, tester: tester });
             var url = "/"+user+"/update_messages/";
-            updateMessages(timestamp, cID, fID, tID, text, user, url);
+            updateMessages(timestamp, cID, fID, tID, text, user, tester, url);
             text = "";
         }
     });

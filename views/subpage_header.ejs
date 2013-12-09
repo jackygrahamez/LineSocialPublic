@@ -29,7 +29,8 @@ var x=document.getElementById("demo");
 				 	global_cID = $(this).children().children().children("#cID").attr("value");
 					global_fID = $(this).children().children().children("#fID").attr("value");
 					global_tID = $(this).children().children().children("#tID").attr("value");	
-					getMessages(global_cID, global_fID, url);				  
+					var tester = $(this).children().children().children("#tester").attr("value");
+					getMessages(global_cID, global_fID, tester, url);				  
 				}
 				else if (url.indexOf("user_lines") > 0) {
 					

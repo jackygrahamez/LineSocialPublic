@@ -12,9 +12,11 @@
 			   		<li class="arrow"> 
 
 						<form id="form<%= i %>">
+
 						  <input class="hide" id="cID" type="text" name="cID" value="<%= lines[i].check_in.cID  %>" />
 						  <input class="hide" id="tID" type="text" name="tID" value="<%= lines[i]._id %>" />
-						  <input class="hide" id="fID" type="text" name="fID" value="<%= user._id %>" />						  						  
+						  <input class="hide" id="fID" type="text" name="fID" value="<%= user._id %>" />
+						  <input class="hide" id="tester" type="text" name="tester" value="<%= lines[i].tester %>" />
 						  <span class="name" ><%= lines[i].name.first %></span><span type="button" class="right">Chat</span><br /> 
 						  <span class="location"><%= lines[i].check_in.location %></span> 
 

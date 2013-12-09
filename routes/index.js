@@ -292,7 +292,9 @@ exports.user_lines = function(req, res) {
 	        if (!error) {
 	        	if (typeof(venues) != "undefined" && (JSON.stringify(venues.response.venues) != "null")) {
 		        	var i = Math.floor((Math.random()*venues.response.venues.length)+1);
-		            test_venue = venues.response.venues[i].name;
+		        	if (venues.response.venues[i]){
+			            test_venue = venues.response.venues[i].name;		        		
+		        	}
 		            console.log("test_venue "+JSON.stringify(test_venue));	        		
 	        	} else {
 	        		test_venue = "McDonalds";
@@ -500,7 +502,8 @@ exports.user_profile = function(req, res) {
 
 exports.messages = function(req, res) {
 	var cID = req.param('cID', ''),
-	fID = req.param('fID', '');
+	fID = req.param('fID', ''),
+	tester = req.param('tester', '');
 	console.log("messages route cID "+cID);
 	console.log("messages route fID "+fID);
 	  if ( req.session.loggedIn ) {
@@ -515,7 +518,8 @@ exports.messages = function(req, res) {
 						  pagename: 'messages',
 						  cID: cID,
 						  message: '',
-						  fID: fID	    
+						  fID: fID,
+						  tester: tester
 			    	});	  
 		    	}
 		    	else {
@@ -527,7 +531,8 @@ exports.messages = function(req, res) {
 						  pagename: 'messages',
 						  cID: cID,
 						  message: message_doc,
-						  fID: fID	    
+						  fID: fID,
+						  tester: tester	    
 			    	});			    		
 		    	}
   
