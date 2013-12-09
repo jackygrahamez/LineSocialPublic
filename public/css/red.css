@@ -23,6 +23,9 @@ background: -ms-linear-gradient(top,  #febbbb 0%,#fe9090 45%,#ff5c5c 100%); /* I
 background: linear-gradient(to bottom,  #febbbb 0%,#fe9090 45%,#ff5c5c 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#febbbb', endColorstr='#ff5c5c',GradientType=0 ); /* IE6-9 */
 }
+html, section.body.right.active, section.notifications.right.active {
+padding-bottom:400px;
+}
 
 li {
 color: #7A1402;

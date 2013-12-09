@@ -24,6 +24,9 @@ background: -ms-linear-gradient(top,  #d6f9ff 0%,#9ee8fa 100%); /* IE10+ */
 background: linear-gradient(to bottom,  #d6f9ff 0%,#9ee8fa 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d6f9ff', endColorstr='#9ee8fa',GradientType=0 ); /* IE6-9 */
 }
+html, section.body.right.active, section.notifications.right.active {
+padding-bottom:400px;
+}
 li.arrow:after {
 content: "";
 background-image: url(../img/arrow_blue.png);
