@@ -461,6 +461,13 @@ p.outbound > span,
 	color: white;
 	border-radius: 20px;
 }
+.lines span.name:before {
+	content: "Who?";
+	font-size: 10px;
+	font-style: italic;
+	margin-right: 6px;
+	color:#2C8136;	
+}
 .lines span {
 	display: inline-block;
 	overflow: hidden;
@@ -471,9 +478,14 @@ p.outbound > span,
 	width: 280px;
 	white-space: nowrap;
 	overflow: hidden;
-	
 	/* for good looks */
-
+}
+.lines .location:before {
+	content: "Where?";
+	font-size: 10px;
+	font-style: italic;
+	margin-right: 6px;
+	color:#2C8136;	
 }
 .field {
 	width: 210px;
