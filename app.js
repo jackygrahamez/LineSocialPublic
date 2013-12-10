@@ -14,6 +14,7 @@ var express = require('express'),
     util = require('util'),
     FacebookStrategy = require('passport-facebook').Strategy;
 
+var clients = {};
 
 //account.plugin(findOrCreate);
 
@@ -191,7 +192,12 @@ function(req, res) {
 server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 
+  var users = [];
+  
   global.io.sockets.on('connection', function (socket) {
+	  users.push(socket.id);
+	  console.log('+ User '+ socket.id +' connected ('+ socket.handshake.address.address +'). Total users: '+ users.length );
+	  	clients[socket.id] = socket;
 	  	console.log("sockets.on");
 	    socket.emit('message', { message: 'welcome to the chat' });
 		socket.on('send', function (data) {
