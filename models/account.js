@@ -41,16 +41,7 @@ module.exports = function(mongoose) {
     shaSum.update(password);
 
     account.findOne({email:email,password:shaSum.digest('hex')},function(err,doc){
-    	console.log("doc "+doc._id);
-    	console.log("session_id "+session_id);
-    	var user_id = doc._id;
-    	var query = { _id : doc._id };
-		    account.update(query, {"$set" : { "session_id" : session_id }}, function(err,doc_session){
-		    	console.log("update doc "+doc_session);
-		    	account.findOne({_id:user_id},function(err,updated_doc){
-		    		callback(updated_doc);
-			    });    		        
-		    });    
+		callback(doc);    	
 	    });
 
   };
