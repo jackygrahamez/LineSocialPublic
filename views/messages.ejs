@@ -50,6 +50,7 @@ $(document).ready(function(){
     socket.on('message', function (data) {
     
     	var tester = $(".tester").val();
+    	console.log("tester "+tester);
         if(data.message) {
             messages.push(data);
             var html = $(".content.messages").html();
@@ -93,7 +94,7 @@ $(document).ready(function(){
 					}	                
 	            }
            $(".content.messages").html(html);
-           if (tester) {
+           if (tester != "undefined") {
 				html = $(".content.messages").html();
 				if($(".content.messages div").length < 3) {           
                 html += '<div class="bubbledLeft"><span><b> System: </b>';
