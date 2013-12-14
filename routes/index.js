@@ -17,11 +17,7 @@ var foursquare = (require('foursquarevenues'))('Q3Q5R5RIYDOJDS2ACP3XL1WKK5W1RR3S
 
 exports.index = function(req, res){
 	  if ( req.session.loggedIn ) {
-		  console.log("logging out");
-
 		  req.session.destroy(function(err){
-			  console.log("called destroy");
-			   // cannot access session here
 			  console.log(err);
 			  res.render('index', 
 						{ title: 'LineSocial',
@@ -53,38 +49,29 @@ exports.register = function(req, res) {
     account.register(email, password, firstName, lastName, username, function(err) {
 
       if (err) {
-    	  console.log("errors!");
           res.send('<p class="warning">Could not register</p>');
         return console.log(err);
       }
 
       res.send('Account was created');
-      //res.redirect('/');
-
     });
 }
 
 exports.fb_register = function(id, firstname, lastname, username, req, res) {
 	account.findByFBId(id, function(doc) {
-		console.log("doc "+doc)
 	  if (typeof(doc) == 'undefined' || doc == null) {
 			account.fb_register(id, firstname, lastname, username, function (err, user_created) {
 				account.findByFBId(id, function(doc_after_reg) {
-					console.log("doc_after_reg "+doc_after_reg);
-
 				  	var homepage = '/'+doc_after_reg.username;
-					console.log("homepage "+homepage);
 				    req.session.loggedIn  = true;
 				    req.session.accountId = doc_after_reg._id;	
 					res.redirect(homepage);					
 			        return doc_after_reg;			
 				});
-				console.log("returning user created");
 				return user_created;
 			});    			  
 	  } else {
 		  	var homepage = '/'+doc.username;
-			console.log("homepage "+homepage);
 		    req.session.loggedIn  = true;
 		    req.session.accountId = doc._id;	
 			res.redirect(homepage);				  
@@ -95,18 +82,13 @@ exports.fb_register = function(id, firstname, lastname, username, req, res) {
 
 
 exports.fb_login = function(id, req, res) {
-	console.log("fb_login id "+id);
 	account.findByFBId(id, function(doc) {
-		console.log("login doc " + JSON.stringify(doc));
 		if (doc != 'null' && doc != null && JSON.stringify(doc) != "null") {
 		  	var homepage = '/'+doc.username;
-			console.log("homepage "+homepage);
 		    req.session.loggedIn  = true;
 		    req.session.accountId = doc._id;	
 			res.redirect(homepage);				
 		} 
-		
-		console.log("returning fb_login doc");
         return doc;
 	});
 }	
@@ -115,23 +97,15 @@ exports.fb_login = function(id, req, res) {
 exports.update_password = function(req, res) {
     var id = req.param('id', ''),
     password  = req.param('password', null);
-
-    console.log("id "+id);    
-    console.log("password "+password);
-
 if ( null == password || password.length < 1 ) {
   res.send(400);
   return;
 }
-
   account.passwordUpdate(id, password, function(err) {
   if (err) {
 	  console.log("errors!");
   }
-
   res.send('password updated!');
-  //res.redirect('/');
-
 });
 }
 
@@ -167,11 +141,7 @@ exports.terms = function(req, res){
 exports.login = function(req, res){
     var email    = req.body.email,
         password = req.body.password;
-
   if ( !email || !password ) {
-	console.log("email and password blank!");
-    //res.send(400);
-	//res.send("blank");
 	res.redirect('/?invalid=true');
     return;
   }
@@ -180,7 +150,6 @@ exports.login = function(req, res){
 
     if ( !doc ) {
     	console.log("could not find user!");
-      //res.send(401);
     	res.redirect('/?invalid=true');    	
       return;
     }
@@ -196,14 +165,10 @@ exports.login = function(req, res){
 
 exports.home = function(req, res) {
   var url = req.params.id;
-  
   if ( req.session.loggedIn && url !== 'register') {
-	//console.log("home "+req.session.accountId);
   	account.findUsernameById(req.session.accountId, function(username) {	
-		
 	if (username.username === url) {
 	    account.findByUsername({username: url}, function(doc) {
-	
 	    		var socket = require('./socket');
 		        res.render('home', {
 		          title: 'LineSocial',
@@ -278,7 +243,6 @@ exports.user_check_in = function(req, res) {
 }
 
 exports.user_lines = function(req, res) {
-	console.log("user_lines");
     var lat = req.param('lat', ''),
     lon  = req.param('lon', ''),
     geolocation = new Object();
@@ -323,9 +287,6 @@ exports.user_lines = function(req, res) {
 	        		    if (typeof(cID) == 'undefined') {
 	        		    	cID = "";	
 	        		    }
-	        		    console.log("user_lines cID "+cID);
-	        		    console.log("route geolocation "+geolocation);
-	        		    console.log("route geolocation type "+ typeof(geolocation));
 	        		    if (lat != '' && lon != '') {
 	        				account.findCurrent(cID, geolocation, function(userLines) {
 	        					console.log("userLines "+userLines);
@@ -371,17 +332,14 @@ exports.user_notifications = function(req, res) {
 	  	account.findUsernameById(req.session.accountId, function(username) {
 		if (req.params.username == username.username) {
         account.findById(req.session.accountId, function(doc) {
-    	console.log("doc "+doc);
     	var fID = doc._id;
 	    if (!doc.check_in) {
 	    	cID = "";
 	    } else {
 	    	cID = doc.check_in.cID;
 	    }	
-	    console.log("user notifications cID "+cID+" fID "+fID)
 	    message.findMessages(cID, fID, function(message_doc) {
 	    	if(!message_doc[0]) {
-	    		console.log("message_doc empty");
 		        res.render('user_notifications', {
 		             title: 'LineSocial',
 		             user: doc,
@@ -394,7 +352,6 @@ exports.user_notifications = function(req, res) {
 	    		if (typeof(message_doc[0].requests) == 'undefined') {
 	    			message_doc[0].requests = '';
 	    		}
-	    		console.log("message "+JSON.stringify(message_doc));
 	    		 res.render('user_notifications', {
 	             title: 'LineSocial',
 	             user: doc,
@@ -450,7 +407,6 @@ exports.ajax = function(req, res) {
   if ( req.session.loggedIn ) {
 	account.findUsernameById(req.session.accountId, function(username) {
 		if (req.params.username == username.username) {  
-	console.log("user logged in");
     account.findById(req.session.accountId, function(doc) {
 
     	if (field1 == null | field1 == 0) {
@@ -514,9 +470,6 @@ exports.messages = function(req, res) {
 	fID = req.param('fID', ''),
 	tester = req.param('tester', ''),
 	session_id = req.param('session_id', '');
-	console.log("session_id "+session_id);
-	console.log("messages route cID "+cID);
-	console.log("messages route fID "+fID);
 	  if ( req.session.loggedIn ) {
 		account.findUsernameById(req.session.accountId, function(username) {
 		if (req.params.username == username.username) {
@@ -535,8 +488,6 @@ exports.messages = function(req, res) {
 			    	});	  
 		    	}
 		    	else {
-		    		console.log("defined message_doc");
-		    		console.log("message_doc[0].message "+message_doc);
 		    		res.render('messages', {
 				          title: 'LineSocial',
 				          user: doc,

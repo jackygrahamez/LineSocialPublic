@@ -69,8 +69,6 @@ module.exports = function(mongoose) {
   };
   
   var fb_register = function(id, firstName, lastName, username, callback) {
-       //console.log("registering id: "+id+ " " + " firstname: " + firstName + " lastname: "+ lastName + " username: "+ username);
-
 	    var user = new account({
 	      fb_id: id,
 	      name: {
@@ -81,21 +79,15 @@ module.exports = function(mongoose) {
 	      check_in: "",
 	      points: 1000
 	    });
-	    console.log("saving "+user);
 	    user.save();	    
-	    console.log("user save")
 	    var query = {username: username};
-	    console.log("find one query "+ JSON.stringify(query));
 	    account.findOne(query, function(err,doc){
-	    	console.log("findOne after register "+doc);
 	        callback(doc);
 	      });
 
 	  };  
 	  
   var createTestUser = function(test_venue, center, callback) {
-	  	console.log("remove test group ad_hoc");
-
 	  	account.remove({"test_group": "ad_hoc"}, function (err, deleteDoc) {
 	  	  if (err) return handleError(err);
 	  	});	  	
@@ -120,11 +112,8 @@ module.exports = function(mongoose) {
 		location = test_venue;
 		var email = username + "@test.com";
 
-		console.log("center "+JSON.stringify(center));
 		var lat = parseFloat(center.lat);
-		console.log("lat "+lat);
 		var lon = parseFloat(center.lng);
-		console.log("lon "+lon);
 	  
 		var user = new account({
 			"email": email,
@@ -153,13 +142,11 @@ module.exports = function(mongoose) {
   }
   
   var passwordUpdate = function(id, password, callback) {
-	  console.log("id "+id);
 	    var shaSum = crypto.createHash('sha256');
 	    shaSum.update(password);
 	    var shaPassword = shaSum.digest('hex');
 	    var query = { "_id" : id };
 	    account.update(query, {"$set" : { "password" : shaPassword }}, function(err,doc){
-	    	console.log("update doc "+doc);
 	        callback(doc);
 	    });
 
@@ -179,7 +166,6 @@ module.exports = function(mongoose) {
 	    checkIn.line_length = line_length;
 	    checkIn.check_in_time = d1;
 	    checkIn.check_in_expire_time = d2;
-	    console.log("checkIn "+JSON.stringify(checkIn));
 	    account.update(
 	    {"_id" : accountId},
 	    {"$set": { check_in : checkIn }},
@@ -201,9 +187,6 @@ module.exports = function(mongoose) {
 	  
   var findCurrent = function(id, geolocation, callback) {
 	  var now = new Date();
-	  console.log(" geolocation.lat "+ geolocation.lat);
-	  console.log(" geolocation.lng "+ geolocation.lng);	  
-	  	console.log("query "+JSON.stringify(query));
 	  	if (id && id.length > 0) {
 	  	  var query = { 
 	  			  'check_in.check_in_expire_time': {"$gt": now}, '_id': {'$ne': id},
@@ -257,19 +240,14 @@ module.exports = function(mongoose) {
 	  };
 
  var findById = function(id, callback) {
-	 console.log("find by id "+id);
 	  account.findOne({_id:id}, function(err,doc) {
-		  console.log("user found "+JSON.stringify(doc));
 	      callback(doc);
 	  });
   };
 
   var findByFBId = function(id, callback) {
-		 console.log("find by id "+id);
 		  account.findOne({fb_id:id}, function(err,doc) {
-			  console.log("findByFBId user found "+JSON.stringify(doc));
 			  if (JSON.stringify(doc) == null) {
-				  console.log("user is null!!!");
 			  }
 		      callback(doc);
 		  });
@@ -335,10 +313,6 @@ module.exports = function(mongoose) {
   };
   
   var ajaxTest = function(field1, field2, accountId, callback) {
-	    console.log("field1 " +  field1);
-	  	console.log("field2 " + field2);
-	  	console.log("the accountID " + accountId);
-
 	    account.update(
 	    	    {"_id" : accountId},
 	    	    {"$set": { 'field1' : field1, 'field2': field2 }},

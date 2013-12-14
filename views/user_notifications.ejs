@@ -90,6 +90,7 @@ $(document).ready(function(){
 		 	global_cID = $(".notifications.controls .cID").attr("value");
 			global_fID = $(".notifications.controls .fID").attr("value");              
  			global_tID = $(".notifications.controls .tID").attr("value");
+ 			socket.emit("newUser", global_fID);
 	            for(var i=0; i<messages.length; i++) {
 	            if ($(".notifications.controls .cID").attr("value") == messages[i].cID) {
 		            if (typeof(messages[i].username) != 'undefined') {

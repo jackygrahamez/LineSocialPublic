@@ -198,10 +198,10 @@ server.listen(app.get('port'), function(){
 	  users.push(socket.id);
 	  console.log('+ User '+ socket.id +' connected ('+ socket.handshake.address.address +'). Total users: '+ users.length );
 	  	clients[socket.id] = socket;
-	  	console.log("sockets.on");
 	    socket.emit('message', { message: 'welcome to the chat' });
 		socket.on('send', function (data) {
 		console.log("global.io.sockets.emit data "+data);
+			console.log("emitting data "+JSON.stringify(data));
 			global.io.sockets.emit('message', data);
 		}); 
   });

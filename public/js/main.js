@@ -473,7 +473,6 @@ function updateNotificationMessages(cID, fID, messages, url, requests) {
 } 
 
 function getMessages(cID, fID, tester, session_id, url) {
-	console.log("session_id "+session_id);
     $.ajax({ 
           url: url,
           type: 'POST',
