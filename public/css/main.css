@@ -305,7 +305,8 @@ div.content {
 	border: 1px solid red;
 	font-weight: bold;	
 }
-label.invalid {
+label.invalid,
+p.invalid {
 	border:none;
 }
 .button{
@@ -475,7 +476,7 @@ p.outbound > span,
 .lines .location {
 	/* essential */
 	text-overflow: ellipsis;
-	width: 280px;
+	width: 255px;
 	white-space: nowrap;
 	overflow: hidden;
 	/* for good looks */

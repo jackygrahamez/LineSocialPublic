@@ -101,7 +101,25 @@
 		   $("form label").addClass("invalid");
 		   valid = false;
 	   }
-	   
+	   //Length
+	   if (firstName.length > 30) {
+		   $("input[name='firstName']").addClass("invalid");
+		   var invalidMessage = "<p class='invalid'>30 Characters Max</p>";
+		   $("input[name='firstName']").after(invalidMessage);
+		   valid = false;
+	   }
+	   if (lastName.length > 30) {
+		   $("input[name='lastName']").addClass("invalid");
+		   var invalidMessage = "<p class='invalid'>30 Characters Max</p>";
+		   $("input[name='lastName']").after(invalidMessage);
+		   valid = false;
+	   }	   
+	   if (username.length > 20) {
+		   $("input[name='username']").addClass("invalid");
+		   var invalidMessage = "<p class='invalid'>20 Characters Max</p>";
+		   $("input[name='username']").after(invalidMessage);
+		   valid = false;
+	   }
 	   if (	valid && (email === cemail) && (password === cpassword)) {
 		   userRegister(email, password, firstName, lastName, username);
 		} 
@@ -404,6 +422,26 @@ function regCheck(username) {
         });
 }  
 
+
+function grantPoints(cID, user_id) {
+	var url = "/grant_points";
+     $.ajax({ 
+           url: url,
+           type: 'POST',
+           cache: false,
+           data: { 
+        	   cID: cID,
+        	   user_id: user_id},
+           success: function(data){ 
+
+           }
+           , error: function(jqXHR, textStatus, err){
+               //alert('text status '+textStatus+', err '+err)
+               console.log('text status '+textStatus+', err '+err);
+           }
+        });
+}  
+
 function regCheckEmail(email) {
 	var url = "/register_email_value";
      $.ajax({ 
@@ -605,7 +643,6 @@ function getLines(url) {
 
 }  
 function deviceType(callback) {
-	console.log("checking device types");
     var ua = navigator.userAgent;
     var checker = {
       iphone: ua.match(/(iPhone|iPod|iPad)/),

@@ -154,6 +154,9 @@ app.post('/register_value', routes.register_value);
 app.get('/register_email_value', routes.register_email_value);
 app.post('/register_email_value', routes.register_email_value);
 
+app.get('/grant_points', routes.grant_points);
+app.post('/grant_points', routes.grant_points);
+
 app.get('/logout', routes.logout);
 app.get('/terms', routes.terms);
 

@@ -37,6 +37,7 @@ $(document).ready(function(){
     var name = document.getElementById("name");
     var match = false;
     var sender = "bubbledLeft";
+	var cID = $(".message.controls .cID").val();    
 
     var text = $(".field.message").val();    
 	$(".message.controls .cID").attr("value", global_cID);
@@ -103,7 +104,10 @@ $(document).ready(function(){
                 } else if (($(".content.messages div").length > 2) && ($(".content.messages div").length < 5)) {
                 html += '<div class="bubbledLeft"><span><b> System: </b>';
                 html += 'Sorry I will give you some points!<time>' + time +'</time></span></div>';
-                $(".content.messages").html(html);                   
+                $(".content.messages").html(html);
+                var cID = $(".message.controls .cID").val();
+                var fID = $(".message.controls .fID").val();    
+                grantPoints(cID, fID);             
                 }       	
            }
 	       

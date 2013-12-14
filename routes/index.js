@@ -121,6 +121,21 @@ exports.register_value = function(req, res) {
 	
 }
 
+
+exports.grant_points = function(req, res) {
+	var value = req.param('cID', '');
+	var user_id = req.param('user_id', '');	
+    account.findBycId(value, function(doc) {
+    	console.log("grant points doc "+doc);
+    	if (doc) {
+    		account.checkOutByID(doc._id, function(checkout_doc) {
+        		account.addPoints(user_id, 5, function(addPoints_doc) {
+    			});       			
+    		});
+    	}
+	});	
+}
+
 exports.register_email_value = function(req, res) {
 	var value = req.param('email', '');	
     account.findByEmail(value, function(doc) {
@@ -149,14 +164,12 @@ exports.login = function(req, res){
   account.login(email, password, function(doc) {
 
     if ( !doc ) {
-    	console.log("could not find user!");
     	res.redirect('/?invalid=true');    	
       return;
     }
     else {
         req.session.loggedIn  = true;
         req.session.accountId = doc._id;
-        console.log("req.session "+ JSON.stringify(req.session));
         res.redirect('/' + doc.username);    	
     }
 
@@ -207,8 +220,6 @@ exports.user_check_in = function(req, res) {
     lat  = parseFloat(req.param('lat', '')),
     lon  = parseFloat(req.param('lon', '')),
     geolocation = [lat, lon];
-    console.log("lat type "+typeof(lat));
-    
  	if ( req.session.loggedIn ) {
 	account.findUsernameById(req.session.accountId, function(username) {
 		if (req.params.username == username.username) {
@@ -249,27 +260,21 @@ exports.user_lines = function(req, res) {
     geolocation.lat = lat,
     geolocation.lng = lon,
     coord = [ lat + "," + lon];
-    console.log("coord "+coord);
     var test_venue;
-    
 	var params = {
 	        "ll": coord
 	    };
-		console.log("params "+JSON.stringify(params));
-
-
   if ((req.session.loggedIn)) {
 	  
 	    foursquare.getVenues(params, function(error, venues) {
-	    	console.log("returning venues");
 	        if (!error) {
 	        	if (typeof(venues) != "undefined" && (JSON.stringify(venues.response.venues) != "null")) {
 		        	var i = Math.floor((Math.random()*venues.response.venues.length)+1);
 		        	if (venues.response.venues[i]){
 			            test_venue = venues.response.venues[i].name;		        		
 		        	}
-		            console.log("test_venue "+JSON.stringify(test_venue));	        		
 	        	} else {
+	        		console.log("could not find, using McDonalds");
 	        		test_venue = "McDonalds";
 	        	}
 
@@ -278,7 +283,6 @@ exports.user_lines = function(req, res) {
 	        		account.findUsernameById(req.session.accountId, function(username) {
 	        			if (req.params.username == username.username) {
 	        		    account.findById(req.session.accountId, function(doc) {
-	        			console.log("doc "+doc);
 	        		    if (!doc.check_in) {
 	        		    	cID = "";
 	        		    } else {
@@ -289,8 +293,6 @@ exports.user_lines = function(req, res) {
 	        		    }
 	        		    if (lat != '' && lon != '') {
 	        				account.findCurrent(cID, geolocation, function(userLines) {
-	        					console.log("userLines "+userLines);
-	        					//res.send(userLines);
 	        			        res.render('user_lines', {
 	        			          title: 'LineSocial',
 	        			          user: doc,
@@ -517,85 +519,7 @@ exports.messages = function(req, res) {
 
 exports.user_message = function(req, res) {
 
-    var user_message = req.param('message', ''),
-	
-    	tID = req.param('tID', ''),
-    	fID = req.param('fID', req.session.accountId),
-		cID = req.param('cID', ''),
-	    time = new Date(),
-	    counter = 0;
-	        
-		
-    if ((cID.length > 1) && (fID.length > 1) && (tID.length > 1) && user_message.length > 0 ) {
-    	account.findUsernameById(req.session.accountId, function(username) {
-		if (req.params.username == username.username) {      	
-    	account.findById(req.session.accountId, function(doc) {
-    		message.sendMessages(cID, tID, fID, doc.name.first, user_message, time, function(message_doc) {
-    			if (message_doc[0] && message_doc[0].thread) {
-    			counter = message_doc[0].thread.length;
-    			} else {
-    			counter = 0;
-    			}
-    			var ticker = counter.toString();
 
-				var ajaxMessage ="<li>" + doc.name.first + ": " + user_message + " "+time.getHours()+":"+time.getMinutes()+"</li>"; 
-
-				res.send(ajaxMessage);
-
-    		});
-    	});
-	    } else {
-	    	res.redirect('/' +username.username);
-	    }	 
-    	});    	
-        return;
-        
-    } else if ((cID.length > 1) && (fID.length > 1) && (tID.length > 1) && user_message.length < 1 ) {
-    	account.findUsernameById(req.session.accountId, function(username) {
-		if (req.params.username == username.username) {      	
-	    account.findById(req.session.accountId, function(doc) {
-	    account.findBycId(cID, function(cID_doc) {
-	    	message.findMessages(tID, fID, function(message_doc) {
-	    		if (message_doc) {
-		    		console.log("message_doc "+message_doc);
-	    			if (message_doc[0] && message_doc[0].thread) {  			
-			    	res.render('user_message', {
-			          title: 'LineSocial',
-			          user: doc,
-			          message_doc: message_doc,
-			          cID: cID,
-			          tID: tID,
-			          fID: fID,
-			          cID_doc: cID_doc,
-					  pagename: 'user_message'
-			        });
-	    			} else {
-			    	  res.render('user_message', {
-			          title: 'LineSocial',
-			          user: doc,
-			          message_doc: "",
-			          cID: cID,
-			          tID: tID,
-			          fID: fID,
-			          cID_doc: cID_doc,
-					  pagename: 'user_message'
-			        });
-	    			}
-	    		}
-	    	 });
-	    });
-	    });	    
-	    } else {
-	    	res.redirect('/' +username.username);
-	    }	 
-    	});   	    
-    	return;  	
-    }
-    else {
-    	
-        res.send(401);
-    	return;
-    }
 }
 
 exports.user_next_message = function(req, res) {
@@ -608,15 +532,11 @@ exports.user_next_message = function(req, res) {
 	account.findById(req.session.accountId, function(doc) {
 		message.findNextMessage(cID, function(message_doc) {
 			if(message_doc) {
-				console.log("user_next_message doc"+message_doc);
 				if (message_doc[0] && message_doc[0].thread) {
 				if (current_thread_length < message_doc[0].thread.length) {
 					i = parseInt(current_thread_length) + 1;			
 					if (message_doc[0].thread[i] && message_doc[0].thread[i]) {
-						console.log("current_thread_length is less than message_doc[0].thread.length");
-						console.log("message_doc[0].thread[i] "+message_doc[0].thread[i]);
 						var ajaxMessage ="<li>" + message_doc[0].thread[i].username + ": " + message_doc[0].thread[i].message + "<br /> "+message_doc[0].thread[i].time+"</li>"; 
-						console.log(ajaxMessage);
 						res.send(ajaxMessage);	
 					}
 					else {
@@ -678,10 +598,8 @@ exports.venues = function(req, res) {
 	    	var params = {
 	    	        "ll": coord
 	    	    };
-	    		console.log("params "+params);
 	    	    foursquare.getVenues(params, function(error, venues) {
 	    	        if (!error) {
-	    	            console.log(venues.response.venues);
 	    	            res.send(venues.response.venues);
 	    	        }
 	    	    });
@@ -726,12 +644,8 @@ exports.update_messages = function(req, res) {
 	 fID = req.param('fID', ''),
 	 messages = req.param('messages', ''),
 	 user = req.param('user', '');
-	 
-	 console.log("messages route "+messages);
-	 console.log("tID route "+tID);
 	  if ( req.session.loggedIn && cID && tID && fID && messages) {
 		   message.saveMessages(ts, cID, fID, tID, messages, user, function(error, doc) {
-			   console.log("updated messages "+doc);
 			   res.send("updated messages");
 		   });
 
@@ -748,13 +662,9 @@ exports.update_notification_messages = function(req, res) {
 	 fID = req.param('fID', ''),
 	 messages = req.param('messages', ''),
 	 requests = req.param('requests', '');
-	 console.log("update_notification_messages");
-	 console.log("fID route "+fID);
-	 console.log("update_notification_messages "+messages);
 	  if ( req.session.loggedIn ) {
 		  if (messages){
 			   message.saveNotificationMessages(cID, fID, messages, requests, function(error, doc) {
-				   console.log("updated messages "+doc);
 				   res.send("updated messages");
 			   });
 		  }
@@ -773,16 +683,7 @@ exports.update_notification_messages = function(req, res) {
 
 exports.logout = function(req, res) {
 	  if ( req.session.loggedIn ) {
-		  console.log("logging out");
 		  res.render('logout');
-		  /*
-		  req.session.destroy(function(err){
-			  console.log("called destroy");
-			   // cannot access session here
-			  console.log(err);
-			  res.render('index');
-			 });
-		  */
 		  } else {
 
 		    res.send(401);

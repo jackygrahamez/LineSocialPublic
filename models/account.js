@@ -91,7 +91,10 @@ module.exports = function(mongoose) {
 	  	account.remove({"test_group": "ad_hoc"}, function (err, deleteDoc) {
 	  	  if (err) return handleError(err);
 	  	});	  	
-	  		
+	  	if (typeof(test_venue) == "undefined" || test_venue == "undefined") {
+	  		test_venue = "Test Location";
+	  	}
+	    var cID = crypto.createHash('md5').update(Math.random().toString()).digest('hex').substring(0, 24);
 	  	var username = "";
 	  	var counter = 0;
 		var d = new Date();
@@ -131,13 +134,13 @@ module.exports = function(mongoose) {
 			],
 			"line_length": 1800000,
 			"check_in_time": d,
-			"check_in_expire_time": expire
+			"check_in_expire_time": expire,
+			"cID": cID
 			},
 		      "tester": true,
 		      "test_group": "ad_hoc"				
 		});	  
 
-		console.log("createTestUser user"+user);
 		user.save(callback);
   }
   
@@ -239,6 +242,20 @@ module.exports = function(mongoose) {
 		  	}
 	  };
 
+  var checkOutByID = function(id, callback) {
+	  	if (id) {
+	      account.update(
+    	    {"_id" : id},
+    	    {"$set": { 'check_in' : '' }},
+    	        function(error, account){
+    	           if( error ) callback(error);
+    	           else callback("checked out");
+    	    });			  				  
+	  	}
+  };
+
+	  	  
+	  
  var findById = function(id, callback) {
 	  account.findOne({_id:id}, function(err,doc) {
 	      callback(doc);
@@ -255,7 +272,7 @@ module.exports = function(mongoose) {
   
   var findBycId = function(cID, callback) {
 
-	  account.findOne({_id:cID}, function(err,doc) {
+	  account.findOne({"check_in.cID":cID}, function(err,doc) {
 	      callback(doc);
 	  });
 
@@ -285,13 +302,13 @@ module.exports = function(mongoose) {
 
   	};
 
-    var findByEmail = function(user_email, callback) {
+  var findByEmail = function(user_email, callback) {
 
-        account.findOne({email: user_email}, function(err,doc) {
-          callback(doc);
-        });
+    account.findOne({email: user_email}, function(err,doc) {
+      callback(doc);
+    });
 
-      	};
+  	};
         	
   	
   var post_message = function(cID, accountId, message, username, callback) {
@@ -321,8 +338,18 @@ module.exports = function(mongoose) {
 	    	           else callback(null, account);
 	    	    });	    
 
-};
+  };
   
+  var addPoints = function(user_id, points, callback) {
+    account.update(
+    	    {"_id" : user_id},
+    	    {"$inc": { 'points' : points }},
+    	        function(error, account){
+    	           if( error ) callback(error);
+    	           else callback(null, account);
+    	    });	    
+  };
+
 
   return {
     login: login,
@@ -343,6 +370,8 @@ module.exports = function(mongoose) {
     ajaxTest: ajaxTest,
     fb_register: fb_register,
     findByFBId: findByFBId,
-    createTestUser: createTestUser
+    createTestUser: createTestUser,
+    addPoints: addPoints,
+    checkOutByID: checkOutByID
   }
 }
