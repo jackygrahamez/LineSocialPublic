@@ -184,9 +184,21 @@
    
    //Themes
    $("menu.themes li").click(function(){
+	   $(this).siblings().removeClass("active");
+	   $(this).addClass("active");
 	   var themeColor = $(this).attr("rel");
 	   setActiveStyleSheet(themeColor);
    });
+   
+   $("menu.themes > li").first().addClass("active");
+   
+   $("link").each(function(){ 
+	   if(!$(this).attr("disabled") && ( $(this).attr("title") != undefined)) {
+		   var theme = $(this).attr("title");
+		   console.log($(this).attr("title"));
+		   $(".themes li[rel='"+theme+"']").click();
+	   } 
+	});
    
    //set global coordinates
    //getLocation(0);
