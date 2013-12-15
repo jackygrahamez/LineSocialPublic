@@ -43,9 +43,9 @@ passport.deserializeUser(function(obj, done) {
 });
 
 
-console.log("using authenticator");
+//console.log("using authenticator");
 //Authenticator
-app.use(express.basicAuth('friend', 'bli8ke'));
+//app.use(express.basicAuth('friend', 'bli8ke'));
 
 //all environments
 app.set('port', process.env.PORT || 5000);
