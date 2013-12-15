@@ -204,12 +204,12 @@
    //getLocation(0);
    
    // autocheckout
-
+/*
    setInterval(function(){
 	   console.log("auto checkout");
 	   getLocation(1);
    },60000);
-   
+*/   
    $("html").removeClass("disabled");
 })(jQuery, this)
 
@@ -599,6 +599,7 @@ function checkIn(location, geolocation, line_length, global_lat, global_lon, url
 	              //alert('Success!');
 	              $("#demo").html(data);
 	              global_cID = data;
+	              autocheckout();
 	              $(".checkin.active .back").click();
 	           }
 	           , error: function(jqXHR, textStatus, err){
