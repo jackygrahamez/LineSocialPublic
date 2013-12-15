@@ -1,4 +1,4 @@
-h1, #submit, #register, #checkin, #chat, #post, #send, input[type='button'], .button {
+h1, #submit, #register, #checkin, #chat, #post, #send, input[type='button'], .button, input[type='submit'] {
 background: #fefcea; /* Old browsers */
 background: -moz-linear-gradient(top,  #fefcea 0%, #f1da36 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fefcea), color-stop(100%,#f1da36)); /* Chrome,Safari4+ */
@@ -9,7 +9,7 @@ background: linear-gradient(to bottom,  #fefcea 0%,#f1da36 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefcea', endColorstr='#f1da36',GradientType=0 ); /* IE6-9 */
 }
 
-h1, #submit, #register, #checkin, #chat, #post, #send, input[type='button'], .button {
+h1, #submit, #register, #checkin, #chat, #post, #send, input[type='button'], .button, input[type='submit'] {
 	color:black;
 	text-shadow: none;
 }
@@ -32,7 +32,7 @@ html, section.body.right.active, section.notifications.right.active {
 padding-bottom:400px;
 }
 
-input, textarea, button {
+input, textarea, button, input[type='submit'] {
 background: #FFF;
 }
 

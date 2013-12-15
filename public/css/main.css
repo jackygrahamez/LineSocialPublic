@@ -171,7 +171,7 @@ label {
 	margin-top: 20px;
 	text-align: left;
 }
-input, textarea, button {
+input, textarea, button, input[type='submit'] {
 	width: 280px;
 	background: #efefef;
 	border: 1px solid #ddd;
@@ -719,13 +719,13 @@ section.chat_requests.bordered .message {
 .section.expanded li,
 .section.expanded ol li {
 	border: none !important;
-	width: 200px !important;
+	width: 200px;
 }
 
 .section.expanded li li,
 .section.expanded li ol li {
 	border:none !important;
-	width: 170px !important;
+	width: 170px ;
 }
 
 /*colors*/
@@ -796,4 +796,14 @@ and (min-width : 768px) {
 	div.wrapper {
 		width: auto;
 	}
+	.section.expanded li,
+	.section.expanded ol li {
+		border: none !important;
+		width: auto !important;
+	}	
+	.section.expanded li li,
+	.section.expanded li ol li {
+		border:none !important;
+		width: 170px ;
+	}	
 }
