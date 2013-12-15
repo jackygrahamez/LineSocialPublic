@@ -449,6 +449,28 @@ function grantPoints(cID, user_id) {
         });
 }  
 
+function sendPoints(fID, tID, points) {
+	console.log("send points function");
+	var url = "/send_points";
+     $.ajax({ 
+           url: url,
+           type: 'POST',
+           cache: false,
+           data: { 
+        	   points: points,
+        	   fID: fID,
+        	   tID: tID},
+           success: function(data){ 
+        	   console.log(data);
+           }
+           , error: function(jqXHR, textStatus, err){
+               //alert('text status '+textStatus+', err '+err)
+               console.log('text status '+textStatus+', err '+err);
+           }
+        });
+} 
+
+
 function regCheckEmail(email) {
 	var url = "/register_email_value";
      $.ajax({ 

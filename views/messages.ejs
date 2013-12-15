@@ -22,6 +22,13 @@
 		<input class="name message hide" placeholder="name" value="<%= user.username %>" /> 
         <input class="field message" placeholder="field" />
         <input class="send message" type="button"  value='send' />
+		<p>
+		  <label for="amount">Points To Send: <span id="amount"></span>
+		  <span class="balance">Balance: <span class="balance_value"><%= user.points %></span></span>
+		  </label>
+		</p>
+		<div id="slider"></div>
+		<input type="button" class="send_points" value="Send Points">        
     </div>
     </section>
 </section>
@@ -47,6 +54,45 @@ $(document).ready(function(){
 	$('.content.messages').stop().animate({
 	  scrollTop: $(".content.messages")[0].scrollHeight
 	}, 800);  
+	
+   $( "#slider" ).slider({
+      value:5,
+      min: 0,
+      max: 10,
+      step: 1,
+      slide: function( event, ui ) {
+        $( "#amount" ).text(  ui.value );;
+      }
+    });
+    $( "#amount" ).text( $( "#slider" ).slider( "value" ) );	
+    
+    $(".send_points").click(function(){
+		var d = new Date();
+		var h = d.getHours();
+		var td = "am";
+		if (h > 12) { 
+		h = h - 12;
+		td = "pm"; 
+		}
+		var m = d.getMinutes();
+		m = checkTime(m);   
+		var time = " " + h + ":" + m + " "+td;    
+		var fID = $(".message.controls .fID").val();    
+		var tID = $(".message.controls .tID").val();
+		var points = $( "#amount" ).text();
+		var balance_value = parseInt($(".balance_value").text()) - points;
+		var user = $(".name.message").val();   
+		var message = user+' sent '+points;
+		var html = $(".content.messages").html();
+        html += '<div class="bubbledLeft"><span><b> System: </b>';
+        html += message +' <time>' + time +'</time></span></div>';
+        $(".content.messages").html(html);  	
+       	$(".balance_value").text(balance_value);
+		sendPoints(fID, tID, points);
+		socket.emit('send', { message: user+' sent '+points });    
+	
+    });
+    
 	    	 
     socket.on('message', function (data) {
     

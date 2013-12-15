@@ -133,6 +133,7 @@ module.exports = function(mongoose) {
 			lat,
 			lon
 			],
+			"points": 1000,
 			"line_length": 1800000,
 			"check_in_time": d,
 			"check_in_expire_time": expire,
@@ -363,15 +364,41 @@ module.exports = function(mongoose) {
 	    	    });	    
 
   };
+
   
-  var addPoints = function(user_id, points, callback) {
-    account.update(
-    	    {"_id" : user_id},
-    	    {"$inc": { 'points' : points }},
-    	        function(error, account){
-    	           if( error ) callback(error);
-    	           else callback(null, account);
-    	    });	    
+  var grantPoints = function(tID, points, callback) {
+	  console.log("tID "+tID);
+	  console.log("points "+points);
+	  account.update(
+	    	    {"_id" : tID},
+	    	    {"$inc": { 'points' : points }},
+	    	    {upsert: true},
+    	        function(error, account_decrement){
+	    	           if( error ) callback(error);
+	    	           else callback(null, account_decrement);
+	    	    });
+	  
+  };
+  
+  var addPoints = function(fID, tID, points, callback) {
+	  console.log("tID "+tID);
+	  console.log("points "+points);
+	  account.update(
+	    	    {"_id" : tID},
+	    	    {"$inc": { 'points' : points }},
+	    	    {upsert: true},
+	    	        function(error, account_increment){
+	    	    	points = points * -1;
+		    	  	  account.update(
+		    		    	    {"_id" : fID},
+		    		    	    {"$inc": { 'points' : points }},
+		    		    	    {upsert: true},
+		    		    	        function(error, account_decrement){
+		    		    	           if( error ) callback(error);
+		    		    	           else callback(null, account_decrement);
+		    		    	    });	 
+	    	    });
+	  
   };
 
 
@@ -396,6 +423,7 @@ module.exports = function(mongoose) {
     findByFBId: findByFBId,
     createTestUser: createTestUser,
     addPoints: addPoints,
+    grantPoints: grantPoints,
     checkOutByID: checkOutByID
   }
 }

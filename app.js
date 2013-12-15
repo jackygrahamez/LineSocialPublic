@@ -160,6 +160,9 @@ app.post('/grant_points', routes.grant_points);
 app.get('/logout', routes.logout);
 app.get('/terms', routes.terms);
 
+app.get('/send_points', routes.send_points);
+app.post('/send_points', routes.send_points);
+
 
 //GET /auth/facebook
 //Use passport.authenticate() as route middleware to authenticate the

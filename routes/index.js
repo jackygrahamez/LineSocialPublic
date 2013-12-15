@@ -129,12 +129,27 @@ exports.grant_points = function(req, res) {
     	console.log("grant points doc "+doc);
     	if (doc) {
     		account.checkOutByID(doc._id, function(checkout_doc) {
-        		account.addPoints(user_id, 5, function(addPoints_doc) {
+    			console.log("user_id "+user_id);
+        		account.grantPoints(user_id, 5, function(addPoints_doc) {
     			});       			
     		});
     	}
 	});	
 }
+
+exports.send_points = function(req, res) {
+	var points = req.param('points', '');
+	var fID = req.param('fID', '');	
+	var tID = req.param('tID', '');	
+	console.log("points "+points);
+	console.log("tID "+tID);
+	console.log("fID "+fID);
+	account.addPoints(fID, tID, points, function(doc) {
+		//console.log("send points doc "+doc);
+		res.send("points sent");
+	});       	
+}
+
 
 exports.register_email_value = function(req, res) {
 	var value = req.param('email', '');	

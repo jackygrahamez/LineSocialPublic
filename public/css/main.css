@@ -391,6 +391,14 @@ html:not(.iphone) .register form #terms {
 .message #name {
 	color:black;
 }
+.message #slider {
+	margin: auto 20px;
+}
+.balance {
+	float: right;
+	margin-right: 10px;
+}
+
 .accordion.off {
 	height: 0px;
 	overflow: hidden;
