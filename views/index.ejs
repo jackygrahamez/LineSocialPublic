@@ -42,12 +42,6 @@
  <div class="overlay"><div></div></div>
 <script type="text/javascript">
 $(document).ready(function(){
-var interval_id = window.setInterval("", 9999); // Get a reference to the last
-                                                // interval +1
-for (var i = 1; i < interval_id; i++)
-        window.clearInterval(i);
-//for clearing all intervals
-
 var invalid = getURLParameter('invalid');
 $(".overlay > div").canvasLoader();
 setTimeout(function() {
