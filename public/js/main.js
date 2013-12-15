@@ -27,7 +27,7 @@
 				    +"position: fixed;"
 				    +"height: 100%;"
 				    +"width: 100%;"
-				    +"top: 0px;"
+				    +"top: 40px;"
 				    +"left: 0px;"
 				    +"background: rgba(0,0,0, 0.2);"
 				    +'"><div></div></div>';
