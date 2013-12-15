@@ -138,14 +138,19 @@ li.arrow[name='contact']:not(.down) {
 }
 
 menu.themes {
-margin: 10px 0px 0px;
+	margin: 10px 0px 0px;
 }
 
 menu.themes li {
-display: inline-block;
-width: 20px;
-border-radius: 0px;
-margin: 5px;
+	display: inline-block;
+	width: 20px;
+	border-radius: 0px;
+	margin: 5px;
+	border: white 2px solid;
+}
+
+.themes .active {
+	border: #F7B654 2px solid;
 }
 
 menu.themes li:first-of-type {
@@ -720,6 +725,8 @@ section.chat_requests.bordered .message {
 .normal_theme {
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#b4bfce), color-stop( 50%, #889bb3), color-stop(50%, #7f94b0), to(#6d83a1));
 }
+
+
 
 .red_theme {
 	background: #f85032; /* Old browsers */

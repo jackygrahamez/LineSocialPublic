@@ -622,12 +622,30 @@ exports.auto_checkout = function(req, res) {
     lon  = req.param('lon', ''),
     geolocation = new Object();
     geolocation.lat = lat,
-    geolocation.lng = lon;	
+    geolocation.lng = lon,
+    lat1 = lat,
+    lon1 = lon,
+    lat2 = lat,
+    lon2 = lon;
+    
+    console.log("geolocation "+JSON.stringify(geolocation));
 	  if ( req.session.loggedIn ) {
-	  account.findUsernameById(req.session.accountId, function(username) {
-		  account.checkOut(req.session.accountId, geolocation, function(error, doc) {
-			   //res.send(doc);
-		   });
+		  console.log("req.session.accountId "+req.session.accountId);
+	  account.findById(req.session.accountId, function(user_data) {
+		  console.log("user_data.check_in.geolocation "+user_data.check_in.geolocation);
+		  if (typeof(user_data.check_in.geolocation) != "undefined") {
+			  var check_in_location = user_data.check_in.geolocation;
+			  lat2 = check_in_location[0];
+			  lon2 = check_in_location[1];
+			  
+			  var distance = getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2);
+			  console.log("distance "+distance +" (km)");
+			  if (distance > 0.5) {
+				  account.checkOut(req.session.accountId, function(error, doc) {
+					   //res.send(doc);
+				   });			  
+			  }			  
+		  }
 	    });
 
 	  } else {
@@ -691,4 +709,22 @@ exports.logout = function(req, res) {
 		  }	
 
 	}
+
+function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+	  var R = 6371; // Radius of the earth in km
+	  var dLat = deg2rad(lat2-lat1);  // deg2rad below
+	  var dLon = deg2rad(lon2-lon1); 
+	  var a = 
+	    Math.sin(dLat/2) * Math.sin(dLat/2) +
+	    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+	    Math.sin(dLon/2) * Math.sin(dLon/2)
+	    ; 
+	  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+	  var d = R * c; // Distance in km
+	  return d;
+	}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
+}
 

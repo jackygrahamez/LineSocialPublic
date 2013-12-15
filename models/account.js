@@ -22,7 +22,8 @@ module.exports = function(mongoose) {
     	  geolocation: { type: {}, index: '2dsphere', sparse: true },
     	  line_length: { type: Number },
     	  check_in_time: { type: Date, expires: '24h' },
-    	  check_in_expire_time: { type: Date, expires: '24h' }
+    	  check_in_expire_time: { type: Date, expires: '24h' },
+    	  outside_count: { type: Number }
       },
       points: { type: Number },
       tester: Boolean,
@@ -215,28 +216,51 @@ module.exports = function(mongoose) {
 	  };	  
 	  
 	  
-	  var checkOut = function(id, geolocation, callback) {
+	  var checkOut = function(id, callback) {
 		  	if (id && id.length > 0) {
 
 		  	  var query = { 
-		  			  '_id': id,
-					  "check_in.geolocation" : { $near : { $geometry :
-				      { type : "Point" ,
-					        coordinates : [ parseFloat(geolocation.lat), parseFloat(geolocation.lng) ] } },
-					        $maxDistance : 500 }
-			  				};	 
+		  			  '_id': id };	 
 
 		  		account.find(query, function(err,doc) {	
 		  			  if (doc.length) {
-		  				  callback("not checkedout");
+		  				  //callback("not checkedout");
+		  				  if (typeof(doc[0].check_in.outside_count) != "undefined")
+		  					  {
+		  					    if (doc[0].check_in.outside_count > 5) {
+					  			      account.update(
+						  			    	    {"_id" : id},
+						  			    	    {"$set": { 'check_in' : '' }},
+						  			    	        function(error, account){
+						  			    	           if( error ) callback(error);
+						  			    	           else callback("checked out");
+						  			    	    });				  					  
+				  				  } else {
+				  					  console.log("incrementing outside count");
+					  			      account.update(
+						  			    	    {"_id" : id},
+						  			    	    {"$inc": { 'check_in.outside_count' : 1 }},
+						  			    	    {upsert: true},
+						  			    	        function(error, account){
+						  			    	           if( error ) callback(error);
+						  			    	           else callback("checked out");
+						  			    	    });				  					  
+				  				  }			  					  
+		  					  } 
+		  				  else {
+		  					  console.log("incrementing outside count");
+			  			      account.update(
+				  			    	    {"_id" : id},
+				  			    	    {"$inc": { 'check_in.outside_count' : 1 }},
+				  			    	    {upsert: true},
+				  			    	        function(error, account){
+				  			    	           if( error ) callback(error);
+				  			    	           else callback("checked out");
+				  			    	    });			  					  
+		  				  }
 		  			  } else {
-		  			      account.update(
-			  			    	    {"_id" : id},
-			  			    	    {"$set": { 'check_in' : '' }},
-			  			    	        function(error, account){
-			  			    	           if( error ) callback(error);
-			  			    	           else callback("checked out");
-			  			    	    });			  				  
+		  				  console.log("checked out");
+	  				  
 		  			  }
 				    });	  		
 		  	}

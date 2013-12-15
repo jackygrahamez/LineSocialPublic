@@ -192,15 +192,21 @@
    //getLocation(0);
    
    // autocheckout
-   /*
+
    setInterval(function(){
+	   console.log("auto checkout");
 	   getLocation(1);
    },60000);
-   */
    
    $("html").removeClass("disabled");
 })(jQuery, this)
 
+
+function autocheckout() {
+   setInterval(function(){
+	   getLocation(1);
+   },60000);	
+} 
 
 function getLocation(lLength, pURL)
   {
@@ -230,6 +236,7 @@ function showPosition(position)
 	  } else if (lineLength == 1) {
 		  var d = new Date()
 		  var url = location.pathname+"/auto_checkout/";
+		  //console.log("position "+JSON.stringify(position));
 		  auto_checkout(url, position.coords.latitude, position.coords.longitude);
 	  } 
 	  else {
