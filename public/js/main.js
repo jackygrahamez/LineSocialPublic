@@ -8,6 +8,9 @@
   var html, ajaxData;
   var lURL;
 (function($, window, undefined) {
+	if ((location.href.indexOf("alpha.") < 0) && ((location.href.indexOf("localhost") < 0))) {
+		location.replace("https://alpha.linesocial.mobi");
+	}
 	deviceType(iosCheckbox);
       
    $("input, textarea").focus(function(){
