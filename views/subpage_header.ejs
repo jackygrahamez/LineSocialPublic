@@ -3,10 +3,32 @@ var x=document.getElementById("demo");
 	$(document).ready( function(){
 	   //$("body").height($(document).height());
 	   //Themes
+	   /*
 	   $("menu.themes li").click(function(){
 		   var themeColor = $(this).attr("rel");
 		   setActiveStyleSheet(themeColor);
 	   });	
+	   */
+	   //Themes
+	   setTimeout(function(){
+	   $("menu.themes li").click(function(){
+	   console.log("menu.themes li");
+		   $(this).siblings().removeClass("active");
+		   $(this).addClass("active");
+		   var themeColor = $(this).attr("rel");
+		   setActiveStyleSheet(themeColor);
+	   });
+	   
+	   $("menu.themes > li").first().addClass("active");
+	   }, 1000);
+	   
+	   $("link").each(function(){ 
+		   if(!$(this).attr("disabled") && ( $(this).attr("title") != undefined)) {
+			   var theme = $(this).attr("title");
+			   $(".themes li[rel='"+theme+"']").click();
+		   } 
+		}); 	   
+	   
 
 	   $("input[type='text'], textarea").focus(function(){
 		   $(this).css("color", "black");
