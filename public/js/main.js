@@ -172,7 +172,6 @@
 		   $(section).removeClass("expanded");
 	   }
 	   else {
-		   console.log("remove down");
 		   $(".down").removeClass("down");
 		   $(".expanded").removeClass("expanded");
 		   $(this).addClass("down");
@@ -198,7 +197,6 @@
    $("link").each(function(){ 
 	   if(!$(this).attr("disabled") && ( $(this).attr("title") != undefined)) {
 		   var theme = $(this).attr("title");
-		   console.log($(this).attr("title"));
 		   $(".themes li[rel='"+theme+"']").click();
 	   } 
 	});
@@ -465,7 +463,6 @@ function grantPoints(cID, user_id) {
 }  
 
 function sendPoints(fID, tID, points) {
-	console.log("send points function");
 	var url = "/send_points";
      $.ajax({ 
            url: url,
@@ -476,7 +473,7 @@ function sendPoints(fID, tID, points) {
         	   fID: fID,
         	   tID: tID},
            success: function(data){ 
-        	   console.log(data);
+
            }
            , error: function(jqXHR, textStatus, err){
                //alert('text status '+textStatus+', err '+err)
@@ -623,9 +620,7 @@ function auto_checkout(url, lat, lon) {
 	        	   	   lon: lon}, 
 	           success: function(data){
 	           	  markup = data;
-	           	  console.log("data "+data);
 	           	  if (data === "checkout") {
-	           		  console.log("clearing intervals");
 	           		var interval_id = window.setInterval("", 9999); // Get a reference to the last
                     // interval +1
 					for (var i = 1; i < interval_id; i++)

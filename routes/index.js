@@ -126,10 +126,8 @@ exports.grant_points = function(req, res) {
 	var value = req.param('cID', '');
 	var user_id = req.param('user_id', '');	
     account.findBycId(value, function(doc) {
-    	console.log("grant points doc "+doc);
     	if (doc) {
     		account.checkOutByID(doc._id, function(checkout_doc) {
-    			console.log("user_id "+user_id);
         		account.grantPoints(user_id, 5, function(addPoints_doc) {
     			});       			
     		});
@@ -141,9 +139,6 @@ exports.send_points = function(req, res) {
 	var points = req.param('points', '');
 	var fID = req.param('fID', '');	
 	var tID = req.param('tID', '');	
-	console.log("points "+points);
-	console.log("tID "+tID);
-	console.log("fID "+fID);
 	account.addPoints(fID, tID, points, function(doc) {
 		//console.log("send points doc "+doc);
 		res.send("points sent");
@@ -289,7 +284,6 @@ exports.user_lines = function(req, res) {
 			            test_venue = venues.response.venues[i].name;		        		
 		        	}
 	        	} else {
-	        		console.log("could not find, using McDonalds");
 	        		test_venue = "McDonalds";
 	        	}
 
@@ -435,7 +429,6 @@ exports.ajax = function(req, res) {
     	}
     	else {
     		 account.ajaxTest(field1, field2, req.session.accountId, function(err) {
-    			 console.log("callback");
             if (err) {
               return console.log(err);
             }
@@ -645,9 +638,7 @@ exports.auto_checkout = function(req, res) {
     
     console.log("geolocation "+JSON.stringify(geolocation));
 	  if ( req.session.loggedIn ) {
-		  console.log("req.session.accountId "+req.session.accountId);
 	  account.findById(req.session.accountId, function(user_data) {
-		  console.log("user_data.check_in.geolocation "+user_data.check_in.geolocation);
 		  if (typeof(user_data.check_in.geolocation) != "undefined") {
 			  var check_in_location = user_data.check_in.geolocation;
 			  lat2 = check_in_location[0];

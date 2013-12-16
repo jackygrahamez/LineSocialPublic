@@ -236,7 +236,6 @@ module.exports = function(mongoose) {
 						  			    	           if( error ) callback(error);
 						  			    	           else {
 						  			    	        	   var doc = "checkout";
-						  			    	        	   console.log("doc "+doc);
 						  			    	        	   callback(error, doc);
 						  			    	           }
 						  			    	    });				  					  
@@ -379,8 +378,6 @@ module.exports = function(mongoose) {
 
   
   var grantPoints = function(tID, points, callback) {
-	  console.log("tID "+tID);
-	  console.log("points "+points);
 	  account.update(
 	    	    {"_id" : tID},
 	    	    {"$inc": { 'points' : points }},
@@ -393,8 +390,6 @@ module.exports = function(mongoose) {
   };
   
   var addPoints = function(fID, tID, points, callback) {
-	  console.log("tID "+tID);
-	  console.log("points "+points);
 	  account.update(
 	    	    {"_id" : tID},
 	    	    {"$inc": { 'points' : points }},
