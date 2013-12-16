@@ -234,7 +234,11 @@ module.exports = function(mongoose) {
 						  			    	    {"$set": { 'check_in' : '' }},
 						  			    	        function(error, account){
 						  			    	           if( error ) callback(error);
-						  			    	           else callback("checked out");
+						  			    	           else {
+						  			    	        	   var doc = "checkout";
+						  			    	        	   console.log("doc "+doc);
+						  			    	        	   callback(error, doc);
+						  			    	           }
 						  			    	    });				  					  
 				  				  } else {
 				  					  console.log("incrementing outside count");
@@ -244,7 +248,11 @@ module.exports = function(mongoose) {
 						  			    	    {upsert: true},
 						  			    	        function(error, account){
 						  			    	           if( error ) callback(error);
-						  			    	           else callback("checked out");
+						  			    	           else {
+						  			    	        	 var doc = "inc 1";
+						  			    	        	   console.log("doc "+doc);
+						  			    	        	   callback(error, doc);
+						  			    	           }
 						  			    	    });				  					  
 				  				  }			  					  
 		  					  } 
@@ -256,7 +264,11 @@ module.exports = function(mongoose) {
 				  			    	    {upsert: true},
 				  			    	        function(error, account){
 				  			    	           if( error ) callback(error);
-				  			    	           else callback("checked out");
+				  			    	           else {
+				  			    	        	   var doc = "inc 1";
+				  			    	        	   console.log("doc "+doc);
+				  			    	        	   callback(error, doc);
+				  			    	           }
 				  			    	    });			  					  
 		  				  }
 		  			  } else {

@@ -657,7 +657,8 @@ exports.auto_checkout = function(req, res) {
 			  console.log("distance "+distance +" (km)");
 			  if (distance > 0.5) {
 				  account.checkOut(req.session.accountId, function(error, doc) {
-					   //res.send(doc);
+					  console.log("checkOut doc "+doc);
+					   res.send(doc);
 				   });			  
 			  }			  
 		  }

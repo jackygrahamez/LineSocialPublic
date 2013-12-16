@@ -1,5 +1,6 @@
 <% include header %>
 
+
 <section class="content">
 	<div class="wrapper">
 	    <h2 class="light no-margin"><%= user.name.first %> <%= user.name.last %></h2>
@@ -7,6 +8,7 @@
 	    <section class="bordered">
 	        <div class="container-fluid">
 				<% include nav %>
+				<input class="hide cID" value="<%= user.check_in.cID %>" />
 	        </div>
 	    </section>
 	</div>    			
@@ -16,6 +18,11 @@
 <% include footer %>
 
 <script type="text/javascript">
-var notification_url = "/<%= user.username %>/user_notifications/"; 
-getNotifications(notification_url);
+$(document).ready(function() {
+	if ($(".cID").attr("value") != "undefined") {
+		autocheckout();
+	}
+	var notification_url = "/<%= user.username %>/user_notifications/"; 
+	getNotifications(notification_url);
+});
 </script>

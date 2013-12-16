@@ -620,11 +620,21 @@ function auto_checkout(url, lat, lon) {
 	        	   	   lon: lon}, 
 	           success: function(data){
 	           	  markup = data;
+	           	  console.log("data "+data);
+	           	  if (data === "checkout") {
+	           		  console.log("clearing intervals");
+	           		var interval_id = window.setInterval("", 9999); // Get a reference to the last
+                    // interval +1
+					for (var i = 1; i < interval_id; i++)
+					window.clearInterval(i);
+					//for clearing all intervals
+	           		  
+	           	  }
 	              //alert('Success!');
 	           }
 	           , error: function(jqXHR, textStatus, err){
 	               //alert('text status '+textStatus+', err '+err)
-	               //console.log('text status '+textStatus+', err '+err);
+	               console.log('text status '+textStatus+', err '+err);
 	           }
 	        });
 	}     
