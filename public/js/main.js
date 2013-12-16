@@ -632,7 +632,7 @@ function auto_checkout(url, lat, lon) {
 	           }
 	           , error: function(jqXHR, textStatus, err){
 	               //alert('text status '+textStatus+', err '+err)
-	               console.log('text status '+textStatus+', err '+err);
+	               //console.log('text status '+textStatus+', err '+err);
 	           }
 	        });
 	}     
