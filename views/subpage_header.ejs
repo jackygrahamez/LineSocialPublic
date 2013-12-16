@@ -12,7 +12,6 @@ var x=document.getElementById("demo");
 	   //Themes
 	   setTimeout(function(){
 	   $("menu.themes li").click(function(){
-	   console.log("menu.themes li");
 		   $(this).siblings().removeClass("active");
 		   $(this).addClass("active");
 		   var themeColor = $(this).attr("rel");
