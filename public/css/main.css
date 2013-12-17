@@ -60,6 +60,29 @@ h1 {
 	color: white;
 	padding: 8px 0px 0px 0px;
 	text-align: center;
+	vertical-align: top;
+}
+
+#branding h1:after {
+content: "ALPHA";
+position: relative;
+display: inline;
+top: 0px;
+width: 100px;
+height: 43px;
+margin-left: 10px;
+font-size: 10px;
+vertical-align: top;
+}
+
+#branding h1:before {
+content: "";
+background: transparent url(../img/linelogo.png) 0 0 no-repeat;
+background-size: contain;
+height: 30px;
+width: 30px;
+vertical-align: top;
+display: inline-block;
 }
 
 h2{
