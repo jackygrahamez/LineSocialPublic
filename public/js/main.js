@@ -258,10 +258,12 @@ function showPosition(position)
   }
 function showError(error)
   {
-	if ( $("header p.invalid").length  < 1 ) {
-		$("header").append("<p class='invalid'></p>");		
+	if ( $("body > header p.invalid").length  < 1 ) {
+		$("body > header").append("<p class='invalid'></p>");		
 	}
-
+	if ( $(".body > header p.invalid").length  < 1 ) {
+		$(".body > header").append("<p class='invalid'></p>");		
+	}
   switch(error.code) 
     {
     case error.PERMISSION_DENIED:
