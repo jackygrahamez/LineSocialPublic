@@ -122,7 +122,7 @@ li {
 	margin-bottom: -2px;
 	padding: 12px 10px;
 	text-align: left;
-	color: black;
+	color: #333;
 	font-weight: bold;
 	width: 270px;
 	margin: 1px auto;	
@@ -710,7 +710,8 @@ section.chat_requests.bordered .message {
 	padding: 0px;
 	border: 0px;
 	transition: height 0.5s;
-	transition-delay: 0s;	
+	transition-delay: 0s;
+	font-weight: normal;	
 }
 
 .section.expanded {
@@ -723,33 +724,27 @@ section.chat_requests.bordered .message {
 	padding: 0 10px;
 }
 
-.section.expanded.about {
-	min-height: 400px;
-}
-
-.section.expanded.terms {
-	min-height: 4370px;	
-}
-
-
-.section.expanded.contact {
-	min-height: 200px;
+.section.expanded li p {
+	font-weight: normal;
 }
 
 .section.expanded ol {
 	-webkit-padding-start: 0px;
+	font-weight: normal;	
 }
 
 .section.expanded li,
 .section.expanded ol li {
 	border: none !important;
 	width: 200px;
+	font-weight: normal;	
 }
 
 .section.expanded li li,
 .section.expanded li ol li {
 	border:none !important;
 	width: 170px ;
+	font-weight: normal;	
 }
 
 /*colors*/
