@@ -258,25 +258,29 @@ function showPosition(position)
   }
 function showError(error)
   {
+	if ( $("header p.invalid").length  < 1 ) {
+		$("header").append("<p class='invalid'></p>");		
+	}
+
   switch(error.code) 
     {
     case error.PERMISSION_DENIED:
-          $("header").append("<p class='invalid'>Please enable location services for https://alpha.linesocial.mobi in your browser settings.</p>");
+          $("header p.invalid").replaceWith("<p class='invalid'>Please enable location services for https://alpha.linesocial.mobi in your browser settings.</p>");
           $(".loader").remove();
           $("canvas").remove();
           break;
     case error.POSITION_UNAVAILABLE:
-          $("header").append("<p class='invalid'>Location information is unavailable.</p>");''
+          $("header p.invalid").replaceWith("<p class='invalid'>Location information is unavailable.</p>");
           $(".loader").remove();
           $("canvas").remove();
           break;
     case error.TIMEOUT:
-          $("header").append("<p class='invalid'>The request to get user location timed out.</p>");
+          $("header p.invalid").replaceWith("<p class='invalid'>The request to get user location timed out.</p>");
           $(".loader").remove();      
           $("canvas").remove();
           break;
     case error.UNKNOWN_ERROR:
-          $("header").append("<p class='invalid'>An unknown error occurred.</p>");
+          $("header p.invalid").replaceWith("<p class='invalid'>An unknown error occurred.</p>");
           $(".loader").remove();          
           $("canvas").remove();
           break;
