@@ -261,17 +261,25 @@ function showError(error)
   switch(error.code) 
     {
     case error.PERMISSION_DENIED:
-      x.innerHTML="User denied the request for Geolocation."
-      break;
+          $("header").append("<p class='invalid'>Please enable location services for https://alpha.linesocial.mobi in your browser settings.</p>");
+          $(".loader").remove();
+          $("canvas").remove();
+          break;
     case error.POSITION_UNAVAILABLE:
-      x.innerHTML="Location information is unavailable."
-      break;
+          $("header").append("<p class='invalid'>Location information is unavailable.</p>");''
+          $(".loader").remove();
+          $("canvas").remove();
+          break;
     case error.TIMEOUT:
-      x.innerHTML="The request to get user location timed out."
-      break;
+          $("header").append("<p class='invalid'>The request to get user location timed out.</p>");
+          $(".loader").remove();      
+          $("canvas").remove();
+          break;
     case error.UNKNOWN_ERROR:
-      x.innerHTML="An unknown error occurred."
-      break;
+          $("header").append("<p class='invalid'>An unknown error occurred.</p>");
+          $(".loader").remove();          
+          $("canvas").remove();
+          break;
     }
   }
 function getPage(url) {
