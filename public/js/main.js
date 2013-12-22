@@ -655,7 +655,10 @@ function auto_checkout(url, lat, lon) {
 
 
 function getLines(url) {
+
 	 if (typeof(global_coords_lat)!="undefined" && typeof(global_coords_lon)!="undefined") {
+		 console.log("undefined coords!");
+		 setTimeout(function(){
 	     $.ajax({ 
 	           url: url,
 	           type: 'POST',
@@ -664,32 +667,48 @@ function getLines(url) {
 	        	   lat: global_coords_lat,
 	        	   lon: global_coords_lon},
 		           success: function(data){
-			           	  markup = data;
-			           	  $("section.body.right").html(data);
-			           	  setTimeout(function(){
-			           		$("body > .loader").remove();
-			           		$("section.body.right").addClass("active");
-			           	    $(".back.button").click(function(){
-			           		  $(".body").removeClass("active");
-			           		  $("section.checkin").remove();
-			           	    });	           		
-			           	  }, 1000);           		  	           	  
+		        	   	if (data != null ) {
+				           	  $("section.body.right").html(data);
+				           	  setTimeout(function(){
+				           		$("body > .loader").remove();
+				           		$("section.body.right").addClass("active");
+				           	    $(".back.button").click(function(){
+				           		  $(".body").removeClass("active");
+				           		  $("section.checkin").remove();
+				           	    });	           		
+				           	  }, 1000);		        	   		
+		        	   	} else {
+		        	   		if ( $("body > header p.invalid").length  < 1 ) {
+		        	   			$("body > header").append("<p class='invalid'></p>");		
+		        	   		}
+		        	   		if ( $(".body > header p.invalid").length  < 1 ) {
+		        	   			$(".body > header").append("<p class='invalid'></p>");		
+		        	   		}
+		        	   	          $("header p.invalid").replaceWith("<p class='invalid'>Network Connection Problem</p>");
+		        	   	          $(".loader").remove();
+		        	   	          $("canvas").remove();
+		        	   	}      	  
 			           }
 	           , error: function(jqXHR, textStatus, err){
 	               //alert('text status '+textStatus+', err '+err)
 	               console.log('text status '+textStatus+', err '+err);
-	           }
-	        });		 
+	           },
+	              timeout: 10000,
+	               async: false	           
+	        });		
+		 }, 10000);
 	 } 	else {
+		 console.log("getting lines");
+		 setTimeout(function(){
 	     $.ajax({ 
 	           url: url,
 	           type: 'POST',
 	           cache: false,
 	           data: { 
 	        	   lat: "",
-	        	   lon: ""},
+	        	   lon: "" },
 		           success: function(data){
-			           	  markup = data;
+		        	   if (data != null ) {
 			           	  $("section.body.right").html(data);
 			           	  setTimeout(function(){
 			           		$("section.body.right").addClass("active");
@@ -697,15 +716,27 @@ function getLines(url) {
 			           		  $(".body").removeClass("active");
 			           		  $("section.checkin").remove();
 			           	    });	           		
-			           	  }, 1000);           		  	           	  
-			           }
-	           , error: function(jqXHR, textStatus, err){
+			           	  }, 1000);  
+		        	   } else {
+		        	   		if ( $("body > header p.invalid").length  < 1 ) {
+		        	   			$("body > header").append("<p class='invalid'></p>");		
+		        	   		}
+		        	   		if ( $(".body > header p.invalid").length  < 1 ) {
+		        	   			$(".body > header").append("<p class='invalid'></p>");		
+		        	   		}
+		        	   	          $("header p.invalid").replaceWith("<p class='invalid'>Network Connection Problem</p>");
+		        	   	          $(".loader").remove();
+		        	   	          $("canvas").remove();
+		        	   	}      	  
+			           }, error: function(jqXHR, textStatus, err){
 	               //alert('text status '+textStatus+', err '+err)
 	               console.log('text status '+textStatus+', err '+err);
-	           }
-	        });			 
+	           },
+	            timeout: 10000,
+	            async: false	   
+	        });	
+		 }, 10000);
 	 }
-
 }  
 function deviceType(callback) {
     var ua = navigator.userAgent;
