@@ -657,9 +657,7 @@ function auto_checkout(url, lat, lon) {
 function getLines(url) {
 
 	 if (typeof(global_coords_lat)!="undefined" && typeof(global_coords_lon)!="undefined") {
-		 console.log("undefined coords!");
 		 setTimeout(function(){
-			 console.log("running timeout");
 	     $.ajax({ 
 	           url: url,
 	           type: 'POST',
@@ -709,7 +707,6 @@ function getLines(url) {
 	        });		
 		 }, 100);
 	 } 	else {
-		 console.log("getting lines");
 		 setTimeout(function(){
 	     $.ajax({ 
 	           url: url,
