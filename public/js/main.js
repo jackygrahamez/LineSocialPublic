@@ -707,7 +707,7 @@ function getLines(url) {
 	               timeout: 10000,
 	               async: false	           
 	        });		
-		 }, 10000);
+		 }, 100);
 	 } 	else {
 		 console.log("getting lines");
 		 setTimeout(function(){
@@ -746,7 +746,7 @@ function getLines(url) {
 	            timeout: 10000,
 	            async: false	   
 	        });	
-		 }, 10000);
+		 }, 100);
 	 }
 }  
 function deviceType(callback) {
