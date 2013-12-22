@@ -27,6 +27,7 @@
 		  <span class="balance">Balance: <span class="balance_value"><%= user.points %></span></span>
 		  </label>
 		</p>
+		<input class="slider" type="range" name="slider-fill" id="slider-fill" value="5" min="0" max="10" data-highlight="true" />		
 		<div id="slider"></div>
 		<input type="button" class="send_points" value="Send Points">        
     </div>
@@ -54,7 +55,7 @@ $(document).ready(function(){
 	$('.content.messages').stop().animate({
 	  scrollTop: $(".content.messages")[0].scrollHeight
 	}, 800);  
-	
+	/*
    $( "#slider" ).slider({
       value:5,
       min: 0,
@@ -64,7 +65,13 @@ $(document).ready(function(){
         $( "#amount" ).text(  ui.value );;
       }
     });
-    $( "#amount" ).text( $( "#slider" ).slider( "value" ) );	
+*/    
+
+	   $( "#amount" ).text( $("#slider-fill").val());	
+	$("#slider-fill").change(function() {
+	   $( "#amount" ).text( $("#slider-fill").val());
+	});	
+   	
     
     $(".send_points").click(function(){
 		var d = new Date();
