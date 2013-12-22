@@ -26,6 +26,7 @@
 			   $(".notifications").addClass("active");
 		   }
 		   else if (url.indexOf("user_lines") > 0) {
+			   $('html, body').animate({scrollTop:top - 50}, 'slow');	
 			   var loader = '<div class="loader" style="'
 				    +"position: fixed;"
 				    +"height: 100%;"

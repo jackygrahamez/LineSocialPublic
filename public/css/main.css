@@ -6,6 +6,12 @@ http://www.predic8.de
 Released for free under a Creative Commons Attribution 2.5 License
 */
 
+*, *::active, *::focus {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0)!important;
+    -webkit-focus-ring-color: rgba(0, 0, 0, 0)!important;
+    outline: none!important;
+}
+
 ::-moz-selection { background: transparent; color: transparent; text-shadow: none; }
 ::selection { background: transparent; color: transparent; text-shadow: none; }
 
