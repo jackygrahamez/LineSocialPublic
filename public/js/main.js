@@ -659,6 +659,7 @@ function getLines(url) {
 	 if (typeof(global_coords_lat)!="undefined" && typeof(global_coords_lon)!="undefined") {
 		 console.log("undefined coords!");
 		 setTimeout(function(){
+			 console.log("running timeout");
 	     $.ajax({ 
 	           url: url,
 	           type: 'POST',
@@ -667,6 +668,7 @@ function getLines(url) {
 	        	   lat: global_coords_lat,
 	        	   lon: global_coords_lon},
 		           success: function(data){
+		        	   console.log("success!")
 		        	   	if (data != null ) {
 				           	  $("section.body.right").html(data);
 				           	  setTimeout(function(){
@@ -692,8 +694,17 @@ function getLines(url) {
 	           , error: function(jqXHR, textStatus, err){
 	               //alert('text status '+textStatus+', err '+err)
 	               console.log('text status '+textStatus+', err '+err);
-	           },
-	              timeout: 10000,
+	               if ( $("body > header p.invalid").length  < 1 ) {
+       	   			$("body > header").append("<p class='invalid'></p>");		
+	       	   		}
+	       	   		if ( $(".body > header p.invalid").length  < 1 ) {
+	       	   			$(".body > header").append("<p class='invalid'></p>");		
+	       	   		}
+	       	   	          $("header p.invalid").replaceWith("<p class='invalid'>Network Connection Problem</p>");
+	       	   	          $(".loader").remove();
+	       	   	          $("canvas").remove();	               
+	           		},
+	               timeout: 10000,
 	               async: false	           
 	        });		
 		 }, 10000);
