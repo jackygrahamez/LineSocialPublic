@@ -651,7 +651,10 @@ exports.auto_checkout = function(req, res) {
 					  console.log("checkOut doc "+doc);
 					   res.send(doc);
 				   });			  
-			  }			  
+			  }	
+			  else {
+				  res.send("no checkout");
+			  }
 		  }
 	    });
 

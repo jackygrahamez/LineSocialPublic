@@ -415,8 +415,17 @@ html:not(.iphone) .register form #terms {
 .message #name {
 	color:black;
 }
+
+html:not(.iphone) #slider-fill {
+	display:none;
+}
+
+html.iphone .message #slider {
+	display:none;
+}
 .message #slider {
 	margin: auto 20px;
+	height: .8em;
 }
 .balance {
 	float: right;

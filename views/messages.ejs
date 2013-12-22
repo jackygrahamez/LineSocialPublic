@@ -55,22 +55,27 @@ $(document).ready(function(){
 	$('.content.messages').stop().animate({
 	  scrollTop: $(".content.messages")[0].scrollHeight
 	}, 800);  
-	/*
-   $( "#slider" ).slider({
-      value:5,
-      min: 0,
-      max: 10,
-      step: 1,
-      slide: function( event, ui ) {
-        $( "#amount" ).text(  ui.value );;
-      }
-    });
-*/    
+	
+	if ($("html").hasClass("iphone")) {
 
-	   $( "#amount" ).text( $("#slider-fill").val());	
-	$("#slider-fill").change(function() {
-	   $( "#amount" ).text( $("#slider-fill").val());
-	});	
+		$( "#amount" ).text( $("#slider-fill").val());	
+		$("#slider-fill").change(function() {
+	   		$( "#amount" ).text( $("#slider-fill").val());
+		});	
+   			
+	} else {
+	
+	   	$( "#slider" ).slider({
+	      value:5,
+	      min: 0,
+	      max: 10,
+	      step: 1,
+	      slide: function( event, ui ) {
+	        $( "#amount" ).text(  ui.value );;
+	      }
+	    });
+	}
+
    	
     
     $(".send_points").click(function(){
