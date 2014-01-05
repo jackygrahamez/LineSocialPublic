@@ -220,7 +220,7 @@
 	   } 
 	});
    
-   $("input[name='telephone'").intlTelInput();
+   $("input[name='telephone']").intlTelInput();
    
    // redirect to notifications
    
