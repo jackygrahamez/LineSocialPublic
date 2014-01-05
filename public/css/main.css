@@ -95,7 +95,8 @@ margin-right: 10px;
 h2{
 	text-align: left;
 	font-size: 19px;
-	margin-left: 12px;
+	width: 280px;
+	margin: 5px auto;
 }
 a {
 	color: inherit;
@@ -845,6 +846,10 @@ background-size: 100%;
 
 @media only screen 
 and (min-width : 768px) { 
+	h2 {
+		width: 700px;
+		margin: 0 auto;
+	}
 	div#wrapper, li, textarea, form {
 		width: 700px;
 	}
