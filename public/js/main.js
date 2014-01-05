@@ -647,9 +647,10 @@ function checkIn(location, geolocation, line_length, global_lat, global_lon, url
 	              global_cID = data;
 	              autocheckout();
 	              $(".checkin.active .back").click();
+	              $(".line_pokes > div").remove();
+	              $(".chat_requests > ul > li").remove();
 	           }
 	           , error: function(jqXHR, textStatus, err){
-	               alert('text status '+textStatus+', err '+err)
 	               console.log('text status '+textStatus+', err '+err);
 	           }
 	        });
