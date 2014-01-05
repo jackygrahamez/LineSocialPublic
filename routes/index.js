@@ -93,7 +93,7 @@ exports.fb_login = function(id, req, res) {
 exports.update_password = function(req, res) {
     var id = req.param('id', ''),
     password  = req.param('password', null),
-    telephone = req.param('telephone', null);
+    telephone = req.param('telephone', '');
     
 if ( null == password || password.length < 1 ) {
   res.send(400);

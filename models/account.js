@@ -153,6 +153,7 @@ module.exports = function(mongoose) {
 	    shaSum.update(password);
 	    var shaPassword = shaSum.digest('hex');
 	    var query = { "_id" : id };
+
 	    account.update(query, {"$set" : { "password" : shaPassword, "telephone" : telephone }}, function(err,doc){
 	        callback(doc);
 	    });

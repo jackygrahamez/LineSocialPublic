@@ -63,8 +63,6 @@
 	   var cpassword = $("input[name='cpassword']").val();
 	   var id = $("input[name='id']").val();
 	   var url = "/<%= user.username %>/update_password/";
-	   console.log("url "+url);
-	   console.log("password length "+password.length);
 	   if (password != cpassword || password.length == 0) {
 		   $("input[name='password']").addClass("invalid");
 		   $("input[name='cpassword']").addClass("invalid");

@@ -418,6 +418,9 @@ function getVenues(url, coord) {
  }  
 
 function updatePassword(id, password, url, telephone) {
+	if (telephone == "") {
+		telephone = " ";
+	}
 	     $.ajax({ 
 	           url: url,
 	           type: 'POST',
