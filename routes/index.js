@@ -542,26 +542,18 @@ exports.pokes = function(data) {
 			account.findById(tID, function(doc) {
 				console.log("user doc "+JSON.stringify(doc));
 
-				/*
-				console.log("user doc telephone undefined? " + (JSON.stringify(doc.telephone) == "undefined"));
-				console.log("user doc telephone undefined? " + (JSON.stringify(doc.telephone) == undefined));
-				console.log("user doc telephone value "+JSON.stringify(doc.telephone));
-				*/
-				
 				if (JSON.stringify(doc.telephone) != undefined) {
 					// Twilio Credentials 
 					var accountSid = 'AC024a4372dfdb9fafe0e7fd9d51cf4c78'; 
 					var authToken = '19c22aab1c46228b020ace358f7989cb'; 
 					var telephone = doc.telephone.replace(/ /g,'');
-					var username = data.username;
+					var username = doc.username;
 					console.log("username "+username);
 					console.log("telephone "+telephone);
-					var notification_url = "https://linesocial.mobi/"+username+"?pagename=user_notifications"; 
+					var notification_url = "https://linesocial.mobi/"+username+"?pagename=user_notifications";
 					console.log("notification_url "+notification_url); 
-					
 					//require the Twilio module and create a REST client 
 					var client = require('twilio')(accountSid, authToken); 
-					 
 					client.messages.create({  
 						to: telephone, 
 						from: "+12024172791", 
@@ -570,7 +562,8 @@ exports.pokes = function(data) {
 						//mediaUrl: "https://linesocial.mobi/"+username+"?pagename=user_notifications",    
 					}, function(err, message) { 
 						console.log(message.sid); 
-					});					
+					});	
+			
 				}
 				
 			});
