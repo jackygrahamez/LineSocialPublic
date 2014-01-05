@@ -135,6 +135,28 @@ li {
 	position: relative;
 }
 
+.intl-tel-input.pretty input  {
+	height: 40px !important;
+	width: 300px !important;
+}
+
+.flag-dropdown {
+	margin: 7px;
+}
+
+ul.country-list {
+	max-width:280px;
+	background: transparent;
+	border: none !important;
+	box-shadow: 0px 0px !important;	
+}
+
+li.country {
+	width:auto;
+	margin:0px;
+	max-width:300px;
+}
+
 li.arrow:after {
 	content: "";
 	background-image: url(../img/arrow.png);

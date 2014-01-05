@@ -124,9 +124,6 @@ app.post('/:username/messages/', routes.messages);
 app.get('/:username/update_messages', routes.update_messages);
 app.post('/:username/update_messages', routes.update_messages);
 
-app.get('/:username/user_message/', routes.user_message);
-app.post('/:username/user_message/', routes.user_message);
-
 app.get('/:username/user_next_message/', routes.user_next_message);
 app.post('/:username/user_next_message/', routes.user_next_message);
 
@@ -162,6 +159,9 @@ app.get('/terms', routes.terms);
 
 app.get('/send_points', routes.send_points);
 app.post('/send_points', routes.send_points);
+
+app.get('/pokes', routes.pokes);
+app.post('/pokes', routes.pokes);
 
 
 //GET /auth/facebook
@@ -208,6 +208,7 @@ server.listen(app.get('port'), function(){
 		socket.on('send', function (data) {
 		console.log("global.io.sockets.emit data "+data);
 			console.log("emitting data "+JSON.stringify(data));
+			routes.pokes(data);
 			global.io.sockets.emit('message', data);
 		}); 
   });

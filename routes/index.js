@@ -14,7 +14,6 @@ mongoose.connect('mongodb://heroku_app19413190:gtqqg23kecrfldmqb2ko3bm53f@ds0536
 // foursquare
 var foursquare = (require('foursquarevenues'))('Q3Q5R5RIYDOJDS2ACP3XL1WKK5W1RR3SNJULY2VDU2PXNKAB', 'UWBQRUXO0NGPQGZGFFV2WLJGEUTRABRGZKGC5LC25SAUGYDJ');
 
-
 exports.index = function(req, res){
 	  if ( req.session.loggedIn ) {
 		  req.session.destroy(function(err){
@@ -23,15 +22,11 @@ exports.index = function(req, res){
 						{ title: 'LineSocial',
 						  pagename: 'login' });
 			 });
-
 		  } else {
-
 		  res.render('index', 
 					{ title: 'LineSocial',
 					  pagename: 'login' });
-
 		  }		
-
 };
 
 exports.register = function(req, res) {
@@ -39,14 +34,15 @@ exports.register = function(req, res) {
         lastName  = req.param('lastName', ''),
         username  = req.param('username', ''),        
         email     = req.param('email', null),
-        password  = req.param('password', null);
+        password  = req.param('password', null),
+        telephone  = req.param('telephone', null);
 
     if ( null == email || email.length < 1 || null == password || password.length < 1 ) {
       res.send(400);
       return;
     }
 
-    account.register(email, password, firstName, lastName, username, function(err) {
+    account.register(email, password, firstName, lastName, username, telephone, function(err) {
 
       if (err) {
           res.send('<p class="warning">Could not register</p>');
@@ -525,9 +521,18 @@ exports.messages = function(req, res) {
 	}
 
 
-exports.user_message = function(req, res) {
-
-
+exports.pokes = function(data) {
+	var cID = data.cID,
+	fID = data.fID;
+	console.log("cID "+ cID);
+	console.log("fID "+ fID);
+	message.linePokes(cID, fID, function(message_doc) {
+		if (message_doc.length == 0) {
+			account.findById(fID, function(doc) {
+				console.log("user doc "+JSON.stringify(doc));
+			});
+		}
+	});
 }
 
 exports.user_next_message = function(req, res) {

@@ -60,11 +60,23 @@ module.exports = function(mongoose) {
 
   };
 
+  var linePokes = function(cID, fID, callback) {
+	  query = { cID: cID, fID: fID}
+	  message.find(query,
+			  function(err,doc) {
+		  	  //console.log("model linePokes doc "+doc);
+	          callback(doc);
+	    });
+	  //data.save(callback);
+
+  };  
+  
   
   return {
 	message: message,
 	findMessages: findMessages,
 	saveMessages: saveMessages,
-	saveNotificationMessages: saveNotificationMessages
+	saveNotificationMessages: saveNotificationMessages,
+	linePokes: linePokes
   }
 }

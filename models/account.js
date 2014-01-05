@@ -15,6 +15,7 @@ module.exports = function(mongoose) {
         first:   { type: String },
         last:    { type: String }
       },
+      telephone: { type: String },
       photoUrl:  { type: String },
       check_in: {
     	  cID: ObjectId,
@@ -47,7 +48,7 @@ module.exports = function(mongoose) {
 
   };
 
- var register = function(email, password, firstName, lastName, username, callback) {
+ var register = function(email, password, firstName, lastName, username, telephone, callback) {
     var shaSum = crypto.createHash('sha256');
     shaSum.update(password);
     var user = new account({
@@ -56,6 +57,7 @@ module.exports = function(mongoose) {
         first: firstName,
         last: lastName
       },
+      telephone: telephone,
       username: username.toLowerCase(),
       password: shaSum.digest('hex'),
       check_in: "",

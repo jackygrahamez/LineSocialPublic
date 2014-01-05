@@ -202,6 +202,8 @@
 	   } 
 	});
    
+   $("input[name='telephone'").intlTelInput();
+   
    //set global coordinates
    //getLocation(0);
    
