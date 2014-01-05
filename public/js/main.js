@@ -223,10 +223,13 @@
    $("input[name='telephone']").intlTelInput();
    
    // redirect to notifications
-   
-   if (page == "user_notifications") {
-	   $("a[href$='user_notifications/']").click();
-   }
+   setTimeout(function(){
+	   console.log("page "+page);
+	   if (page === "user_notifications") {
+		   $("a[href$='user_notifications/']").click();
+	   }	   
+   }, 5000);
+
    
    //set global coordinates
    //getLocation(0);
