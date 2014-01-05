@@ -148,12 +148,12 @@ module.exports = function(mongoose) {
 		user.save(callback);
   }
   
-  var passwordUpdate = function(id, password, callback) {
+  var passwordUpdate = function(id, password, telephone, callback) {
 	    var shaSum = crypto.createHash('sha256');
 	    shaSum.update(password);
 	    var shaPassword = shaSum.digest('hex');
 	    var query = { "_id" : id };
-	    account.update(query, {"$set" : { "password" : shaPassword }}, function(err,doc){
+	    account.update(query, {"$set" : { "password" : shaPassword, "telephone" : telephone }}, function(err,doc){
 	        callback(doc);
 	    });
 

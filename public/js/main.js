@@ -8,9 +8,26 @@
   var html, ajaxData;
   var lURL;
 (function($, window, undefined) {
-	if ((location.href.indexOf("alpha.") < 0) && ((location.href.indexOf("localhost") < 0))) {
-		location.replace("https://alpha.linesocial.mobi");
+	var page = null;
+	var path = null;
+	try {
+		path = location.pathname;
+		page = getURLParameter("pagename");
+		console.log("path "+path);
+		console.log("page "+page);
 	}
+	catch(err) {
+	  console.log("could not find parameter pagename");		
+	}
+	if ((location.href.indexOf("alpha.") < 0) && ((location.href.indexOf("localhost") < 0))) {
+		if (page && path) {
+			location.replace("https://alpha.linesocial.mobi/"+location.pathname+"?"+page);			
+			
+		} else {
+			location.replace("https://alpha.linesocial.mobi");			
+		}
+	}
+	
 	deviceType(iosCheckbox);
       
    $("input, textarea").focus(function(){
@@ -69,6 +86,7 @@
 	   var cpassword = $("input[name='cpassword']").val();
 	   var firstName = $("input[name='firstName']").val();
 	   var lastName = $("input[name='lastName']").val();
+	   var telephone = $("input[name='telephone']").val();	   
 	   var username = $("input[name='username']").val();
 	   var terms = $("input[name='terms']").is(":checked");
 	   var valid = true;
@@ -125,7 +143,7 @@
 		   valid = false;
 	   }
 	   if (	valid && (email === cemail) && (password === cpassword)) {
-		   userRegister(email, password, firstName, lastName, username);
+		   userRegister(email, password, firstName, lastName, username, telephone);
 		} 
    });
 
@@ -203,6 +221,12 @@
 	});
    
    $("input[name='telephone'").intlTelInput();
+   
+   // redirect to notifications
+   
+   if (page == "user_notifications") {
+	   $("a[href$='user_notifications/']").click();
+   }
    
    //set global coordinates
    //getLocation(0);
@@ -390,14 +414,15 @@ function getVenues(url, coord) {
 	        });
  }  
 
-function updatePassword(id, password, url) {
+function updatePassword(id, password, url, telephone) {
 	     $.ajax({ 
 	           url: url,
 	           type: 'POST',
 	           cache: false,
 	           data: { 
 	        	   id: id,
-	        	   password: password},
+	        	   password: password,
+	        	   telephone: telephone },
 	           success: function(data){ 
 	        	   if (data === "password updated!") {
 	        		   $(".body .back").click();
@@ -410,7 +435,7 @@ function updatePassword(id, password, url) {
 	        });
  }  
 
-function userRegister(email, password, firstName, lastName, username) {
+function userRegister(email, password, firstName, lastName, username, telephone) {
 	var url = "/register";
      $.ajax({ 
            url: url,
@@ -421,7 +446,8 @@ function userRegister(email, password, firstName, lastName, username) {
         	   password: password,
         	   firstName: firstName,
         	   lastName: lastName,
-        	   username: username},
+        	   username: username,
+        	   telephone: telephone},
            success: function(data){ 
         	   if (data == 'Account was created') {
         		   location.replace(location.origin);

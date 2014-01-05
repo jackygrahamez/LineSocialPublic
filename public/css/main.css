@@ -581,6 +581,15 @@ p.outbound > span,
 	border-image: url(../img/speech_bubble_left_2.png) 8 10 8 17 stretch stretch;		
 }
 
+.profile input[name='telephone'] {
+	width: 280px !important;
+	
+}
+
+.profile .intl-tel-input.pretty .flag-dropdown .selected-flag {
+	padding: 6px 16px 6px 10px;
+}
+
 /* MESSAGE BUBBLE */
 
 .bubbledLeft,.bubbledRight{

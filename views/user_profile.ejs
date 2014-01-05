@@ -1,7 +1,7 @@
 <section class="content">
 
 <% include subpage_header %>
-<div class="wrapper">
+<div class="wrapper profile">
 	<h2 class="light no-margin">Profile</h2>
 
     <section class="bordered">
@@ -32,8 +32,11 @@
 	      <li>Username: <%= user.username %></li>
     <% if(user.email != undefined) { %>	  	      
 	      <li>Email: <%= user.email %></li>
-    <% } %>    		      
+    <% } %>
     </ul>
+          <p>Change your telephone number?</p>    
+          <input type="text" name="telephone" placeholder="telephone number" value="<%= user.telephone %>" />
+
           <p>Change your password?</p>
     <ul>       
 	      <input type="password" name="password" required placeholder="Your password here"/>
@@ -51,9 +54,11 @@
 
 
 <script type="text/javascript">
+   $("input[name='telephone'").intlTelInput();
    $("#profile_update").click(function(){
    	console.log("profile update");
 	   var valid = true;	   
+	   var telephone = $("input[name='telephone']").val();
 	   var password = $("input[name='password']").val();
 	   var cpassword = $("input[name='cpassword']").val();
 	   var id = $("input[name='id']").val();
@@ -66,6 +71,6 @@
 		   valid = false;
 	   }
 	   if (valid) {
-		   updatePassword(id, password, url);
+		   updatePassword(id, password, url, telephone);
 		} 	   
    });
