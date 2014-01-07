@@ -224,6 +224,12 @@ label {
 	margin-top: 20px;
 	text-align: left;
 }
+
+label[for='on_off'] {
+	min-width: 80px;
+	width: auto;
+}
+
 input, textarea, button, input[type='submit'] {
 	width: 280px;
 	background: #efefef;
