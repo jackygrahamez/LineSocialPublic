@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="disabled">
   <head>
-    <title><%= title %></title>
+    <title><%= l(title) %></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<link rel='stylesheet' href='/css/main.css' />
@@ -18,10 +18,10 @@
         <header>
             <div class="container-fluid">
             	<% if ( typeof(user) != 'undefined' ) { %>
-				<div class="back button">Back</div>   
+				<div class="back button"><%= l('Back') %></div>   
 				<% } %>      
                 <div id="branding" class="aligncenter">
-                	<h1 class="light no-margin">LineSocial&trade;</h1>
+                	<h1 class="light no-margin"><%= l('LineSocial') %>&trade;</h1>
                 <a class="button right logout" href="/">Logout</a>
                 </div>
             </div>
