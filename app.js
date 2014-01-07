@@ -12,7 +12,8 @@ var express = require('express'),
     passport = require('passport'),
     findOrCreate = require('mongoose-findorcreate'),
     util = require('util'),
-    FacebookStrategy = require('passport-facebook').Strategy;
+    FacebookStrategy = require('passport-facebook').Strategy,
+    i18n    = require('i18n');
 
 var clients = {};
 
@@ -21,6 +22,10 @@ var clients = {};
 var app    = express();
 var server = http.createServer(app);
 global.io  = require('socket.io').listen(server);
+
+i18n.configure({
+	locales: ['en', 'ja']	
+});
 
 /* FACEBOOK AUTHENTICATION */
 var FACEBOOK_APP_ID = "698217933545116"
@@ -42,7 +47,7 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-
+app.configure(function () {
 //console.log("using authenticator");
 //Authenticator
 //app.use(express.basicAuth('friend', 'bli8ke'));
@@ -51,6 +56,12 @@ passport.deserializeUser(function(obj, done) {
 app.set('port', process.env.PORT || 5000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
+
+app.locals({
+	  'l':  i18n.__
+	, 'ln': i18n.__n	
+});
+
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
@@ -59,8 +70,11 @@ app.use(express.cookieParser('your secret here'));
 app.use(express.session({ secret: 'keyboard cat' }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(i18n.init);
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
+});
 
 // Use the FacebookStrategy within Passport.
 //   Strategies in Passport require a `verify` function, which accept
