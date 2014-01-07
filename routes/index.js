@@ -3,10 +3,10 @@ var mongoose = require('mongoose'),
 	account  = require('../models/account')(mongoose),
 	findOrCreate = require('mongoose-findorcreate');
 
-//mongoose.connect('mongodb://localhost/LineSocial');
+mongoose.connect('mongodb://localhost/LineSocial');
 
 //mongoose.connect('mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds053678.mongolab.com:53678/heroku_app19397517');
-mongoose.connect('mongodb://heroku_app19413190:gtqqg23kecrfldmqb2ko3bm53f@ds053668.mongolab.com:53668/heroku_app19413190');
+//mongoose.connect('mongodb://heroku_app19413190:gtqqg23kecrfldmqb2ko3bm53f@ds053668.mongolab.com:53668/heroku_app19413190');
 
 
 //var db = mongoose.connection;
