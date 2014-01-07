@@ -13,8 +13,6 @@
 	try {
 		path = location.pathname;
 		page = getURLParameter("pagename");
-		console.log("path "+path);
-		console.log("page "+page);
 	}
 	catch(err) {
 	  console.log("could not find parameter pagename");		
