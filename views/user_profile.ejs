@@ -2,7 +2,7 @@
 
 <% include subpage_header %>
 <div class="wrapper profile">
-	<h2 class="light no-margin">Profile</h2>
+	<h2 class="light no-margin"><%= l('Profile') %></h2>
 
     <section class="bordered">
     <% if(user.check_in.location != undefined) { %>
@@ -18,29 +18,29 @@
 
 	  <form method="post" action="/register" class="form-skin register">
     <% if(user.check_in.location != undefined) { %>	  
-    <p>Check-in Info:</p>
+    <p><%= l('Check-in Info:') %></p>
     <ul>	 
-    	  <li>Check-in: <%= time %></li>
-    	  <li>Expires: <%= etime %></li>
+    	  <li><%= l('Check-in:') %> <%= time %></li>
+    	  <li><%= l('Expires:') %> <%= etime %></li>
     	  <li><%= user.check_in.location %></li>
     </ul>    	      	  
     <% } %>    	   
-    <p>User Info:</p>
+    <p><%= l('User Info') %>:</p>
 	      <input class="hide" value="<%= user._id %>" type="text" name="id" required  />
 	<ul>      	  
-	      <li>Name: <%= user.name.first %> <%= user.name.last %></li>
-	      <li>Username: <%= user.username %></li>
+	      <li><%= l('Name') %>: <%= user.name.first %> <%= user.name.last %></li>
+	      <li><%= l('Username') %>: <%= user.username %></li>
     <% if(user.email != undefined) { %>	  	      
-	      <li>Email: <%= user.email %></li>
+	      <li><%= l('Email') %>: <%= user.email %></li>
     <% } %>
     </ul>
-          <p>Change your telephone number?</p>    
+          <p><%= l('Change your telephone number?') %></p>    
           <input type="text" name="telephone" placeholder="telephone number" value="<%= user.telephone %>" />
 
-          <p>Change your password?</p>
+          <p><%= l('Change your password?') %></p>
     <ul>       
-	      <input type="password" name="password" required placeholder="Your password here"/>
-	      <input type="password" name="cpassword" required placeholder="Your password (confirm) here"/>
+	      <input type="password" name="password" required placeholder="<%= l('Your password here') %>"/>
+	      <input type="password" name="cpassword" required placeholder="<%= l('Your password (confirm) here') %>"/>
 	      <p></p>
 	      <p>
 	      <input id="profile_update" type="button" value="Update Now" class="btn btn-flat btn-blue no-radius"/>

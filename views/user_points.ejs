@@ -2,17 +2,17 @@
 
 <% include subpage_header %>
 <div class="wrapper">
-	<h2 class="light no-margin">Points</h2>
+	<h2 class="light no-margin"><%= l('Points') %></h2>
 
     <section class="bordered">
 	<ul>
 	<% if (user.points != undefined) { %>
-	<li>Points: <%= user.points %>  <span class="green">+1 weekly</span></li>
+	<li><%= l('Points:') %> <%= user.points %>  <span class="green"><%= l('+1 weekly') %></span></li>
 	<% } %>
-	<li class="arrow buy">Buy Points</li> 
+	<li class="arrow buy"><%= l('Buy Points') %></li> 
 	</ul>
 	<ul>
-	<li class="message collapsed invalid">Points cannot be purchased currently</li>
+	<li class="message collapsed invalid"><%= l('Points cannot be purchased currently') %></li>
 	</ul>
 
     </section>
