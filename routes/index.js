@@ -217,7 +217,14 @@ exports.home = function(req, res) {
 		  title: 'register'	,
 		  pagename: 'register'});
 
-  }  else if( url === 'terms' ) {
+  } else if( !req.session.loggedIn && url === 'forgot_password' ) {
+
+      res.render('forgot_password', {
+		  title: 'forgot password'	,
+		  pagename: 'forgot password'});
+
+  }  
+  else if( url === 'terms' ) {
 
       res.render('terms');
 
@@ -766,6 +773,12 @@ exports.logout = function(req, res) {
 		  }	
 
 	}
+
+exports.forgot_password = function(req, res) {
+	  res.render('forgot_password');
+
+	}
+
 
 function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
 	  var R = 6371; // Radius of the earth in km

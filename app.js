@@ -108,17 +108,46 @@ passport.use(new FacebookStrategy({
 
 
 /* END FACEBOOK AUTHENTICATION */
-
 /* FORGOT PASSWORD */
+app.use(require('sesame')()); // for sessions
 
 var forgot = require('password-reset')({
-    uri : 'http://localhost:8080/password_reset',
-    from : 'password-robot@localhost',
-    host : 'localhost', port : 25,
+    uri : 'http://alpha.linesocial.mobi:8080/password_reset',
+    from : 'webmaster@linesocial.mobi',
+    host : 'alpha.linesocial.mobi', port : 25,
 });
 
-/* END FORGOT PASSWORD */
+app.use(forgot.middleware);
 
+app.post('/forgot', express.bodyParser(), function (req, res) {
+    var email = req.body.email;
+    var reset = forgot(email, function (err) {
+        if (err) res.end('Error sending message: ' + err)
+        else res.end('Check your inbox for a password reset message.')
+    });
+
+    reset.on('request', function (req_, res_) {
+        req_.session.reset = { email : email, id : reset.id };
+        fs.createReadStream(__dirname + '/forgot.html').pipe(res_);
+    });
+});
+
+app.post('/reset', express.bodyParser(), function (req, res) {
+    if (!req.session.reset) return res.end('reset token not set');
+
+    var password = req.body.password;
+    var confirm = req.body.confirm;
+    if (password !== confirm) return res.end('passwords do not match');
+
+    // update the user db here
+
+    forgot.expire(req.session.reset.id);
+    delete req.session.reset;
+    res.end('password reset');
+});
+
+
+/* END FORGOT PASSWORD */
 
 // development only
 if ('development' == app.get('env')) {
@@ -185,6 +214,7 @@ app.post('/send_points', routes.send_points);
 app.get('/pokes', routes.pokes);
 app.post('/pokes', routes.pokes);
 
+app.get('/forgot_password', routes.forgot_password);
 
 //GET /auth/facebook
 //Use passport.authenticate() as route middleware to authenticate the
