@@ -895,4 +895,7 @@ and (min-width : 768px) {
 		border:none !important;
 		width: 170px ;
 	}	
+	.register input[name='telephone'] {
+		width: 702px !important;
+	}
 }
