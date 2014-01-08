@@ -808,7 +808,8 @@ section.chat_requests.bordered .message {
 	font-weight: normal;	
 }
 
-.login > div {
+.login > div,
+.register > div {
 	padding-top: 60px;
 }
 

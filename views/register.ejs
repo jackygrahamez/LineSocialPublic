@@ -3,26 +3,22 @@
 <div class="container hero-unit">
 
   <form method="post" action="/register" class="form-skin register">
-      <input type="text" name="firstName" required placeholder="Your firstname here"/>
-      <input type="text" name="lastName" required placeholder="Your lastname here"/>
-      <input type="text" name="username" required placeholder="Your username here"/>
-      <input type="email" name="email" required placeholder="Your Email here"/>
-      <input type="email" name="cemail" required placeholder="Your Email (confirm) here"/>
-      <input type="password" name="password" required placeholder="Your password here"/>
-      <input type="password" name="cpassword" required placeholder="Your password (confirm) here"/>
-      <input type="text" name="telephone" placeholder="telephone number (optional)"/>
+      <input type="text" name="firstName" required placeholder="<%= l('Your firstname here') %>"/>
+      <input type="text" name="lastName" required placeholder="<%= l('Your lastname here') %>"/>
+      <input type="text" name="username" required placeholder="<%= l('Your username here') %>"/>
+      <input type="email" name="email" required placeholder="<%= l('Your Email here') %>"/>
+      <input type="email" name="cemail" required placeholder="<%= l('Your Email (confirm) here') %>"/>
+      <input type="password" name="password" required placeholder="<%= l('Your password here') %>"/>
+      <input type="password" name="cpassword" required placeholder="<%= l('Your password (confirm) here') %>"/>
+      <input type="text" name="telephone" placeholder="<%= l('telephone number (optional)') %>"/>
       <p></p>
       <p>
-	  <label>Accept Terms & Conditions</label>
+	  <label><%= l('Accept Terms & Conditions') %></label>
 	  <br />
 	  <input id="terms" name="terms" type="checkbox"/>
 	  <br />   
-      <input id="user_register" type="button" value="Register Now" class="btn btn-flat btn-blue no-radius"/>
+      <input id="user_register" type="button" value="<%= l('Register Now') %>" class="btn btn-flat btn-blue no-radius"/>
       </p>
-
-
-	
-	  
   </form>
 </div>
 
