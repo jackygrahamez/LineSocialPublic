@@ -83,10 +83,10 @@ var x=document.getElementById("demo");
 <header>
     <div class="container-fluid">
     	<% if ( typeof(user) != 'undefined' ) { %>
-		<div class="back button">Back</div>    
+		<div class="back button"><%= l('Back') %></div>    
 		<% } %>      
         <div id="branding" class="aligncenter">
-        	<h1 class="light no-margin">LineSocial</h1>
+        	<h1 class="light no-margin"><%= l('LineSocial') %></h1>
         </div>
         </button>
     </div>

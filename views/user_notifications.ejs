@@ -2,7 +2,7 @@
 <!--notifications -->
 <% include subpage_header %>
 <div class="wrapper">
-	<h2 class="light no-margin hide">Line Pokes</h2>
+	<h2 class="light no-margin hide"><%= l('Line Pokes') %></h2>
     <section class="chat_requests bordered">
     <ul><%- requests %></ul>
     <div class="notifications accordion off">
@@ -21,7 +21,7 @@
 			<input class="hide tID notifications"  />    		
 			<input class="name notifications hide" placeholder="name" value="<%= user.username %>" /> 
 	        <input class="field notifications" placeholder="message" />
-	        <input class="send notifications" type="button"  value='send' />
+	        <input class="send notifications" type="button"  value='<%= l('send') %>' />
 	    </div>
     </div>
     </section>
@@ -72,7 +72,7 @@ $(document).ready(function(){
    		    for(var i=0; i<fIDlistArrayUnique.length; i++) {
 	            var ufID = fIDlistArrayUnique[i].split("_").pop();
 	            fIDlistArrayUnique[i].split("_").pop();
-	            chat_requests += '<li ufid="'+ufID+'">Message from ' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
+	            chat_requests += '<li ufid="'+ufID+'"><%= l('Message from') %> ' + fIDlistArrayUnique[i].split("_")[0] + '</li>';
             }
             $(".chat_requests ul").html(chat_requests);
     } else {
