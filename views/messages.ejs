@@ -2,7 +2,7 @@
 <!--messages-->
 <% include subpage_header %>
 	<div class="wrapper">
-	<h2 class="light no-margin hide">Messages</h2>
+	<h2 class="light no-margin hide"><%= l('Messages') %></h2>
 
     <section class="chat_requests bordered">
 
@@ -21,15 +21,15 @@
 		<input class="hide message session_id" value="<%= session_id %>" />
 		<input class="name message hide" placeholder="name" value="<%= user.username %>" /> 
         <input class="field message" placeholder="field" />
-        <input class="send message" type="button"  value='send' />
+        <input class="send message" type="button"  value='<%= l('send') %>' />
 		<p>
-		  <label for="amount">Points To Send: <span id="amount"></span>
-		  <span class="balance">Balance: <span class="balance_value"><%= user.points %></span></span>
+		  <label for="amount"><%= l('Points To Send:') %> <span id="amount"></span>
+		  <span class="balance"><%= l('Balance:') %> <span class="balance_value"><%= user.points %></span></span>
 		  </label>
 		</p>
 		<input class="slider" type="range" name="slider-fill" id="slider-fill" value="5" min="0" max="10" data-highlight="true" />		
 		<div id="slider"></div>
-		<input type="button" class="send_points" value="Send Points">        
+		<input type="button" class="send_points" value="<%= l('Send Points') %>">        
     </div>
     </section>
 </section>

@@ -541,33 +541,36 @@ exports.pokes = function(data) {
 		if (message_doc.length == 0) {
 			account.findById(tID, function(doc) {
 				console.log("user doc "+JSON.stringify(doc));
-
-				if (JSON.stringify(doc.telephone) != undefined) {
-					if (doc.telephone.length > 5) {
-						// Twilio Credentials 
-						var accountSid = 'AC024a4372dfdb9fafe0e7fd9d51cf4c78'; 
-						var authToken = '19c22aab1c46228b020ace358f7989cb'; 
-						var telephone = doc.telephone.replace(/ /g,'');
-						var username = doc.username;
-						console.log("username "+username);
-						console.log("telephone "+telephone);
-						var notification_url = "https://linesocial.mobi/"+username+"?pagename=user_notifications";
-						console.log("notification_url "+notification_url); 
-						//require the Twilio module and create a REST client 
-						var client = require('twilio')(accountSid, authToken); 
-						client.messages.create({  
-							to: telephone, 
-							from: "+12024172791", 
-							body: "You received a line poke "+notification_url,
-							//mediaUrl: "https://linesocial.mobi",
-							//mediaUrl: "https://linesocial.mobi/"+username+"?pagename=user_notifications",    
-						}, function(err, message) { 
-							console.log(message.sid); 
-						});	
-					} else {
-						console.log("blank telephone");
-					}
+				if (JSON.stringify(doc) != "null") {
+					console.log("telephone not null");
+					if (JSON.stringify(doc.telephone) != undefined) {
+						if (doc.telephone.length > 5) {
+							// Twilio Credentials 
+							var accountSid = 'AC024a4372dfdb9fafe0e7fd9d51cf4c78'; 
+							var authToken = '19c22aab1c46228b020ace358f7989cb'; 
+							var telephone = doc.telephone.replace(/ /g,'');
+							var username = doc.username;
+							console.log("username "+username);
+							console.log("telephone "+telephone);
+							var notification_url = "https://linesocial.mobi/"+username+"?pagename=user_notifications";
+							console.log("notification_url "+notification_url); 
+							//require the Twilio module and create a REST client 
+							var client = require('twilio')(accountSid, authToken); 
+							client.messages.create({  
+								to: telephone, 
+								from: "+12024172791", 
+								body: "You received a line poke "+notification_url,
+								//mediaUrl: "https://linesocial.mobi",
+								//mediaUrl: "https://linesocial.mobi/"+username+"?pagename=user_notifications",    
+							}, function(err, message) { 
+								console.log(message.sid); 
+							});	
+						} else {
+							console.log("blank telephone");
+						}
+					}					
 				}
+
 				
 			});
 		}
