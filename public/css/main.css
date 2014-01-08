@@ -37,6 +37,14 @@ html {
 	background: url(../img/bg.png);
 }
 
+header {
+	position: fixed;
+	width: 100%;
+	z-index: 1;
+	top: 0px;
+	left: 0px;	
+}
+
 body {
 	padding: 0px;
 	margin: 0px;
@@ -47,7 +55,7 @@ body {
 }
 
 section {
-	padding-bottom: 10px;
+	padding: 10px;
 }
 
 div#wrapper,

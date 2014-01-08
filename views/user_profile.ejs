@@ -5,6 +5,14 @@
 	<h2 class="light no-margin"><%= l('Profile') %></h2>
 
     <section class="bordered">
+    <p>Pick a theme?</p>
+	<menu class="themes">
+	    <li class="normal_theme" rel=""></li>			
+	    <li class="red_theme" rel="red"></li>
+	    <li class="blue_theme" rel="blue"></li>
+	    <li class="gold_theme" rel="gold"></li>
+	</menu>    
+    
     <% if(user.check_in.location != undefined) { %>
 	<% var d = new Date(user.check_in.check_in_time.getTime()) %>
 	<% if (d.getHours() > 12) { var h = d.getHours() - 12; var td = "pm";} else { var h = d.getHours(); var td = "am"; } %>
@@ -43,7 +51,7 @@
 	      <input type="password" name="cpassword" required placeholder="<%= l('Your password (confirm) here') %>"/>
 	      <p></p>
 	      <p>
-	      <input id="profile_update" type="button" value="Update Now" class="btn btn-flat btn-blue no-radius"/>
+	      <input id="profile_update" type="button" value="<%= l('Update Now') %>" class="btn btn-flat btn-blue no-radius"/>
 	      </p>
 	</ul>	      
 	  </form>

@@ -326,9 +326,14 @@ function getPage(url) {
 	           	  $("section.body.right").html(data);
 	           	  setTimeout(function(){
 	           		$("section.body.right").addClass("active");
+           			  console.log("resize section.content");
+           			  $("section.content").css("height", "0px");
+          		
 	           	    $(".back.button").click(function(){
 	           		  $(".body").removeClass("active");
 	           		  $("section.checkin").remove();
+           			  console.log("resize section.content");
+           			  $("section.content").css("height", "auto");
 	           	    });	           		
 	           	  }, 1000);           		  	           	  
 	           }
