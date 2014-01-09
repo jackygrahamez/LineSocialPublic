@@ -193,47 +193,49 @@ exports.login = function(req, res){
 
 exports.home = function(req, res) {
   var url = req.params.id;
-  if ( req.session.loggedIn && url !== 'register') {
-  	account.findUsernameById(req.session.accountId, function(username) {	
-	if (username.username === url) {
-	    account.findByUsername({username: url}, function(doc) {
-	    		var socket = require('./socket');
-		        res.render('home', {
-		          title: 'LineSocial',
-		          user: doc,
-				  pagename: 'home'
-		        });
-	    	});
-  		}	
-	else {
-		res.redirect('/' +username.username);
-	}
-    });
-
-
-  } else if( !req.session.loggedIn && url === 'register' ) {
-
-      res.render('register', {
-		  title: 'register'	,
-		  pagename: 'register'});
-
-  } else if( !req.session.loggedIn && url === 'forgot_password' ) {
-
-      res.render('forgot_password', {
-		  title: 'forgot password'	,
-		  pagename: 'forgot password'});
-
-  }  
-  else if( url === 'terms' ) {
-
-      res.render('terms');
-
-  }  else {
-
-    res.redirect('/');
-
-  }
-
+	  if ( req.session.loggedIn && url !== 'register') {
+	  	account.findUsernameById(req.session.accountId, function(username) {	
+		if (username.username === url) {
+		    account.findByUsername({username: url}, function(doc) {
+		    		var socket = require('./socket');
+			        res.render('home', {
+			          title: 'LineSocial',
+			          user: doc,
+					  pagename: 'home'
+			        });
+		    	});
+	  		}	
+		else {
+			res.redirect('/' +username.username);
+		}
+	    });
+	
+	
+	  } else if( !req.session.loggedIn && url === 'register' ) {
+	
+	      res.render('register', {
+			  title: 'register'	,
+			  pagename: 'register'});
+	      
+	  } else if( !req.session.loggedIn && url === 'forgot_password' ) {
+			
+	      res.render('forgot_password', {
+			  title: 'forgot_password'	,
+			  pagename: 'forgot_password'});
+	      
+	  } else if( !req.session.loggedIn && url === 'password_reset' ) {
+		console.log("password_reset");
+	      res.render('forgot');	      
+	  }
+	  else if( url === 'terms' ) {
+	
+	      res.render('terms');
+	
+	  }  else {
+	
+	    res.redirect('/');
+	
+	  }
 }
 
 exports.user_check_in = function(req, res) {
@@ -779,6 +781,7 @@ exports.forgot_password = function(req, res) {
 	}
 
 exports.forgot = function(req, res) {
+	console.log("exports.forgot");
 	  res.render('forgot');
 	}
 

@@ -129,8 +129,9 @@ var forgot = require('password-reset-nodemailer')({
 app.use(forgot.middleware);
 
 app.post('/forgot', express.bodyParser(), function(req, res) {
+	console.log("forgot");
 	  var email = req.body.email;
-
+	  console.log("email "+email);
 	  var callback = {
 	    error: function(err) {
 	      res.end('Error sending message: ' + err);
@@ -142,15 +143,18 @@ app.post('/forgot', express.bodyParser(), function(req, res) {
 	  var reset = forgot(email, callback);
 
 	  reset.on('request', function(req_, res_) {
+		  console.log("request");
 	    req_.session.reset = {
 	      email: email,
 	      id: reset.id
 	    };
-	    fs.createReadStream(__dirname + '/forgot.html').pipe(res_);
+	    console.log("fs.createReadStream");
+	    fs.createReadStream(__dirname + '/forgot').pipe(res_);
 	  });
 	});
 
 app.post('/reset', express.bodyParser(), function(req, res) {
+	console.log("reset");
   if (!req.session.reset) return res.end('reset token not set');
 
   var password = req.body.password;
@@ -231,8 +235,6 @@ app.post('/send_points', routes.send_points);
 
 app.get('/pokes', routes.pokes);
 app.post('/pokes', routes.pokes);
-
-app.get('/forgot_password', routes.forgot_password);
 
 //GET /auth/facebook
 //Use passport.authenticate() as route middleware to authenticate the
