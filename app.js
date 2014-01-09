@@ -108,9 +108,10 @@ passport.use(new FacebookStrategy({
 
 
 /* END FACEBOOK AUTHENTICATION */
+/* FORGOT PASSWORD */
 
 
-
+/* END FORGOT PASSWORD */
 
 // development only
 if ('development' == app.get('env')) {
@@ -177,6 +178,7 @@ app.post('/send_points', routes.send_points);
 app.get('/pokes', routes.pokes);
 app.post('/pokes', routes.pokes);
 
+app.get('/forgot_password', routes.forgot_password);
 
 //GET /auth/facebook
 //Use passport.authenticate() as route middleware to authenticate the
@@ -228,7 +230,6 @@ server.listen(app.get('port'), function(){
   });
 
 });
-
 
 
 
