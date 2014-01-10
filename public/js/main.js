@@ -228,6 +228,10 @@
 	   }	   
    }, 5000);
 
+   $(".forgot_password div.back.button, .forgot div.back.button").click(function(){
+	   location.assign("/");
+   });
+   
    
    //set global coordinates
    //getLocation(0);
