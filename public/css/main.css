@@ -402,7 +402,7 @@ p.invalid {
 }
 
 .login .back.button,
-.home .back.button {
+.home > header > div > .back.button {
 	display:none;
 }
 

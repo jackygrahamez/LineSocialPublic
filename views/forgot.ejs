@@ -26,10 +26,10 @@
           <div class="container hero-unit">  
           <h2><% l('Enter New Password') %></h2>
 		    <form method="POST" action="/reset">
-		        <input placeholder="<% l('password') %>" type="password" name="password">
-		        <input placeholder="<% l('confirm password') %>" type="password" name="confirm">
+		        <input placeholder="<%= l('password') %>" type="password" name="password">
+		        <input placeholder="<%= l('confirm password') %>" type="password" name="confirm">
 		        <input class="hide" type="text" name="token">		        
-		        <input id="submit" type="submit" value="<% l('reset password') %>">
+		        <input id="submit" type="submit" value="<%= l('reset password') %>">
 		    </form>
     	</div>
 <%include footer %>
