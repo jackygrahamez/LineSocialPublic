@@ -138,7 +138,7 @@ app.post('/forgot', express.bodyParser(), function(req, res) {
 	      res.end('Check your inbox for a password reset message.');
 	    }
 	  };
-	  var reset = forgot(email, callback);
+	  //var reset = forgot(email, callback);
 	  //console.log("reset "+JSON.stringify(reset));
 	  var token = reset.id;
 	  
