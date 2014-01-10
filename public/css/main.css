@@ -826,6 +826,11 @@ section.chat_requests.bordered .message {
 	height: 47px;
 }
 
+a[href='/forgot_password'] {
+	text-decoration: underline;
+	font-weight: bold;
+}
+
 /*colors*/
 
 .normal_theme {
