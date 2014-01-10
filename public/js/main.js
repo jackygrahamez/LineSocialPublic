@@ -36,7 +36,7 @@
    $("a").click(function(e){
 	   e.preventDefault();
 	   var url = $(this).attr("href");
-	   if (url != "/register" && url != "/terms") {
+	   if (url != "/register" && url != "/terms" && url != "/forgot_password") {
 		   if (url.indexOf("notifications") > 0) {
 			   $(".notifications").addClass("active");
 		   }
