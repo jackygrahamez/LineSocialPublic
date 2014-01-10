@@ -29,7 +29,9 @@ module.exports = function(mongoose) {
       points: { type: Number },
       tester: Boolean,
       test_group: { type: String},
-      session_id: { type: String }
+      session_id: { type: String },
+      token: { type: String },
+      token_expire: { type: String }
       
   });
   
@@ -411,6 +413,18 @@ module.exports = function(mongoose) {
 	  
   };
 
+  var saveToken = function(email, token, callback) {
+	  var d = new Date();
+	  var token_expire = new Date (d.getTime() + 1800000);	  
+	  account.update(
+	    	    {"email" : email},
+	    	    {"$set": { 'token' : token, 'token_expire' : token_expire }},
+    	        function(error, doc){
+	    	           if( error ) callback(error);
+	    	           else callback(null, doc);
+	    	    });
+  };  
+  
 
   return {
     login: login,
@@ -434,6 +448,7 @@ module.exports = function(mongoose) {
     createTestUser: createTestUser,
     addPoints: addPoints,
     grantPoints: grantPoints,
-    checkOutByID: checkOutByID
+    checkOutByID: checkOutByID,
+    saveToken: saveToken
   }
 }

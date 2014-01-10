@@ -129,32 +129,33 @@ var forgot = require('password-reset-nodemailer')({
 app.use(forgot.middleware);
 
 app.post('/forgot', express.bodyParser(), function(req, res) {
-	console.log("forgot");
 	  var email = req.body.email;
-	  console.log("email "+email);
 	  var callback = {
 	    error: function(err) {
 	      res.end('Error sending message: ' + err);
 	    },
-	    success: function(success) {
+	    success: function(success) {   	
 	      res.end('Check your inbox for a password reset message.');
 	    }
 	  };
 	  var reset = forgot(email, callback);
-
+	  //console.log("reset "+JSON.stringify(reset));
+	  var token = reset.id;
+	  
+	  routes.saveToken(email, token);
+	  
 	  reset.on('request', function(req_, res_) {
-		  console.log("request");
 	    req_.session.reset = {
 	      email: email,
 	      id: reset.id
 	    };
+	    console.log("req_.session.reset "+req_.session.reset);
 	    console.log("fs.createReadStream");
 	    fs.createReadStream(__dirname + '/forgot').pipe(res_);
 	  });
 	});
 
 app.post('/reset', express.bodyParser(), function(req, res) {
-	console.log("reset");
   if (!req.session.reset) return res.end('reset token not set');
 
   var password = req.body.password;
@@ -162,7 +163,7 @@ app.post('/reset', express.bodyParser(), function(req, res) {
   if (password !== confirm) return res.end('passwords do not match');
 
   // update the user db here
-
+  console.log("req.session.reset.id "+req.session.reset.id);
   forgot.expire(req.session.reset.id);
   delete req.session.reset;
   res.end('password reset');
