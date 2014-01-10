@@ -156,17 +156,18 @@ app.post('/forgot', express.bodyParser(), function(req, res) {
 	});
 
 app.post('/reset', express.bodyParser(), function(req, res) {
-  if (!req.session.reset) return res.end('reset token not set');
+  //if (!req.session.reset) return res.end('reset token not set');
 
   var password = req.body.password;
   var confirm = req.body.confirm;
-  if (password !== confirm) return res.end('passwords do not match');
+  var token = req.body.token;
+  if (password !== confirm) return res.redirect('/invalid_passwords');
 
+  routes.savePassword(password, token, res);
   // update the user db here
-  console.log("req.session.reset.id "+req.session.reset.id);
-  forgot.expire(req.session.reset.id);
-  delete req.session.reset;
-  res.end('password reset');
+  //forgot.expire(req.session.reset.id);
+  //delete req.session.reset;
+  //res.end('password reset');
 });
   
 	  

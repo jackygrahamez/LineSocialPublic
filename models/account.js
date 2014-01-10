@@ -31,7 +31,7 @@ module.exports = function(mongoose) {
       test_group: { type: String},
       session_id: { type: String },
       token: { type: String },
-      token_expire: { type: String }
+      token_expire: { type: Number }
       
   });
   
@@ -415,7 +415,7 @@ module.exports = function(mongoose) {
 
   var saveToken = function(email, token, callback) {
 	  var d = new Date();
-	  var token_expire = new Date (d.getTime() + 1800000);	  
+	  var token_expire = d.getTime() + 1800000;	  
 	  account.update(
 	    	    {"email" : email},
 	    	    {"$set": { 'token' : token, 'token_expire' : token_expire }},
@@ -424,6 +424,25 @@ module.exports = function(mongoose) {
 	    	           else callback(null, doc);
 	    	    });
   };  
+  
+  var savePassword = function(password, token, callback) {  
+	  console.log("password "+ password);
+	  console.log("token "+ token);
+	  var d = new Date();
+	  var shaSum = crypto.createHash('sha256');
+	  shaSum.update(password);
+	  var shaPassword = shaSum.digest('hex');	
+	  console.log("shaPassword "+shaPassword);
+	  var expire = d.getTime() + 1800000;
+	  var query = { "token" : token, "token_expire" : { "$lt" : d.getTime() + expire } };
+	  account.update(
+			  	query,
+	    	    {"$set": { 'password' : shaPassword, 'token' : '' }},
+    	        function(error, doc){
+	    	           if( error ) callback(error);
+	    	           else callback(null, doc);
+	    	    });
+  }; 
   
 
   return {
@@ -449,6 +468,7 @@ module.exports = function(mongoose) {
     addPoints: addPoints,
     grantPoints: grantPoints,
     checkOutByID: checkOutByID,
-    saveToken: saveToken
+    saveToken: saveToken,
+    savePassword: savePassword
   }
 }

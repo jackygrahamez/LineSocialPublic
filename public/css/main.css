@@ -809,8 +809,21 @@ section.chat_requests.bordered .message {
 }
 
 .login > div,
-.register > div {
+.register > div,
+.forgot_password > div,
+.forgot > div   {
 	padding-top: 60px;
+}
+
+.forgot_password input,
+.forgot input  {
+	padding: 10px 0px;
+	text-align: center;
+	color: #ccc !important;
+}
+
+.forgot input  {
+	height: 47px;
 }
 
 /*colors*/

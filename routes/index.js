@@ -223,9 +223,15 @@ exports.home = function(req, res) {
 			  title: 'forgot_password'	,
 			  pagename: 'forgot_password'});
 	      
-	  } else if( !req.session.loggedIn && url === 'password_reset' ) {
+	  } else if ( !req.session.loggedIn && url === 'password_reset' ) {
 		console.log("password_reset");
-	      res.render('forgot');	      
+	      res.render('forgot');	   
+	      
+	  } else if ( !req.session.loggedIn && url === 'invalid_passwords' ) {
+			console.log("invalid_passwords");
+		      res.render('invalid_passwords', {
+				  title: 'invalid_passwords'	,
+				  pagename: 'invalid_passwords'});	      
 	  }
 	  else if( url === 'terms' ) {
 	
@@ -791,6 +797,16 @@ exports.saveToken = function(email, token) {
 	    	console.log(doc);
 	    });		
 	}
+
+exports.savePassword = function(password, token, res) {
+	console.log("token "+token);
+	console.log("save password");
+    account.savePassword(password, token, function(doc) {
+    	console.log(doc);
+    	res.redirect("/");
+    });		
+}
+
 
 
 function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
