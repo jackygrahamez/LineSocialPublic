@@ -93,15 +93,24 @@ $(document).ready(function(){
 		var tID = $(".message.controls .tID").val();
 		var points = $( "#amount" ).text();
 		var balance_value = parseInt($(".balance_value").text()) - points;
+		console.log("points "+points);
 		var user = $(".name.message").val();   
 		var message = user+' sent '+points;
 		var html = $(".content.messages").html();
         html += '<div class="bubbledLeft"><span><b> System: </b>';
         html += message +' <time>' + time +'</time></span></div>';
+        var confirm_message = 'Send '+ points + ' points?';
+        if (confirm(confirm_message)) {
         $(".content.messages").html(html);  	
        	$(".balance_value").text(balance_value);
-		sendPoints(fID, tID, points);
-		socket.emit('send', { message: user+' sent '+points });    
+
+		    // Save it!
+			sendPoints(fID, tID, points);
+			socket.emit('send', { message: user+' sent '+points });  		    
+		} else {
+		    // Do nothing!
+		}       	
+  
 	
     });
     
