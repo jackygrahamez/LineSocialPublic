@@ -15,16 +15,25 @@ mongoose.connect('mongodb://heroku_app19413190:gtqqg23kecrfldmqb2ko3bm53f@ds0536
 var foursquare = (require('foursquarevenues'))('Q3Q5R5RIYDOJDS2ACP3XL1WKK5W1RR3SNJULY2VDU2PXNKAB', 'UWBQRUXO0NGPQGZGFFV2WLJGEUTRABRGZKGC5LC25SAUGYDJ');
 
 exports.index = function(req, res){
+	  var shapes = ['triangle', 'x', 'rectangle', 'circle', 'check', 'caret', 'zigzag', 'arrow', 'leftbracket', 'rightbracket', 'v', 'delete', 'star', 'pigtail'];
+	  var shape = shapes[Math.floor(Math.random() * (shapes.length) )];
+	  req.session.shape = shape;	
+	  
 	  if ( req.session.loggedIn ) {
 		  req.session.destroy(function(err){
 			  console.log(err);
+		  
 			  res.render('index', 
 						{ title: 'LineSocial',
+		    	    	  error: req.param('error'),				  
+		    	    	  shape: shape,				  
 						  pagename: 'login' });
 			 });
 		  } else {
 		  res.render('index', 
 					{ title: 'LineSocial',
+	    	          error: req.param('error'),			  
+	    	  		  shape: shape,				  
 					  pagename: 'login' });
 		  }		
 };
