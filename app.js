@@ -129,6 +129,52 @@ var forgot = require('password-reset-nodemailer')({
 app.use(forgot.middleware);
 
 app.post('/forgot', express.bodyParser(), function(req, res) {
+	  var $1 = require('./dollar.js') // require $1 Unistroke Recognizer
+	    , points = req.param('_points') // get the points submitted on the hidden input
+	    , _points_xy = points.split('|')
+	    , _points = [];
+
+	  // convert to an array of Points
+	  for(p in _points_xy){
+	    var xy = _points_xy[p].split(',');
+	    _points.push(new $1.Point(parseInt(xy[0]), parseInt(xy[1])));
+	  }
+
+	  // test the points
+	  var _r = new $1.DollarRecognizer();
+	  var result = _r.Recognize(_points);
+
+	  // validates the captcha or redirect
+	  if(_points.length >= 10 && result.Score > 0.7 && result.Name == req.session.shape){ // valid
+		  var email = req.body.email;
+		  var callback = {
+		    error: function(err) {
+		      res.end('Error sending message: ' + err);
+		    },
+		    success: function(success) {   	
+		      //res.end('Check your inbox for a password reset message.');
+		    	res.redirect('/check_inbox');
+		    }
+		  };
+		  var reset = forgot(email, callback);
+		  console.log("reset "+JSON.stringify(reset));
+		  var token = reset.id;
+		  
+		  routes.saveToken(email, token);
+		  
+		  reset.on('request', function(req_, res_) {
+		    req_.session.reset = {
+		      email: email,
+		      id: reset.id
+		    };
+		    console.log("req_.session.reset "+req_.session.reset);
+		    console.log("fs.createReadStream");
+		    fs.createReadStream(__dirname + '/forgot').pipe(res_);
+		  });
+	  }else{
+	    res.redirect('/?error=true');
+	  }
+	/*
 	  var email = req.body.email;
 	  var callback = {
 	    error: function(err) {
@@ -138,7 +184,7 @@ app.post('/forgot', express.bodyParser(), function(req, res) {
 	      res.end('Check your inbox for a password reset message.');
 	    }
 	  };
-	  //var reset = forgot(email, callback);
+	  var reset = forgot(email, callback);
 	  //console.log("reset "+JSON.stringify(reset));
 	  var token = reset.id;
 	  
@@ -153,6 +199,7 @@ app.post('/forgot', express.bodyParser(), function(req, res) {
 	    console.log("fs.createReadStream");
 	    fs.createReadStream(__dirname + '/forgot').pipe(res_);
 	  });
+	  */
 	});
 
 app.post('/reset', express.bodyParser(), function(req, res) {

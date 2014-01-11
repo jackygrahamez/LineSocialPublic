@@ -218,10 +218,16 @@ exports.home = function(req, res) {
 			  pagename: 'register'});
 	      
 	  } else if( !req.session.loggedIn && url === 'forgot_password' ) {
-			
+		  // sort a random shape for the captcha and save it on the session
+		  var shapes = ['triangle', 'x', 'rectangle', 'circle', 'check', 'caret', 'zigzag', 'arrow', 'leftbracket', 'rightbracket', 'v', 'delete', 'star', 'pigtail'];
+		  var shape = shapes[Math.floor(Math.random() * (shapes.length) )];
+		  req.session.shape = shape;
+		  
 	      res.render('forgot_password', {
-			  title: 'forgot_password'	,
-			  pagename: 'forgot_password'});
+	    	    error: req.param('error'),
+	    	    shape: shape,
+			    title: 'forgot_password',
+			    pagename: 'forgot_password' });
 	      
 	  } else if ( !req.session.loggedIn && url === 'password_reset' ) {
 		console.log("password_reset");
