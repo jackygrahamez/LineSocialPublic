@@ -1,8 +1,12 @@
-	<section class="body" class="right">
+
+<section class="body" class="right">
 
 <% include subpage_header %>
 <div class="wrapper">
 	<h2><%= l('Lines') %></h2>
+	<% if (typeof(lines) == "undefined") { lines = [] %> 
+		<p>No Lines Currently</p>
+	<% } %>
 		<ul class="lines">
 			<% for(var i=0; i<lines.length; i++) {%>
 			

@@ -230,11 +230,9 @@ exports.home = function(req, res) {
 			    pagename: 'forgot_password' });
 	      
 	  } else if ( !req.session.loggedIn && url === 'password_reset' ) {
-		console.log("password_reset");
-	      res.render('forgot');	   
+	     res.render('forgot');	   
 	      
 	  } else if ( !req.session.loggedIn && url === 'invalid_passwords' ) {
-			console.log("invalid_passwords");
 		      res.render('invalid_passwords', {
 				  title: 'invalid_passwords'	,
 				  pagename: 'invalid_passwords'});	      
@@ -303,6 +301,7 @@ exports.user_lines = function(req, res) {
   if ((req.session.loggedIn)) {
 	  
 	    foursquare.getVenues(params, function(error, venues) {
+	    	console.log(venues);
 	        if (!error) {
 	        	if (typeof(venues) != "undefined" && (JSON.stringify(venues.response.venues) != "null")) {
 		        	var i = Math.floor((Math.random()*venues.response.venues.length)+1);

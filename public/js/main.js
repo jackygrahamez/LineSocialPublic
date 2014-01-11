@@ -53,6 +53,7 @@
 			   if ($("body > canvas").length < 1) {
 				   $("body").append(loader);
 				   $(".loader > div").canvasLoader();
+				   console.log("url "+url);
 				   getLocation(0, url); 						   
 			   }
 		   } 		   
@@ -190,6 +191,8 @@ function autocheckout() {
 
 function getLocation(lLength, pURL)
   {
+	console.log("lLength "+lLength);
+	console.log("pURL "+pURL);
 	lURL = pURL;
 	$("ul.checkin").canvasLoader();
 	lineLength = lLength;
@@ -220,6 +223,7 @@ function showPosition(position)
 		  auto_checkout(url, position.coords.latitude, position.coords.longitude);
 	  } 
 	  else {
+		  console.log("getLines");
 		  getLines(lURL);
 	  }
   }
@@ -256,6 +260,7 @@ function showError(error)
     }
   }
 function getPage(url) {
+		console.log("url "+url);
 	     $.ajax({ 
 	           url: url,
 	           type: 'GET',
@@ -315,6 +320,7 @@ function ArrNoDupe(a) {
 
 function getVenues(url, coord) {
 	var availableTags = [];
+	console.log("getVenues");
     $(".checkin #wrapper > p").addClass("hide");
 	     $.ajax({ 
 	           url: url,
@@ -631,8 +637,7 @@ function auto_checkout(url, lat, lon) {
  }
 
 
-function getLines(url) {
-
+function getLines(url) {	
 	 if (typeof(global_coords_lat)!="undefined" && typeof(global_coords_lon)!="undefined") {
 		 setTimeout(function(){
 	     $.ajax({ 
@@ -643,15 +648,18 @@ function getLines(url) {
 	        	   lat: global_coords_lat,
 	        	   lon: global_coords_lon},
 		           success: function(data){
-		        	   console.log("success!")
 		        	   	if (data != null ) {
 				           	  $("section.body.right").html(data);
+				          		if(!$("section.notifications").hasClass("active")) {
+				          			$("section.notifications").addClass("hide");
+				        		}					           	  
 				           	  setTimeout(function(){
 				           		$("body > .loader").remove();
 				           		$("section.body.right").addClass("active");
 				           	    $(".back.button").click(function(){
 				           		  $(".body").removeClass("active");
 				           		  $("section.checkin").remove();
+				           		  $("section.notifications").removeClass("hide");					           		  
 				           	    });	           		
 				           	  }, 1000);		        	   		
 		        	   	} else {
