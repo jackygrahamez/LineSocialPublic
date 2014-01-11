@@ -114,7 +114,7 @@ app.use(require('sesame')()); // for sessions
 
 // example nodemailer config here
 var forgot = require('password-reset-nodemailer')({
-  uri: 'http://localhost:5000/password_reset',
+  uri: 'https://alpha.linesocial.mobi/password_reset',
   from: 'webmater@linesocial.mobi',
   transportType: 'SMTP',
   transportOptions: {

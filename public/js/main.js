@@ -36,7 +36,7 @@
    $("a").click(function(e){
 	   e.preventDefault();
 	   var url = $(this).attr("href");
-	   if (url != "/forgot_password") {
+	   if (url != "") {
 		   if (url.indexOf("notifications") > 0) {
 			   $(".notifications").addClass("active");
 		   }
