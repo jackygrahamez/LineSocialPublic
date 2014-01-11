@@ -49,7 +49,8 @@ var x=document.getElementById("demo");
 		   		if (url.indexOf("messages") > 0) {
 				 	global_cID = $(this).children().children().children("#cID").attr("value");
 					global_fID = $(this).children().children().children("#fID").attr("value");
-					global_tID = $(this).children().children().children("#tID").attr("value");	
+					global_tID = $(this).children().children().children("#tID").attr("value");
+					global_toUser = $(this).children().children().children(".name").text();	
 					var tester = $(this).children().children().children("#tester").attr("value");	
 					var session_id = $(this).children().children().children("#session_id").attr("value");
 					getMessages(global_cID, global_fID, tester, session_id, url);				  

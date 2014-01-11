@@ -2,7 +2,7 @@
 <!--messages-->
 <% include subpage_header %>
 	<div class="wrapper">
-	<h2 class="light no-margin hide"><%= l('Messages') %></h2>
+	<h2 class="light no-margin hide"><%= l('Messages to: ') %>&nbsp;</h2>
 
     <section class="chat_requests bordered">
 
@@ -37,7 +37,12 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-
+	
+	if (global_toUser) {
+		$(".wrapper > h2").removeClass("hide");
+		$(".wrapper > h2").append(global_toUser);
+	}
+	
     var messages = [];
     var socket = io.connect(location.origin);
     var field = document.getElementById("field");
@@ -99,7 +104,7 @@ $(document).ready(function(){
 		var html = $(".content.messages").html();
         html += '<div class="bubbledLeft"><span><b> System: </b>';
         html += message +' <time>' + time +'</time></span></div>';
-        var confirm_message = 'Send '+ points + ' points?';
+        var confirm_message = 'Send '+ points + ' points to ' + global_toUser + '?';
         if (confirm(confirm_message)) {
         $(".content.messages").html(html);  	
        	$(".balance_value").text(balance_value);
