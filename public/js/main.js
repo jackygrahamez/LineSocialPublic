@@ -36,7 +36,7 @@
    $("a").click(function(e){
 	   e.preventDefault();
 	   var url = $(this).attr("href");
-	   if (url != "/register" && url != "/terms" && url != "/forgot_password") {
+	   if (url != "/forgot_password") {
 		   if (url.indexOf("notifications") > 0) {
 			   $(".notifications").addClass("active");
 		   }
@@ -63,6 +63,7 @@
 			   location.assign(url);
 		   }
 		   else {
+			   console.log("get URL "+url);
 			   getPage(url);   
 		   }
 	   }   
@@ -77,73 +78,7 @@
    });
 
 
-   $("#user_register").click(function() {
-	   var email = $("input[name='email']").val();
-	   var cemail = $("input[name='cemail']").val();
-	   var password = $("input[name='password']").val();
-	   var cpassword = $("input[name='cpassword']").val();
-	   var firstName = $("input[name='firstName']").val();
-	   var lastName = $("input[name='lastName']").val();
-	   var telephone = $("input[name='telephone']").val();	   
-	   var username = $("input[name='username']").val();
-	   var terms = $("input[name='terms']").is(":checked");
-	   var valid = true;
-	   $(".register > input").each(function(){
-		   	var object = $(this);
-		   	var value = object.val();
-		   if (value.length < 1) {
-			   object.addClass("invalid");
-			   valid = false;
-		   }			   	
-	   });
-	   $(".register > input[type='email']").each(function(){
-		   	var object = $(this);
-		   	var value = object.val();
-		   if (!isValidEmail(value)) {
-			   object.addClass("invalid");
-			   valid = false;
-		   }			   	
-	   });
-
-	   if (email != cemail) {
-		   $("input[name='email']").addClass("invalid");
-		   $("input[name='cemail']").addClass("invalid");
-		   valid = false;
-	   } 
-	   
-	   if (password != cpassword) {
-		   $("input[name='password']").addClass("invalid");
-		   $("input[name='cpassword']").addClass("invalid");
-		   valid = false;
-	   }	   
-	   if (terms === false) {
-		   $("input[name='terms']").addClass("invalid");
-		   $("form label").addClass("invalid");
-		   valid = false;
-	   }
-	   //Length
-	   if (firstName.length > 30) {
-		   $("input[name='firstName']").addClass("invalid");
-		   var invalidMessage = "<p class='invalid'>30 Characters Max</p>";
-		   $("input[name='firstName']").after(invalidMessage);
-		   valid = false;
-	   }
-	   if (lastName.length > 30) {
-		   $("input[name='lastName']").addClass("invalid");
-		   var invalidMessage = "<p class='invalid'>30 Characters Max</p>";
-		   $("input[name='lastName']").after(invalidMessage);
-		   valid = false;
-	   }	   
-	   if (username.length > 20) {
-		   $("input[name='username']").addClass("invalid");
-		   var invalidMessage = "<p class='invalid'>20 Characters Max</p>";
-		   $("input[name='username']").after(invalidMessage);
-		   valid = false;
-	   }
-	   if (	valid && (email === cemail) && (password === cpassword)) {
-		   userRegister(email, password, firstName, lastName, username, telephone);
-		} 
-   });
+ 
 
    $(".register input").focusout(function(){
 	   var object = $(this);
