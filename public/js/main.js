@@ -760,7 +760,8 @@ function deviceType(callback) {
         if (version < 4) {
             setTimeout(function(){
             	$(".loader").hide();
-            }, 1000);
+            	console.log("android")
+            }, 2000);
             $("html").addClass("absolute_header");
         }
 
