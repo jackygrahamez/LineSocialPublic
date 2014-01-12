@@ -171,7 +171,8 @@
    
    // redirect to notifications
    setTimeout(function(){
-	   $(".overlay").hide();
+	   alert("remove overlay");
+	   $(".overlay").remove();
 	   
 	   if (page === "user_notifications") {
 		   $("a[href$='user_notifications/']").click();
