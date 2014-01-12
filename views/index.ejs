@@ -46,18 +46,21 @@
  <div class="overlay"><div></div></div>
 <script type="text/javascript">
 $(document).ready(function(){
-var invalid = getURLParameter('invalid');
-$(".overlay > div").canvasLoader();
-setTimeout(function() {
-   $(".overlay").addClass("disable");
-   setTimeout(function() {
+    if ($("section").hasClass("password_reset")) {
+		$('#captcha').motionCaptcha('<%= shape %>');	   
+    }
+	var invalid = getURLParameter('invalid');
+	$(".overlay > div").canvasLoader();
+	setTimeout(function() {
+    $(".overlay").addClass("disable");
+    setTimeout(function() {
    	$(".overlay > canvas").remove();
 	if (invalid) {
-	$("#inputPassword").after("<label class='invalid'>Invalid Login</label>");
-	$("input").addClass("invalid");
+		$("#inputPassword").after("<label class='invalid'>Invalid Login</label>");
+		$("input").addClass("invalid");
 	}   	
-   }, 1000);
-   }, 500);
+    }, 1000);
+    }, 500);
 });
 </script>
 
