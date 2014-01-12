@@ -65,13 +65,14 @@ $(document).ready(function(){
     $(".footer li[name='contact']").click(function(){
             	console.log("contact");
        $("#captcha").remove();     	
-       var contact_form = '<form id="captcha" method="POST" action="/forgot">' +
+       var contact_form = '<form id="captcha" method="POST" action="/contact">' +
         '	<input type="text" id="contactName" name="name" placeholder="<%= l('Name') %>"> '+
         '	<input type="email" id="contactEmail" name="email" placeholder="<%= l('Email') %>"> '+
-        '	<input type="email" id="contactMessage" name="message" placeholder="<%= l('Message') %>"> '+
+        '	<input type="text" id="contactMessage" name="message" placeholder="<%= l('Message') %>"> '+
 		'<div id="mc">'+
         '    <canvas id="mc-canvas" class="<%= error ? "mc-invalid" : "" %>"></canvas>'+
-        '</div>'+    
+        '</div>'+  
+        '<input id="submit" type="submit" value="<%= l('Send Message') %>">'+
         '</form>';
         $(".footer li.contact").append(contact_form); 
         $('#captcha').motionCaptcha('<%= shape %>');	

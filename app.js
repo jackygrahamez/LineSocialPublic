@@ -285,6 +285,9 @@ app.post('/send_points', routes.send_points);
 app.get('/pokes', routes.pokes);
 app.post('/pokes', routes.pokes);
 
+app.get('/contact', routes.contact);
+app.post('/contact', routes.contact);
+
 //GET /auth/facebook
 //Use passport.authenticate() as route middleware to authenticate the
 //request.  The first step in Facebook authentication will involve

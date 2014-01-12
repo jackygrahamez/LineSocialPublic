@@ -380,11 +380,15 @@ div.content {
 .footer #captcha input {
 	width: 250px;
 	margin: 5px auto;
+	display: block;
+}
+
+.footer #mc {
+	display: block;
 }
 
 .footer #mc-canvas {
-	width: 265px;
-	margin: 5px auto;
+	margin: 5px 23px;
 }
 
 .invalid {
@@ -938,5 +942,11 @@ and (min-width : 768px) {
 	}	
 	.register input[name='telephone'] {
 		width: 702px !important;
+	}
+	.footer #mc {
+		margin: 5px 33%;
+	}
+	.footer #mc-canvas {
+		margin: 5px auto;
 	}
 }
