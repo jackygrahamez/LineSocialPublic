@@ -35,6 +35,8 @@
    
    $("a").click(function(e){
 	   e.preventDefault();
+       $("#captcha").remove(); 
+       $(".footer li.expanded").removeClass("expanded");
 	   var url = $(this).attr("href");
 	   if (url != "") {
 		   if (url.indexOf("notifications") > 0) {
