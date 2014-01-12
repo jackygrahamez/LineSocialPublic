@@ -454,7 +454,13 @@ p.invalid {
 	margin: 0 auto;
 }
 
-
+section.body.right.active .container.hero-unit h2 {
+	position: absolute;
+	top: 50px;
+	left: 0px;
+	width: 100%;
+	text-align: center;
+}
 
 
 /* PAGE SPECIFIC */

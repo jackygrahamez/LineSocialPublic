@@ -60,8 +60,13 @@
 			   }
 		   } 
 		   else if ($(this).parent().parent().parent().hasClass("addthis")) {
+			   console.log("url "+url);
+			   url = "#share";
 			   getPage(url);
-			   setTimeout(function(){$("section header .back.button").addClass("active");}, 2000);			   
+			   setTimeout(function(){
+				   $("section header .back.button").addClass("active");
+				   //$(".body.right.active").prepend("<div class='container hero-unit'><h2>Social Share</h2></div>");
+			   }, 1000);			   
 		   }
 		   else if ($(this).hasClass("facebook")) {
 			   location.assign(url);
@@ -279,7 +284,11 @@ function getPage(url) {
 	           		  $(".body").removeClass("active");
 	           		  $("section.checkin").remove();
            			  $("section.content").css("height", "auto");
-	           	    });	           		
+	           	    });	  
+	           	    if (url === "#share") {
+	           	    	$(".body.right.active").prepend("<div class='container hero-unit'><h2>Social Share</h2></div>");
+	           	    	$('html, body').animate({scrollTop:top - 50}, 'slow');	
+	           	    }
 	           	  }, 1000);           		  	           	  
 	           }
 	           , error: function(jqXHR, textStatus, err){
