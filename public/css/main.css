@@ -377,6 +377,10 @@ div.content {
 
 /*CLASSES*/
 
+.absolute_header .loader {
+	display:none;
+} 
+
 .footer #captcha {
 	width: 100%;
 }
