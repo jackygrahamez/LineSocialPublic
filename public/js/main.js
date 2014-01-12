@@ -279,15 +279,22 @@ function getPage(url) {
 	           	  setTimeout(function(){
 	           		$("section.body.right").addClass("active");
            			  $("section.content").css("height", "0px");
-          		
-	           	    $(".back.button").click(function(){
-	           		  $(".body").removeClass("active");
-	           		  $("section.checkin").remove();
-           			  $("section.content").css("height", "auto");
-	           	    });	  
 	           	    if (url === "#share") {
 	           	    	$(".body.right.active").prepend("<div class='container hero-unit'><h2>Social Share</h2></div>");
 	           	    	$('html, body').animate({scrollTop:top - 50}, 'slow');	
+		           	    $(".back.button").click(function(){
+			           		  $(".body").removeClass("active");
+			           		  $("section.checkin").remove();
+		           			  $("section.content").css("height", "auto");
+		           			  $("section.body.right").html("");
+			           	    });		
+	           	    }
+	           	    else {
+		           	    $(".back.button").click(function(){
+			           		  $(".body").removeClass("active");
+			           		  $("section.checkin").remove();
+		           			  $("section.content").css("height", "auto");
+			           	    });		           	    	
 	           	    }
 	           	  }, 1000);           		  	           	  
 	           }
