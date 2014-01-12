@@ -757,7 +757,6 @@ function deviceType(callback) {
     if (checker.android){
     	var version = navigator.userAgent.match(/Android [\d+\.]{3,5}/)[0].replace('Android ','').split(".")[0];
         $('html').addClass("android");
-        alert("android");
         if (version < 4) {
             setTimeout(function(){
             	$(".loader").hide();
