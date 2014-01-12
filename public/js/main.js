@@ -171,9 +171,6 @@
    
    // redirect to notifications
    setTimeout(function(){
-	   alert("remove overlay");
-	   $(".overlay").remove();
-	   
 	   if (page === "user_notifications") {
 		   $("a[href$='user_notifications/']").click();
 	   }	   
@@ -759,6 +756,10 @@ function deviceType(callback) {
     };
     if (checker.android){
         $('html').addClass("android");
+        alert("android");
+        setTimeout(function(){
+        	$(".loader").hide();
+        }, 1000);
     }
     else if (checker.iphone){
         $('html').addClass("iphone");
