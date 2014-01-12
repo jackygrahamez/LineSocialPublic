@@ -58,7 +58,11 @@
 				   console.log("url "+url);
 				   getLocation(0, url); 						   
 			   }
-		   } 		   
+		   } 
+		   else if ($(this).parent().parent().parent().hasClass("addthis")) {
+			   getPage(url);
+			   setTimeout(function(){$("section header .back.button").addClass("active");}, 2000);			   
+		   }
 		   else if ($(this).hasClass("facebook")) {
 			   location.assign(url);
 		   }
