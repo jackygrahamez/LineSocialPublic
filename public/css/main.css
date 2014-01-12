@@ -45,6 +45,10 @@ header {
 	left: 0px;	
 }
 
+.absolute_header header {
+	position: absolute;
+}
+
 body {
 	padding: 0px;
 	margin: 0px;

@@ -755,11 +755,16 @@ function deviceType(callback) {
       android: ua.match(/Android/)
     };
     if (checker.android){
+    	var version = navigator.userAgent.match(/Android [\d+\.]{3,5}/)[0].replace('Android ','').split(".")[0];
         $('html').addClass("android");
         alert("android");
-        setTimeout(function(){
-        	$(".loader").hide();
-        }, 1000);
+        if (version < 4) {
+            setTimeout(function(){
+            	$(".loader").hide();
+            }, 1000);
+            $("html").addClass("absolute_header");
+        }
+
     }
     else if (checker.iphone){
         $('html').addClass("iphone");
