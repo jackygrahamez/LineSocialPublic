@@ -50,9 +50,14 @@ $(document).ready(function(){
 		$('#captcha').motionCaptcha('<%= shape %>');	   
     }
 	var invalid = getURLParameter('invalid');
+<<<<<<< HEAD
+
+=======
+	/*
+>>>>>>> f381c79dbf4b42b0c6ac1137ca2e0fcb2a0be904
 	$(".overlay > div").canvasLoader();
 	setTimeout(function() {
-    $(".overlay").addClass("disable");
+    $(".overlay").remove();
     setTimeout(function() {
    	$(".overlay > canvas").remove();
 	if (invalid) {
@@ -61,6 +66,8 @@ $(document).ready(function(){
 	}   	
     }, 1000);
     }, 500);
+	*/
+
 
     $(".footer li[name='contact']").click(function(){
             	console.log("contact");
