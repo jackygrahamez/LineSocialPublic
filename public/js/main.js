@@ -26,7 +26,7 @@
 		}
 	}
 	
-	deviceType(iosCheckbox);
+	//deviceType(iosCheckbox);
       
    $("input, textarea").focus(function(){
 	   
