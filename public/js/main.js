@@ -17,7 +17,6 @@
 	catch(err) {
 	  console.log("could not find parameter pagename");		
 	}
-	/*
 	if ((location.href.indexOf("alpha.") < 0) && ((location.href.indexOf("localhost") < 0))) {
 		if (page && path) {
 			location.replace("https://alpha.linesocial.mobi/"+location.pathname+"?"+page);			
@@ -26,7 +25,7 @@
 			location.replace("https://alpha.linesocial.mobi");			
 		}
 	}
-	*/
+	
 	deviceType(iosCheckbox);
       
    $("input, textarea").focus(function(){
@@ -36,6 +35,8 @@
    
    $("a").click(function(e){
 	   e.preventDefault();
+       $("#captcha").remove(); 
+       $(".footer li.expanded").removeClass("expanded");
 	   var url = $(this).attr("href");
 	   if (url != "") {
 		   if (url.indexOf("notifications") > 0) {
@@ -57,7 +58,16 @@
 				   console.log("url "+url);
 				   getLocation(0, url); 						   
 			   }
-		   } 		   
+		   } 
+		   else if ($(this).parent().parent().parent().hasClass("addthis")) {
+			   console.log("url "+url);
+			   url = "#share";
+			   getPage(url);
+			   setTimeout(function(){
+				   $("section header .back.button").addClass("active");
+				   //$(".body.right.active").prepend("<div class='container hero-unit'><h2>Social Share</h2></div>");
+			   }, 1000);			   
+		   }
 		   else if ($(this).hasClass("facebook")) {
 			   location.assign(url);
 		   }
@@ -120,21 +130,23 @@
    */
    //TERMS
    $("menu.footer li").click(function(){
+	 if (!$(this).hasClass("expanded")) {
+		   var section = $(this).next();
+		   if ($(section).hasClass("expanded")) {
+			   $(this).removeClass("down");
+			   $(section).removeClass("expanded");
+		   }
+		   else {
+			   $(".down").removeClass("down");
+			   $(".expanded").removeClass("expanded");
+			   $(this).addClass("down");
+			   $(section).addClass("expanded");
+			   
+			   var top =  $(section).position().top;
+			   $('html, body').animate({scrollTop:top - 50}, 'slow');		   
+		   }		 
+	 }
 
-	   var section = $(this).next();
-	   if ($(section).hasClass("expanded")) {
-		   $(this).removeClass("down");
-		   $(section).removeClass("expanded");
-	   }
-	   else {
-		   $(".down").removeClass("down");
-		   $(".expanded").removeClass("expanded");
-		   $(this).addClass("down");
-		   $(section).addClass("expanded");
-		   
-		   var top =  $(section).position().top;
-		   $('html, body').animate({scrollTop:top - 50}, 'slow');		   
-	   }
 	   
    });
 
@@ -160,7 +172,8 @@
    
    // redirect to notifications
    setTimeout(function(){
-	   console.log("page "+page);
+	   $(".overlay").hide();
+	   
 	   if (page === "user_notifications") {
 		   $("a[href$='user_notifications/']").click();
 	   }	   
@@ -193,8 +206,6 @@ function autocheckout() {
 
 function getLocation(lLength, pURL)
   {
-	console.log("lLength "+lLength);
-	console.log("pURL "+pURL);
 	lURL = pURL;
 	$("ul.checkin").canvasLoader();
 	lineLength = lLength;
@@ -225,7 +236,6 @@ function showPosition(position)
 		  auto_checkout(url, position.coords.latitude, position.coords.longitude);
 	  } 
 	  else {
-		  console.log("getLines");
 		  getLines(lURL);
 	  }
   }
@@ -262,7 +272,6 @@ function showError(error)
     }
   }
 function getPage(url) {
-		console.log("url "+url);
 	     $.ajax({ 
 	           url: url,
 	           type: 'GET',
@@ -272,15 +281,24 @@ function getPage(url) {
 	           	  $("section.body.right").html(data);
 	           	  setTimeout(function(){
 	           		$("section.body.right").addClass("active");
-           			  console.log("resize section.content");
            			  $("section.content").css("height", "0px");
-          		
-	           	    $(".back.button").click(function(){
-	           		  $(".body").removeClass("active");
-	           		  $("section.checkin").remove();
-           			  console.log("resize section.content");
-           			  $("section.content").css("height", "auto");
-	           	    });	           		
+	           	    if (url === "#share") {
+	           	    	$(".body.right.active").prepend("<div class='container hero-unit'><h2>Social Share</h2></div>");
+	           	    	$('html, body').animate({scrollTop:top - 50}, 'slow');	
+		           	    $(".back.button").click(function(){
+			           		  $(".body").removeClass("active");
+			           		  $("section.checkin").remove();
+		           			  $("section.content").css("height", "auto");
+		           			  $("section.body.right").html("");
+			           	    });		
+	           	    }
+	           	    else {
+		           	    $(".back.button").click(function(){
+			           		  $(".body").removeClass("active");
+			           		  $("section.checkin").remove();
+		           			  $("section.content").css("height", "auto");
+			           	    });		           	    	
+	           	    }
 	           	  }, 1000);           		  	           	  
 	           }
 	           , error: function(jqXHR, textStatus, err){
@@ -322,7 +340,6 @@ function ArrNoDupe(a) {
 
 function getVenues(url, coord) {
 	var availableTags = [];
-	console.log("getVenues");
     $(".checkin #wrapper > p").addClass("hide");
 	     $.ajax({ 
 	           url: url,
