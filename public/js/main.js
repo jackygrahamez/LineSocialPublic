@@ -123,11 +123,10 @@
    
    
    //REMOVE FB HASH
-   /*
    if (window.location.href.indexOf('#_=_') > 0) {
 	    window.location = window.location.href.replace(/#.*/, '');
 	}   
-   */
+   
    //TERMS
    $("menu.footer li").click(function(){
 	 if (!$(this).hasClass("expanded")) {
@@ -172,8 +171,6 @@
    
    // redirect to notifications
    setTimeout(function(){
-	   $(".overlay").hide();
-	   
 	   if (page === "user_notifications") {
 		   $("a[href$='user_notifications/']").click();
 	   }	   
@@ -758,7 +755,16 @@ function deviceType(callback) {
       android: ua.match(/Android/)
     };
     if (checker.android){
+    	var version = navigator.userAgent.match(/Android [\d+\.]{3,5}/)[0].replace('Android ','').split(".")[0];
         $('html').addClass("android");
+        if (version < 4) {
+            setTimeout(function(){
+            	$(".loader").hide();
+            	console.log("android")
+            }, 2000);
+            $("html").addClass("absolute_header");
+        }
+
     }
     else if (checker.iphone){
         $('html').addClass("iphone");
