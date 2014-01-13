@@ -17,7 +17,6 @@
 	catch(err) {
 	  console.log("could not find parameter pagename");		
 	}
-	/*
 	if ((location.href.indexOf("alpha.") < 0) && ((location.href.indexOf("localhost") < 0))) {
 		if (page && path) {
 			location.replace("https://alpha.linesocial.mobi/"+location.pathname+"?"+page);			
@@ -26,7 +25,6 @@
 			location.replace("https://alpha.linesocial.mobi");			
 		}
 	}
-	*/
 	deviceType(iosCheckbox);
       
    $("input, textarea").focus(function(){
@@ -124,11 +122,9 @@
    
    
    //REMOVE FB HASH
-   /*
    if (window.location.href.indexOf('#_=_') > 0) {
 	    window.location = window.location.href.replace(/#.*/, '');
 	}   
-   */
    //TERMS
    $("menu.footer li").click(function(){
 	 if (!$(this).hasClass("expanded")) {
