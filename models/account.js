@@ -9,6 +9,7 @@ module.exports = function(mongoose) {
   var userSchema = new mongoose.Schema({
 	  fb_id:	 { type: String },
       email:     { type: String },
+      email_confirm_token: { type: String },
       email_valid: { type: Boolean },
       password:  { type: String },
       username:  { type: String },
@@ -17,6 +18,7 @@ module.exports = function(mongoose) {
         last:    { type: String }
       },
       telephone: { type: String },
+      telephone_confirm_token: { type: String },
       telephone_valid: { type: Boolean },
       photoUrl:  { type: String },
       check_in: {

@@ -1,9 +1,7 @@
 <section class="content">
-
 <% include subpage_header %>
 <div class="wrapper profile">
 	<h2 class="light no-margin"><%= l('Profile') %></h2>
-
     <section class="bordered">
     <p>Pick a theme?</p>
 	<menu class="themes">
@@ -38,13 +36,44 @@
 	<ul>      	  
 	      <li><%= l('Name') %>: <%= user.name.first %> <%= user.name.last %></li>
 	      <li><%= l('Username') %>: <%= user.username %></li>
-    <% if(user.email != undefined) { %>	  	      
-	      <li><%= l('Email') %>: <%= user.email %></li>
-    <% } %>
-    </ul>
-          <p><%= l('Change your telephone number?') %></p>    
-          <input type="text" name="telephone" placeholder="telephone number" value="<%= user.telephone %>" />
+	</ul>
+	
 
+    <% if(user.email != undefined) { %>	  	
+    	<% if (typeof(user.email_valid) == "undefined") {  %>       
+		  <p class="invalid">Please Confirm</p>    	
+		      <ul>
+	      		<li class="invalid arrow"><%= l('Email') %>: <%= user.email %></li>
+	          </ul>
+	      <% } else { %>
+			<% if (user.email_valid) { %>
+			  <ul>
+			  <li class="arrow"><%= l('Email') %>: <%= user.email %></li>
+			  </ul> 
+			<% } else { %>
+			  <p class="invalid">Please Confirm</p>    	
+			  <ul>
+		      <li class="invalid arrow"><%= l('Email') %>: <%= user.email %></li>
+		      </ul>			  
+			<% } %>	      
+	      <% } %>
+    <% } %>
+
+          <p><%= l('Change your telephone number?') %></p>    
+          
+	<% if (typeof(user.telephone_valid) == "undefined") {  %> 
+		  	<p class="invalid">Please Confirm</p>
+		  	<input class="invalid arrow" type="text" name="telephone" placeholder="telephone number" value="<%= user.telephone %>" autocomplete="off" />
+			<div class="tel_arrow"></div>
+	<% } else { %>
+		<% if (user.telephone_valid) { %>
+		  <input type="text" name="telephone" placeholder="telephone number" value="<%= user.telephone %>" autocomplete="off" />
+		<% } else { %>
+		  <p class="invalid">Please Confirm</p>
+		  	<input class="invalid arrow" type="text" name="telephone" placeholder="telephone number" value="<%= user.telephone %>" autocomplete="off" />
+			<div class="tel_arrow"></div>
+		<% } %>
+	<% } %>
           <p><%= l('Change your password?') %></p>
     <ul>       
 	      <input type="password" name="password" required placeholder="<%= l('Your password here') %>"/>
