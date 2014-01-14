@@ -74,8 +74,7 @@ app.use(express.session({
 	      host: 'ds053668.mongolab.com',
 	      port: 53668,  // optional, default: 27017
 	      username: 'admin', // optional
-	      password: 'admin', // optional
-	      collection: 'sessions' // optional, default: sessions	      
+	      password: 'Swbv123()' // optional      
 	    }),	
 		secret: 'keyboard cat',
 	    cookie: {
