@@ -75,7 +75,7 @@ app.use(express.session({
 	      port: 53668,  // optional, default: 27017
 	      username: 'admin', // optional
 	      password: 'admin', // optional
-	      collection: 'accounts' // optional, default: sessions	      
+	      collection: 'sessions' // optional, default: sessions	      
 	    }),	
 		secret: 'keyboard cat',
 	    cookie: {
