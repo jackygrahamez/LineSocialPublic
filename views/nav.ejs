@@ -15,9 +15,23 @@
 		</li>
 	</a>
 	<a href="/<%= user.username %>/user_profile/" class="right">
-		<li class="arrow">
-			<%= l('Profile') %>		
-		</li>
+    <% if((user.email != undefined) || (typeof(user.telephone_valid) == "undefined")) { %>	  	
+    	 <% if (typeof(user.email_valid) == "undefined") {  %>       
+			<li class="arrow invalid">
+				<%= l('Profile') %>		
+			</li>
+	      <% } else { %>
+			<% if ((user.email_valid) || (user.telephone_valid)) { %>
+			<li class="arrow">
+				<%= l('Profile') %>		
+			</li>
+			<% } else { %>
+			<li class="arrow invalid">
+				<%= l('Profile') %>		
+			</li>	  
+			<% } %>	      
+	      <% } %>
+    <% } %>		
 	</a>
 	<a href="/<%= user.username %>/user_notifications/" class="right">
 		<li class="arrow line_pokes">
