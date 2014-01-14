@@ -65,7 +65,7 @@ $(document).ready(function(){
 
 
     $(".footer li[name='contact']").click(function(){
-            	console.log("contact");
+       console.log("contact");
        $("#captcha").remove();     	
        var contact_form = '<form id="captcha" method="POST" action="/contact">' +
         '	<input type="text" id="contactName" name="name" placeholder="<%= l('Name') %>"> '+

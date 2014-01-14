@@ -39,6 +39,10 @@ exports.index = function(req, res){
 };
 
 exports.register = function(req, res) {
+    var shapes = ['triangle', 'x', 'rectangle', 'circle', 'check', 'caret', 'zigzag', 'arrow', 'leftbracket', 'rightbracket', 'v', 'delete', 'star', 'pigtail'];
+    var shape = shapes[Math.floor(Math.random() * (shapes.length) )];
+    req.session.shape = shape;		
+	
     var firstName = req.param('firstName', ''),
         lastName  = req.param('lastName', ''),
         username  = req.param('username', ''),        
@@ -201,6 +205,10 @@ exports.login = function(req, res){
 };
 
 exports.home = function(req, res) {
+  var shapes = ['triangle', 'x', 'rectangle', 'circle', 'check', 'caret', 'zigzag', 'arrow', 'leftbracket', 'rightbracket', 'v', 'delete', 'star', 'pigtail'];
+  var shape = shapes[Math.floor(Math.random() * (shapes.length) )];
+  req.session.shape = shape;	
+  
   var url = req.params.id;
 	  if ( req.session.loggedIn && url !== 'register') {
 	  	account.findUsernameById(req.session.accountId, function(username) {	
@@ -208,6 +216,8 @@ exports.home = function(req, res) {
 		    account.findByUsername({username: url}, function(doc) {
 		    		var socket = require('./socket');
 			        res.render('home', {
+	    	          error: req.param('error'),			  
+	    	  		  shape: shape,				        	
 			          title: 'LineSocial',
 			          user: doc,
 					  pagename: 'home'
@@ -223,6 +233,8 @@ exports.home = function(req, res) {
 	  } else if( !req.session.loggedIn && url === 'register' ) {
 	
 	      res.render('register', {
+	          error: req.param('error'),			  
+	  		  shape: shape,		    	  
 			  title: 'register'	,
 			  pagename: 'register'});
 	      
