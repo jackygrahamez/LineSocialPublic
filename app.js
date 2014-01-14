@@ -13,7 +13,8 @@ var express = require('express'),
     findOrCreate = require('mongoose-findorcreate'),
     util = require('util'),
     FacebookStrategy = require('passport-facebook').Strategy,
-    i18n    = require('i18n');
+    i18n    = require('i18n'),
+    session = require('connect-mongo')(express);
 
 var clients = {};
 
@@ -57,6 +58,7 @@ app.set('port', process.env.PORT || 5000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
+
 app.locals({
 	  'l':  i18n.__
 	, 'ln': i18n.__n	
@@ -67,7 +69,25 @@ app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
-app.use(express.session({ secret: 'keyboard cat' }));
+//app.use(express.session({ secret: 'keyboard cat' }));
+app.use(express.session({
+	  store: new session({
+	    db: 'sessions'
+	  }),
+	  secret: 'bump me',
+	  cookie: {
+	    path: '/',
+	    maxAge: 1000 * 60 * 60 * 24 // 1 day
+	  }
+	}));
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+    next();
+  });
+app.set('jsonp callback', true);
 app.use(passport.initialize());
 app.use(passport.session());
 
