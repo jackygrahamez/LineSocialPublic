@@ -9,6 +9,7 @@ module.exports = function(mongoose) {
   var userSchema = new mongoose.Schema({
 	  fb_id:	 { type: String },
       email:     { type: String },
+      email_valid: { type: Boolean },
       password:  { type: String },
       username:  { type: String },
       name: {
@@ -16,6 +17,7 @@ module.exports = function(mongoose) {
         last:    { type: String }
       },
       telephone: { type: String },
+      telephone_valid: { type: Boolean },
       photoUrl:  { type: String },
       check_in: {
     	  cID: ObjectId,
@@ -125,6 +127,7 @@ module.exports = function(mongoose) {
 	  
 		var user = new account({
 			"email": email,
+			"email_valid": false,
 			"name": {
 			"first": firstname,
 			"last": lastname
@@ -137,6 +140,8 @@ module.exports = function(mongoose) {
 			lat,
 			lon
 			],
+			"telephone" : "",
+			"telephone_valid" : false,
 			"points": 1000,
 			"line_length": 1800000,
 			"check_in_time": d,
