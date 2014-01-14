@@ -69,15 +69,15 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
 app.use(express.session({
-		store: new session({
-		      db: 'sessions'
-		    }),	
-			secret: 'keyboard cat',
-		    cookie: {
-		        path: '/',
-		        maxAge: 1000 * 60 * 60 * 24 // 1 day
-		      } 
-		}));
+	store: new session({
+	      db: 'heroku_app19413190'  	  
+	    }),	
+		secret: 'keyboard cat',
+	    cookie: {
+	        path: '/',
+	        maxAge: 1000 * 60 * 60 * 24 // 1 day
+	      } 
+	}));
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Origin', req.headers.origin);
