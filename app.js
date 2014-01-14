@@ -76,6 +76,13 @@ app.use(express.session(
 		        maxAge: 1000 * 60 * 60 * 24 // 1 day
 		      } 
 		}));
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+    next();
+  });
 app.set('jsonp callback', true);
 app.use(passport.initialize());
 app.use(passport.session());
