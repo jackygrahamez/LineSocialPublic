@@ -940,7 +940,7 @@ exports.send_validate_email = function(req, res) {
 		    	"paste it in the email validation code box " +
 		    	"on your profile page. Otherwise please click "+
 		    	"the following hyper link. <br /><br /> "+
-		    	"https://alpha.linesocial.mobi/"+username+"?email_validation="+code;
+		    	"https://alpha.linesocial.mobi/?email_validation="+code;
 		    	
 				var nodemailer = require("../node_modules/nodemailer");
 				// create reusable transport method (opens pool of SMTP connections)
@@ -959,6 +959,7 @@ exports.send_validate_email = function(req, res) {
 				    text: message+" ", // plaintext body
 				    html: "<b>"+message+" </b>" // html body
 				}
+				console.log("mailOptions "+mailOptions);
 	
 				// send mail with defined transport object
 				smtpTransport.sendMail(mailOptions, function(error, response){
@@ -967,16 +968,19 @@ exports.send_validate_email = function(req, res) {
 				        res.redirect('/?error=true');
 				    }else{
 				        console.log("Message sent: " + response.message);
-				        res.redirect('/');
+						console.log("right before "+user);
+						/*
+				        res.render('send_validate_email', {
+					          title: 'LineSocial',
+					          user: user
+					        });
+					    */
+						res.send("/send_validate_email")
 				    }
 				    // if you don't want to use this transport object anymore, uncomment following line
 				    //smtpTransport.close(); // shut down the connection pool, no more messages
 				});		
-				console.log("right before "+user);
-		        res.render('send_validate_email', {
-			          title: 'LineSocial',
-			          user: user
-			        });
+
 		    });	
 		  }else{
 		    res.redirect('/?error=true');
@@ -985,7 +989,7 @@ exports.send_validate_email = function(req, res) {
 	  }
 }
 
-exports.send_validate_email_code = function(password, token, res) {
+exports.send_validate_email_code = function(req, res) {
 	var code = req.param('code');
 	console.log("code "+code);
     account.sendValidateEmailCode(code, function(doc) {

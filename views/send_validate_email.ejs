@@ -4,9 +4,9 @@
 <div class="wrapper">
 	<h2 class="light no-margin"><%= l('Validate Email') %></h2>
     <section class="bordered">
-	    <form id='captcha' method="POST" action="/<%= user.username %>/send_validate_email_code">
+	    <form id='captcha' method="POST" action="/send_validate_email_code">
 	        <input id="code" name="code" type="text" >
-	      	<input id="submit" type="submit" value="<%= l('Submit Code') %>" >
+	      	<input id="submit_code" type="button" value="<%= l('Submit Code') %>" >
 	    </form>
     </section>
 </div>
@@ -14,6 +14,10 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-
+	$("submit_code").click(function() {
+		var url = $("#captcha").attr("action"),
+		_points = $("input[name='_points']").attr("value");
+		captchaPoints(_points, url);
+	});
 });
 </script>

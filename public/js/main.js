@@ -653,6 +653,27 @@ function auto_checkout(url, lat, lon) {
  }
 
 
+function captchaPoints(_points, url) {
+	console.log("_points "+_points);
+	console.log("url "+url);
+     $.ajax({ 
+           url: url,
+           type: 'POST',
+           cache: false,
+           data: { 
+        	   _points: _points
+        	   },
+           success: function(data){ 
+
+           }
+           , error: function(jqXHR, textStatus, err){
+               //alert('text status '+textStatus+', err '+err)
+               console.log('text status '+textStatus+', err '+err);
+           }
+        });
+}
+
+
 function getLines(url) {	
 	 if (typeof(global_coords_lat)!="undefined" && typeof(global_coords_lon)!="undefined") {
 		 setTimeout(function(){

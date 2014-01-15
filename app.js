@@ -292,6 +292,9 @@ app.post('/:username/validate_email', routes.validate_email);
 app.get('/:username/send_validate_email', routes.send_validate_email);
 app.post('/:username/send_validate_email', routes.send_validate_email);
 
+app.get('/send_validate_email_code', routes.send_validate_email_code);
+app.post('/send_validate_email_code', routes.send_validate_email_code);
+
 app.get('/:username/validate_phone', routes.validate_phone);
 app.post('/:username/validate_pone', routes.validate_phone);
 
