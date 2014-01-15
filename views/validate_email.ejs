@@ -18,13 +18,28 @@
 <script type="text/javascript">
 $(document).ready(function(){
    $("#captcha").remove();     	
-   var contact_form = '<form id="captcha" method="POST" action="/<%= user.username %>/send_validate_email">' +
+   var contact_form = '<form id="captcha" method="POST" action="/<%= user.username %>/send_validate_email" >' +
 	'<div id="mc">'+
     '    <canvas id="mc-canvas" class="<%= error ? "mc-invalid" : "" %>"></canvas>'+
     '</div>'+  
     '<input id="submit" type="submit" value="<%= l('Send Email') %>">'+
     '</form>';
+   
     $(".wrapper section.bordered.validate_email").append(contact_form); 
-    $('.wrapper section.bordered.validate_email').motionCaptcha('<%= shape %>');	
+    $('.wrapper section.bordered.validate_email').motionCaptcha('<%= shape %>');
+
+	/*
+ 	$(".wrapper section.bordered.validate_email").bind("DOMSubtreeModified", function() {
+ 		setTimeout(function() {
+		$("input[name='_points']").appendTo("form#captcha");
+		}, 1000);              
+    });
+    */
+    
 });
+
+function appendPoints() {
+	$("#captcha > input[name='_points']").appendTo("form#captcha");
+	//alert("moving input");
+}
 </script>

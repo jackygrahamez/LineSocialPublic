@@ -903,13 +903,19 @@ exports.savePassword = function(password, token, res) {
 }
 
 exports.send_validate_email = function(req, res) {
-	  var $1 = require('../dollar.js') // require $1 Unistroke Recognizer
-	    , message = req.param('message')
-	    , points = req.param('_points') // get the points submitted on the hidden input
-	    , _points_xy = points.split('|')
-	    , _points = [];
+	  console.log("req "+JSON.stringify(req.param));
+	  var $1 = require('../dollar.js'); // require $1 Unistroke Recognizer
+	  var points = req.param('_points'); // get the points submitted on the hidden input
+	  console.log("points "+points);
+	  var _points_xy = points.split('|');
+	  var  _points = [];
 	  if ( req.session.loggedIn ) {
 		  account.findById(req.session.accountId, function(doc) {
+		  var name = doc.name.first,
+		  	id = doc._id,
+		  	username = doc.username,
+		  	email = doc.email;
+		  
 		  // convert to an array of Points
 		  for(p in _points_xy){
 		    var xy = _points_xy[p].split(',');
@@ -922,8 +928,19 @@ exports.send_validate_email = function(req, res) {
 		  
 		  // validates the captcha or redirect
 		  if(_points.length >= 10 && result.Score > 0.7 && result.Name == req.session.shape) { // valid
-		    account.saveEmailValidationCode(username, code, function(doc) {
+			  
+		    var code = makeid();			  
+			  
+		    account.saveEmailValidationCode(id, code, function(doc) {
 		    	console.log(doc);
+		    	var message = "You recieved this message "+
+		    	"because you wish to validate your LineSocial "+
+		    	"email address. Please copy this code and " +
+		    	"paste it in the email validation code box " +
+		    	"on your profile page. Otherwise please click "+
+		    	"the following hyper link. <br /><br /> "+
+		    	"https://alpha.linesocial.mobi/"+username+"?email_validation="+code;
+		    	
 				var nodemailer = require("../node_modules/nodemailer");
 				// create reusable transport method (opens pool of SMTP connections)
 				var smtpTransport = nodemailer.createTransport("SMTP",{
@@ -1043,4 +1060,15 @@ function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
 
 function deg2rad(deg) {
   return deg * (Math.PI/180)
+}
+
+function makeid()
+{
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 5; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
 }

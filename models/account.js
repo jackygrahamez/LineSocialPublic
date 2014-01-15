@@ -451,6 +451,15 @@ module.exports = function(mongoose) {
 	    	    });
   }; 
   
+  var saveEmailValidationCode = function(id, code, callback) {
+	  account.update(
+	    	    {"_id" : id},
+	    	    {"$set": { 'email_confirm_token' : code }},
+    	        function(error, doc){
+	    	           if( error ) callback(error);
+	    	           else callback(null, doc);
+	    	    });
+  }; 
 
   return {
     login: login,
@@ -476,6 +485,7 @@ module.exports = function(mongoose) {
     grantPoints: grantPoints,
     checkOutByID: checkOutByID,
     saveToken: saveToken,
-    savePassword: savePassword
+    savePassword: savePassword,
+    saveEmailValidationCode: saveEmailValidationCode
   }
 }
