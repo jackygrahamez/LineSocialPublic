@@ -660,9 +660,6 @@ exports.user_next_message = function(req, res) {
   }
 }
 
-
-
-
 exports.inbox = function(req, res) {
 
   if ( req.session.loggedIn ) {
@@ -683,6 +680,78 @@ exports.inbox = function(req, res) {
   }
 }
 
+
+exports.validate_email = function(req, res) {
+	  var shapes = ['triangle', 'x', 'rectangle', 'circle', 'check', 'caret', 'zigzag', 'arrow', 'leftbracket', 'rightbracket', 'v', 'delete', 'star', 'pigtail'];
+	  var shape = shapes[Math.floor(Math.random() * (shapes.length) )];
+	  req.session.shape = shape;	
+	  
+	  if ( req.session.loggedIn ) {
+
+	    account.findById(req.session.accountId, function(doc) {
+
+	        res.render('validate_email', {
+	          title: 'LineSocial',
+	          error: req.param('error'),	
+	          shape: shape,
+	          user: doc
+	        });
+
+	    });
+
+	  } else {
+
+	    res.send(401);
+
+	  }
+	}
+
+
+
+exports.validate_phone = function(req, res) {
+	  var shapes = ['triangle', 'x', 'rectangle', 'circle', 'check', 'caret', 'zigzag', 'arrow', 'leftbracket', 'rightbracket', 'v', 'delete', 'star', 'pigtail'];
+	  var shape = shapes[Math.floor(Math.random() * (shapes.length) )];
+	  req.session.shape = shape;	
+	  
+	  if ( req.session.loggedIn ) {
+
+	    account.findById(req.session.accountId, function(doc) {
+
+	        res.render('validate_phone', {
+	          title: 'LineSocial',
+	          error: req.param('error'),	
+	          shape: shape,
+	          user: doc
+	        });
+
+	    });
+
+	  } else {
+
+	    res.send(401);
+
+	  }
+	}
+
+exports.send_validate_phone = function(req, res) {
+
+	  if ( req.session.loggedIn ) {
+
+	    account.findById(req.session.accountId, function(doc) {
+
+	        res.render('send_validate_phone', {
+	          title: 'LineSocial',
+	          user: doc
+	        });
+
+	    });
+
+	  } else {
+
+	    res.send(401);
+
+	  }
+	}
 
 exports.venues = function(req, res) {
 	var coord = req.param('coordinates', '');
@@ -831,6 +900,70 @@ exports.savePassword = function(password, token, res) {
     	console.log(doc);
     	res.redirect("/");
     });		
+}
+
+exports.send_validate_email = function(req, res) {
+	  var $1 = require('../dollar.js') // require $1 Unistroke Recognizer
+	    , message = req.param('message')
+	    , points = req.param('_points') // get the points submitted on the hidden input
+	    , _points_xy = points.split('|')
+	    , _points = [];
+	  if ( req.session.loggedIn ) {
+		  account.findById(req.session.accountId, function(doc) {
+		  // convert to an array of Points
+		  for(p in _points_xy){
+		    var xy = _points_xy[p].split(',');
+		    _points.push(new $1.Point(parseInt(xy[0]), parseInt(xy[1])));
+		  }
+	
+		  // test the points
+		  var _r = new $1.DollarRecognizer();
+		  var result = _r.Recognize(_points);
+		  
+		  // validates the captcha or redirect
+		  if(_points.length >= 10 && result.Score > 0.7 && result.Name == req.session.shape) { // valid
+		    account.saveEmailValidationCode(username, code, function(doc) {
+		    	console.log(doc);
+				var nodemailer = require("../node_modules/nodemailer");
+				// create reusable transport method (opens pool of SMTP connections)
+				var smtpTransport = nodemailer.createTransport("SMTP",{
+				    service: "Gmail",
+				    auth: {
+				        user: "webmaster@linesocial.mobi",
+				        pass: "Tgifkfc123"
+				    }
+				});
+				// setup e-mail data with unicode symbols
+				var mailOptions = {
+				    to: name+ " <"+email+">", // sender address
+				    from: "Webmaster <webmaster@linesocial.mobi>", // list of receivers
+				    subject: "LineSocial Email Validation ", // Subject line
+				    text: message+" ", // plaintext body
+				    html: "<b>"+message+" </b>" // html body
+				}
+	
+				// send mail with defined transport object
+				smtpTransport.sendMail(mailOptions, function(error, response){
+				    if(error){
+				        console.log(error);
+				        res.redirect('/?error=true');
+				    }else{
+				        console.log("Message sent: " + response.message);
+				        res.redirect('/');
+				    }
+				    // if you don't want to use this transport object anymore, uncomment following line
+				    //smtpTransport.close(); // shut down the connection pool, no more messages
+				});		    	
+		        res.render('send_validate_email', {
+			          title: 'LineSocial',
+			          user: doc
+			        });
+		    });	
+		  }else{
+		    res.redirect('/?error=true');
+		  }	
+	    });	  
+	  }
 }
 
 exports.contact = function(req, res) {

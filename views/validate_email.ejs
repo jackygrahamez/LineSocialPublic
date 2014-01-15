@@ -1,0 +1,30 @@
+<section class="content">
+
+<% include subpage_header %>
+<div class="wrapper">
+	<h2 class="light no-margin"><%= l('Confirm Email') %></h2>
+	<p>
+		Please trace drawing, then click Send Email.<br />
+		Check your inbox for confirmation code.
+	</p>
+	
+    <section class="bordered validate_email">
+
+
+    </section>
+</div>
+</section>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $("#captcha").remove();     	
+   var contact_form = '<form id="captcha" method="POST" action="/<%= user.username %>/send_validate_email">' +
+	'<div id="mc">'+
+    '    <canvas id="mc-canvas" class="<%= error ? "mc-invalid" : "" %>"></canvas>'+
+    '</div>'+  
+    '<input id="submit" type="submit" value="<%= l('Send Email') %>">'+
+    '</form>';
+    $(".wrapper section.bordered.validate_email").append(contact_form); 
+    $('.wrapper section.bordered.validate_email').motionCaptcha('<%= shape %>');	
+});
+</script>

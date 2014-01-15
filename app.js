@@ -286,6 +286,19 @@ app.post('/:username/ajax', routes.ajax);
 app.get('/:username/auto_checkout', routes.auto_checkout);
 app.post('/:username/auto_checkout', routes.auto_checkout);
 
+app.get('/:username/validate_email', routes.validate_email);
+app.post('/:username/validate_email', routes.validate_email);
+
+app.get('/:username/send_validate_email', routes.send_validate_email);
+app.post('/:username/send_validate_email', routes.send_validate_email);
+
+app.get('/:username/validate_phone', routes.validate_phone);
+app.post('/:username/validate_pone', routes.validate_phone);
+
+app.get('/:username/send_validate_phone', routes.send_validate_phone);
+app.post('/:username/send_validate_phone', routes.send_validate_phone);
+
+
 app.post('/login', routes.login);
 app.post('/register', routes.register);
 

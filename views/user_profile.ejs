@@ -43,7 +43,7 @@
     	<% if (typeof(user.email_valid) == "undefined") {  %>       
 		  <p class="invalid">Please Confirm</p>    	
 		      <ul>
-	      		<li class="invalid arrow"><%= l('Email') %>: <%= user.email %></li>
+	      		<a href="/<%= user.username %>/validate_email"><li class="invalid arrow"><%= l('Email') %>: <%= user.email %></li></a>
 	          </ul>
 	      <% } else { %>
 			<% if (user.email_valid) { %>
@@ -53,7 +53,7 @@
 			<% } else { %>
 			  <p class="invalid">Please Confirm</p>    	
 			  <ul>
-		      <li class="invalid arrow"><%= l('Email') %>: <%= user.email %></li>
+		      <a href="/<%= user.username %>/validate_email"><li class="invalid arrow"><%= l('Email') %>: <%= user.email %></li></a>
 		      </ul>			  
 			<% } %>	      
 	      <% } %>
@@ -62,16 +62,15 @@
           <p><%= l('Change your telephone number?') %></p>    
           
 	<% if (typeof(user.telephone_valid) == "undefined") {  %> 
-		  	<p class="invalid">Please Confirm</p>
 		  	<input class="invalid arrow" type="text" name="telephone" placeholder="telephone number" value="<%= user.telephone %>" autocomplete="off" />
-			<div class="tel_arrow"></div>
+			<a href="/<%= user.username %>/validate_phone"><div class="tel_arrow"></div></a>
 	<% } else { %>
 		<% if (user.telephone_valid) { %>
 		  <input type="text" name="telephone" placeholder="telephone number" value="<%= user.telephone %>" autocomplete="off" />
 		<% } else { %>
 		  <p class="invalid">Please Confirm</p>
 		  	<input class="invalid arrow" type="text" name="telephone" placeholder="telephone number" value="<%= user.telephone %>" autocomplete="off" />
-			<div class="tel_arrow"></div>
+			<a href="/<%= user.username %>/validate_phone"><div class="tel_arrow"></div></a>
 		<% } %>
 	<% } %>
           <p><%= l('Change your password?') %></p>
