@@ -910,11 +910,12 @@ exports.send_validate_email = function(req, res) {
 	  var _points_xy = points.split('|');
 	  var  _points = [];
 	  if ( req.session.loggedIn ) {
-		  account.findById(req.session.accountId, function(doc) {
-		  var name = doc.name.first,
-		  	id = doc._id,
-		  	username = doc.username,
-		  	email = doc.email;
+		  account.findById(req.session.accountId, function(user) {
+			  console.log("send_validate_email "+user);
+			  var name = user.name.first,
+		  		id = user._id,
+		  		username = user.username,
+		  		email = user.email;
 		  
 		  // convert to an array of Points
 		  for(p in _points_xy){
@@ -935,7 +936,7 @@ exports.send_validate_email = function(req, res) {
 		    	console.log(doc);
 		    	var message = "You recieved this message "+
 		    	"because you wish to validate your LineSocial "+
-		    	"email address. Please copy this code and " +
+		    	"email address. Please copy this code "+code+" and " +
 		    	"paste it in the email validation code box " +
 		    	"on your profile page. Otherwise please click "+
 		    	"the following hyper link. <br /><br /> "+
@@ -970,10 +971,11 @@ exports.send_validate_email = function(req, res) {
 				    }
 				    // if you don't want to use this transport object anymore, uncomment following line
 				    //smtpTransport.close(); // shut down the connection pool, no more messages
-				});		    	
+				});		
+				console.log("right before "+user);
 		        res.render('send_validate_email', {
 			          title: 'LineSocial',
-			          user: doc
+			          user: user
 			        });
 		    });	
 		  }else{
@@ -982,6 +984,16 @@ exports.send_validate_email = function(req, res) {
 	    });	  
 	  }
 }
+
+exports.send_validate_email_code = function(password, token, res) {
+	var code = req.param('code');
+	console.log("code "+code);
+    account.sendValidateEmailCode(code, function(doc) {
+    	console.log(doc);
+    	res.redirect("/");
+    });		
+}
+
 
 exports.contact = function(req, res) {
 	  var $1 = require('../dollar.js') // require $1 Unistroke Recognizer
@@ -1067,7 +1079,7 @@ function makeid()
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    for( var i=0; i < 5; i++ )
+    for( var i=0; i < 10; i++ )
         text += possible.charAt(Math.floor(Math.random() * possible.length));
 
     return text;

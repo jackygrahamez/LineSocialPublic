@@ -461,6 +461,16 @@ module.exports = function(mongoose) {
 	    	    });
   }; 
 
+  var sendValidateEmailCode = function(code, callback) {
+	  account.update(
+	    	    {"email_confirm_token" : code},
+	    	    {"$set": { 'telephone_valid' : true,  email_confirm_token: "BLANK"}},
+    	        function(error, doc){
+	    	           if( error ) callback(error);
+	    	           else callback(null, doc);
+	    	    });
+  }; 
+  
   return {
     login: login,
     register: register,
@@ -486,6 +496,7 @@ module.exports = function(mongoose) {
     checkOutByID: checkOutByID,
     saveToken: saveToken,
     savePassword: savePassword,
-    saveEmailValidationCode: saveEmailValidationCode
+    saveEmailValidationCode: saveEmailValidationCode,
+    sendValidateEmailCode: sendValidateEmailCode
   }
 }

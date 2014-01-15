@@ -1,0 +1,19 @@
+<section class="content">
+
+<% include subpage_header %>
+<div class="wrapper">
+	<h2 class="light no-margin"><%= l('Validate Email') %></h2>
+    <section class="bordered">
+	    <form id='captcha' method="POST" action="/<%= user.username %>/send_validate_email_code">
+	        <input id="code" name="code" type="text" >
+	      	<input id="submit" type="submit" value="<%= l('Submit Code') %>" >
+	    </form>
+    </section>
+</div>
+</section>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+});
+</script>
