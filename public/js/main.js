@@ -10,6 +10,12 @@
 (function($, window, undefined) {
 	var page = null;
 	var path = null;
+	var email_validation = getURLParameter("email_validation");
+
+	if (email_validation) {
+		codeValidate( email_validation, "/send_validate_email_code");
+	}
+
 	try {
 		path = location.pathname;
 		page = getURLParameter("pagename");

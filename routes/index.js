@@ -894,10 +894,7 @@ exports.saveToken = function(email, token) {
 	}
 
 exports.savePassword = function(password, token, res) {
-	console.log("token "+token);
-	console.log("save password");
     account.savePassword(password, token, function(doc) {
-    	console.log(doc);
     	res.redirect("/");
     });		
 }
@@ -909,7 +906,6 @@ exports.send_validate_email = function(req, res) {
 	  var  _points = [];
 	  if ( req.session.loggedIn ) {
 		  account.findById(req.session.accountId, function(user) {
-			  console.log("send_validate_email "+user);
 			  var name = user.name.first,
 		  		id = user._id,
 		  		username = user.username,
@@ -963,9 +959,6 @@ exports.send_validate_email = function(req, res) {
 				        console.log(error);
 				        res.redirect('/?error=true');
 				    }else{
-				        console.log("Message sent: " + response.message);
-						console.log("right before "+user);
-						
 						res.render('send_validate_email', {
 					          title: 'LineSocial',
 					          user: user
@@ -988,7 +981,6 @@ exports.send_validate_email = function(req, res) {
 exports.send_validate_email_code = function(req, res) {
 	var code = req.param('code');
     account.sendValidateEmailCode(code, function(doc) {
-    	console.log(doc);
     	res.render('send_validate_email_code', {
 		          title: 'LineSocial'
 		        });
