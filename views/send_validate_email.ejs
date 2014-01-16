@@ -14,10 +14,10 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	$("submit_code").click(function() {
+	$("#submit_code").click(function() {
 		var url = $("#captcha").attr("action"),
-		_points = $("input[name='_points']").attr("value");
-		captchaPoints(_points, url);
+		code = $("#code").val();
+		codeValidate(code, url);
 	});
 });
 </script>

@@ -969,13 +969,13 @@ exports.send_validate_email = function(req, res) {
 				    }else{
 				        console.log("Message sent: " + response.message);
 						console.log("right before "+user);
-						/*
-				        res.render('send_validate_email', {
+						
+						res.render('send_validate_email', {
 					          title: 'LineSocial',
 					          user: user
 					        });
-					    */
-						res.send("/send_validate_email")
+					    
+						//res.send("/"+user.username+"/send_validate_email");
 				    }
 				    // if you don't want to use this transport object anymore, uncomment following line
 				    //smtpTransport.close(); // shut down the connection pool, no more messages
@@ -994,7 +994,10 @@ exports.send_validate_email_code = function(req, res) {
 	console.log("code "+code);
     account.sendValidateEmailCode(code, function(doc) {
     	console.log(doc);
-    	res.redirect("/");
+    	res.render('send_validate_email_code', {
+		          title: 'LineSocial'
+		        });
+    	//res.redirect("/");
     });		
 }
 

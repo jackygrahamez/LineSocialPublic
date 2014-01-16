@@ -665,6 +665,19 @@ function captchaPoints(_points, url) {
         	   },
            success: function(data){ 
         	   console.log("data "+data);
+        	   //getPage(data);
+	           	  markup = data;
+	           	  $("section.body.right").html(data);
+	           	  setTimeout(function(){
+	           		$("section.body.right").addClass("active");
+           			$("section.content").css("height", "0px");
+	           	    $(".back.button").click(function(){
+		           		  $(".body").removeClass("active");
+		           		  $("section.checkin").remove();
+	           			  $("section.content").css("height", "auto");
+		           	    });		           	    	
+	           	    
+	           	  }, 1000);          	   
 
            }
            , error: function(jqXHR, textStatus, err){
@@ -674,6 +687,39 @@ function captchaPoints(_points, url) {
         });
 }
 
+function codeValidate(code, url) {
+	console.log("code "+code);
+	console.log("url "+url);
+     $.ajax({ 
+           url: url,
+           type: 'POST',
+           cache: false,
+           data: { 
+        	   code: code
+        	   },
+           success: function(data){ 
+        	   console.log("data "+data);
+        	   //getPage(data);
+	           	  markup = data;
+	           	  $("section.body.right").html(data);
+	           	  setTimeout(function(){
+	           		$("section.body.right").addClass("active");
+           			$("section.content").css("height", "0px");
+	           	    $(".back.button").click(function(){
+		           		  $(".body").removeClass("active");
+		           		  $("section.checkin").remove();
+	           			  $("section.content").css("height", "auto");
+		           	    });		           	    	
+	           	    
+	           	  }, 1000);          	   
+
+           }
+           , error: function(jqXHR, textStatus, err){
+               //alert('text status '+textStatus+', err '+err)
+               console.log('text status '+textStatus+', err '+err);
+           }
+        });
+}
 
 function getLines(url) {	
 	 if (typeof(global_coords_lat)!="undefined" && typeof(global_coords_lon)!="undefined") {
