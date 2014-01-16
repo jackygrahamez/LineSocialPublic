@@ -1005,4 +1005,7 @@ and (min-width : 768px) {
 	.footer #mc-canvas {
 		margin: 5px auto;
 	}
+	div.tel_arrow {
+		left: 330px !important;
+	}
 }

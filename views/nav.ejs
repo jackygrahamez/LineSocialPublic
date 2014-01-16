@@ -35,6 +35,10 @@
 			</li>	  
 			<% } %>	 
 	      <% } %>
+    <% } else if ((user.email_valid == false ) || (user.telephone_valid == false )){ %>
+		<li class="arrow invalid">
+			<%= l('Profile') %>		
+		</li>	
     <% } %>		
 	</a>
 	<a href="/<%= user.username %>/user_notifications/" class="right">
