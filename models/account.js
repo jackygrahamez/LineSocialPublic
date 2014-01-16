@@ -464,7 +464,7 @@ module.exports = function(mongoose) {
   var sendValidateEmailCode = function(code, callback) {
 	  account.update(
 	    	    {"email_confirm_token" : code},
-	    	    {"$set": { 'telephone_valid' : true,  email_confirm_token: "BLANK"}},
+	    	    {"$set": { 'email_valid' : true,  email_confirm_token: "BLANK"}},
     	        function(error, doc){
 	    	           if( error ) callback(error);
 	    	           else callback(null, doc);
