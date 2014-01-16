@@ -664,6 +664,7 @@ function captchaPoints(_points, url) {
         	   _points: _points
         	   },
            success: function(data){ 
+        	   console.log("data "+data);
 
            }
            , error: function(jqXHR, textStatus, err){

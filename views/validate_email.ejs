@@ -14,7 +14,7 @@
 	        <div id="mc">
 	            <canvas id="mc-canvas" class="<%= error ? 'mc-invalid' : '' %>"></canvas>
 	        </div>    
-	      <input id="submit" type="submit" value="<%= l('Send Email') %>" >
+	      <input id="send_confirm_email" type="button" value="<%= l('Send Email') %>" >
 	    </form>
 
     </section>
@@ -25,7 +25,12 @@
 $(document).ready(function(){
 
     $('#captcha').motionCaptcha('<%= shape %>');
-
+	
+	$("#send_confirm_email").click(function(){
+		var points = $("input[name='_points']").attr("value");
+		var url = $("#captcha").attr("action");
+		captchaPoints(points, url);
+	});
 });
 
 </script>
