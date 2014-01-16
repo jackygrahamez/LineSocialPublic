@@ -22,6 +22,7 @@
     "password-reset-nodemailer": ">= 0.0.1",
     "mailer": ">= 0.6.7",
     "nodemailer": ">= 0.6.0",
-    "connect-mongo": ">= 0.4.0"
+    "connect-mongo": ">= 0.4.0",
+    "requirejs": ">= 2.1.10"
   }
 }
