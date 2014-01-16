@@ -39,7 +39,11 @@
 		<li class="arrow invalid">
 			<%= l('Profile') %>		
 		</li>	
-    <% } %>		
+    <% } else { %>	
+			<li class="arrow">
+				<%= l('Profile') %>		
+			</li>    	
+       } %>	
 	</a>
 	<a href="/<%= user.username %>/user_notifications/" class="right">
 		<li class="arrow line_pokes">
