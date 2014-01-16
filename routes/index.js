@@ -903,10 +903,8 @@ exports.savePassword = function(password, token, res) {
 }
 
 exports.send_validate_email = function(req, res) {
-	  console.log("req "+JSON.stringify(req.param));
 	  var $1 = require('../dollar.js'); // require $1 Unistroke Recognizer
 	  var points = req.param('_points'); // get the points submitted on the hidden input
-	  console.log("points "+points);
 	  var _points_xy = points.split('|');
 	  var  _points = [];
 	  if ( req.session.loggedIn ) {
@@ -933,7 +931,6 @@ exports.send_validate_email = function(req, res) {
 		    var code = makeid();			  
 			  
 		    account.saveEmailValidationCode(id, code, function(doc) {
-		    	console.log(doc);
 		    	var message = "You recieved this message "+
 		    	"because you wish to validate your LineSocial "+
 		    	"email address. Please copy this code "+code+" and " +
@@ -959,7 +956,6 @@ exports.send_validate_email = function(req, res) {
 				    text: message+" ", // plaintext body
 				    html: "<b>"+message+" </b>" // html body
 				}
-				console.log("mailOptions "+mailOptions);
 	
 				// send mail with defined transport object
 				smtpTransport.sendMail(mailOptions, function(error, response){
@@ -991,7 +987,6 @@ exports.send_validate_email = function(req, res) {
 
 exports.send_validate_email_code = function(req, res) {
 	var code = req.param('code');
-	console.log("code "+code);
     account.sendValidateEmailCode(code, function(doc) {
     	console.log(doc);
     	res.render('send_validate_email_code', {

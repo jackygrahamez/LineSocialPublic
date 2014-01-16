@@ -9,6 +9,7 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-
+	var back_button = "<div class='back button'><%= l('Back') %></div>";
+	$("section.active header > div").prepend(back_button);
 });
 </script>

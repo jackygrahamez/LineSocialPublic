@@ -654,8 +654,6 @@ function auto_checkout(url, lat, lon) {
 
 
 function captchaPoints(_points, url) {
-	console.log("_points "+_points);
-	console.log("url "+url);
      $.ajax({ 
            url: url,
            type: 'POST',
@@ -664,8 +662,6 @@ function captchaPoints(_points, url) {
         	   _points: _points
         	   },
            success: function(data){ 
-        	   console.log("data "+data);
-        	   //getPage(data);
 	           	  markup = data;
 	           	  $("section.body.right").html(data);
 	           	  setTimeout(function(){
@@ -688,8 +684,6 @@ function captchaPoints(_points, url) {
 }
 
 function codeValidate(code, url) {
-	console.log("code "+code);
-	console.log("url "+url);
      $.ajax({ 
            url: url,
            type: 'POST',
@@ -698,8 +692,6 @@ function codeValidate(code, url) {
         	   code: code
         	   },
            success: function(data){ 
-        	   console.log("data "+data);
-        	   //getPage(data);
 	           	  markup = data;
 	           	  $("section.body.right").html(data);
 	           	  setTimeout(function(){
