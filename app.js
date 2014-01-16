@@ -301,6 +301,8 @@ app.post('/:username/validate_pone', routes.validate_phone);
 app.get('/:username/send_validate_phone', routes.send_validate_phone);
 app.post('/:username/send_validate_phone', routes.send_validate_phone);
 
+app.get('/send_validate_phone_code', routes.send_validate_phone_code);
+app.post('/send_validate_phone_code', routes.send_validate_phone_code);
 
 app.post('/login', routes.login);
 app.post('/register', routes.register);

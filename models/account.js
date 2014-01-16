@@ -470,7 +470,28 @@ module.exports = function(mongoose) {
 	    	           else callback(null, doc);
 	    	    });
   }; 
-  
+
+
+    var savePhoneValidationCode = function(id, code, callback) {
+    account.update(
+            {"_id" : id},
+            {"$set": { 'telephone_confirm_token' : code }},
+              function(error, doc){
+                   if( error ) callback(error);
+                   else callback(null, doc);
+            });
+  }; 
+
+  var sendValidatePhoneCode = function(code, callback) {
+    account.update(
+            {"telephone_confirm_token" : code},
+            {"$set": { 'telephone_valid' : true,  telephone_confirm_token: "BLANK"}},
+              function(error, doc){
+                   if( error ) callback(error);
+                   else callback(null, doc);
+            });
+  }; 
+
   return {
     login: login,
     register: register,
@@ -497,6 +518,8 @@ module.exports = function(mongoose) {
     saveToken: saveToken,
     savePassword: savePassword,
     saveEmailValidationCode: saveEmailValidationCode,
-    sendValidateEmailCode: sendValidateEmailCode
+    sendValidateEmailCode: sendValidateEmailCode,
+    savePhoneValidationCode: savePhoneValidationCode,
+    sendValidatePhoneCode: sendValidatePhoneCode
   }
 }

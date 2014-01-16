@@ -2,16 +2,22 @@
 
 <% include subpage_header %>
 <div class="wrapper">
-	<h2 class="light no-margin"><%= l('Validate Phone') %></h2>
+	<h2 class="light no-margin"><%= l('Validate Telephone Number') %></h2>
     <section class="bordered">
-
-
+	    <form id='captcha' method="POST" action="/send_validate_phone_code">
+	        <input id="code" name="code" type="text" >
+	      	<input id="submit_code" type="button" value="<%= l('Submit Code') %>" >
+	    </form>
     </section>
 </div>
 </section>
 
 <script type="text/javascript">
 $(document).ready(function(){
-
+	$("#submit_code").click(function() {
+		var url = $("#captcha").attr("action"),
+		code = $("#code").val();
+		codeValidate(code, url);
+	});
 });
 </script>

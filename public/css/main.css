@@ -177,7 +177,11 @@ li.country {
 	max-width:300px;
 }
 
-input.arrow:after,
+form[action='/register'] li.arrow:after {
+	background: transparent;
+}
+
+form[action='/register'] li.arrow.invalid:after,
 li.arrow:after {
 	content: "";
 	background-image: url(../img/arrow.png);
@@ -496,7 +500,7 @@ section.body.right.active .container.hero-unit h2 {
 
 div.tel_arrow {
 	position: relative;
-	left: 115px;
+	left: 125px;
 	width: 20px;
 	height: 20px;
 	display: inline-block;

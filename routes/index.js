@@ -734,24 +734,69 @@ exports.validate_phone = function(req, res) {
 	}
 
 exports.send_validate_phone = function(req, res) {
+	  var $1 = require('../dollar.js'); // require $1 Unistroke Recognizer
+	  var points = req.param('_points'); // get the points submitted on the hidden input
+	  var _points_xy = points.split('|');
+	  var  _points = [];
+	  console.log("_points "+points);
 
 	  if ( req.session.loggedIn ) {
 
-	    account.findById(req.session.accountId, function(doc) {
+	    account.findById(req.session.accountId, function(user) {
 
-	        res.render('send_validate_phone', {
-	          title: 'LineSocial',
-	          user: doc
-	        });
+		  var name = user.name.first,
+	  		id = user._id,
+	  		username = user.username,
+	  		telephone = user.telephone;
+		  
+		  // convert to an array of Points
+		  for(p in _points_xy){
+		    var xy = _points_xy[p].split(',');
+		    _points.push(new $1.Point(parseInt(xy[0]), parseInt(xy[1])));
+		  }
+	
+		  // test the points
+		  var _r = new $1.DollarRecognizer();
+		  var result = _r.Recognize(_points);
+		  
+		  // validates the captcha or redirect
+		  if(_points.length >= 10 && result.Score > 0.7 && result.Name == req.session.shape) { // valid
 
-	    });
+		  	var code = makeid();		
 
-	  } else {
+			account.savePhoneValidationCode(id, code, function(doc) {
 
-	    res.send(401);
+				// Twilio Credentials 
+				var accountSid = 'AC024a4372dfdb9fafe0e7fd9d51cf4c78'; 
+				var authToken = '19c22aab1c46228b020ace358f7989cb'; 
+				telephone = user.telephone.replace(/ /g,'');
+				console.log("username "+username);
+				console.log("telephone "+telephone);
+				var notification_url = "https://alpha.linesocial.mobi/?telephone_validation="+code;
+				console.log("notification_url "+notification_url); 
+				//require the Twilio module and create a REST client 
+				var client = require('twilio')(accountSid, authToken); 
+				client.messages.create({  
+					to: telephone, 
+					from: "+12024172791", 
+					body: "Your LineSocial telephone validation code is "+code+" click her to validate"+notification_url,
+					//mediaUrl: "https://linesocial.mobi",
+					//mediaUrl: "https://linesocial.mobi/"+username+"?pagename=user_notifications",    
+				}, function(err, message) { 
+					console.log(message.sid); 
+			        res.render('send_validate_phone', {
+			          title: 'LineSocial',
+			          user: user
+			        });				
+				});
+			});
 
+		  }else{
+		    res.redirect('/?error=true');
+		  }	
+	    });	  
 	  }
-	}
+}
 
 exports.venues = function(req, res) {
 	var coord = req.param('coordinates', '');
@@ -982,6 +1027,16 @@ exports.send_validate_email_code = function(req, res) {
 	var code = req.param('code');
     account.sendValidateEmailCode(code, function(doc) {
     	res.render('send_validate_email_code', {
+		          title: 'LineSocial'
+		        });
+    	//res.redirect("/");
+    });		
+}
+
+exports.send_validate_phone_code = function(req, res) {
+	var code = req.param('code');
+    account.sendValidatePhoneCode(code, function(doc) {
+    	res.render('send_validate_phone_code', {
 		          title: 'LineSocial'
 		        });
     	//res.redirect("/");
