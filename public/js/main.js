@@ -1,11 +1,34 @@
-setTimeout(function() {
+
 // Foundation JavaScript
 // Documentation can be found at: http://foundation.zurb.com/docs
-require(["bower_components/jquery/jquery.js"], 
-	function (jquery) {
+require(
+	[
+	"/bower_components/jquery/jquery.js",
+	"/js/libs/styleswitcher.js",
+	"/socket.io/socket.io.js",
+	"/js/motionCaptcha.js",
+	"/js/libs/underscore.js",
+	"/js/libs/iphone-style-checkboxes.js",
+	"/js/libs/jquery-ui.js",
+	"/js/libs/jquery.canvas-loader.1.3.js",
+	"/js/intlTelInput.min.js"
+	], 
+	function (jquery, styleswitcher, jquery, socket, motionCaptcha, underscore, iphone, jquery_ui, jquery_canvas, intlTelInput) {
 
-});
-}, 1000);
+/*
+    <script src="/js/libs/styleswitcher.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/socket.io/socket.io.js" type="text/javascript" charset="utf-8"></script>  
+    <script src="/js/motionCaptcha.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/libs/underscore.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/libs/iphone-style-checkboxes.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/libs/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/libs/jquery.canvas-loader.1.3.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/intlTelInput.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/main.js" type="text/javascript" charset="utf-8"></script>
+
+*/
+
+
   //checkin
   var x=document.getElementById("demo");
   var lineLength=0;
@@ -864,3 +887,4 @@ function iosCheckbox() {
 function getURLParameter(name) {
 	  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
 	}
+});	
