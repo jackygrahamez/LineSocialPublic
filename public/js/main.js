@@ -1,3 +1,11 @@
+setTimeout(function() {
+// Foundation JavaScript
+// Documentation can be found at: http://foundation.zurb.com/docs
+require(["bower_components/jquery/jquery.js"], 
+	function (jquery) {
+
+});
+}, 1000);
   //checkin
   var x=document.getElementById("demo");
   var lineLength=0;
