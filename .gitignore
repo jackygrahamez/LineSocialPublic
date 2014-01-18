@@ -47,20 +47,6 @@ Thumbs.db
 
 # Ignore Modules  #
 #######################
-/bower_components/jquery/
-/bower_components/requirejs/
-/node_modules/bower
-/node_modules/mongodb				
-/node_modules/requirejs
-/node_modules/connect-mongo			
-/node_modules/mongoose			
-/node_modules/sesame
-/node_modules/crypto				
-/node_modules/mongoose-findorcreate		
-/node_modules/socket.io
-/node_modules/ejs				
-/node_modules/nodemailer			
-/node_modules/stylus
 /node_modules/express				
 /node_modules/passport			
 /node_modules/twilio
