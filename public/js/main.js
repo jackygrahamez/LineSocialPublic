@@ -1,4 +1,14 @@
 
+ var global_coords, global_coords_lat, global_coords_lon;
+  var x=document.getElementById("demo");
+  var lineLength=0;
+  var global_coords="";
+  var global_cID="";
+  var global_fID="";
+  var global_tID="";
+  var html, ajaxData;
+  var lURL; 
+
 // Foundation JavaScript
 // Documentation can be found at: http://foundation.zurb.com/docs
 require(
@@ -13,34 +23,33 @@ require(
 	"/js/libs/jquery.canvas-loader.1.3.js",
 	"/js/intlTelInput.min.js",
 	"/js/util/helper.js",
-	"/js/util/notifications.js"
+	"/js/util/notifications.js",
+	"/js/util/register.js",
+	"/js/util/redirect.js",
+	"/js/util/canvasLoader.js",
+	"/js/util/telephoneValidation.js",
+	"/js/util/subPageLoad.js"	
 	], 
-	function (jquery, styleswitcher, socket, motionCaptcha, underscore, iphone, jquery_ui, jquery_canvas, intlTelInput, helper, notifications) {
-
-/*
-    <script src="/js/libs/styleswitcher.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/socket.io/socket.io.js" type="text/javascript" charset="utf-8"></script>  
-    <script src="/js/motionCaptcha.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/js/libs/underscore.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/js/libs/iphone-style-checkboxes.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/js/libs/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/js/libs/jquery.canvas-loader.1.3.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/js/intlTelInput.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/js/main.js" type="text/javascript" charset="utf-8"></script>
-
-*/
-
+	function (jquery, 
+		styleswitcher, 
+		socket, 
+		motionCaptcha, 
+		underscore, 
+		iphone,
+		jquery_ui, 
+		jquery_canvas, 
+		intlTelInput, 
+		helper, 
+		notifications, 
+		redirect,
+		canvasLoader,
+		telephoneValidation,
+		subPageLoad) {
 
   //checkin
-  var x=document.getElementById("demo");
-  var lineLength=0;
-  var global_coords="";
-  var global_cID="";
-  var global_fID="";
-  var global_tID="";
-  var html, ajaxData;
-  var lURL;
+
 (function($, window, undefined) {
+
 	var page = null;
 	var path = null;
 	var email_validation = getURLParameter("email_validation");
@@ -60,54 +69,22 @@ require(
 	}
 	catch(err) {
 	  console.log("could not find parameter pagename");		
-	}
-	if ((location.href.indexOf("alpha.") < 0) && ((location.href.indexOf("localhost") < 0))) {
-		if (page && path) {
-			location.replace("https://alpha.linesocial.mobi/"+location.pathname+"?"+page);			
-			
-		} else {
-			location.replace("https://alpha.linesocial.mobi");			
-		}
-	}
+	}	
+
+	redirectDomain();
+
 	deviceType(iosCheckbox);
       
    $("input, textarea").focus(function(){
-	   
 	   $(this).css("color", "black");
    });
-   
    
    $(".back.button").click(function(){
 	  $(".body").last().removeClass("active"); 
 	  $(".checkin").remove();
    });
 
-
- 
-
-   $(".register input").focusout(function(){
-	   var object = $(this);
-	   if (object.val().length > 0) {
-		   object.removeClass("invalid");
-	   }
-   });
-   	   
-   $(".register input[name='username']").focusout(function(){
-	   var username = $(this).val();
-
-	   if (username.length > 0) {
-		   regCheck(username);
-	   }
-   });
-   
-   $(".register input[name='email']").focusout(function(){
-	   var email = $(this).val();
-	   
-	   if (email.length > 0) {
-		   var value = {email:email};
-		   regCheckEmail(email);
-	   }
-   });   
+   registerForm();
   
    $("input[name='terms']").click(function(){
 	   $(this).removeClass("invalid");
@@ -137,8 +114,6 @@ require(
 			   $('html, body').animate({scrollTop:top - 50}, 'slow');		   
 		   }		 
 	 }
-
-	   
    });
 
    
@@ -174,33 +149,8 @@ require(
 	   location.assign("/");
    });
    
-   
-   //set global coordinates
-   //getLocation(0);
-   
-   // autocheckout
-/*
-   setInterval(function(){
-	   console.log("auto checkout");
-	   getLocation(1);
-   },60000);
-*/   
+
    $("html").removeClass("disabled");
-
-/* canvas loader */
-
-var invalid = getURLParameter('invalid');
-$(".overlay > div").canvasLoader();
-	setTimeout(function() {
-    $(".overlay").remove();
-    setTimeout(function() {
-   	$(".overlay > canvas").remove();
-	if (invalid) {
-		$("#inputPassword").after("<label class='invalid'>Invalid Login</label>");
-		$("input").addClass("invalid");
-	}   	
-    }, 1000);
-    }, 500);
 
   /* contact */
 
@@ -247,52 +197,51 @@ if ($("body").hasClass("home")) {
 	console.log("notification_url "+notification_url);
 	getNotifications(notification_url);
 
-}        
+}       
+
+	   
+	   $(".login a").click(function(e){
+		   e.preventDefault();
+		   var url = $(this).attr("href");
+		   console.log("url "+url);
+		   if (url.indexOf("notifications") > 0) {
+			   $(".notifications").addClass("active");
+		   } 	   
+		   else {
+		   		if (url.indexOf("messages") > 0) {
+				 	global_cID = $(this).children().children().children("#cID").attr("value");
+					global_fID = $(this).children().children().children("#fID").attr("value");
+					global_tID = $(this).children().children().children("#tID").attr("value");
+					global_toUser = $(this).children().children().children(".name").text();	
+					var tester = $(this).children().children().children("#tester").attr("value");	
+					var session_id = $(this).children().children().children("#session_id").attr("value");
+					getMessages(global_cID, global_fID, tester, session_id, url);				  
+				}
+				else if (url.indexOf("user_lines") > 0) {
+					console.log("user_lines");
+			   		$('html, body').animate({scrollTop:top - 50}, 'slow');	
+				    var loader = '<div class="loader" style="'
+					    +"position: fixed;"
+					    +"height: 100%;"
+					    +"width: 100%;"
+					    +"top: 40px;"
+					    +"left: 0px;"
+					    +"background: rgba(0,0,0, 0.2);"
+					    +'"><div></div></div>';
+				   if ($("body > canvas").length < 1) {
+					   $("body").append(loader);
+					   $(".loader > div").canvasLoader();
+					   console.log("url "+url);
+					   getLocation(0, url); 						   
+				   }					
+				}
+				else {
+				    getPage(url);
+			   }  
+		   }	
+	   }); 
 
 })(jQuery, this)
 
-
-
-
-
-
-function deviceType(callback) {
-    var ua = navigator.userAgent;
-    var checker = {
-      iphone: ua.match(/(iPhone|iPod|iPad)/),
-      windows_phone: ua.match(/IEMobile/),
-      android: ua.match(/Android/)
-    };
-    if (checker.android){
-        $('html').addClass("android");
-    }
-    else if (checker.iphone){
-        $('html').addClass("iphone");
-        callback();        
-    }
-    else if (checker.blackberry){
-        $('html').addClass("blackberry");
-    }
-    else if (checker.windows_phone){
-        $('html').addClass("IEMobile");
-    }
-}
-
-function iosCheckbox() {
-	//iOS checkbox
-    $('.on_off :checkbox').iphoneStyle();
-    $('.disabled :checkbox').iphoneStyle();
-    $('.css_sized_container :checkbox').iphoneStyle({ resizeContainer: false, resizeHandle: false });
-    $('.long_tiny :checkbox').iphoneStyle({ checkedLabel: 'Very Long Text', uncheckedLabel: 'Tiny' });
-    var onchange_checkbox = ($('.onchange :checkbox')).iphoneStyle({
-        onChange: function(elem, value) { 
-          $('span#status').html(value.toString());
-        }
-      });    
-}
-
-function getURLParameter(name) {
-	  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
-	}
 });	
 
