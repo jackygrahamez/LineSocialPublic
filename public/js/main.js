@@ -3,7 +3,7 @@
 // Documentation can be found at: http://foundation.zurb.com/docs
 require(
 	[
-	"/bower_components/jquery/jquery.js",
+	"/js/libs/jquery-1.9.1.js ",
 	"/js/libs/styleswitcher.js",
 	"/socket.io/socket.io.js",
 	"/js/motionCaptcha.js",
@@ -13,7 +13,7 @@ require(
 	"/js/libs/jquery.canvas-loader.1.3.js",
 	"/js/intlTelInput.min.js"
 	], 
-	function (jquery, styleswitcher, jquery, socket, motionCaptcha, underscore, iphone, jquery_ui, jquery_canvas, intlTelInput) {
+	function (jquery, styleswitcher, socket, motionCaptcha, underscore, iphone, jquery_ui, jquery_canvas, intlTelInput) {
 
 /*
     <script src="/js/libs/styleswitcher.js" type="text/javascript" charset="utf-8"></script>

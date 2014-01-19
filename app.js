@@ -132,7 +132,6 @@ passport.use(new FacebookStrategy({
 /* END FACEBOOK AUTHENTICATION */
 /* FORGOT PASSWORD */
 app.use(express.static(__dirname));
-app.use(require('sesame')()); // for sessions
 
 // example nodemailer config here
 var forgot = require('password-reset-nodemailer')({
