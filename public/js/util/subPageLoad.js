@@ -1,15 +1,7 @@
 function subPageLoad() {
 var x=document.getElementById("demo");
 	$(document).ready( function(){
-	   //$("body").height($(document).height());
-	   //Themes
-	   /*
-	   $("menu.themes li").click(function(){
-		   var themeColor = $(this).attr("rel");
-		   setActiveStyleSheet(themeColor);
-	   });	
-	   */
-	   //Themes
+
 	   setTimeout(function(){
 	   $("menu.themes li").click(function(){
 		   $(this).siblings().removeClass("active");
@@ -55,6 +47,9 @@ var x=document.getElementById("demo");
 					var tester = $(this).children().children().children("#tester").attr("value");	
 					var session_id = $(this).children().children().children("#session_id").attr("value");
 					getMessages(global_cID, global_fID, tester, session_id, url);				  
+				}
+				else if ($(this).hasClass("logout")) {
+					location.href="/";
 				}
 				else if (url.indexOf("user_lines") > 0) {
 					console.log("user_lines");
