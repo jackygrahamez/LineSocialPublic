@@ -1,6 +1,6 @@
 ({
 	
-    baseUrl: "../linesocial/public/js",
+    baseUrl: "../linesocial/dev/js",
     dir: "appdirectory-build",
     modules: [
         {
