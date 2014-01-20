@@ -1,5 +1,5 @@
 ({
-    baseUrl: "../linesocial/public/css",
+    baseUrl: "../linesocial/dev/css",
     name: "main",
     dir: "appdirectory-build"
 })

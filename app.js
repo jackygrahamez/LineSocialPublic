@@ -95,7 +95,7 @@ app.use(passport.session());
 
 app.use(i18n.init);
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'dev')));
+app.use(express.static(path.join(__dirname, 'prod')));
 });
 
 // Use the FacebookStrategy within Passport.

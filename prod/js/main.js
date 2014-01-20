@@ -13,7 +13,6 @@
 // Documentation can be found at: http://foundation.zurb.com/docs
 require(
 	[
-	"/js/libs/jquery-1.9.1.js",
 	"/js/libs/styleswitcher.js",
 	"/socket.io/socket.io.js",
 	"/js/motionCaptcha.js",
@@ -31,7 +30,7 @@ require(
 	"/js/util/subPageLoad.js",
 	"/js/util/pageParameterCheck.js"		
 	], 
-	function (jquery, 
+	function ( 
 		styleswitcher, 
 		socket, 
 		motionCaptcha, 

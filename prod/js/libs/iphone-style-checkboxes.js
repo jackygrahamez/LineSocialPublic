@@ -1,1 +1,350 @@
-(function(){var e,t,n,r=[].slice;$.browser==null&&(n=navigator.userAgent||"",jQuery.uaMatch=function(e){var t;return e=e.toLowerCase(),t=/(chrome)[ \/]([\w.]+)/.exec(e)||/(webkit)[ \/]([\w.]+)/.exec(e)||/(opera)(?:.*version)?[ \/]([\w.]+)/.exec(e)||/(msie) ([\w.]+)/.exec(e)||e.indexOf("compatible")<0&&/(mozilla)(?:.*? rv:([\w.]+))?/.exec(e)||[],{browser:t[1]||"",version:t[2]||"0"}},t=jQuery.uaMatch(n),jQuery.browser={},t.browser&&(jQuery.browser[t.browser]=!0,jQuery.browser.version=t.version),jQuery.browser.webkit&&(jQuery.browser.safari=!0)),e=function(){function e(t,n){var r,i,s;this.elem=$(t),i=$.extend({},e.defaults,n);for(r in i)s=i[r],this[r]=s;this.elem.data(this.dataName,this),this.wrapCheckboxWithDivs(),this.attachEvents(),this.disableTextSelection(),this.calculateDimensions()}return e.prototype.calculateDimensions=function(){return this.resizeHandle&&this.optionallyResize("handle"),this.resizeContainer&&this.optionallyResize("container"),this.initialPosition()},e.prototype.isDisabled=function(){return this.elem.is(":disabled")},e.prototype.wrapCheckboxWithDivs=function(){return this.elem.wrap("<div class='"+this.containerClass+"' />"),this.container=this.elem.parent(),this.offLabel=$("<label class='"+this.labelOffClass+"'>\n  <span>"+this.uncheckedLabel+"</span>\n</label>").appendTo(this.container),this.offSpan=this.offLabel.children("span"),this.onLabel=$("<label class='"+this.labelOnClass+"'>\n  <span>"+this.checkedLabel+"</span>\n</label>").appendTo(this.container),this.onSpan=this.onLabel.children("span"),this.handle=$("<div class='"+this.handleClass+"'>\n  <div class='"+this.handleRightClass+"'>\n    <div class='"+this.handleCenterClass+"' />\n  </div>\n</div>").appendTo(this.container)},e.prototype.disableTextSelection=function(){if($.browser.msie)return $([this.handle,this.offLabel,this.onLabel,this.container]).attr("unselectable","on")},e.prototype._getDimension=function(e,t){return $.fn.actual!=null?e.actual(t):e[t]()},e.prototype.optionallyResize=function(e){var t,n,r,i,s;return s=this.onLabel.find("span"),i=this._getDimension(s,"width"),i+=parseInt(s.css("padding-left"),10),r=this.offLabel.find("span"),n=this._getDimension(r,"width"),n+=parseInt(r.css("padding-right"),10),e==="container"?(t=i>n?i:n,t+=this._getDimension(this.handle,"width")+this.handleMargin,this.container.css({width:t})):(t=i>n?i:n,this.handle.css({width:t}))},e.prototype.onMouseDown=function(t){var n;t.preventDefault();if(this.isDisabled())return;return n=t.pageX||t.originalEvent.changedTouches[0].pageX,e.currentlyClicking=this.handle,e.dragStartPosition=n,e.handleLeftOffset=parseInt(this.handle.css("left"),10)||0},e.prototype.onDragMove=function(t,n){var r,i;if(e.currentlyClicking!==this.handle)return;return i=(n+e.handleLeftOffset-e.dragStartPosition)/this.rightSide,i<0&&(i=0),i>1&&(i=1),r=i*this.rightSide,this.handle.css({left:r}),this.onLabel.css({width:r+this.handleRadius}),this.offSpan.css({marginRight:-r}),this.onSpan.css({marginLeft:-(1-i)*this.rightSide})},e.prototype.onDragEnd=function(t,n){var r;if(e.currentlyClicking!==this.handle)return;if(this.isDisabled())return;return e.dragging?(r=(n-e.dragStartPosition)/this.rightSide,this.elem.prop("checked",r>=.5)):this.elem.prop("checked",!this.elem.prop("checked")),e.currentlyClicking=null,e.dragging=null,this.didChange()},e.prototype.refresh=function(){return this.didChange()},e.prototype.didChange=function(){var e;return typeof this.onChange=="function"&&this.onChange(this.elem,this.elem.prop("checked")),this.isDisabled()?(this.container.addClass(this.disabledClass),!1):(this.container.removeClass(this.disabledClass),e=this.elem.prop("checked")?this.rightSide:0,this.handle.animate({left:e},this.duration),this.onLabel.animate({width:e+this.handleRadius},this.duration),this.offSpan.animate({marginRight:-e},this.duration),this.onSpan.animate({marginLeft:e-this.rightSide},this.duration))},e.prototype.attachEvents=function(){var e,t,n;return n=this,e=function(e){return n.onGlobalMove.apply(n,arguments)},t=function(r){return n.onGlobalUp.apply(n,arguments),$(document).unbind("mousemove touchmove",e),$(document).unbind("mouseup touchend",t)},this.elem.change(function(){return n.refresh()}),this.container.bind("mousedown touchstart",function(r){return n.onMouseDown.apply(n,arguments),$(document).bind("mousemove touchmove",e),$(document).bind("mouseup touchend",t)})},e.prototype.initialPosition=function(){var e,t;e=this._getDimension(this.container,"width"),this.offLabel.css({width:e-this.containerRadius}),t=this.containerRadius+1,$.browser.msie&&$.browser.version<7&&(t-=3),this.rightSide=e-this._getDimension(this.handle,"width")-t,this.elem.is(":checked")?(this.handle.css({left:this.rightSide}),this.onLabel.css({width:this.rightSide+this.handleRadius}),this.offSpan.css({marginRight:-this.rightSide})):(this.onLabel.css({width:0}),this.onSpan.css({marginLeft:-this.rightSide}));if(this.isDisabled())return this.container.addClass(this.disabledClass)},e.prototype.onGlobalMove=function(t){var n;if(!!this.isDisabled()||!e.currentlyClicking)return;return t.preventDefault(),n=t.pageX||t.originalEvent.changedTouches[0].pageX,!e.dragging&&Math.abs(e.dragStartPosition-n)>this.dragThreshold&&(e.dragging=!0),this.onDragMove(t,n)},e.prototype.onGlobalUp=function(t){var n;if(!e.currentlyClicking)return;return t.preventDefault(),n=t.pageX||t.originalEvent.changedTouches[0].pageX,this.onDragEnd(t,n),!1},e.defaults={duration:200,checkedLabel:"ON",uncheckedLabel:"OFF",resizeHandle:!0,resizeContainer:!0,disabledClass:"iPhoneCheckDisabled",containerClass:"iPhoneCheckContainer",labelOnClass:"iPhoneCheckLabelOn",labelOffClass:"iPhoneCheckLabelOff",handleClass:"iPhoneCheckHandle",handleCenterClass:"iPhoneCheckHandleCenter",handleRightClass:"iPhoneCheckHandleRight",dragThreshold:5,handleMargin:15,handleRadius:4,containerRadius:5,dataName:"iphoneStyle",onChange:function(){}},e}(),$.iphoneStyle=this.iOSCheckbox=e,$.fn.iphoneStyle=function(){var t,n,i,s,o,u,a,f,l,c,h,p;t=1<=arguments.length?r.call(arguments,0):[],i=(l=(c=t[0])!=null?c.dataName:void 0)!=null?l:e.defaults.dataName,h=this.filter(":checkbox");for(a=0,f=h.length;a<f;a++)n=h[a],s=$(n).data(i),s!=null?(o=t[0],u=2<=t.length?r.call(t,1):[],(p=s[o])!=null&&p.apply(s,u)):new e(n,t[0]);return this},$.fn.iOSCheckbox=function(e){var t;return e==null&&(e={}),t=$.extend({},e,{resizeHandle:!1,disabledClass:"iOSCheckDisabled",containerClass:"iOSCheckContainer",labelOnClass:"iOSCheckLabelOn",labelOffClass:"iOSCheckLabelOff",handleClass:"iOSCheckHandle",handleCenterClass:"iOSCheckHandleCenter",handleRightClass:"iOSCheckHandleRight",dataName:"iOSCheckbox"}),this.iphoneStyle(t)}}).call(this);
+// Generated by CoffeeScript 1.6.2
+(function() {
+  var iOSCheckbox, matched, userAgent,
+    __slice = [].slice;
+
+  if ($.browser == null) {
+    userAgent = navigator.userAgent || "";
+    jQuery.uaMatch = function(ua) {
+      var match;
+
+      ua = ua.toLowerCase();
+      match = /(chrome)[ \/]([\w.]+)/.exec(ua) || /(webkit)[ \/]([\w.]+)/.exec(ua) || /(opera)(?:.*version)?[ \/]([\w.]+)/.exec(ua) || /(msie) ([\w.]+)/.exec(ua) || ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+))?/.exec(ua) || [];
+      return {
+        browser: match[1] || "",
+        version: match[2] || "0"
+      };
+    };
+    matched = jQuery.uaMatch(userAgent);
+    jQuery.browser = {};
+    if (matched.browser) {
+      jQuery.browser[matched.browser] = true;
+      jQuery.browser.version = matched.version;
+    }
+    if (jQuery.browser.webkit) {
+      jQuery.browser.safari = true;
+    }
+  }
+
+  iOSCheckbox = (function() {
+    function iOSCheckbox(elem, options) {
+      var key, opts, value;
+
+      this.elem = $(elem);
+      opts = $.extend({}, iOSCheckbox.defaults, options);
+      for (key in opts) {
+        value = opts[key];
+        this[key] = value;
+      }
+      this.elem.data(this.dataName, this);
+      this.wrapCheckboxWithDivs();
+      this.attachEvents();
+      this.disableTextSelection();
+      this.calculateDimensions();
+    }
+
+    iOSCheckbox.prototype.calculateDimensions = function() {
+      if (this.resizeHandle) {
+        this.optionallyResize('handle');
+      }
+      if (this.resizeContainer) {
+        this.optionallyResize('container');
+      }
+      return this.initialPosition();
+    };
+
+    iOSCheckbox.prototype.isDisabled = function() {
+      return this.elem.is(':disabled');
+    };
+
+    iOSCheckbox.prototype.wrapCheckboxWithDivs = function() {
+      this.elem.wrap("<div class='" + this.containerClass + "' />");
+      this.container = this.elem.parent();
+      this.offLabel = $("<label class='" + this.labelOffClass + "'>\n  <span>" + this.uncheckedLabel + "</span>\n</label>").appendTo(this.container);
+      this.offSpan = this.offLabel.children('span');
+      this.onLabel = $("<label class='" + this.labelOnClass + "'>\n  <span>" + this.checkedLabel + "</span>\n</label>").appendTo(this.container);
+      this.onSpan = this.onLabel.children('span');
+      return this.handle = $("<div class='" + this.handleClass + "'>\n  <div class='" + this.handleRightClass + "'>\n    <div class='" + this.handleCenterClass + "' />\n  </div>\n</div>").appendTo(this.container);
+    };
+
+    iOSCheckbox.prototype.disableTextSelection = function() {
+      if ($.browser.msie) {
+        return $([this.handle, this.offLabel, this.onLabel, this.container]).attr("unselectable", "on");
+      }
+    };
+
+    iOSCheckbox.prototype._getDimension = function(elem, dimension) {
+      if ($.fn.actual != null) {
+        return elem.actual(dimension);
+      } else {
+        return elem[dimension]();
+      }
+    };
+
+    iOSCheckbox.prototype.optionallyResize = function(mode) {
+      var newWidth, offLabelWidth, offSpan, onLabelWidth, onSpan;
+
+      onSpan = this.onLabel.find('span');
+      onLabelWidth = this._getDimension(onSpan, "width");
+      onLabelWidth += parseInt(onSpan.css('padding-left'), 10);
+      offSpan = this.offLabel.find('span');
+      offLabelWidth = this._getDimension(offSpan, "width");
+      offLabelWidth += parseInt(offSpan.css('padding-right'), 10);
+      if (mode === "container") {
+        newWidth = onLabelWidth > offLabelWidth ? onLabelWidth : offLabelWidth;
+        newWidth += this._getDimension(this.handle, "width") + this.handleMargin;
+        return this.container.css({
+          width: newWidth
+        });
+      } else {
+        newWidth = onLabelWidth > offLabelWidth ? onLabelWidth : offLabelWidth;
+        return this.handle.css({
+          width: newWidth
+        });
+      }
+    };
+
+    iOSCheckbox.prototype.onMouseDown = function(event) {
+      var x;
+
+      event.preventDefault();
+      if (this.isDisabled()) {
+        return;
+      }
+      x = event.pageX || event.originalEvent.changedTouches[0].pageX;
+      iOSCheckbox.currentlyClicking = this.handle;
+      iOSCheckbox.dragStartPosition = x;
+      return iOSCheckbox.handleLeftOffset = parseInt(this.handle.css('left'), 10) || 0;
+    };
+
+    iOSCheckbox.prototype.onDragMove = function(event, x) {
+      var newWidth, p;
+
+      if (iOSCheckbox.currentlyClicking !== this.handle) {
+        return;
+      }
+      p = (x + iOSCheckbox.handleLeftOffset - iOSCheckbox.dragStartPosition) / this.rightSide;
+      if (p < 0) {
+        p = 0;
+      }
+      if (p > 1) {
+        p = 1;
+      }
+      newWidth = p * this.rightSide;
+      this.handle.css({
+        left: newWidth
+      });
+      this.onLabel.css({
+        width: newWidth + this.handleRadius
+      });
+      this.offSpan.css({
+        marginRight: -newWidth
+      });
+      return this.onSpan.css({
+        marginLeft: -(1 - p) * this.rightSide
+      });
+    };
+
+    iOSCheckbox.prototype.onDragEnd = function(event, x) {
+      var p;
+
+      if (iOSCheckbox.currentlyClicking !== this.handle) {
+        return;
+      }
+      if (this.isDisabled()) {
+        return;
+      }
+      if (iOSCheckbox.dragging) {
+        p = (x - iOSCheckbox.dragStartPosition) / this.rightSide;
+        this.elem.prop('checked', p >= 0.5);
+      } else {
+        this.elem.prop('checked', !this.elem.prop('checked'));
+      }
+      iOSCheckbox.currentlyClicking = null;
+      iOSCheckbox.dragging = null;
+      return this.didChange();
+    };
+
+    iOSCheckbox.prototype.refresh = function() {
+      return this.didChange();
+    };
+
+    iOSCheckbox.prototype.didChange = function() {
+      var new_left;
+
+      if (typeof this.onChange === "function") {
+        this.onChange(this.elem, this.elem.prop('checked'));
+      }
+      if (this.isDisabled()) {
+        this.container.addClass(this.disabledClass);
+        return false;
+      } else {
+        this.container.removeClass(this.disabledClass);
+      }
+      new_left = this.elem.prop('checked') ? this.rightSide : 0;
+      this.handle.animate({
+        left: new_left
+      }, this.duration);
+      this.onLabel.animate({
+        width: new_left + this.handleRadius
+      }, this.duration);
+      this.offSpan.animate({
+        marginRight: -new_left
+      }, this.duration);
+      return this.onSpan.animate({
+        marginLeft: new_left - this.rightSide
+      }, this.duration);
+    };
+
+    iOSCheckbox.prototype.attachEvents = function() {
+      var localMouseMove, localMouseUp, self;
+
+      self = this;
+      localMouseMove = function(event) {
+        return self.onGlobalMove.apply(self, arguments);
+      };
+      localMouseUp = function(event) {
+        self.onGlobalUp.apply(self, arguments);
+        $(document).unbind('mousemove touchmove', localMouseMove);
+        return $(document).unbind('mouseup touchend', localMouseUp);
+      };
+      this.elem.change(function() {
+        return self.refresh();
+      });
+      return this.container.bind('mousedown touchstart', function(event) {
+        self.onMouseDown.apply(self, arguments);
+        $(document).bind('mousemove touchmove', localMouseMove);
+        return $(document).bind('mouseup touchend', localMouseUp);
+      });
+    };
+
+    iOSCheckbox.prototype.initialPosition = function() {
+      var containerWidth, offset;
+
+      containerWidth = this._getDimension(this.container, "width");
+      this.offLabel.css({
+        width: containerWidth - this.containerRadius
+      });
+      offset = this.containerRadius + 1;
+      if ($.browser.msie && $.browser.version < 7) {
+        offset -= 3;
+      }
+      this.rightSide = containerWidth - this._getDimension(this.handle, "width") - offset;
+      if (this.elem.is(':checked')) {
+        this.handle.css({
+          left: this.rightSide
+        });
+        this.onLabel.css({
+          width: this.rightSide + this.handleRadius
+        });
+        this.offSpan.css({
+          marginRight: -this.rightSide
+        });
+      } else {
+        this.onLabel.css({
+          width: 0
+        });
+        this.onSpan.css({
+          marginLeft: -this.rightSide
+        });
+      }
+      if (this.isDisabled()) {
+        return this.container.addClass(this.disabledClass);
+      }
+    };
+
+    iOSCheckbox.prototype.onGlobalMove = function(event) {
+      var x;
+
+      if (!(!this.isDisabled() && iOSCheckbox.currentlyClicking)) {
+        return;
+      }
+      event.preventDefault();
+      x = event.pageX || event.originalEvent.changedTouches[0].pageX;
+      if (!iOSCheckbox.dragging && (Math.abs(iOSCheckbox.dragStartPosition - x) > this.dragThreshold)) {
+        iOSCheckbox.dragging = true;
+      }
+      return this.onDragMove(event, x);
+    };
+
+    iOSCheckbox.prototype.onGlobalUp = function(event) {
+      var x;
+
+      if (!iOSCheckbox.currentlyClicking) {
+        return;
+      }
+      event.preventDefault();
+      x = event.pageX || event.originalEvent.changedTouches[0].pageX;
+      this.onDragEnd(event, x);
+      return false;
+    };
+
+    iOSCheckbox.defaults = {
+      duration: 200,
+      checkedLabel: 'ON',
+      uncheckedLabel: 'OFF',
+      resizeHandle: true,
+      resizeContainer: true,
+      disabledClass: 'iPhoneCheckDisabled',
+      containerClass: 'iPhoneCheckContainer',
+      labelOnClass: 'iPhoneCheckLabelOn',
+      labelOffClass: 'iPhoneCheckLabelOff',
+      handleClass: 'iPhoneCheckHandle',
+      handleCenterClass: 'iPhoneCheckHandleCenter',
+      handleRightClass: 'iPhoneCheckHandleRight',
+      dragThreshold: 5,
+      handleMargin: 15,
+      handleRadius: 4,
+      containerRadius: 5,
+      dataName: "iphoneStyle",
+      onChange: function() {}
+    };
+
+    return iOSCheckbox;
+
+  })();
+
+  $.iphoneStyle = this.iOSCheckbox = iOSCheckbox;
+
+  $.fn.iphoneStyle = function() {
+    var args, checkbox, dataName, existingControl, method, params, _i, _len, _ref, _ref1, _ref2, _ref3;
+
+    args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    dataName = (_ref = (_ref1 = args[0]) != null ? _ref1.dataName : void 0) != null ? _ref : iOSCheckbox.defaults.dataName;
+    _ref2 = this.filter(':checkbox');
+    for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+      checkbox = _ref2[_i];
+      existingControl = $(checkbox).data(dataName);
+      if (existingControl != null) {
+        method = args[0], params = 2 <= args.length ? __slice.call(args, 1) : [];
+        if ((_ref3 = existingControl[method]) != null) {
+          _ref3.apply(existingControl, params);
+        }
+      } else {
+        new iOSCheckbox(checkbox, args[0]);
+      }
+    }
+    return this;
+  };
+
+  $.fn.iOSCheckbox = function(options) {
+    var opts;
+
+    if (options == null) {
+      options = {};
+    }
+    opts = $.extend({}, options, {
+      resizeHandle: false,
+      disabledClass: 'iOSCheckDisabled',
+      containerClass: 'iOSCheckContainer',
+      labelOnClass: 'iOSCheckLabelOn',
+      labelOffClass: 'iOSCheckLabelOff',
+      handleClass: 'iOSCheckHandle',
+      handleCenterClass: 'iOSCheckHandleCenter',
+      handleRightClass: 'iOSCheckHandleRight',
+      dataName: 'iOSCheckbox'
+    });
+    return this.iphoneStyle(opts);
+  };
+
+}).call(this);
