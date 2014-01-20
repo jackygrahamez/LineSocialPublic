@@ -254,8 +254,6 @@ exports.home = function(req, res) {
 		  	var shapes = ['triangle', 'x', 'rectangle', 'circle', 'check', 'caret', 'zigzag', 'arrow', 'leftbracket', 'rightbracket', 'v', 'delete', 'star', 'pigtail'];
 		  	var shape = shapes[Math.floor(Math.random() * (shapes.length) )];
 		  	req.session.shape = shape;	
-		  	console.log("shape "+shape);
-			console.log("exports.forgot");
 		  	res.render('forgot', { error: req.param('error'), shape: shape });
 	      
 	  } else if ( !req.session.loggedIn && url === 'invalid_passwords' ) {
@@ -580,9 +578,6 @@ exports.pokes = function(data) {
 	var cID = data.cID,
 	fID = data.fID,
 	tID = data.tID;	
-	console.log("cID "+ cID);
-	console.log("fID "+ fID);
-	console.log("tID "+ tID);
 	message.linePokes(cID, fID, function(message_doc) {
 		if (message_doc.length == 0) {
 			account.findById(tID, function(doc) {
@@ -596,10 +591,7 @@ exports.pokes = function(data) {
 							var authToken = '19c22aab1c46228b020ace358f7989cb'; 
 							var telephone = doc.telephone.replace(/ /g,'');
 							var username = doc.username;
-							console.log("username "+username);
-							console.log("telephone "+telephone);
 							var notification_url = "https://linesocial.mobi/"+username+"?pagename=user_notifications";
-							console.log("notification_url "+notification_url); 
 							//require the Twilio module and create a REST client 
 							var client = require('twilio')(accountSid, authToken); 
 							client.messages.create({  

@@ -14,39 +14,17 @@ var express = require('express'),
     util = require('util'),
     FacebookStrategy = require('passport-facebook').Strategy,
     i18n    = require('i18n'),
-    session = require('connect-mongo')(express);
+    session = require('connect-mongo')(express),
+    i18n_config  = require('./models/utils/i18n'),
+    facebook_passport_config  = require('./models/utils/i18n');
+
+i18n_config();
 
 var clients = {};
-
-//account.plugin(findOrCreate);
-
 var app    = express();
 var server = http.createServer(app);
 global.io  = require('socket.io').listen(server);
 
-i18n.configure({
-	locales: ['ab','aa','af','sq','am','ar','an','hy','as','ay','az','ba','eu','bn','dz','bh','bi','br','bg','my','be','km','ca','zh','zh','co','hr','cs','da','nl','en','eo','et','fo','fa','fj','fi','fr','fy','gl','gd','gv','ka','de','el','kl','gn','gu','ht','ha','he','iw','hi','hu','is','io','id','in','ia','ie','iu','ik','ga','it','ja','jv','kn','ks','kk','rw','ky','rn','ko','ku','lo','la','lv','li','ln','lt','mk','mg','ms','ml','mt','mi','mr','mo','mn','na','ne','no','oc','or','om','ps','pl','pt','pa','qu','rm','ro','ru','sm','sg','sa','sr','sh','st','tn','sn','ii','sd','si','ss','sk','sl','so','es','su','sw','sv','tl','tg','ta','tt','te','th','bo','ti','to','ts','tr','tk','tw','ug','uk','ur','uz','vi','vo','wa','cy','wo','xh','yi, ji','yo','zu']	
-});
-
-/* FACEBOOK AUTHENTICATION */
-var FACEBOOK_APP_ID = "698217933545116"
-var FACEBOOK_APP_SECRET = "7f8e2e6662a925a67b26d56063f3577e";
-
-
-// Passport session setup.
-//   To support persistent login sessions, Passport needs to be able to
-//   serialize users into and deserialize users out of the session.  Typically,
-//   this will be as simple as storing the user ID when serializing, and finding
-//   the user by ID when deserializing.  However, since this example does not
-//   have a database of user records, the complete Facebook profile is serialized
-//   and deserialized.
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
-});
 
 app.configure(function () {
 //console.log("using authenticator");
@@ -98,38 +76,8 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'prod')));
 });
 
-// Use the FacebookStrategy within Passport.
-//   Strategies in Passport require a `verify` function, which accept
-//   credentials (in this case, an accessToken, refreshToken, and Facebook
-//   profile), and invoke a callback with a user object.
-console.log("about to use passport");
-passport.use(new FacebookStrategy({
-    clientID: FACEBOOK_APP_ID,
-    clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: "https://alpha.linesocial.mobi/auth/facebook/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-	 console.log("passport callback function");
-    // asynchronous verification, for effect...
-    process.nextTick(function () {
-      console.log("profile "+JSON.stringify(profile));
-      console.log("profile username "+profile.username);
-      // To keep the example simple, the user's Facebook profile is returned to
-      // represent the logged-in user.  In a typical application, you would want
-      // to associate the Facebook account with a user record in your database,
-      // and return that user instead.
+facebook_passport_config();
 
-      var firstname = profile.name.givenName, 
-      	  lastname = profile.name.familyName;
-      console.log("registering id: "+profile.id+ " " + " firstname: " + firstname + " lastname: "+ lastname + " username: "+ profile.username);
-      //routes.fb_register(profile.id, firstname, lastname, profile.username);
-      return done(null, profile);
-    });
-  }
-));
-
-
-/* END FACEBOOK AUTHENTICATION */
 /* FORGOT PASSWORD */
 app.use(express.static(__dirname));
 
@@ -195,32 +143,7 @@ app.post('/forgot', express.bodyParser(), function(req, res) {
 	  }else{
 	    res.redirect('/?error=true');
 	  }
-	/*
-	  var email = req.body.email;
-	  var callback = {
-	    error: function(err) {
-	      res.end('Error sending message: ' + err);
-	    },
-	    success: function(success) {   	
-	      res.end('Check your inbox for a password reset message.');
-	    }
-	  };
-	  var reset = forgot(email, callback);
-	  //console.log("reset "+JSON.stringify(reset));
-	  var token = reset.id;
-	  
-	  routes.saveToken(email, token);
-	  
-	  reset.on('request', function(req_, res_) {
-	    req_.session.reset = {
-	      email: email,
-	      id: reset.id
-	    };
-	    console.log("req_.session.reset "+req_.session.reset);
-	    console.log("fs.createReadStream");
-	    fs.createReadStream(__dirname + '/forgot').pipe(res_);
-	  });
-	  */
+	
 	});
 
 app.post('/reset', express.bodyParser(), function(req, res) {
