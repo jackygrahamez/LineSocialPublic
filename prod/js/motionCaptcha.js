@@ -1,0 +1,23 @@
+/*!
+ * jQuery MotionCAPTCHA v0.2
+ * 
+ * Proof of concept only for now, check the roadmap to see when it will be ready for wider use!
+ * 
+ * http://josscrowcroft.com/projects/motioncaptcha-jquery-plugin/
+ * 
+ * DEMO: http://josscrowcroft.com/demos/motioncaptcha/
+ * CODE: https://github.com/josscrowcroft/MotionCAPTCHA
+ *
+ * Modified by Rogério Chaves to only use server-side validation with NodeJS
+ * 
+ * Copyright (c) 2011 Joss Crowcroft - joss[at]josscrowcroftcom | http://www.josscrowcroft.com
+ * 
+ * Incoporates other open source projects, attributed below.
+ */
+
+/*!
+	 * Harmony | mrdoob | Ribbon Brush class
+	 * http://mrdoob.com/projects/harmony/
+	 */
+
+jQuery.fn.motionCaptcha||function(e){function t(e){this.init(e)}e.fn.motionCaptcha=function(n,r){return this.each(function(){function x(e){var t,n;return e.touches&&e.touches.length>0?(t=e.touches[0].pageX-f.offset().left+d,n=e.touches[0].pageY-f.offset().top+v):e.offsetX?(t=e.offsetX-d,n=e.offsetY-v):(t=e.pageX-f.offset().left-d,n=e.pageY-f.offset().top-v),[t,n]}var i=e.extend({},e.fn.motionCaptcha.defaults,r);i.actionId="#"+i.actionId.replace(/\#/g,""),i.canvasId="#"+i.canvasId.replace(/\#/g,""),i.divId="#"+i.divId.replace(/\#/g,""),i.submitId=i.submitId?"#"+i.submitId.replace(/\#/g,""):!1;var s,o=e("body"),u=e(this),a=e(i.divId),f=e(i.canvasId),l=u.find('input[type="submit"]'),c=f.width(),h=f.height(),d=1*f.css("borderLeftWidth").replace("px",""),v=1*f.css("borderTopWidth").replace("px","");f[0].width=c,f[0].height=h;var m=f[0].getContext("2d");m.canvasWidth=c,m.canvasHeight=h,m.font=i.canvasFont,m.fillStyle=i.canvasTextColor,f.addClass(n);var g=!1,y=!1,b=[];s=new t(m);var w=function(t){t.preventDefault();var n=x(t),r=n[0],i=n[1];return g=!0,y=!0,e("body").addClass("mc-noselect"),m.clearRect(0,0,c,h),s.strokeStart(r,i),f.removeClass("mc-invalid mc-valid"),b=[[r,i]],!1},E=function(e){if(y)return y=0;if(g){e.preventDefault();var t=x(e),n=t[0],r=t[1];b.push([n,r]),s.stroke(n,r)}return!1},S=function(t){if(g){g=!1,e("body").removeClass("mc-noselect");if(b.length>=10){var n=u.find('input[name="_points"]'),r=[];for(p in b)r.push(b[p].join(","));r=r.join("|"),n.length==0?u.append(e("<input>").attr({name:"_points",type:"hidden",value:r})):n.val(r),l.removeAttr("disabled")}else l.attr("disabled","disabled")}return!1};f.bind({mousedown:w,mousemove:E,mouseup:S}),f[0].addEventListener("touchstart",w,!1),f[0].addEventListener("touchmove",E,!1),f[0].addEventListener("touchend",S,!1),u.addClass(i.cssClass.replace(/\./,""))})},e.fn.motionCaptcha.defaults={actionId:"#mc-action",divId:"#mc",canvasId:"#mc-canvas",submitId:!1,cssClass:".mc-active",shapes:["triangle","x","rectangle","circle","check","caret","zigzag","arrow","leftbracket","rightbracket","v","delete","star","pigtail"],canvasFont:'15px "Lucida Grande"',canvasTextColor:"#111",errorMsg:"Please try again.",successMsg:"Captcha passed!",noCanvasMsg:"Your browser doesn't support <canvas> - try Chrome, FF4, Safari or IE9.",label:"<p>Please draw the shape in the box to submit the form:</p>",onSuccess:function(t,n,r){var i=this,s=i.submitId?t.find(i.submitId):t.find("input[type=submit]:disabled");t.attr("action",e(i.actionId).val()),s.prop("disabled",!1);return},onError:function(e,t,n){var r=this;return}},t.prototype={ctx:null,X:null,Y:null,painters:null,interval:null,init:function(e){function o(){var e;t.ctx.lineWidth=r,t.ctx.strokeStyle="rgba("+i[0]+", "+i[1]+", "+i[2]+", "+.06+")";for(e=0;e<t.painters.length;e++)t.ctx.beginPath(),t.ctx.moveTo(t.painters[e].dx,t.painters[e].dy),t.painters[e].dx-=t.painters[e].ax=(t.painters[e].ax+(t.painters[e].dx-t.X)*t.painters[e].div)*t.painters[e].ease,t.painters[e].dy-=t.painters[e].ay=(t.painters[e].ay+(t.painters[e].dy-t.Y)*t.painters[e].div)*t.painters[e].ease,t.ctx.lineTo(t.painters[e].dx,t.painters[e].dy),t.ctx.stroke()}var t=this,n=navigator.userAgent.toLowerCase(),r=n.search("android")>-1||n.search("iphone")>-1?2:1,i=[0,0,0];this.ctx=e,this.ctx.globalCompositeOperation="source-over",this.X=this.ctx.canvasWidth/2,this.Y=this.ctx.canvasHeight/2,this.painters=[];for(var s=0;s<38;s++)this.painters.push({dx:this.ctx.canvasWidth/2,dy:this.ctx.canvasHeight/2,ax:0,ay:0,div:.1,ease:Math.random()*.18+.6});this.interval=setInterval(o,1e3/60)},destroy:function(){clearInterval(this.interval)},strokeStart:function(e,t){this.X=e,this.Y=t;for(var n=0;n<this.painters.length;n++)this.painters[n].dx=e,this.painters[n].dy=t;this.shouldDraw=!0},stroke:function(e,t){this.X=e,this.Y=t}}}(jQuery);
