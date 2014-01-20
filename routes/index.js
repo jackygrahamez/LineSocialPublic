@@ -251,7 +251,12 @@ exports.home = function(req, res) {
 			    pagename: 'forgot_password' });
 	      
 	  } else if ( !req.session.loggedIn && url === 'password_reset' ) {
-	     res.render('forgot');	   
+		  	var shapes = ['triangle', 'x', 'rectangle', 'circle', 'check', 'caret', 'zigzag', 'arrow', 'leftbracket', 'rightbracket', 'v', 'delete', 'star', 'pigtail'];
+		  	var shape = shapes[Math.floor(Math.random() * (shapes.length) )];
+		  	req.session.shape = shape;	
+		  	console.log("shape "+shape);
+			console.log("exports.forgot");
+		  	res.render('forgot', { error: req.param('error'), shape: shape });
 	      
 	  } else if ( !req.session.loggedIn && url === 'invalid_passwords' ) {
 		      res.render('invalid_passwords', {
@@ -927,8 +932,12 @@ exports.forgot_password = function(req, res) {
 	}
 
 exports.forgot = function(req, res) {
-	console.log("exports.forgot");
-	  res.render('forgot');
+	  var shapes = ['triangle', 'x', 'rectangle', 'circle', 'check', 'caret', 'zigzag', 'arrow', 'leftbracket', 'rightbracket', 'v', 'delete', 'star', 'pigtail'];
+	  var shape = shapes[Math.floor(Math.random() * (shapes.length) )];
+	  req.session.shape = shape;	
+	  console.log("shape "+shape);
+		console.log("exports.forgot");
+	  res.render('forgot', { error: req.param('error'), shape: shape });
 	}
 
 exports.saveToken = function(email, token) {
