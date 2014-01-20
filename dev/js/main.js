@@ -1,5 +1,5 @@
 
- var global_coords, global_coords_lat, global_coords_lon;
+  var global_coords, global_coords_lat, global_coords_lon;
   var x=document.getElementById("demo");
   var lineLength=0;
   var global_coords="";
@@ -13,7 +13,7 @@
 // Documentation can be found at: http://foundation.zurb.com/docs
 require(
 	[
-	"/js/libs/jquery-1.9.1.js ",
+	"/js/libs/jquery-1.9.1.js",
 	"/js/libs/styleswitcher.js",
 	"/socket.io/socket.io.js",
 	"/js/motionCaptcha.js",
@@ -48,23 +48,22 @@ require(
 		subPageLoad,
 		pageParameterCheck) {
 
-  //checkin
 
-(function($, window, undefined) {
-	PageLoader();
-	checkPageParameters()
-	redirectDomain();
-	deviceType(iosCheckbox);
-    registerForm();
-	formatPage();
-	termsClick();
-	fbHashRemove();
-	themeFormat();   
-	teleFormat();
-	contactFormat();
-	homeFormat();
+		PageLoader();
+		googleAnalytics();
+		checkPageParameters()
+		redirectDomain();
+		deviceType(iosCheckbox);
+	    registerForm();
+		formatPage();
+		termsClick();
+		fbHashRemove();
+		themeFormat();   
+		teleFormat();
+		contactFormat();
+		homeFormat();
 
-})(jQuery, this)
+	
 
 });	
 

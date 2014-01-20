@@ -1,3 +1,171 @@
+function googleAnalytics(){
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  
+    ga('create', 'UA-46446487-2', 'linesocial.mobi');
+    ga('send', 'pageview');  
+}
+
+
+function homeFormat() {
+/* home */
+
+if ($("body").hasClass("home")) {
+  console.log("home");
+  if ($(".cID").attr("value") != "undefined") {
+    autocheckout();
+  } 
+
+  var username = $(".username").attr("value");
+  var notification_url = "/"+username+"/user_notifications/"; 
+  console.log("notification_url "+notification_url);
+  getNotifications(notification_url);
+
+}       
+
+     
+     $(".login a").click(function(e){
+       e.preventDefault();
+       var url = $(this).attr("href");
+       console.log("url "+url);
+       if (url.indexOf("notifications") > 0) {
+         $(".notifications").addClass("active");
+       }     
+       else {
+          if (url.indexOf("messages") > 0) {
+          global_cID = $(this).children().children().children("#cID").attr("value");
+          global_fID = $(this).children().children().children("#fID").attr("value");
+          global_tID = $(this).children().children().children("#tID").attr("value");
+          global_toUser = $(this).children().children().children(".name").text(); 
+          var tester = $(this).children().children().children("#tester").attr("value"); 
+          var session_id = $(this).children().children().children("#session_id").attr("value");
+          getMessages(global_cID, global_fID, tester, session_id, url);         
+        }
+        else if (url.indexOf("user_lines") > 0) {
+          console.log("user_lines");
+            $('html, body').animate({scrollTop:top - 50}, 'slow');  
+            var loader = '<div class="loader" style="'
+              +"position: fixed;"
+              +"height: 100%;"
+              +"width: 100%;"
+              +"top: 40px;"
+              +"left: 0px;"
+              +"background: rgba(0,0,0, 0.2);"
+              +'"><div></div></div>';
+           if ($("body > canvas").length < 1) {
+             $("body").append(loader);
+             $(".loader > div").canvasLoader();
+             console.log("url "+url);
+             getLocation(0, url);                
+           }          
+        }
+        else {
+            getPage(url);
+         }  
+       }  
+     });   
+}
+
+function contactFormat() {
+/* contact */
+
+  var shape = $(".contact_captcha_shape").attr("value");
+  var name = $(".contact_captcha_name").attr("value");
+  var email = $(".contact_captcha_email").attr("value");
+  var message = $(".contact_captcha_message").attr("value");
+  var error = $(".contact_captcha_error").attr("value");
+  var send_message = $(".contact_captcha_send_message").attr("value");
+
+  if (error != "mc-invalid") { error = ""; }
+
+    if ($("section").hasClass("password_reset")) {
+    $('#captcha').motionCaptcha(shape);    
+    }
+
+    $(".footer li[name='contact']").click(function(){
+        $("#captcha").remove(); 
+    var contact_form = '<form id="captcha" method="POST" action="/contact">' +
+        ' <input type="text" id="contactName" name="name" placeholder="'+name+'"> '+
+        ' <input type="email" id="contactEmail" name="email" placeholder="'+email+'"> '+
+        ' <input type="text" id="contactMessage" name="message" placeholder="'+message+'"> '+
+        '<div id="mc">'+
+        '    <canvas id="mc-canvas" class="'+error+'"></canvas>'+
+        '</div>'+  
+        '<input id="submit" type="submit" value="'+send_message+'">'+
+        '</form>';
+        $(".footer li.contact").append(contact_form); 
+        $('#captcha').motionCaptcha(shape);
+    });  
+}
+
+function teleFormat() {
+   $("input[name='telephone']").intlTelInput();  
+}
+
+function themeFormat() {
+   //Themes
+   $("menu.themes li").click(function(){
+     $(this).siblings().removeClass("active");
+     $(this).addClass("active");
+     var themeColor = $(this).attr("rel");
+     setActiveStyleSheet(themeColor);
+   });  
+}
+
+function fbHashRemove() {
+   //REMOVE FB HASH
+   if (window.location.href.indexOf('#_=_') > 0) {
+      window.location = window.location.href.replace(/#.*/, '');
+  }   
+
+}
+
+function termsClick() {
+   $("input[name='terms']").click(function(){
+     $(this).removeClass("invalid");
+     $("form label").removeClass("invalid");
+   });  
+   //TERMS
+   $("menu.footer li").click(function(){
+   if (!$(this).hasClass("expanded")) {
+       var section = $(this).next();
+       if ($(section).hasClass("expanded")) {
+         $(this).removeClass("down");
+         $(section).removeClass("expanded");
+       }
+       else {
+         $(".down").removeClass("down");
+         $(".expanded").removeClass("expanded");
+         $(this).addClass("down");
+         $(section).addClass("expanded");
+         
+         var top =  $(section).position().top;
+         $('html, body').animate({scrollTop:top - 50}, 'slow');      
+       }     
+   }
+   });   
+}
+
+function formatPage() {
+$("input, textarea").focus(function(){
+  $(this).css("color", "black");
+});
+   
+$(".back.button").click(function(){
+  $(".body").last().removeClass("active"); 
+  $(".checkin").remove();
+});
+
+$(".forgot_password div.back.button, .forgot div.back.button").click(function(){
+  location.assign("/");
+});
+
+$("html").removeClass("disabled");
+
+}
+
 function autocheckout() {
    setInterval(function(){
      getLocation(1);
@@ -650,9 +818,40 @@ function iosCheckbox() {
 }    
    
 
-   
-
 function getURLParameter(name) {
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+}
+
+
+function checkPageParameters(){
+  var page = null;
+  var path = null;
+  var email_validation = getURLParameter("email_validation");
+  var telephone_validation = getURLParameter("telephone_validation");
+
+  if (email_validation) {
+    codeValidate( email_validation, "/send_validate_email_code");
   }
-// }); 
+
+  if (telephone_validation) {
+    codeValidate( telephone_validation, "/send_validate_phone_code");
+  }
+
+  try {
+    path = location.pathname;
+    page = getURLParameter("pagename");
+  }
+  catch(err) {
+    console.log("could not find parameter pagename");   
+  } 
+
+   // redirect to notifications
+   setTimeout(function(){
+     $(".overlay").hide();
+     
+     if (page === "user_notifications") {
+      console.log("user_notifications");
+       $("a[href$='user_notifications/']").click();
+     }     
+   }, 1000);  
+}

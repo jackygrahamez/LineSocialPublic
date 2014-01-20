@@ -1,5 +1,5 @@
 /* canvas loader */
-function canvasLoader() {
+function PageLoader() {
 var invalid = getURLParameter('invalid');
 $(".overlay > div").canvasLoader();
 	setTimeout(function() {

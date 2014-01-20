@@ -1,3 +1,14 @@
+function googleAnalytics(){
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  
+    ga('create', 'UA-46446487-2', 'linesocial.mobi');
+    ga('send', 'pageview');  
+}
+
+
 function homeFormat() {
 /* home */
 
@@ -807,9 +818,40 @@ function iosCheckbox() {
 }    
    
 
-   
-
 function getURLParameter(name) {
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+}
+
+
+function checkPageParameters(){
+  var page = null;
+  var path = null;
+  var email_validation = getURLParameter("email_validation");
+  var telephone_validation = getURLParameter("telephone_validation");
+
+  if (email_validation) {
+    codeValidate( email_validation, "/send_validate_email_code");
   }
-// }); 
+
+  if (telephone_validation) {
+    codeValidate( telephone_validation, "/send_validate_phone_code");
+  }
+
+  try {
+    path = location.pathname;
+    page = getURLParameter("pagename");
+  }
+  catch(err) {
+    console.log("could not find parameter pagename");   
+  } 
+
+   // redirect to notifications
+   setTimeout(function(){
+     $(".overlay").hide();
+     
+     if (page === "user_notifications") {
+      console.log("user_notifications");
+       $("a[href$='user_notifications/']").click();
+     }     
+   }, 1000);  
+}
