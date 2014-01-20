@@ -32,6 +32,9 @@ if ($("body").hasClass("home")) {
        console.log("url "+url);
        if (url.indexOf("notifications") > 0) {
          $(".notifications").addClass("active");
+       }
+       else if ($(this).hasClass("facebook")) {
+            location.assign(url);
        }     
        else {
           if (url.indexOf("messages") > 0) {
