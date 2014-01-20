@@ -64,7 +64,7 @@ app.locals({
 });
 
 app.use(express.favicon());
-app.use(express.logger('dev'));
+//app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
@@ -95,7 +95,7 @@ app.use(passport.session());
 
 app.use(i18n.init);
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'prod')));
 });
 
 // Use the FacebookStrategy within Passport.
@@ -132,7 +132,6 @@ passport.use(new FacebookStrategy({
 /* END FACEBOOK AUTHENTICATION */
 /* FORGOT PASSWORD */
 app.use(express.static(__dirname));
-app.use(require('sesame')()); // for sessions
 
 // example nodemailer config here
 var forgot = require('password-reset-nodemailer')({
