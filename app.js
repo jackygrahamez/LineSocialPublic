@@ -15,8 +15,7 @@ var express = require('express'),
     FacebookStrategy = require('passport-facebook').Strategy,
     i18n    = require('i18n'),
     session = require('connect-mongo')(express),
-    i18n_config  = require('./models/utils/i18n'),
-    facebook_passport_config  = require('./models/utils/i18n');
+    i18n_config  = require('./models/utils/i18n');
 
 i18n_config();
 
@@ -73,7 +72,7 @@ app.use(passport.session());
 
 app.use(i18n.init);
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'prod')));
+app.use(express.static(path.join(__dirname, 'dev')));
 });
 
 /* FACEBOOK AUTHENTICATION */
