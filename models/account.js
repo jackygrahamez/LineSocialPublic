@@ -35,8 +35,8 @@ module.exports = function(mongoose) {
       test_group: { type: String},
       session_id: { type: String },
       token: { type: String },
-      token_expire: { type: Number }
-      
+      token_expire: { type: Number },
+      invite_code: { type: String }
   });
   
   userSchema.plugin(findOrCreate);
@@ -54,7 +54,7 @@ module.exports = function(mongoose) {
 
   };
 
- var register = function(email, password, firstName, lastName, username, telephone, callback) {
+ var register = function(email, password, firstName, lastName, username, telephone, invite_code, callback) {
     var shaSum = crypto.createHash('sha256');
     shaSum.update(password);
     var user = new account({
@@ -67,7 +67,8 @@ module.exports = function(mongoose) {
       username: username.toLowerCase(),
       password: shaSum.digest('hex'),
       check_in: "",
-      points: 1000
+      points: 1000,
+      invite_code: invite_code
     });
     
     account.findOne({username:username},function(err,doc){

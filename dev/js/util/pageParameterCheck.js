@@ -30,10 +30,17 @@ function checkPageParameters(){
 	   	console.log("user_notifications");
 		   $("a[href$='user_notifications/']").click();
 	   }	   
+	   console.log("invite_code "+invite_code);
+	   if (invite_code) {
+	   		setCookie("invite_code", invite_code, 365);	
+	   }
+	   
+	   
    }, 1000);	
 
-   setCookie("invite_code", invite_code, 365);
+   
 }
+
 
 function setCookie(cname,cvalue,exdays)
 {

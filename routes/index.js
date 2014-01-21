@@ -48,14 +48,18 @@ exports.register = function(req, res) {
         username  = req.param('username', ''),        
         email     = req.param('email', null),
         password  = req.param('password', null),
-        telephone  = req.param('telephone', null);
+        telephone  = req.param('telephone', null),
+        invite_code  = req.param('invite_code', null);
+
+        console.log("firstName "+firstName);
+        console.log("invite_code "+invite_code);
 
     if ( null == email || email.length < 1 || null == password || password.length < 1 ) {
       res.send(400);
       return;
     }
 
-    account.register(email, password, firstName, lastName, username, telephone, function(err) {
+    account.register(email, password, firstName, lastName, username, telephone, invite_code, function(err) {
 
       if (err) {
           res.send('<p class="warning">Could not register</p>');

@@ -10,6 +10,7 @@
       <input type="email" name="cemail" required placeholder="<%= l('Your Email (confirm) here') %>"/>
       <input type="password" name="password" required placeholder="<%= l('Your password here') %>"/>
       <input type="password" name="cpassword" required placeholder="<%= l('Your password (confirm) here') %>"/>
+      <input class="hide" type="text" name="invite_code" />
       <input type="text" name="telephone" placeholder="<%= l('telephone number (optional)') %>"/>
       <p></p>
       <p>
@@ -25,6 +26,11 @@
 
 <script>
 $(document).ready(function(){
+	var invite_code = getCookie("invite_code");
+	console.log("invite_code "+invite_code);
+
+	$("input[name='invite_code']").attr("value", invite_code);
+
 	$(".iPhoneCheckLabelOn > span").text("Yes");
 	$(".iPhoneCheckLabelOff > span").text("No");
 	
@@ -46,6 +52,7 @@ $(document).ready(function(){
 	   var lastName = $(".register input[name='lastName']").val();
 	   var telephone = $(".register input[name='telephone']").val();	   
 	   var username = $(".register input[name='username']").val();
+	   var invite_code = $(".register input[name='invite_code']").val();
 	   var terms = $(".register input[name='terms']").is(":checked");
 	   var valid = true;
 	   $(".register > input").each(function(){
@@ -108,7 +115,7 @@ $(document).ready(function(){
 		   valid = false;
 	   }
 	   if (	valid && (email === cemail) && (password === cpassword)) {
-		   userRegister(email, password, firstName, lastName, username, telephone);
+		   userRegister(email, password, firstName, lastName, username, telephone, invite_code);
 		} 
    });	
 });

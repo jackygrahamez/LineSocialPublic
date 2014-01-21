@@ -379,7 +379,7 @@ function updatePassword(id, password, url, telephone) {
           });
  }  
 
- function userRegister(email, password, firstName, lastName, username, telephone) {
+ function userRegister(email, password, firstName, lastName, username, telephone, invite_code) {
   var url = "/register";
      $.ajax({ 
            url: url,
@@ -391,7 +391,8 @@ function updatePassword(id, password, url, telephone) {
              firstName: firstName,
              lastName: lastName,
              username: username,
-             telephone: telephone},
+             telephone: telephone,
+             invite_code: invite_code},
            success: function(data){ 
              if (data == 'Account was created') {
                location.replace(location.origin);
