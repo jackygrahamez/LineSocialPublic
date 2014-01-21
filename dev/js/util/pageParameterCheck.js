@@ -4,6 +4,7 @@ function checkPageParameters(){
 	var path = null;
 	var email_validation = getURLParameter("email_validation");
 	var telephone_validation = getURLParameter("telephone_validation");
+	var invite_code = getURLParameter("invite_code");
 
 	if (email_validation) {
 		codeValidate( email_validation, "/send_validate_email_code");
@@ -30,4 +31,14 @@ function checkPageParameters(){
 		   $("a[href$='user_notifications/']").click();
 	   }	   
    }, 1000);	
+
+   setCookie("invite_code", invite_code, 365);
+}
+
+function setCookie(cname,cvalue,exdays)
+{
+	var d = new Date();
+	d.setTime(d.getTime()+(exdays*24*60*60*1000));
+	var expires = "expires="+d.toGMTString();
+	document.cookie = cname + "=" + cvalue + "; " + expires;
 }
