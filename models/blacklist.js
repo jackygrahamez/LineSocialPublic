@@ -18,8 +18,18 @@ module.exports = function(mongoose) {
 	    email.save(callback);
 	};
 
+  	var findEmail = function(email, callback) {
+	  	var query = { "email" : email };
+	  	console.log("query "+JSON.stringify(query));
+	    blacklist.find(query, function(err,doc){
+	    	console.log("doc "+doc);
+			callback(doc);    	
+	    });
+	};
+
 	return {
-		unsubscribe: unsubscribe
+		unsubscribe: unsubscribe,
+		findEmail: findEmail
 	}
 
 }

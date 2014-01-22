@@ -1,4 +1,1 @@
 var global_coords,global_coords_lat,global_coords_lon,x=document.getElementById("demo"),lineLength=0,global_coords="",global_cID="",global_fID="",global_tID="",html,ajaxData,lURL;require(["/js/libs/styleswitcher.js","/socket.io/socket.io.js","/js/motionCaptcha.js","/js/libs/underscore.js","/js/libs/iphone-style-checkboxes.js","/js/libs/jquery-ui.js","/js/libs/jquery.canvas-loader.1.3.js","/js/intlTelInput.min.js","/js/util/helper.js","/js/util/notifications.js","/js/util/register.js","/js/util/redirect.js","/js/util/canvasLoader.js","/js/util/telephoneValidation.js","/js/util/subPageLoad.js","/js/util/pageParameterCheck.js"],function(){PageLoader(),googleAnalytics(),checkPageParameters(),redirectDomain(),deviceType(iosCheckbox),registerForm(),formatPage(),termsClick(),fbHashRemove(),themeFormat(),teleFormat(),contactFormat(),homeFormat()});
-/*
-//@ sourceMappingURL=main.js.map
-*/

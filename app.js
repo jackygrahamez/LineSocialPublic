@@ -72,7 +72,7 @@ app.use(passport.session());
 
 app.use(i18n.init);
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'dev')));
+app.use(express.static(path.join(__dirname, 'prod')));
 });
 
 /* FACEBOOK AUTHENTICATION */
@@ -104,7 +104,7 @@ console.log("about to use passport");
 passport.use(new FacebookStrategy({
     clientID: FACEBOOK_APP_ID,
     clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:5000/auth/facebook/callback"
+    callbackURL: "https://alpha.linesocial.mobi/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
 	 console.log("passport callback function");

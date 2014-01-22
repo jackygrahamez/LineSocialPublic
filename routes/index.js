@@ -781,6 +781,11 @@ exports.send_invite = function(req, res) {
 		  // validates the captcha or redirect
 		  if(_points.length >= 10 && result.Score > 0.7 && result.Name == req.session.shape) { // valid
 			
+			blacklist.findEmail(to_email, function(foundEmail) {
+				console.log("foundEmail "+foundEmail);
+				console.log("size of foundEmail "+foundEmail.length);
+
+				if (foundEmail.length < 1) {
 				  //encodeURIComponent(myUrl)  
 			    var code = encodeURIComponent(id);
 				var link = "http://alpha.linesocial.mobi/?invite_code="+code;
@@ -823,6 +828,12 @@ exports.send_invite = function(req, res) {
 				    // if you don't want to use this transport object anymore, uncomment following line
 				    //smtpTransport.close(); // shut down the connection pool, no more messages
 				});		
+			}
+			else {
+				console.log("could not send invite. Email on blacklist");
+				res.redirect('/?error=true');
+			}
+			});
 
 		  }else{
 		    res.redirect('/?error=true');
