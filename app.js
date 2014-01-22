@@ -104,7 +104,7 @@ console.log("about to use passport");
 passport.use(new FacebookStrategy({
     clientID: FACEBOOK_APP_ID,
     clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: "https://alpha.linesocial.mobi/auth/facebook/callback"
+    callbackURL: "http://localhost:5000/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
 	 console.log("passport callback function");
@@ -222,6 +222,9 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/:id', routes.home);
 app.get('/:username/inbox/', routes.inbox);
+
+app.get('/:username/fb_invite_code/', routes.fb_invite_code);
+app.post('/:username/fb_invite_code/', routes.fb_invite_code);
 
 app.get('/:username/user_check_in/', routes.user_check_in);
 app.post('/:username/user_check_in/', routes.user_check_in);

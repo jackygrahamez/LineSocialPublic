@@ -14,6 +14,7 @@ function homeFormat() {
 
 if ($("body").hasClass("home")) {
   console.log("home");
+
   if ($(".cID").attr("value") != "undefined") {
     autocheckout();
   } 
@@ -22,6 +23,7 @@ if ($("body").hasClass("home")) {
   var notification_url = "/"+username+"/user_notifications/"; 
   console.log("notification_url "+notification_url);
   getNotifications(notification_url);
+  checkInviteCode();
 
 }       
 
@@ -858,4 +860,37 @@ function checkPageParameters(){
        $("a[href$='user_notifications/']").click();
      }     
    }, 1000);  
+}
+
+function checkInviteCode() {
+  var invite_code_cookie = getCookie("invite_code");
+    var invite_code_db = $("input[name='invite_code']").attr("value"),
+    username = $("input[name='username']").attr("value");
+    console.log("invite_code_cookie "+invite_code_cookie);
+    console.log("invite_code_db "+invite_code_db);
+      if (invite_code_db === undefined) {
+        console.log("invite_code_db undefined");
+        if (invite_code_cookie) {
+          console.log("saving invite code");
+          fbInviteCode(username, invite_code_cookie);          
+        }
+      }
+}
+
+function fbInviteCode(username, invite_code) {
+  var url = "/"+username+"/fb_invite_code/";
+     $.ajax({ 
+           url: url,
+           type: 'POST',
+           cache: false,
+           data: { 
+             invite_code: invite_code},
+           success: function(data){ 
+            console.log("data invite_code "+data);
+           }
+           , error: function(jqXHR, textStatus, err){
+               //alert('text status '+textStatus+', err '+err)
+               console.log('text status '+textStatus+', err '+err);
+           }
+        });  
 }

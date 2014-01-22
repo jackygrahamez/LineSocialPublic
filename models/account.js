@@ -36,7 +36,8 @@ module.exports = function(mongoose) {
       session_id: { type: String },
       token: { type: String },
       token_expire: { type: Number },
-      invite_code: { type: String }
+      invite_code: { type: String },
+      login_count: { type: Number }
   });
   
   userSchema.plugin(findOrCreate);
@@ -313,9 +314,14 @@ module.exports = function(mongoose) {
 
   var findByFBId = function(id, callback) {
 		  account.findOne({fb_id:id}, function(err,doc) {
+        //console.log(JSON.stringify(doc));
 			  if (JSON.stringify(doc) == null) {
 			  }
-		      callback(doc);
+          account.update({fb_id:id}, 
+          { "$inc" : { login_count : 1 } }, 
+          function(doc_after_update) {
+            callback(doc);            
+          });        
 		  });
 	  };  
   
@@ -493,6 +499,20 @@ module.exports = function(mongoose) {
             });
   }; 
 
+  var fbInviteCodeUpdate = function(id, invite_code, callback) {
+    account.update(
+            {"_id" : id, 
+            "invite_code" : null, 
+            fb_id : { $exists : true }, 
+            "login_count" : 1 },
+            {"$set": { "invite_code" : invite_code }},
+            {upsert: 1},
+              function(error, doc) {
+                   if( error ) callback(error);
+                   else callback(null, doc);
+            });
+  };
+
   return {
     login: login,
     register: register,
@@ -521,6 +541,7 @@ module.exports = function(mongoose) {
     saveEmailValidationCode: saveEmailValidationCode,
     sendValidateEmailCode: sendValidateEmailCode,
     savePhoneValidationCode: savePhoneValidationCode,
-    sendValidatePhoneCode: sendValidatePhoneCode
+    sendValidatePhoneCode: sendValidatePhoneCode,
+    fbInviteCodeUpdate: fbInviteCodeUpdate
   }
 }

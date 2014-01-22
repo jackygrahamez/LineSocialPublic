@@ -106,6 +106,18 @@ exports.fb_login = function(id, req, res) {
 	});
 }	
 
+exports.fb_invite_code = function(req, res) {
+	console.log("checking fb_invite_code");
+	var id = req.session.accountId,
+	invite_code = req.param('invite_code', '');
+	console.log("id "+id);
+	console.log("invite_code "+invite_code);
+	account.fbInviteCodeUpdate(id, invite_code, function(doc) {
+		res.send("response");
+    	return doc;
+	});
+}	
+
 
 exports.update_password = function(req, res) {
     var id = req.param('id', ''),

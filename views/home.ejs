@@ -1,6 +1,5 @@
 <% include header %>
 
-
 <section class="content">
 	<div class="wrapper">
 	    <h2 class="light no-margin"><%= user.name.first %> <%= user.name.last %></h2>
@@ -14,6 +13,7 @@
 	</div>    			
 </section>
 
+<input class='hide invite_code' value="<%= user.invite_code %>" />
 <input class='hide username' value="<%= user.username %>" />
 
 <% include footer %>
