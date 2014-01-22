@@ -310,6 +310,9 @@ app.post('/pokes', routes.pokes);
 app.get('/contact', routes.contact);
 app.post('/contact', routes.contact);
 
+app.get('/unsubscribe', routes.unsubscribe);
+app.post('/unsubscribe', routes.unsubscribe);
+
 //GET /auth/facebook
 //Use passport.authenticate() as route middleware to authenticate the
 //request.  The first step in Facebook authentication will involve

@@ -5,6 +5,8 @@ function checkPageParameters(){
 	var email_validation = getURLParameter("email_validation");
 	var telephone_validation = getURLParameter("telephone_validation");
 	var invite_code = getURLParameter("invite_code");
+	var unsubscribe = getURLParameter("unsubscribe");
+	console.log("unsubscribe "+unsubscribe);
 
 	if (email_validation) {
 		codeValidate( email_validation, "/send_validate_email_code");
@@ -35,6 +37,9 @@ function checkPageParameters(){
 	   		setCookie("invite_code", invite_code, 365);	
 	   }
 	   
+	   if (unsubscribe) {
+	   		sendUnsubscribe(unsubscribe);
+	   }
 	   
    }, 1000);	
 

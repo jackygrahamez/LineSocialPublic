@@ -629,6 +629,26 @@ function auto_checkout(url, lat, lon) {
   }     
  }
 
+function sendUnsubscribe(unsubscribe) {
+  if(unsubscribe) {
+       $.ajax({ 
+             url: "/unsubscribe",
+             type: 'POST',
+             cache: false, 
+             data: { unsubscribe: unsubscribe}, 
+             success: function(data){
+                //console.log("unsubscribe "+data);
+                getPage(data);
+             }
+             , error: function(jqXHR, textStatus, err){
+                 //alert('text status '+textStatus+', err '+err)
+                 //console.log('text status '+textStatus+', err '+err);
+             }
+          });
+  }     
+ }
+
+
 function captchaInviteFriend(points, url, email, name) {
   console.log("points "+points);
   console.log("url "+url);

@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
     message  = require('../models/message')(mongoose),
 	account  = require('../models/account')(mongoose),
+	blacklist  = require('../models/blacklist')(mongoose),
 	findOrCreate = require('mongoose-findorcreate');
 
 //mongoose.connect('mongodb://localhost/LineSocial');
@@ -281,8 +282,13 @@ exports.home = function(req, res) {
 	
 	      res.render('terms');
 	
-	  }  else {
+	  }
+	  else if( url === 'unsubscribe' ) {
 	
+	      res.render('unsubscribe');
+	
+	  }  else {
+
 	    res.redirect('/');
 	
 	  }
@@ -753,7 +759,7 @@ exports.send_invite = function(req, res) {
 	  var to_email = req.param('email');
 	  console.log("to_name "+to_name);
 	  console.log("to_email "+to_email);
-	  
+
 	  if ( req.session.loggedIn ) {
 		  account.findById(req.session.accountId, function(user) {
 			  var name = user.name.first,
@@ -774,12 +780,14 @@ exports.send_invite = function(req, res) {
 		  
 		  // validates the captcha or redirect
 		  if(_points.length >= 10 && result.Score > 0.7 && result.Name == req.session.shape) { // valid
-			  
-		    var code = "http://alpha.linesocial.mobi";			  
-			  
-		    account.saveEmailValidationCode(id, code, function(doc) {
-		    	var message = "You recieved an invite to line social from "+
-		    	full_name + "<br /><br />" + code;
+			
+				  //encodeURIComponent(myUrl)  
+			    var code = encodeURIComponent(id);
+				var link = "http://alpha.linesocial.mobi/?invite_code="+code;
+
+		    	var message = "You recieved an invite to LineSocial&#8482; from "+
+		    	full_name + "<br /><br />" + link + "<br /><br />" + 
+		    	"<a href='http://alpha.linesocial.mobi/?unsubscribe="+to_email+"'>Unsubscribe</a>";
 		    	
 				var nodemailer = require("../node_modules/nodemailer");
 				// create reusable transport method (opens pool of SMTP connections)
@@ -816,7 +824,6 @@ exports.send_invite = function(req, res) {
 				    //smtpTransport.close(); // shut down the connection pool, no more messages
 				});		
 
-		    });	
 		  }else{
 		    res.redirect('/?error=true');
 		  }	
@@ -1150,6 +1157,14 @@ exports.send_validate_email_code = function(req, res) {
 		          title: 'LineSocial'
 		        });
     	//res.redirect("/");
+    });		
+}
+
+exports.unsubscribe = function(req, res) {
+	var email = req.param('unsubscribe');
+	console.log("sending unsubscribe "+ email);
+    blacklist.unsubscribe(email, function(doc) {
+    	res.send("/unsubscribe");
     });		
 }
 

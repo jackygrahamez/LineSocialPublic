@@ -1,0 +1,21 @@
+<section class="content">
+
+<% include subpage_header %>
+<div class="wrapper">
+	<h2 class="light no-margin">Unsubscribe</h2>
+	<p>We unsubscribed your email address from our mailings</p>
+</div>
+</section>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	setTimeout(function(){
+		var back_button = "<div class='back button active'><%= l('Back') %></div>";
+		$("section.active header > div").prepend(back_button);	
+		   $(".back.button").click(function(){
+		   		$("section.body.active").removeClass("active");
+		   		$("section.content").removeAttr("style");
+		   });			
+	}, 2000)
+});
+</script>
