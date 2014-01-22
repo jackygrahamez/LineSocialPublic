@@ -280,6 +280,12 @@ app.post('/:username/send_validate_phone', routes.send_validate_phone);
 app.get('/send_validate_phone_code', routes.send_validate_phone_code);
 app.post('/send_validate_phone_code', routes.send_validate_phone_code);
 
+app.get('/:username/send_invite_form/', routes.send_invite_form);
+app.post('/:username/send_invite_form/', routes.send_invite_form);
+
+app.get('/:username/send_invite/', routes.send_invite);
+app.post('/:username/send_invite/', routes.send_invite);
+
 app.post('/login', routes.login);
 app.post('/register', routes.register);
 

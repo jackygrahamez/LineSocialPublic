@@ -719,7 +719,110 @@ exports.validate_email = function(req, res) {
 	  }
 	}
 
+exports.send_invite_form = function(req, res) {
+	  var shapes = ['triangle', 'x', 'rectangle', 'circle', 'check', 'caret', 'zigzag', 'arrow', 'leftbracket', 'rightbracket', 'v', 'delete', 'star', 'pigtail'];
+	  var shape = shapes[Math.floor(Math.random() * (shapes.length) )];
+	  req.session.shape = shape;	
+	  
+	  if ( req.session.loggedIn ) {
 
+	    account.findById(req.session.accountId, function(doc) {
+
+	        res.render('send_invite_form', {
+	          title: 'LineSocial',
+	          error: req.param('error'),	
+	          shape: shape,
+	          user: doc
+	        });
+
+	    });
+
+	  } else {
+
+	    res.send(401);
+
+	  }
+	}
+
+exports.send_invite = function(req, res) {
+	  var $1 = require('../dollar.js'); // require $1 Unistroke Recognizer
+	  var points = req.param('_points'); // get the points submitted on the hidden input
+	  var _points_xy = points.split('|');
+	  var  _points = [];
+	  var to_name = req.param('name');
+	  var to_email = req.param('email');
+	  console.log("to_name "+to_name);
+	  console.log("to_email "+to_email);
+	  
+	  if ( req.session.loggedIn ) {
+		  account.findById(req.session.accountId, function(user) {
+			  var name = user.name.first,
+		  		id = user._id,
+		  		username = user.username,
+		  		email = user.email,
+		  		full_name = user.name.first + " " + user.name.last;
+
+		  // convert to an array of Points
+		  for(p in _points_xy){
+		    var xy = _points_xy[p].split(',');
+		    _points.push(new $1.Point(parseInt(xy[0]), parseInt(xy[1])));
+		  }
+	
+		  // test the points
+		  var _r = new $1.DollarRecognizer();
+		  var result = _r.Recognize(_points);
+		  
+		  // validates the captcha or redirect
+		  if(_points.length >= 10 && result.Score > 0.7 && result.Name == req.session.shape) { // valid
+			  
+		    var code = "http://alpha.linesocial.mobi";			  
+			  
+		    account.saveEmailValidationCode(id, code, function(doc) {
+		    	var message = "You recieved an invite to line social from "+
+		    	full_name + "<br /><br />" + code;
+		    	
+				var nodemailer = require("../node_modules/nodemailer");
+				// create reusable transport method (opens pool of SMTP connections)
+				var smtpTransport = nodemailer.createTransport("SMTP",{
+				    service: "Gmail",
+				    auth: {
+				        user: "webmaster@linesocial.mobi",
+				        pass: "Tgifkfc123"
+				    }
+				});
+				// setup e-mail data with unicode symbols
+				var mailOptions = {
+				    to: name+ " <"+to_email+">", // sender address
+				    from: "Webmaster <webmaster@linesocial.mobi>", // list of receivers
+				    subject: "LineSocial Invitation", // Subject line
+				    text: message+" ", // plaintext body
+				    html: "<b>"+message+" </b>" // html body
+				}
+	
+				// send mail with defined transport object
+				smtpTransport.sendMail(mailOptions, function(error, response){
+				    if(error){
+				        console.log(error);
+				        res.redirect('/?error=true');
+				    }else{
+						res.render('send_invite', {
+					          title: 'LineSocial',
+					          user: user
+					        });
+					    
+						//res.send("/"+user.username+"/send_validate_email");
+				    }
+				    // if you don't want to use this transport object anymore, uncomment following line
+				    //smtpTransport.close(); // shut down the connection pool, no more messages
+				});		
+
+		    });	
+		  }else{
+		    res.redirect('/?error=true');
+		  }	
+	    });	  
+	  }
+}	
 
 exports.validate_phone = function(req, res) {
 	  var shapes = ['triangle', 'x', 'rectangle', 'circle', 'check', 'caret', 'zigzag', 'arrow', 'leftbracket', 'rightbracket', 'v', 'delete', 'star', 'pigtail'];

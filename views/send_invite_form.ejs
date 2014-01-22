@@ -1,0 +1,39 @@
+<section class="content">
+
+<% include subpage_header %>
+<div class="wrapper">
+	<h2 class="light no-margin"><%= l('Confirm Telephone Number') %></h2>
+	<p>
+		<%= l('Please trace drawing, then click Send Invite.') %>
+	</p>
+
+    <section class="bordered send_email">
+
+	    <form id='captcha' method="POST" action="/<%= user.username %>/send_invite/">
+	    	<input name="name" type="text" placeholder="name" />	    
+	    	<input name="email" type="email" placeholder="email" />
+			<br /><br />
+	        <div id="mc">
+	            <canvas id="mc-canvas" class="<%= error ? 'mc-invalid' : '' %>"></canvas>
+	        </div>    
+	      <input id="send_invite" type="button" value="<%= l('Send Invite') %>" >
+	    </form>
+
+    </section>
+</div>
+</section>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#captcha').motionCaptcha('<%= shape %>');
+	$("#send_invite").click(function(){
+		var points = $("input[name='_points']").attr("value");
+		var name = $("input[name='name']").val();		
+		var email = $("input[name='email']").val();
+		var url = $("#captcha").attr("action");
+		console.log("points "+points);
+		captchaInviteFriend(points, url, email, name);
+	});
+});
+
+</script>

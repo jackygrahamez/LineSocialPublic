@@ -34,7 +34,6 @@ var x=document.getElementById("demo");
 	   $("a").click(function(e){
 		   e.preventDefault();
 		   var url = $(this).attr("href");
-		   console.log("url "+url);
 		   if (url.indexOf("notifications") > 0) {
 			   $(".notifications").addClass("active");
 		   } 	   
@@ -65,7 +64,6 @@ var x=document.getElementById("demo");
 				   if ($("body > canvas").length < 1) {
 					   $("body").append(loader);
 					   $(".loader > div").canvasLoader();
-					   console.log("url "+url);
 					   getLocation(0, url); 						   
 				   }					
 				}

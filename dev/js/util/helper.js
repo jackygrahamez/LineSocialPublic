@@ -62,7 +62,6 @@ if ($("body").hasClass("home")) {
            if ($("body > canvas").length < 1) {
              $("body").append(loader);
              $(".loader > div").canvasLoader();
-             console.log("url "+url);
              getLocation(0, url);                
            }          
         }
@@ -630,6 +629,41 @@ function auto_checkout(url, lat, lon) {
   }     
  }
 
+function captchaInviteFriend(points, url, email, name) {
+  console.log("points "+points);
+  console.log("url "+url);
+  console.log("email "+email);
+  console.log("name "+name);
+       $.ajax({ 
+           url: url,
+           type: 'POST',
+           cache: false,
+           data: { 
+             _points: points,
+             email: email,
+             name: name
+             },
+           success: function(data){ 
+                markup = data;
+                $("section.body.right").html(data);
+                setTimeout(function(){
+                $("section.body.right").addClass("active");
+                $("section.content").css("height", "0px");
+                  $(".back.button").click(function(){
+                    $(".body").removeClass("active");
+                    $("section.checkin").remove();
+                    $("section.content").css("height", "auto");
+                    });                     
+                  
+                }, 1000);              
+
+           }
+           , error: function(jqXHR, textStatus, err){
+               //alert('text status '+textStatus+', err '+err)
+               console.log('text status '+textStatus+', err '+err);
+           }
+        });
+}
 
 function captchaPoints(_points, url) {
      $.ajax({ 
@@ -866,12 +900,8 @@ function checkInviteCode() {
   var invite_code_cookie = getCookie("invite_code");
     var invite_code_db = $("input[name='invite_code']").attr("value"),
     username = $("input[name='username']").attr("value");
-    console.log("invite_code_cookie "+invite_code_cookie);
-    console.log("invite_code_db "+invite_code_db);
       if (invite_code_db === undefined) {
-        console.log("invite_code_db undefined");
         if (invite_code_cookie) {
-          console.log("saving invite code");
           fbInviteCode(username, invite_code_cookie);          
         }
       }
