@@ -58,15 +58,10 @@ db.accounts.find({ "check_in.geolocation" : { "$near" : { "$geometry" : { "type"
 
 db.accounts.find({ "check_in.geolocation" : { "$near" : { "$geometry" : { "type" : "Point", "coordinates" : [ 41.88723408627484, -74.81166246868779 ]}}, "$maxDistance":500}});
 
-#lineout
-mongo ds053678.mongolab.com:53678/heroku_app19397517 -u heroku_app19397517 -p 1kmoc0c3kdcib1g9v7hpejr8up
 
-#linesocial
-mongodb://heroku_app19413190:gtqqg23kecrfldmqb2ko3bm53f@ds053668.mongolab.com:53668/heroku_app19413190
-mongo ds053668.mongolab.com:53668/heroku_app19413190 -u heroku_app19413190 -p gtqqg23kecrfldmqb2ko3bm53f
+mongo ds029589-a0.mongolab.com:29589/heroku_app19413190 -u heroku_app19413190 -p suf1uaaio2mr0jn4jlpbpdpgud
+mongodb://heroku_app19413190:suf1uaaio2mr0jn4jlpbpdpgud@ds029589-a0.mongolab.com:29589/heroku_app19413190
 
-
-mongoctl connect mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds053678.mongolab.com:53678/heroku_app19397517
 
 
 db.accounts.find({"_id" : ObjectId("52941fd38423053288971672")}).pretty();
