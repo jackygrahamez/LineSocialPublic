@@ -68,7 +68,7 @@ module.exports = function(mongoose) {
       username: username.toLowerCase(),
       password: shaSum.digest('hex'),
       check_in: "",
-      points: 1000,
+      points: 10,
       invite_code: invite_code
     });
     
@@ -88,7 +88,7 @@ module.exports = function(mongoose) {
 	      },
 	      username: username.toLowerCase(),
 	      check_in: "",
-	      points: 1000
+	      points: 10
 	    });
 	    user.save();	    
 	    var query = {username: username};
