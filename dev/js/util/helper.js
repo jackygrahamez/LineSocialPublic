@@ -1221,6 +1221,7 @@ function redirectDomain() {
 
 /* canvas loader */
 function PageLoader() {
+  addthis.init();
   var invalid = getURLParameter('invalid');
   $(".overlay > div").canvasLoader();
 
@@ -1377,4 +1378,200 @@ function setCookie(cname,cvalue,exdays)
   d.setTime(d.getTime()+(exdays*24*60*60*1000));
   var expires = "expires="+d.toGMTString();
   document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+
+function messageInitialize() {
+  var points_to = $(".points_to").attr("value");
+  var send = $(".send_button_text").attr("value");
+
+  if (global_toUser) {
+    $(".wrapper > h2").removeClass("hide");
+    $(".wrapper > h2").append(global_toUser);
+  }
+  
+    var messages = [];
+    var socket = io.connect(location.origin);
+    var field = document.getElementById("field");
+    var content = $(".content.messages");
+    var name = document.getElementById("name");
+    var match = false;
+    var sender = "bubbledLeft";
+  var cID = $(".message.controls .cID").val();    
+
+    var text = $(".field.message").val();    
+  $(".message.controls .cID").attr("value", global_cID);
+  $(".message.controls .tID").attr("value", global_tID);        
+  global_fID = $(".message.controls .fID").val();  
+  
+  $('.content.messages').stop().animate({
+    scrollTop: $(".content.messages")[0].scrollHeight
+  }, 800);  
+  
+  if ($("html").hasClass("iphone")) {
+
+    $( "#amount" ).text( $("#slider-fill").val());  
+    $("#slider-fill").change(function() {
+        $( "#amount" ).text( $("#slider-fill").val());
+    }); 
+        
+  } else {
+  
+      $( "#slider" ).slider({
+        value:5,
+        min: 0,
+        max: 10,
+        step: 1,
+        slide: function( event, ui ) {
+          $( "#amount" ).text(  ui.value );;
+        }
+      });
+  }
+
+    
+    
+    $(".send_points").click(function(){
+    var d = new Date();
+    var h = d.getHours();
+    var td = "am";
+    if (h > 12) { 
+    h = h - 12;
+    td = "pm"; 
+    }
+    var m = d.getMinutes();
+    m = checkTime(m);   
+    var time = " " + h + ":" + m + " "+td;    
+    var fID = $(".message.controls .fID").val();    
+    var tID = $(".message.controls .tID").val();
+    var points = $( "#amount" ).text();
+    var balance_value = parseInt($(".balance_value").text()) - points;
+    console.log("points "+points);
+    var user = $(".name.message").val();   
+    var message = user+' sent '+points;
+    var html = $(".content.messages").html();
+        html += '<div class="bubbledLeft"><span><b> System: </b>';
+        html += message +' <time>' + time +'</time></span></div>';
+        var confirm_message =  send_button_text + ' ' + points + ' ' + points_to + ' ' + global_toUser + '?';
+        if (confirm(confirm_message)) {
+        $(".content.messages").html(html);    
+        $(".balance_value").text(balance_value);
+
+        // Save it!
+      sendPoints(fID, tID, points);
+      socket.emit('send', { message: user+' sent '+points });         
+    } else {
+        // Do nothing!
+    }         
+  
+  
+    });
+    
+         
+    socket.on('message', function (data) {
+    
+      var tester = $(".tester").val();
+      console.log("tester "+tester);
+        if(data.message) {
+            messages.push(data);
+            var html = $(".content.messages").html();
+            var chat_requests = '';            
+            var fIDlist = [];
+      var d = new Date();
+      var h = d.getHours();
+      var td = "am";
+      if (h > 12) { 
+      h = h - 12;
+      td = "pm"; 
+      }
+      var m = d.getMinutes();
+      m = checkTime(m);   
+      var time = " " + h + ":" + m + " "+td;
+      var timestamp = d.getTime();            
+      global_fID = $(".message.controls .fID").attr("value");
+      $('.content.messages').stop().animate({
+        scrollTop: $(".content.messages")[0].scrollHeight
+      }, 800);        
+              for(var i=0; i<messages.length; i++) {
+              var sender = "bubbledLeft";
+              match = false;
+              if ((messages[i].cID == $(".message.controls .cID").attr("value")) && 
+                ((messages[i].fID == $(".message.controls .fID").attr("value")) || 
+                (messages[i].tID == $(".message.controls .fID").attr("value"))  
+                )) {  
+                $(".content.messages > div").each(function(){
+                  if ($(this).attr("ts") == messages[i].ts) {
+                    match = true;
+                  }
+                });
+                  if (!match) {
+                    if (messages[i].fID === $(".message.fID").attr("value")) {
+                    sender = "bubbledRight";
+                    }                 
+                    html += '<div ts="'+messages[i].ts+'" class="'+sender+'" name="'+messages[i].username+'" cID="'+messages[i].cID+'" fID="'+messages[i].fID+'" tID="'+messages[i].tID+'"><span><b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
+                    html += messages[i].message + ' <time>' + time +'</time></span></div>';
+                    }
+                    match = false;
+          }                 
+              }
+           $(".content.messages").html(html);
+           if (tester != "undefined") {
+        html = $(".content.messages").html();
+        if($(".content.messages div").length < 3) {           
+                html += '<div class="bubbledLeft"><span><b> System: </b>';
+                html += 'User Left! Sorry <time>' + time +'</time></span></div>';
+                $(".content.messages").html(html);   
+                } else if (($(".content.messages div").length > 2) && ($(".content.messages div").length < 5)) {
+                html += '<div class="bubbledLeft"><span><b> System: </b>';
+                html += 'Sorry I will give you some points!<time>' + time +'</time></span></div>';
+                $(".content.messages").html(html);
+                var cID = $(".message.controls .cID").val();
+                var fID = $(".message.controls .fID").val();    
+                grantPoints(cID, fID);             
+                }         
+           }
+         
+        } else {
+            console.log("There is a problem:", data);
+        }
+    });
+ 
+    $(".send.message").click(function() {
+      var tester = $(".tester").val();
+    var user = $(".name.message").val();      
+      var d = new Date();
+      var session_id = $(".session_id").val();
+      
+
+      
+        if(user == "") {
+            alert("Please type your name!");
+        } else {
+          var d = new Date();
+          var h = d.getHours();
+          var td = "am";
+          if (h > 12) { 
+          h = h - 12;
+          td = "pm"; 
+          }
+          var m = d.getMinutes();
+          m = checkTime(m);   
+        var time = " " + h + ":" + m + " "+td;
+        var timestamp = d.getTime();
+            var text = $(".field.message").val();
+        //var text = text + time;    
+        var cID = $(".message.controls .cID").val();
+        var tID = $(".message.controls .tID").val();
+        var fID = $(".message.controls .fID").val();
+        $(".field.message").val("");                
+      global_cID = $(".message.controls .cID").attr("value"); 
+            socket.emit('send', { ts: timestamp, cID: cID, fID: fID, tID: tID, message: text, username: user, tester: tester });
+        if (session_id) {
+          console.log("session_id "+session_id);
+              socket.emit(session_id, { ts: timestamp, cID: cID, fID: fID, tID: tID, message: text, username: user, tester: tester });          
+        }
+            var url = "/"+user+"/update_messages/";
+            updateMessages(timestamp, cID, fID, tID, text, user, tester, url);
+            text = "";
+        }
+    });
+
 }

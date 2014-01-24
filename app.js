@@ -26,9 +26,6 @@ global.io  = require('socket.io').listen(server);
 
 
 app.configure(function () {
-//console.log("using authenticator");
-//Authenticator
-//app.use(express.basicAuth('friend', 'bli8ke'));
 
 //all environments
 app.set('port', process.env.PORT || 5000);
@@ -72,7 +69,7 @@ app.use(passport.session());
 
 app.use(i18n.init);
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'dev')));
+app.use(express.static(path.join(__dirname, 'prod')));
 });
 
 /* FACEBOOK AUTHENTICATION */
@@ -100,18 +97,14 @@ passport.deserializeUser(function(obj, done) {
 //   Strategies in Passport require a `verify` function, which accept
 //   credentials (in this case, an accessToken, refreshToken, and Facebook
 //   profile), and invoke a callback with a user object.
-console.log("about to use passport");
 passport.use(new FacebookStrategy({
     clientID: FACEBOOK_APP_ID,
     clientSecret: FACEBOOK_APP_SECRET,
     callbackURL: "https://alpha.linesocial.mobi/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-	 console.log("passport callback function");
     // asynchronous verification, for effect...
     process.nextTick(function () {
-      console.log("profile "+JSON.stringify(profile));
-      console.log("profile username "+profile.username);
       // To keep the example simple, the user's Facebook profile is returned to
       // represent the logged-in user.  In a typical application, you would want
       // to associate the Facebook account with a user record in your database,
@@ -119,7 +112,6 @@ passport.use(new FacebookStrategy({
 
       var firstname = profile.name.givenName, 
       	  lastname = profile.name.familyName;
-      console.log("registering id: "+profile.id+ " " + " firstname: " + firstname + " lastname: "+ lastname + " username: "+ profile.username);
       //routes.fb_register(profile.id, firstname, lastname, profile.username);
       return done(null, profile);
     });
@@ -177,7 +169,6 @@ app.post('/forgot', express.bodyParser(), function(req, res) {
 		    }
 		  };
 		  var reset = forgot(email, callback);
-		  console.log("reset "+JSON.stringify(reset));
 		  var token = reset.id;
 		  
 		  routes.saveToken(email, token);
@@ -187,8 +178,6 @@ app.post('/forgot', express.bodyParser(), function(req, res) {
 		      email: email,
 		      id: reset.id
 		    };
-		    console.log("req_.session.reset "+req_.session.reset);
-		    console.log("fs.createReadStream");
 		    fs.createReadStream(__dirname + '/forgot').pipe(res_);
 		  });
 	  }else{
@@ -333,8 +322,7 @@ function(req, res){
 app.get('/auth/facebook/callback', 
 passport.authenticate('facebook'),
 function(req, res) {
-	console.log("/auth/facebook/callback");
-	console.log("user "+JSON.stringify(req.session.passport.user));
+
     var firstname = req.session.passport.user.name.givenName, 
 	  lastname = req.session.passport.user.name.familyName,
 	  id = req.session.passport.user.id,
@@ -351,12 +339,9 @@ server.listen(app.get('port'), function(){
   
   global.io.sockets.on('connection', function (socket) {
 	  users.push(socket.id);
-	  console.log('+ User '+ socket.id +' connected ('+ socket.handshake.address.address +'). Total users: '+ users.length );
-	  	clients[socket.id] = socket;
-	    socket.emit('message', { message: 'welcome to the chat' });
-		socket.on('send', function (data) {
-		console.log("global.io.sockets.emit data "+data);
-			console.log("emitting data "+JSON.stringify(data));
+		  	clients[socket.id] = socket;
+		    socket.emit('message', { message: 'welcome to the chat' });
+			socket.on('send', function (data) {
 			routes.pokes(data);
 			global.io.sockets.emit('message', data);
 		}); 
