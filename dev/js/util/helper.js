@@ -1221,6 +1221,7 @@ function redirectDomain() {
 
 /* canvas loader */
 function PageLoader() {
+  addthis.init();
   var invalid = getURLParameter('invalid');
   $(".overlay > div").canvasLoader();
 
