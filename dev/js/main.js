@@ -21,14 +21,7 @@ require(
 	"/js/libs/jquery-ui.js",
 	"/js/libs/jquery.canvas-loader.1.3.js",
 	"/js/intlTelInput.min.js",
-	"/js/util/helper.js",
-	"/js/util/notifications.js",
-	"/js/util/register.js",
-	"/js/util/redirect.js",
-	"/js/util/canvasLoader.js",
-	"/js/util/telephoneValidation.js",
-	"/js/util/subPageLoad.js",
-	"/js/util/pageParameterCheck.js"		
+	"/js/util/helper.js"	
 	], 
 	function ( 
 		styleswitcher, 
@@ -38,14 +31,8 @@ require(
 		iphone,
 		jquery_ui, 
 		jquery_canvas, 
-		intlTelInput, 
-		helper, 
-		notifications, 
-		redirect,
-		canvasLoader,
-		telephoneValidation,
-		subPageLoad,
-		pageParameterCheck) {
+		intlTelInput,
+		helper ) {
 
 
 		PageLoader();
