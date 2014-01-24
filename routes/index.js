@@ -4,11 +4,11 @@ var mongoose = require('mongoose'),
 	blacklist  = require('../models/blacklist')(mongoose),
 	findOrCreate = require('mongoose-findorcreate');
 
-//mongoose.connect('mongodb://localhost/LineSocial');
+mongoose.connect('mongodb://heroku_app19413190:suf1uaaio2mr0jn4jlpbpdpgud@ds029589-a0.mongolab.com:29589/heroku_app19413190');
 
+//mongoose.connect('mongodb://localhost/LineSocial');
 //mongoose.connect('mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds053678.mongolab.com:53678/heroku_app19397517');
 //mongoose.connect('mongodb://heroku_app19413190:suf1uaaio2mr0jn4jlpbpdpgud@ds029589-a0.mongolab.com:29589/heroku_app19413190');
-mongoose.connect('mongodb://heroku_app19413190:suf1uaaio2mr0jn4jlpbpdpgud@ds029589-a0.mongolab.com:29589/');
 //mongodb://<dbuser>:<dbpassword>@ds029589-a0.mongolab.com:29589/
 //mongodb://heroku_app19413190:suf1uaaio2mr0jn4jlpbpdpgud@ds029589-a0.mongolab.com:29589/
 //var db = mongoose.connection;
