@@ -146,7 +146,7 @@ module.exports = function(mongoose) {
 			],
 			"telephone" : "",
 			"telephone_valid" : false,
-			"points": 1000,
+			"points": 10,
 			"line_length": 1800000,
 			"check_in_time": d,
 			"check_in_expire_time": expire,
