@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
 //mongoose.connect('mongodb://heroku_app19413190:suf1uaaio2mr0jn4jlpbpdpgud@ds029589-a0.mongolab.com:29589/heroku_app19413190');
 mongoose.connect('mongodb://heroku_app19413190:suf1uaaio2mr0jn4jlpbpdpgud@ds029589-a0.mongolab.com:29589/');
 //mongodb://<dbuser>:<dbpassword>@ds029589-a0.mongolab.com:29589/
-//mongodb://heroku_app19413190:suf1uaaio2mr0jn4jlpbpdpgud@ds029589-a0.mongolab.com:29589/heroku_app19413190
+//mongodb://heroku_app19413190:suf1uaaio2mr0jn4jlpbpdpgud@ds029589-a0.mongolab.com:29589/
 //var db = mongoose.connection;
 
 // foursquare
