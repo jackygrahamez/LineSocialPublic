@@ -48,10 +48,10 @@ app.use(express.cookieParser('your secret here'));
 app.use(express.session({
 	store: new session({
 	      db: 'heroku_app19413190',
-	      host: 'ds053668.mongolab.com',
-	      port: 53668,  // optional, default: 27017
-	      username: 'admin', // optional
-	      password: 'Swbv123()' // optional      
+	      host: 'ds029589-a0.mongolab.com',
+	      port: 29589,  // optional, default: 27017
+	      username: 'heroku_app19413190', // optional
+	      password: 'suf1uaaio2mr0jn4jlpbpdpgud' // optional      
 	    }),	
 		secret: 'keyboard cat',
 	    cookie: {
