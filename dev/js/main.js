@@ -13,6 +13,7 @@
 // Documentation can be found at: http://foundation.zurb.com/docs
 require(
 	[
+	"/js/libs/pusher.min.js",
 	"/js/libs/styleswitcher.js",
 	"/socket.io/socket.io.js",
 	"/js/motionCaptcha.js",
@@ -24,6 +25,7 @@ require(
 	"/js/util/helper.js"	
 	], 
 	function ( 
+		pusher,
 		styleswitcher, 
 		socket, 
 		motionCaptcha, 

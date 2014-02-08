@@ -35,7 +35,21 @@
 	</menu>			
 	<p>&copy; 2013 <%= l('LineSocial') %></p>
 </section>
-  
+  <script src="/js/libs/pusher.min.js"></script> 
+  <script type="text/javascript">
+    // Enable pusher logging - don't include this in production
+    Pusher.log = function(message) {
+      if (window.console && window.console.log) {
+        window.console.log(message);
+      }
+    };
+
+    var pusher = new Pusher('7887ef69f6a3f0ef790d');
+    var channel = pusher.subscribe('test_channel');
+    channel.bind('message', function(data) {
+      alert(data.message);
+    });
+  </script>  
     <!-- build:js scripts/vendor/vendor.js -->
     <!-- bower:js -->
       <script data-main="js/main" src="js/require-jquery.js"></script> 

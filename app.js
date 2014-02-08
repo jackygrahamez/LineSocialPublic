@@ -15,7 +15,8 @@ var express = require('express'),
     FacebookStrategy = require('passport-facebook').Strategy,
     i18n    = require('i18n'),
     session = require('connect-mongo')(express),
-    i18n_config  = require('./models/utils/i18n');
+    i18n_config  = require('./models/utils/i18n'),
+    Pusher = require('pusher');
 
 i18n_config();
 
@@ -69,7 +70,7 @@ app.use(passport.session());
 
 app.use(i18n.init);
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'prod')));
+app.use(express.static(path.join(__dirname, 'dev')));
 });
 
 /* FACEBOOK AUTHENTICATION */
@@ -341,11 +342,22 @@ server.listen(app.get('port'), function(){
 	  users.push(socket.id);
 		  	clients[socket.id] = socket;
 		    socket.emit('message', { message: 'welcome to the chat' });
-			socket.on('send', function (data) {
+			socket.on('message', function (data) {
 			routes.pokes(data);
 			global.io.sockets.emit('message', data);
 		}); 
   });
+
+var pusher = new Pusher({
+  appId: '65555',
+  key: '7887ef69f6a3f0ef790d',
+  secret: 'd3d781066a92a9cf51bc'
+});
+
+pusher.trigger('test_channel', 'my_event', {
+  "message": "hello world"
+});
+
 
 });
 
