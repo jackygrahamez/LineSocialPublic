@@ -347,18 +347,6 @@ server.listen(app.get('port'), function(){
 			global.io.sockets.emit('message', data);
 		}); 
   });
-
-var pusher = new Pusher({
-  appId: '65555',
-  key: '7887ef69f6a3f0ef790d',
-  secret: 'd3d781066a92a9cf51bc'
-});
-
-pusher.trigger('test_channel', 'my_event', {
-  "message": "hello world"
-});
-
-
 });
 
 

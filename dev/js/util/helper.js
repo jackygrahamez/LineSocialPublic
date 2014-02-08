@@ -947,8 +947,8 @@ function fbInviteCode(username, invite_code) {
 
 
 function notificationsModule() {
-  var pusher = new Pusher("7887ef69f6a3f0ef790d");
-  var channel = pusher.subscribe("test_channel");  
+  //var pusher = new Pusher("7887ef69f6a3f0ef790d");
+  //var channel = pusher.subscribe("test_channel");  
   var message_from = $(".message_from").attr("value");
 
     global_tID = "";  
@@ -998,14 +998,14 @@ function notificationsModule() {
       $(".line_pokes div").addClass("hide");
     } 
   }
-
+/*
   channel.bind('message',
   function(data) {
     // add new price into the APPL widget
     console.log("new message "+data);
   }
 );
-  
+*/  
     socket.on('message', function (data) {
         if(data.message) {
             messages.push(data);
@@ -1168,7 +1168,7 @@ function notificationsModule() {
         var cID = $(".notifications.controls .cID").attr("value");      
         var fID = $(".notifications.controls .fID").attr("value"); 
         socket.emit('message', { ts: timestamp, cID: cID, fID: fID, tID: tID, message: text, username: user });
-        channel.trigger("message", { ts: timestamp, cID: cID, fID: fID, tID: tID, message: text, username: user });
+        //channel.trigger("message", { ts: timestamp, cID: cID, fID: fID, tID: tID, message: text, username: user });
         var url = "/"+name.value+"/update_messages/";
         updateMessages(timestamp, cID, fID, tID, text, user, url);
       $(".field.notifications").val("");         
@@ -1391,8 +1391,8 @@ function setCookie(cname,cvalue,exdays)
 }
 
 function messageInitialize() {
-  var pusher = new Pusher("7887ef69f6a3f0ef790d");
-  var channel = pusher.subscribe("test_channel");
+  //var pusher = new Pusher("7887ef69f6a3f0ef790d");
+  //var channel = pusher.subscribe("test_channel");
 
   var points_to = $(".points_to").attr("value");
   var send = $(".send_button_text").attr("value");
@@ -1477,14 +1477,14 @@ function messageInitialize() {
   
   
     });
-    
+/*    
   channel.bind('message',
     function(data) {
       // add new price into the APPL widget
       console.log("new message "+data);
     }
   );         
-
+*/
     socket.on('message', function (data) {
     
       var tester = $(".tester").val();
@@ -1592,11 +1592,11 @@ function messageInitialize() {
             console.log("emitting");
             socket.emit("message", { ts: timestamp, cID: cID, fID: fID, tID: tID, message: text, username: user, tester: tester });          
             var url = "/"+user+"/update_messages/";
-            channel.trigger("message", { ts: timestamp, cID: cID, fID: fID, tID: tID, message: text, username: user, tester: tester }); 
+            //channel.trigger("message", { ts: timestamp, cID: cID, fID: fID, tID: tID, message: text, username: user, tester: tester }); 
             updateMessages(timestamp, cID, fID, tID, text, user, tester, url);
             text = "";
         }
-        channel.bind("message", function(){ console.log("data "+JSON.stringify(data))});
+        //channel.bind("message", function(){ console.log("data "+JSON.stringify(data))});
     });
 
 }
