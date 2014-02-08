@@ -24,7 +24,10 @@ var clients = {};
 var app    = express();
 var server = http.createServer(app);
 global.io  = require('socket.io').listen(server);
-
+global.io.configure(function () { 
+  io.set("transports", ["xhr-polling"]); 
+  io.set("polling duration", 10); 
+});
 
 app.configure(function () {
 
