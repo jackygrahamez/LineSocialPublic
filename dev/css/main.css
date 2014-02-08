@@ -272,6 +272,9 @@ input, textarea, button, input[type='submit'] {
 	-weblit-border-radius: 6px;
 	border-radius: 6px;
 }
+input[type="text"] {
+	color: black;
+}
 textarea {
 	height: 30px;
 }
