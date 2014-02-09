@@ -1484,9 +1484,9 @@ function messageInitialize() {
       console.log("new message "+data);
     }
   );         
-*/
+*/setTimeout(function(){
     socket.on('message', function (data) {
-    
+      console.log("data "+data);
       var tester = $(".tester").val();
         if(data.message) {
             messages.push(data);
@@ -1553,6 +1553,7 @@ function messageInitialize() {
             console.log("There is a problem:", data);
         }
     });
+}, 1000);
  
     $(".send.message").click(function() {
       var tester = $(".tester").val();
