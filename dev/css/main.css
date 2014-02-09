@@ -272,7 +272,9 @@ input, textarea, button, input[type='submit'] {
 	-weblit-border-radius: 6px;
 	border-radius: 6px;
 }
-input[type="text"] {
+input[type="text"],
+input[type="email"],
+input[type="password"] {
 	color: black;
 }
 textarea {

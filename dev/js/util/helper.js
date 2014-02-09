@@ -1409,7 +1409,7 @@ function messageInitialize() {
     var name = document.getElementById("name");
     var match = false;
     var sender = "bubbledLeft";
-  var cID = $(".message.controls .cID").val();    
+    var cID = $(".message.controls .cID").val();    
 
     var text = $(".field.message").val();    
   $(".message.controls .cID").attr("value", global_cID);
@@ -1533,8 +1533,9 @@ function messageInitialize() {
               }
            $(".content.messages").html(html);
            if (tester != "undefined") {
-        html = $(".content.messages").html();
-        if($(".content.messages div").length < 3) {           
+          html = $(".content.messages").html();
+          setTimeout(function() {
+            if($(".content.messages div").length < 3) {           
                 html += '<div class="bubbledLeft"><span><b> System: </b>';
                 html += 'User Left! Sorry <time>' + time +'</time></span></div>';
                 $(".content.messages").html(html);   
@@ -1545,7 +1546,8 @@ function messageInitialize() {
                 var cID = $(".message.controls .cID").val();
                 var fID = $(".message.controls .fID").val();    
                 grantPoints(cID, fID);             
-                }         
+                }
+                }, 1000);         
            }
          
         } else {
@@ -1594,4 +1596,43 @@ function messageInitialize() {
         //channel.bind("message", function(){ console.log("data "+JSON.stringify(data))});
     });
 
+    sendSystemMessage();
+
 }
+
+    function sendSystemMessage() {
+      var socket = io.connect(location.origin);      
+      console.log("checking tester");
+      var tester = $(".tester").val();
+      var user = "system";      
+      var d = new Date();
+      var session_id = $(".session_id").val();
+      
+        if(user == "") {
+            alert("Please type your name!");
+        } else {
+          var d = new Date();
+          var h = d.getHours();
+          var td = "am";
+          if (h > 12) { 
+          h = h - 12;
+          td = "pm"; 
+          }
+          var m = d.getMinutes();
+          m = checkTime(m);   
+        var time = " " + h + ":" + m + " "+td;
+        var timestamp = d.getTime();
+        var text = "You have just poked "+global_toUser;
+        //var text = text + time;    
+        var cID = $(".message.controls .cID").val();
+        var tID = $(".message.controls .tID").val();
+        var fID = $(".message.controls .fID").val();
+        $(".field.message").val("");                
+        global_cID = $(".message.controls .cID").attr("value"); 
+            console.log("emitting");
+            socket.emit("message", { ts: timestamp, cID: cID, fID: tID, tID: fID, message: text, username: user, tester: tester });          
+            var url = "/"+user+"/update_messages/";
+            updateMessages(timestamp, cID, tID, fID, text, user, tester, url);
+            text = "";
+        }
+    }
