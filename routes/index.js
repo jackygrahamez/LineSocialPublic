@@ -348,9 +348,10 @@ exports.user_lines = function(req, res) {
 	        "ll": coord
 	    };
   if ((req.session.loggedIn)) {
-	  
+	  	console.log("getVenues");
+	  	console.log("params "+JSON.stringify(params));
 	    foursquare.getVenues(params, function(error, venues) {
-	    	console.log(venues);
+	    	//console.log(venues);
 	        if (!error) {
 	        	if (typeof(venues) != "undefined" && (JSON.stringify(venues.response.venues) != "null")) {
 		        	var i = Math.floor((Math.random()*venues.response.venues.length)+1);
