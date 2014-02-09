@@ -1395,7 +1395,7 @@ function messageInitialize() {
   //var channel = pusher.subscribe("test_channel");
 
   var points_to = $(".points_to").attr("value");
-  var send = $(".send_button_text").attr("value");
+  var send_button_text = $(".send_button_text").attr("value");
 
   if (global_toUser) {
     $(".wrapper > h2").removeClass("hide");
@@ -1556,11 +1556,6 @@ function messageInitialize() {
     $(".send.message").click(function() {
       console.log("checking tester");
       var tester = $(".tester").val();
-      console.log("value of "+tester);
-      if (typeof(tester)=="undefined" || tester === "undefined") { 
-        tester = ""; 
-        console.log("setting test to blank");
-      }
       var user = $(".name.message").val();      
       var d = new Date();
       var session_id = $(".session_id").val();

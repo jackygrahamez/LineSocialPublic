@@ -73,7 +73,7 @@ app.use(passport.session());
 
 app.use(i18n.init);
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'prod')));
+app.use(express.static(path.join(__dirname, 'dev')));
 });
 
 /* FACEBOOK AUTHENTICATION */
