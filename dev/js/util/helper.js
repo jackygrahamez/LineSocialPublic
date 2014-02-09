@@ -1484,30 +1484,31 @@ function messageInitialize() {
       console.log("new message "+data);
     }
   );         
-*/setTimeout(function(){
+*/
+setTimeout(function(){
     socket.on('message', function (data) {
-      console.log("data "+data);
+      console.log("data "+JSON.stringify(data));
       var tester = $(".tester").val();
         if(data.message) {
             messages.push(data);
             var html = $(".content.messages").html();
             var chat_requests = '';            
             var fIDlist = [];
-      var d = new Date();
-      var h = d.getHours();
-      var td = "am";
-      if (h > 12) { 
-      h = h - 12;
-      td = "pm"; 
-      }
-      var m = d.getMinutes();
-      m = checkTime(m);   
-      var time = " " + h + ":" + m + " "+td;
-      var timestamp = d.getTime();            
-      global_fID = $(".message.controls .fID").attr("value");
-      $('.content.messages').stop().animate({
-        scrollTop: $(".content.messages")[0].scrollHeight
-      }, 800);        
+            var d = new Date();
+            var h = d.getHours();
+            var td = "am";
+            if (h > 12) { 
+            h = h - 12;
+            td = "pm"; 
+            }
+            var m = d.getMinutes();
+            m = checkTime(m);   
+            var time = " " + h + ":" + m + " "+td;
+            var timestamp = d.getTime();            
+            global_fID = $(".message.controls .fID").attr("value");
+            $('.content.messages').stop().animate({
+              scrollTop: $(".content.messages")[0].scrollHeight
+            }, 800);        
               for(var i=0; i<messages.length; i++) {
               var sender = "bubbledLeft";
               match = false;
@@ -1528,8 +1529,8 @@ function messageInitialize() {
                     html += messages[i].message + ' <time>' + time +'</time></span></div>';
                     }
                     match = false;
-          }                 
-              }
+              }                 
+            }
            $(".content.messages").html(html);
            if (tester != "undefined") {
           html = $(".content.messages").html();
