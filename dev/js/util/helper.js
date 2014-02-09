@@ -1488,7 +1488,6 @@ function messageInitialize() {
     socket.on('message', function (data) {
     
       var tester = $(".tester").val();
-      console.log("tester "+tester);
         if(data.message) {
             messages.push(data);
             var html = $(".content.messages").html();
@@ -1556,7 +1555,6 @@ function messageInitialize() {
     });
  
     $(".send.message").click(function() {
-      console.log("checking tester");
       var tester = $(".tester").val();
       var user = $(".name.message").val();      
       var d = new Date();
@@ -1567,32 +1565,34 @@ function messageInitialize() {
         if(user == "") {
             alert("Please type your name!");
         } else {
-          var d = new Date();
-          var h = d.getHours();
-          var td = "am";
-          if (h > 12) { 
-          h = h - 12;
-          td = "pm"; 
+            var d = new Date();
+            var h = d.getHours();
+            var td = "am";
+            if (h > 12) { 
+            h = h - 12;
+            td = "pm"; 
           }
-          var m = d.getMinutes();
-          m = checkTime(m);   
-        var time = " " + h + ":" + m + " "+td;
-        var timestamp = d.getTime();
+            var m = d.getMinutes();
+            m = checkTime(m);   
+            var time = " " + h + ":" + m + " "+td;
+            var timestamp = d.getTime();
             var text = $(".field.message").val();
-        //var text = text + time;    
-        var cID = $(".message.controls .cID").val();
-        var tID = $(".message.controls .tID").val();
-        var fID = $(".message.controls .fID").val();
-        $(".field.message").val("");                
-        global_cID = $(".message.controls .cID").attr("value"); 
+            //var text = text + time;    
+            var cID = $(".message.controls .cID").val();
+            var tID = $(".message.controls .tID").val();
+            var fID = $(".message.controls .fID").val();
+            $(".field.message").val("");                
+            global_cID = $(".message.controls .cID").attr("value"); 
             //socket.emit('send', { ts: timestamp, cID: cID, fID: fID, tID: tID, message: text, username: user, tester: tester });
-            console.log("emitting");
+            var newMessage = { ts: timestamp, cID: cID, fID: fID, tID: tID, message: text, username: user, tester: tester };
+            console.log("newMessage "+JSON.stringify(newMessage));
+            socket.emit("message", {message: "test"});
             socket.emit("message", { ts: timestamp, cID: cID, fID: fID, tID: tID, message: text, username: user, tester: tester });          
             var url = "/"+user+"/update_messages/";
             //channel.trigger("message", { ts: timestamp, cID: cID, fID: fID, tID: tID, message: text, username: user, tester: tester }); 
             updateMessages(timestamp, cID, fID, tID, text, user, tester, url);
             text = "";
-        }
+          }
         //channel.bind("message", function(){ console.log("data "+JSON.stringify(data))});
     });
 
@@ -1601,8 +1601,7 @@ function messageInitialize() {
 }
 
     function sendSystemMessage() {
-      var socket = io.connect(location.origin);      
-      console.log("checking tester");
+      var socket = io.connect(location.origin);
       var tester = $(".tester").val();
       var user = "system";      
       var d = new Date();
@@ -1629,7 +1628,6 @@ function messageInitialize() {
         var fID = $(".message.controls .fID").val();
         $(".field.message").val("");                
         global_cID = $(".message.controls .cID").attr("value"); 
-            console.log("emitting");
             socket.emit("message", { ts: timestamp, cID: cID, fID: tID, tID: fID, message: text, username: user, tester: tester });          
             var url = "/"+user+"/update_messages/";
             updateMessages(timestamp, cID, tID, fID, text, user, tester, url);
