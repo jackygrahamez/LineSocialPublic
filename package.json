@@ -11,7 +11,16 @@
     "grunt-selenium-simple": ">= 0.1.1",
     "jasmine-runner": ">= 0.2.9",
     "phantom-jasmine": ">= 0.3.0",
-    "grunt-mocha-selenium": "~0.7.0"
+    "grunt-mocha-selenium": "~0.7.0",
+    "grunt-nodemon": "~0.2.0",
+    "watch": "~0.9.0",
+    "grunt-concurrent": "~0.4.3",
+    "node-inspector": "~0.7.0-2",
+    "watch": "~0.9.0",
+    "node-inspector": "~0.7.0-2",
+    "grunt-contrib-watch": "~0.5.3",
+    "nodeunit": "~0.8.4",
+    "grunt-shell": "~0.6.4"
   },
   "dependencies": {
     "express": "3.2.4",
