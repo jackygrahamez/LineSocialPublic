@@ -5,6 +5,14 @@
   "scripts": {
     "start": "node app.js"
   },
+  "devDependencies": {
+    "grunt-cli": ">= 0.1.13",
+    "chromedriver": ">= 2.8.1",
+    "grunt-selenium-simple": ">= 0.1.1",
+    "jasmine-runner": ">= 0.2.9",
+    "phantom-jasmine": ">= 0.3.0",
+    "grunt-mocha-selenium": "~0.7.0"
+  },
   "dependencies": {
     "express": "3.2.4",
     "socket.io": "*",
