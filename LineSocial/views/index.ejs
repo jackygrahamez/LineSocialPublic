@@ -1,0 +1,48 @@
+<% include header %>
+
+  <div class="container hero-unit">
+      <form method="post" action="/login" class="form-horizontal form-skin">
+        <div class="control-group">
+          <div class="controls">
+            <input type="email" id="inputEmail" name="email" placeholder="<%= l('Email') %>">
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="controls">
+            <input type="password" id="inputPassword" name="password" placeholder="<%= l('Password') %>">
+          </div>
+        </div>
+        <div class="control-group">      
+          <div class="controls">
+	          <table>
+		          <tr class="on_off">
+					<th><label for="on_off"><%= l('Remember Me:') %></label></th>
+					  <td>
+					  <label class="on_off">
+					    <input type="checkbox" id="on_off" />
+					    </label>
+					  </td>
+					</tr>
+			  </table>
+            <button id="submit" type="submit" class="btn btn-flat btn-blue no-radius"><%= l('Sign In') %></button>
+	        <p>
+	        	<a href="/forgot_password"><%= l('Forgot Password?') %></a>
+	        </p>
+
+            <a href="/register"><button id="register" type="button" class="btn btn-flat btn-blue no-radius"><%= l('Register Here') %></button></a>
+          </div>
+        </div>
+      </form>
+      <br />
+      <a class="facebook" href="/auth/facebook"> <img src="img/linelogoBlackGreen.png" style="height: 20px; display:inline-block;margin: 0px 15px; cursor:pointer; cursor:hand; border:0;" /><img src="/img/login-with-facebook.png" width="154" height="22"></a>
+ 	  <br />
+ 	  <br />
+ 	  
+
+  </div>
+
+
+<%include footer %>
+ <div class="overlay"><div></div></div>
+
+

@@ -1,0 +1,84 @@
+
+// NYC AREA
+// N 41.103156, S 40.577456 = 0.5257/100 = 0.005257
+// W -74.42296, E -73.447924 = 0.975036/100 = 0.00975036
+
+function insertTestData() {
+var lon = -73.447924;
+for (var x=0;x<100;x++) {
+lon = lon - 0.005257;
+var lat = 40.577456;
+for (var y=0;y<100;y++) {
+lat = lat + 0.005257;
+var d = new Date();
+var expire = new Date (d.getTime() + 86400000);
+var firstname = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed ornare felis. Nullam sed nulla dignissim, condimentum risus sit amet, sodales diam. Morbi eget adipiscing nunc, in varius felis. Phasellus consequat dapibus porta. Mauris congue ligula ut mi sagittis, sit amet ornare lectus consectetur. Etiam eget euismod mi, ac semper arcu. Vivamus ipsum orci, tincidunt nec purus eu, sagittis auctor lacus. Morbi vitae odio ultricies, rutrum turpis ac, sagittis quam. Curabitur laoreet leo sollicitudin arcu iaculis placerat. In enim lacus, suscipit a sodales a, elementum id felis.";
+var lastname = "Proin tristique congue erat vitae pharetra. Vivamus non ligula diam. Nullam dignissim eleifend luctus. Aliquam elementum augue vel magna malesuada, ac semper tortor facilisis. Nullam vel tortor vel neque suscipit porttitor ut ut nunc. In et est eget orci egestas laoreet. Suspendisse ornare, odio at tristique adipiscing, odio est ullamcorper mi, eu sodales ante risus ornare massa. Cras erat lorem, suscipit sed tincidunt at, lobortis eu ipsum.";
+var username = "In hac habitasse platea dictumst. Mauris vitae diam malesuada, suscipit ipsum eget, venenatis arcu. Vestibulum adipiscing tincidunt suscipit. Morbi adipiscing ipsum sit amet felis tempus adipiscing. Nunc convallis lacinia eros. Morbi eu auctor neque. Sed eget imperdiet eros. Aliquam convallis, massa non porta pharetra, dolor lorem iaculis tellus, sed condimentum massa purus at tellus. Curabitur accumsan nisl volutpat blandit vulputate. Phasellus laoreet eu sapien vitae commodo. Cras vitae nunc est.";
+var location = "Aenean feugiat libero turpis, sed aliquet arcu tempus at. Nam nunc nisl, pulvinar eu pellentesque vel, ullamcorper eget elit. Pellentesque quis consectetur urna. Aliquam sit amet semper risus. Phasellus placerat vestibulum justo non tristique. Phasellus a turpis id nisl placerat cursus vel varius eros. Quisque et vehicula tortor. Nulla dapibus nunc eget purus luctus venenatis. Donec sodales, orci non tempus convallis, tortor arcu tristique arcu, eu gravida mi nibh a mauris. Nulla at dui mattis, pharetra velit imperdiet, ullamcorper nisl. Vivamus feugiat, lacus nec adipiscing vehicula, risus turpis consectetur turpis, sed lacinia erat nibh vel felis. Curabitur iaculis pharetra convallis. Aliquam et lacus vitae tortor interdum elementum eget eu neque. Proin eu ornare purus. Cras tincidunt, arcu non semper faucibus, arcu neque lobortis neque, eu tempus turpis nisi et sapien.";
+var i = Math.floor((Math.random()*firstname.split(" ").length)+1);
+firstname = firstname.split(" ")[i];
+var i = Math.floor((Math.random()*lastname.split(" ").length)+1);
+lastname = lastname.split(" ")[i];
+var i = Math.floor((Math.random()*username.split(" ").length)+1);
+username = username.split(" ")[i] + "_"+ Math.floor((Math.random()*1000)+1);
+var i = Math.floor((Math.random()*location.split(" ").length)+1);
+location = location.split(" ")[i];
+var email = username + "@test.com";
+var data = {
+"email": email,
+"name": {
+"first": firstname,
+"last": lastname
+},
+"password": "6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090",
+"username": username,
+"check_in": {
+"cID": ObjectId(),
+"location": location,
+"geolocation": [
+lat,
+lon
+],
+"line_length": 86400000,
+"check_in_time": d,
+"check_in_expire_time": expire
+}
+}
+printjson (data);
+db.accounts.insert(data);
+}
+}
+}
+
+
+
+
+db.accounts.find({ "check_in.geolocation" : { "$near" : { "$geometry" : { "type" : "Point", "coordinates" : [ 24.522486, 66.955782 ]}}, "$maxDistance":500}});
+
+db.accounts.find({ "check_in.geolocation" : { "$near" : { "$geometry" : { "type" : "Point", "coordinates" : [ 41.88723408627484, -74.81166246868779 ]}}, "$maxDistance":500}});
+
+
+mongo ds029589-a0.mongolab.com:29589/heroku_app19413190 -u heroku_app19413190 -p suf1uaaio2mr0jn4jlpbpdpgud
+mongodb://heroku_app19413190:suf1uaaio2mr0jn4jlpbpdpgud@ds029589-a0.mongolab.com:29589/heroku_app19413190
+
+
+
+db.accounts.find({"_id" : ObjectId("52941fd38423053288971672")}).pretty();
+
+
+var d = new Date();
+var expire = d.getTime() + 86400000;
+db.accounts.update({"_id" : ObjectId("52941fd38423053288971672")}, { $set : { "check_in.check_in_expire_time" : expire } } );
+
+
+var d = new Date();
+var expire = d.getTime() + 86400000;
+db.accounts.update({}, { $set : { "check_in.check_in_expire_time" : expire } } );
+
+
+
+
+
+
+

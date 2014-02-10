@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html class="disabled">
+  <head>
+    <title><%= l(title) %></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta property="og:image" content="https://alpha.linesocial.mobi/img/linelogoBlackGreen.png" />
+	<link rel='stylesheet' href='/css/main.css' />
+	<link rel="alternate stylesheet" type="text/css" href="/css/red.css" title="red" />
+	<link rel="alternate stylesheet" type="text/css" href="/css/blue.css" title="blue" />
+	<link rel="alternate stylesheet" type="text/css" href="/css/gold.css" title="gold" />
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  </head>
+  <body class="<%= pagename %>">
+
+        <header>
+            <div class="container-fluid">
+				<div class="back button"><%= l('Home') %></div>      
+                <div id="branding" class="aligncenter">
+                	<h1 class="light no-margin"><%= l('LineSocial') %>&trade;</h1>
+                <a class="button right logout" href="/"><%= l('Logout') %></a>
+                </div>
+            </div>
+ 
+        </header>

@@ -1,0 +1,36 @@
+<section class="content">
+
+<% include subpage_header %>
+<div class="wrapper">
+	<h2 class="light no-margin"><%= l('Confirm Telephone Number') %></h2>
+	<p>
+		Please trace drawing, then click Send SMS.<br />
+		Check your inbox for confirmation code.
+	</p>
+	
+    <section class="bordered validate_email">
+
+	    <form id='captcha' method="POST" action="/<%= user.username %>/send_validate_phone">
+	        <div id="mc">
+	            <canvas id="mc-canvas" class="<%= error ? 'mc-invalid' : '' %>"></canvas>
+	        </div>    
+	      <input id="send_confirm_sms" type="button" value="<%= l('Send SMS') %>" >
+	    </form>
+
+    </section>
+</div>
+</section>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+    $('#captcha').motionCaptcha('<%= shape %>');
+	
+	$("#send_confirm_sms").click(function(){
+		var points = $("input[name='_points']").attr("value");
+		var url = $("#captcha").attr("action");
+		captchaPoints(points, url);
+	});
+});
+
+</script>

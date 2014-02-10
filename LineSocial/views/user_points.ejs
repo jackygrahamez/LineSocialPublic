@@ -1,0 +1,29 @@
+<section class="content">
+
+<% include subpage_header %>
+<div class="wrapper">
+	<h2 class="light no-margin"><%= l('Points') %></h2>
+
+    <section class="bordered">
+	<ul>
+	<% if (user.points != undefined) { %>
+	<li><%= l('Points:') %> <%= user.points %>  <span class="green"><%= l('+1 weekly') %></span></li>
+	<% } %>
+	<li class="arrow buy"><%= l('Buy Points') %></li> 
+	</ul>
+	<ul>
+	<li class="message collapsed invalid"><%= l('Points cannot be purchased currently') %></li>
+	</ul>
+
+    </section>
+</div>
+</section>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".buy").click(function() {
+		$(this).toggleClass("down");	
+		$(".message").toggleClass("collapsed");
+	});
+});
+</script>

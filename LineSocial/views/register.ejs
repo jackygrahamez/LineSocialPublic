@@ -1,0 +1,122 @@
+
+
+<section class="content">
+<div class="wrapper">
+  <form method="post" action="/register" class="form-skin register">
+      <input type="text" name="firstName" required placeholder="<%= l('Your firstname here') %>"/>
+      <input type="text" name="lastName" required placeholder="<%= l('Your lastname here') %>"/>
+      <input type="text" name="username" required placeholder="<%= l('Your username here') %>"/>
+      <input type="email" name="email" required placeholder="<%= l('Your Email here') %>"/>
+      <input type="email" name="cemail" required placeholder="<%= l('Your Email (confirm) here') %>"/>
+      <input type="password" name="password" required placeholder="<%= l('Your password here') %>"/>
+      <input type="password" name="cpassword" required placeholder="<%= l('Your password (confirm) here') %>"/>
+      <input class="hide" type="text" name="invite_code" />
+      <input type="text" name="telephone" placeholder="<%= l('telephone number (optional)') %>"/>
+      <p></p>
+      <p>
+	  <label><%= l('Accept Terms & Conditions') %></label>
+	  <br />
+	  <input id="terms" name="terms" type="checkbox"/>
+	  <br />   
+      <input id="user_register" type="button" value="<%= l('Register Now') %>" class="btn btn-flat btn-blue no-radius"/>
+      </p>
+  </form>
+</div>
+</section>
+
+<script>
+$(document).ready(function(){
+	var invite_code = getCookie("invite_code");
+	console.log("invite_code "+invite_code);
+
+	$("input[name='invite_code']").attr("value", invite_code);
+
+	$(".iPhoneCheckLabelOn > span").text("Yes");
+	$(".iPhoneCheckLabelOff > span").text("No");
+	
+	setTimeout(function(){
+		$("header > div .back.button").addClass("active");	
+	}, 1000);
+
+    $(".back.button").click(function(){
+	  $("header > div .back.button").removeClass("active");    
+	  $(".body").last().removeClass("active"); 
+	  $(".checkin").remove();
+    });
+    $("#user_register").click(function() {
+	   var email = $(".register input[name='email']").val();
+	   var cemail = $(".register input[name='cemail']").val();
+	   var password = $(".register input[name='password']").val();
+	   var cpassword = $(".register input[name='cpassword']").val();
+	   var firstName = $(".register input[name='firstName']").val();
+	   var lastName = $(".register input[name='lastName']").val();
+	   var telephone = $(".register input[name='telephone']").val();	   
+	   var username = $(".register input[name='username']").val();
+	   var invite_code = $(".register input[name='invite_code']").val();
+	   var terms = $(".register input[name='terms']").is(":checked");
+	   var valid = true;
+	   $(".register > input").each(function(){
+	   	if ($(this).attr("name") != "telephone") {
+			   var object = $(this);
+			   var value = object.val();
+			   
+			   if (value.length < 1) {
+				   object.addClass("invalid");
+				   valid = false;
+				   console.log("value less than 1");
+			   }	
+		   }		   	
+	   });
+	   
+	   $(".register > input[type='email']").each(function(){
+		   	var object = $(this);
+		   	var value = object.val();
+		   if (!isValidEmail(value)) {
+			   object.addClass("invalid");
+			   valid = false;
+			   console.log("email invalid");
+		   }			   	
+	   });
+
+	   if (email != cemail) {
+		   $("input[name='email']").addClass("invalid");
+		   $("input[name='cemail']").addClass("invalid");
+		   valid = false;
+		   console.log("emails don't match");
+	   } 
+	   
+	   if (password != cpassword) {
+		   $("input[name='password']").addClass("invalid");
+		   $("input[name='cpassword']").addClass("invalid");
+		   valid = false;
+	   }	   
+	   if (terms === false) {
+		   $("input[name='terms']").addClass("invalid");
+		   $("form label").addClass("invalid");
+		   valid = false;
+	   }
+	   //Length
+	   if (firstName.length > 30) {
+		   $("input[name='firstName']").addClass("invalid");
+		   var invalidMessage = "<p class='invalid'>30 Characters Max</p>";
+		   $("input[name='firstName']").after(invalidMessage);
+		   valid = false;
+	   }
+	   if (lastName.length > 30) {
+		   $("input[name='lastName']").addClass("invalid");
+		   var invalidMessage = "<p class='invalid'>30 Characters Max</p>";
+		   $("input[name='lastName']").after(invalidMessage);
+		   valid = false;
+	   }	   
+	   if (username.length > 20) {
+		   $("input[name='username']").addClass("invalid");
+		   var invalidMessage = "<p class='invalid'>20 Characters Max</p>";
+		   $("input[name='username']").after(invalidMessage);
+		   valid = false;
+	   }
+	   if (	valid && (email === cemail) && (password === cpassword)) {
+		   userRegister(email, password, firstName, lastName, username, telephone, invite_code);
+		} 
+   });	
+});
+</script>

@@ -1,0 +1,112 @@
+<section class="content">
+<% include subpage_header %>
+<div class="wrapper profile">
+	<h2 class="light no-margin"><%= l('Profile') %></h2>
+    <section class="bordered">
+    <p>Send Invite</p>
+    <ul><a href="/<%= user.username %>/send_invite_form/"><li class="arrow">Invite Friend</li></a></ul>
+    <p>Pick a theme?</p>
+	<menu class="themes">
+	    <li class="normal_theme" rel=""></li>			
+	    <li class="red_theme" rel="red"></li>
+	    <li class="blue_theme" rel="blue"></li>
+	    <li class="gold_theme" rel="gold"></li>
+	</menu>    
+    
+    <% if(user.check_in.location != undefined) { %>
+	<% var d = new Date(user.check_in.check_in_time.getTime()) %>
+	<% if (d.getHours() > 12) { var h = d.getHours() - 12; var td = "pm";} else { var h = d.getHours(); var td = "am"; } %>
+	<% if (d.getMinutes() < 10) { var m = "0"+ d.getMinutes(); } else { var m = d.getMinutes(); }%>
+	<% var time = d.toDateString() + " "+h+":"+m+" "+td; %>    
+	<% var d = new Date(user.check_in.check_in_expire_time.getTime()) %>
+	<% if (d.getHours() > 12) { var h = d.getHours() - 12; var td = "pm";} else { var h = d.getHours(); var td = "am"; } %>
+	<% if (d.getMinutes() < 10) { var m = "0"+ d.getMinutes(); } else { var m = d.getMinutes(); }%>
+	<% var etime = d.toDateString() + " "+h+":"+m+" "+td; %> 
+    <% } %>
+
+	  <form method="post" action="/register" class="form-skin register">
+    <% if(user.check_in.location != undefined) { %>	  
+    <p><%= l('Check-in Info:') %></p>
+    <ul>	 
+    	  <li><%= l('Check-in:') %> <%= time %></li>
+    	  <li><%= l('Expires:') %> <%= etime %></li>
+    	  <li><%= user.check_in.location %></li>
+    </ul>    	      	  
+    <% } %>    	   
+    <p><%= l('User Info') %>:</p>
+	      <input class="hide" value="<%= user._id %>" type="text" name="id" required  />
+	<ul>      	  
+	      <li><%= l('Name') %>: <%= user.name.first %> <%= user.name.last %></li>
+	      <li><%= l('Username') %>: <%= user.username %></li>
+	</ul>
+	
+
+    <% if(user.email != undefined) { %>	  	
+    	<% if (typeof(user.email_valid) == "undefined") {  %>       
+		  <p class="invalid">Please Confirm</p>    	
+		      <ul>
+	      		<a href="/<%= user.username %>/validate_email"><li class="invalid arrow"><%= l('Email') %>: <%= user.email %></li></a>
+	          </ul>
+	      <% } else { %>
+			<% if (user.email_valid) { %>
+			  <ul>
+			  <li class="arrow"><%= l('Email') %>: <%= user.email %></li>
+			  </ul> 
+			<% } else { %>
+			  <p class="invalid">Please Confirm</p>    	
+			  <ul>
+		      <a href="/<%= user.username %>/validate_email"><li class="invalid arrow"><%= l('Email') %>: <%= user.email %></li></a>
+		      </ul>			  
+			<% } %>	      
+	      <% } %>
+    <% } %>
+
+          <p><%= l('Change your telephone number?') %></p>    
+          
+	<% if (typeof(user.telephone_valid) == "undefined") {  %> 
+		  	<input class="invalid arrow" type="text" name="telephone" placeholder="telephone number" value="<%= user.telephone %>" autocomplete="off" />
+			<a href="/<%= user.username %>/validate_phone"><div class="tel_arrow"></div></a>
+	<% } else { %>
+		<% if (user.telephone_valid) { %>
+		  <input type="text" name="telephone" placeholder="telephone number" value="<%= user.telephone %>" autocomplete="off" />
+		<% } else { %>
+		  <p class="invalid">Please Confirm</p>
+		  	<input class="invalid arrow" type="text" name="telephone" placeholder="telephone number" value="<%= user.telephone %>" autocomplete="off" />
+			<a href="/<%= user.username %>/validate_phone"><div class="tel_arrow"></div></a>
+		<% } %>
+	<% } %>
+          <p><%= l('Change your password?') %></p>
+    <ul>       
+	      <input type="password" name="password" required placeholder="<%= l('Your password here') %>"/>
+	      <input type="password" name="cpassword" required placeholder="<%= l('Your password (confirm) here') %>"/>
+	      <p></p>
+	      <p>
+	      <input id="profile_update" type="button" value="<%= l('Update Now') %>" class="btn btn-flat btn-blue no-radius"/>
+	      </p>
+	</ul>	      
+	  </form>
+	 
+    </section>
+</div>
+</section>
+
+
+<script type="text/javascript">
+   $("input[name='telephone']").intlTelInput();
+   $("#profile_update").click(function(){
+   	console.log("profile update");
+	   var valid = true;	   
+	   var telephone = $("input[name='telephone']").val();
+	   var password = $("input[name='password']").val();
+	   var cpassword = $("input[name='cpassword']").val();
+	   var id = $("input[name='id']").val();
+	   var url = "/<%= user.username %>/update_password/";
+	   if (password != cpassword || password.length == 0) {
+		   $("input[name='password']").addClass("invalid");
+		   $("input[name='cpassword']").addClass("invalid");
+		   valid = false;
+	   }
+	   if (valid) {
+		   updatePassword(id, password, url, telephone);
+		} 	   
+   });

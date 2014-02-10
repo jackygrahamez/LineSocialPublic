@@ -1,0 +1,36 @@
+<section class="notifications right">
+<!--notifications -->
+<% include subpage_header %>
+<div class="wrapper">
+	<h2 class="light no-margin hide"><%= l('Line Pokes') %></h2>
+    <section class="chat_requests bordered">
+    <ul><%- requests %></ul>
+    <div class="notifications accordion off">
+	    <div class="content notifications">
+	    <p><%= message %></p>
+    	<% for(var i=0;i < message.length;i++) { %>
+    	<% var senderClass = "bubbledLeft"; %>
+    	<p><%= message[i].fID %> <%=  user._id %></p>
+		<% if (JSON.stringify(message[i].fID) == JSON.stringify(user._id) ) { var senderClass = "bubbledRight"; } %>    	
+    	<div name="<%= message[i].user %>" class="<%= senderClass %>" ts="<%= message[i].ts %>" cid="<%= message[i].cID %>" fid="<%= message[i].fID %>" tid="<%= message[i].tID %>"><span><b><%= message[i].user %>:</b> <%= message[i].message %> <time><%= message[i].time %></tim></span></div>
+    	<% } %>	
+		</div>
+	    <div class="notifications controls">
+			<input class="hide cID notifications" value="<%= user.check_in.cID %>" />       
+			<input class="hide fID notifications" value="<%= user._id %>" />
+			<input class="hide tID notifications"  />    		
+			<input class="name notifications hide" placeholder="name" value="<%= user.username %>" /> 
+	        <input class="field notifications" placeholder="message" />
+	        <input class="send notifications" type="button"  value='<%= l('send') %>' />
+	    </div>
+    </div>
+    </section>
+</div>
+</section>
+
+
+<input class='hide message_from' value="<%= l('Message from') %>" />
+
+<script type="text/javascript">
+	notificationsModule();
+</script>

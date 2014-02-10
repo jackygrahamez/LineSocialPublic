@@ -1,0 +1,54 @@
+<menu>
+	<a href="/<%= user.username %>/user_check_in/">
+		<li class="arrow">
+			<%= l('Check-in') %>
+		</li>
+	</a>
+	<a href="/<%= user.username %>/user_lines/">
+		<li class="arrow">
+			<%= l('Lines') %>
+		</li>
+	</a>
+	<a href="/<%= user.username %>/user_points/">
+		<li class="arrow">
+			<%= l('Points') %>
+		</li>
+	</a>
+	<a href="/<%= user.username %>/user_profile/" class="right">
+    <% if((user.email != undefined) || (typeof(user.telephone_valid) == "undefined")) { %>	  	
+    	 <% if (typeof(user.email_valid) == "undefined") {  %>       
+			<li class="arrow invalid">
+				<%= l('Profile') %>		
+			</li>
+	      <% } else { %>
+			<% if ((user.email_valid) && (user.telephone_valid)) { %>
+			<li class="arrow">
+				<%= l('Profile') %>		
+			</li>
+			<% } else if ((user.telephone) && (!user.telephone_valid)) { %>
+			<li class="arrow invalid">
+				<%= l('Profile') %>		
+			</li>	  
+			<% } else { %>
+			<li class="arrow invalid">
+				<%= l('Profile') %>		
+			</li>	  
+			<% } %>	 
+	      <% } %>
+    <% } else if ((user.email_valid == false ) || (user.telephone_valid == false )){ %>
+		<li class="arrow invalid">
+			<%= l('Profile') %>		
+		</li>	
+    <% } else { %>	
+			<li class="arrow">
+				<%= l('Profile') %>		
+			</li>    	
+       <% } %>	
+	</a>
+	<a href="/<%= user.username %>/user_notifications/" class="right">
+		<li class="arrow line_pokes">
+			<%= l('Line Pokes') %>
+			<div class="hide"></div>	
+		</li>
+	</a>	
+</menu>
