@@ -7,7 +7,8 @@ var mongoose = require('mongoose'),
 
 //mongoose.connect('mongodb://localhost/LineSocial');
 //mongoose.connect('mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds053678.mongolab.com:53678/heroku_app19397517');
-mongoose.connect('mongodb://heroku_app19413190:suf1uaaio2mr0jn4jlpbpdpgud@ds029589-a0.mongolab.com:29589/heroku_app19413190');
+//MONGOLAB_URI: mongodb://heroku_app22073819:a68ool5kcg8eshvbvdopub6slt@ds033029-a0.mongolab.com:33029/heroku_app22073819
+mongoose.connect('mongodb://heroku_app22073819:a68ool5kcg8eshvbvdopub6slt@ds033029-a0.mongolab.com:33029/heroku_app22073819');
 
 
 //mongoose.connect('mongodb://heroku_app19413190:suf1uaaio2mr0jn4jlpbpdpgud@ds029589-a0.mongolab.com:29589/heroku_app19413190');
