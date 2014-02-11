@@ -1,105 +1,91 @@
-module.exports = function(grunt) {
+'use strict';
 
+module.exports = function (grunt) {
 
-
-/*
-  grunt.initConfig({
-    mochaSelenium: {
-      options: {
-        // Mocha options
-        reporter: 'spec',
-        timeout: 30e3,
-        // Toggles wd's promises API, default:false
-        usePromises: false
-      },
-      firefox: {
-        src: ['test/*.js']
-        // firefox is the default browser, so no browserName option required
-      },
-      chrome: {
-        src: ['test/*.js'],
-        options: {
-          // Chrome browser must be installed from Chromedriver support
-          browserName: 'chrome'
+    // Project configuration.
+    grunt.initConfig({
+        // Metadata.
+        pkg: grunt.file.readJSON('package.json'),
+        banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+            '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
+            '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
+            '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
+            ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
+        // Task configuration.
+        watch: {
+            all: {
+                files: ['src/**/*.*', 'test/**/*.*'],
+                tasks: ['default']
+            },
+        },
+        jasmine_node: {
+            specNameMatcher: "Spec",
+            specFolders: ["test/spec/common"],
+            projectRoot: "test/spec/node",
+            forceExit: true,
+        },
+        jshint: {
+            all: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
+            options: {
+                jshintrc: '.jshintrc',
+            }
+        },
+        browserify: {
+            main: {
+                src: ['./src/browser/App.js'],
+                dest: 'dist/app_bundle_main.js',
+                options: {
+                    alias: ["./src/browser/App.js:SampleApp"],
+                    ignore: ['src/node/**/*.js'],
+                },
+            },
+            src: {
+                src: ['src/common/**/*.js', 'src/browser/**/*.js'],
+                dest: 'dist/app_bundle.js',
+                options: {
+                    alias: ["./src/browser/App.js:SampleApp"],
+                    externalize: ['src/common/**/*.js', 'src/browser/**/*.js'],
+                    ignore: ['src/node/**/*.js'],
+                }
+            },
+            test: {
+                src: ['test/spec/common/**/*.js', 'test/spec/browser/**/*.js'],
+                dest: 'dist/test_bundle.js',
+                options: {
+                    external: ['./src/**/*.js'],
+                    ignore: ['./node_modules/underscore/underscore.js'],
+                }
+            },
+        },
+        jasmine : {
+            src : 'dist/app_bundle.js',
+            options : {
+                specs : 'dist/test_bundle.js',
+                vendor : ['libs/jquery-1.9.1.js', 'libs/underscore.js']
+            }
+        },
+        uglify: {
+            all: {
+                files: {
+                    'dist/app_bundle_min.js': ['dist/app_bundle.js']
+                }
+            },
+            main: {
+                files: {
+                    'dist/app_bundle_main_min.js': ['dist/app_bundle_main.js']
+                }
+            }
         }
-      },
-      phantomjs: {
-        src: ['test/*.js'],
-        options: {
-          // phantomjs must be in the $PATH when invoked
-          browserName: 'phantomjs'
-        }
-      }
-    }
-  });
-*/
+    });
 
-  grunt.initConfig({
+    // These plugins provide necessary tasks.
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-jasmine-node');
 
-
-    mochaSelenium: {
-      options: {
-        // Mocha options
-        reporter: 'spec',
-        timeout: 30e3,
-        // Toggles wd's promises API, default:false
-        usePromises: false
-      },
-      chrome: {
-        src: ['test/*.js'],
-        options: {
-          // Chrome browser must be installed from Chromedriver support
-          browserName: 'chrome'
-        }
-      },
-      phantomjs: {
-        src: ['test/*.js'],
-        options: {
-          // phantomjs must be in the $PATH when invoked
-          browserName: 'phantomjs'
-        }
-      }
-    },
-    serverFile: 'app.js',
-    shell: {
-      nodemon: {
-        command: 'nodemon <%= serverFile %>',
-        options: {
-          stdout: true,
-          stderr: true
-        }
-      }
-    },
-    watch: { /* nothing to do in watch anymore */ },
-    concurrent: {
-      target: {
-        tasks: ['nodemon', 'mochaSelenium'],
-        options: {
-          logConcurrentOutput: true
-        }
-      }
-    },
-    nodemon: {
-      dev: {
-        options: {
-          file: 'app.js'
-        }
-      }
-    }    
-  });
-  grunt.loadNpmTasks('grunt-concurrent');
-  grunt.loadNpmTasks('grunt-nodemon');
-  grunt.loadNpmTasks('grunt-mocha-selenium');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-shell');  
-
-
-  grunt.registerTask('test', ['concurrent']);
-
-  //grunt.registerTask('test', ['mochaSelenium']);
-
-  //grunt.registerTask('test', ['shell:nodemon', 'mochaSelenium']);
-
-  //grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
-
-}; 
+    // Default task.
+    grunt.registerTask('default', ['jshint', 'jasmine_node', 'browserify', 'jasmine', 'uglify']);
+};

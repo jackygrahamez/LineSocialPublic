@@ -20,7 +20,16 @@
     "node-inspector": "~0.7.0-2",
     "grunt-contrib-watch": "~0.5.3",
     "nodeunit": "~0.8.4",
-    "grunt-shell": "~0.6.4"
+    "grunt-shell": "~0.6.4",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-jshint": "~0.4.3",
+    "grunt": "~0.4.1",
+    "grunt-browserify": "~1.0.0",
+    "jasmine-node": "~1.7.0",
+    "grunt-contrib-jasmine": "~0.4.2",
+    "grunt-jasmine-node": "~0.1",
+    "grunt-contrib-jasmine": "~0.5.2",
+    "grunt-template-jasmine-requirejs": "~0.1.9"    
   },
   "dependencies": {
     "express": "3.2.4",
@@ -41,6 +50,7 @@
     "nodemailer": ">= 0.6.0",
     "connect-mongo": ">= 0.4.0",
     "requirejs": ">= 2.1.10",
-    "bower": ">= 1.2.8"
+    "bower": ">= 1.2.8",
+    "underscore": "~1.4"
   }
 }
