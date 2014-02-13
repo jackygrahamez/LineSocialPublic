@@ -1,23 +1,28 @@
-var flow = webdriver.promise.controlFlow(),
-   num = 0,
-   start = Date.now();
 
-function printStepNumber() {
- num += 1;
- console.log("task #" + num);
- return webdriver.promise.delayed(250);
-}
 
-flow.execute(printStepNumber);
-flow.execute(printStepNumber);
-flow.execute(printStepNumber).then(function() {
- var elapsed = Date.now() - start;
- console.log("All done; elapsed time: " + elapsed + " ms");
+describe('LineSocial homepage', function() {
+  it('Test Title', function() {
+    browser.driver.get('http://localhost:5000')
+    	.then(function(){
+    		return browser.driver.getTitle().then(function(title) {
+   				//return title === 'LineSocial';
+   				expect(title).toEqual('LineSocial');
+ 			});
+    	});   	
+  });
+
+  it('Test Header', function() {
+    browser.driver.get('http://localhost:5000')
+    	.then(function(){  
+
+			var promise = browser.driver.findElement(by.css('h1')).getText();
+
+			promise.then(function(header) {
+			 console.log("header is: " + header);
+			});
+
+
+    	});   	
+  });
+
 });
-console.log("All tasks scheduled!");
-
-// All tasks scheduled!
-// task #1
-// task #2
-// task #3
-// All done; elapsed time: 750 ms

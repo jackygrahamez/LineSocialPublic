@@ -11,7 +11,7 @@ exports.config = {
   // Spec patterns are relative to the current working directly when
   // protractor is called.
   //specs: ['example_spec.js'],
-  specs: ['example_spec.js'],
+  specs: ['linesocial_spec.js'],
 
   // Options to be passed to Jasmine-node.
   jasmineNodeOpts: {
