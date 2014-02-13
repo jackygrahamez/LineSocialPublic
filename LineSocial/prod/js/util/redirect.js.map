@@ -1,1 +1,0 @@
-{"version":3,"file":"/Users/jgs/Projects/linesocial/prod/js/util/redirect.js","sources":["redirect.js.src"],"names":["redirectDomain","location","href","indexOf","page","path","replace","pathname"],"mappings":"AACA,QAASA,kBACHC,SAASC,KAAKC,QAAQ,UAAY,GAAQF,SAASC,KAAKC,QAAQ,aAAe,IAC/EC,MAAQC,KACXJ,SAASK,QAAQ,iCAAiCL,SAASM,SAAS,IAAIH,MAGxEH,SAASK,QAAQ","sourceRoot":"/js/util"}

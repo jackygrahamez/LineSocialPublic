@@ -10,6 +10,7 @@ var mongoose = require('mongoose'),
 //MONGOLAB_URI: mongodb://heroku_app22073819:a68ool5kcg8eshvbvdopub6slt@ds033029-a0.mongolab.com:33029/heroku_app22073819
 mongoose.connect('mongodb://heroku_app22073819:a68ool5kcg8eshvbvdopub6slt@ds033029-a0.mongolab.com:33029/heroku_app22073819');
 
+//mongo ds033029-a0.mongolab.com:33029/heroku_app22073819 -u heroku_app22073819 -p a68ool5kcg8eshvbvdopub6slt
 
 //mongoose.connect('mongodb://heroku_app19413190:suf1uaaio2mr0jn4jlpbpdpgud@ds029589-a0.mongolab.com:29589/heroku_app19413190');
 //mongodb://<dbuser>:<dbpassword>@ds029589-a0.mongolab.com:29589/
@@ -71,7 +72,7 @@ exports.register = function(req, res) {
         return console.log(err);
       }
 
-      res.send('Account was created');
+      res.redirect('/');
     });
 }
 
