@@ -18,7 +18,8 @@ describe('LineSocial homepage', function() {
 			var promise = browser.driver.findElement(by.css('h1')).getText();
 
 			promise.then(function(header) {
-			 console.log("header is: " + header);
+			 	console.log("header is: " + header);
+			 	expect(header).toMatch('LineSocial');
 			});
 
 
