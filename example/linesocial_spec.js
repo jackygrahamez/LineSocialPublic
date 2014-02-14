@@ -30,14 +30,34 @@ describe('LineSocial homepage', function() {
 	    browser.driver.get('http://localhost:5000')
 	    	.then(function(){  
           browser.driver.executeScript("$(\"#register\").click()");
+          setTimeout(function(){
             var promise = browser.driver.findElement(by.css('#submit')).getAttribute('value');
-
             promise.then(function(buttonText) {
               console.log("submit is: " + buttonText);
               expect(buttonText).toMatch('Register Now');
-            });          
+            });
+          }, 5000);            
 	    	});   	
 	  });
 
   });
+
+  describe('LineSocial Register User', function() {
+
+    it('Register User', function() {
+      browser.driver.get('http://localhost:5000')
+        .then(function(){  
+          browser.driver.executeScript("$(\"#register\").click()");
+          setTimeout(function(){
+            var promise = browser.driver.findElement(by.css('#submit')).getAttribute('value');
+            promise.then(function(buttonText) {
+              console.log("submit is: " + buttonText);
+              expect(buttonText).toMatch('Register Now');
+            });
+          }, 5000);            
+        });     
+    });
+
+  });
+
 });
