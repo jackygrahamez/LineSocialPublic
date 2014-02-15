@@ -106,10 +106,19 @@ describe("Asynchronous specs", function() {
             setTimeout(function(){
               browser.driver.findElement(By.id("inputEmail")).sendKeys(email);
               browser.driver.findElement(By.id("inputPassword")).sendKeys(password);              
-              browser.driver.findElement(By.id("submit")).click();
-
+              //browser.driver.findElement(By.id("submit")).click()
+              browser.driver.executeScript("$(\"#submit\").click()")
+                .then(function(){
+                   setTimeout(function(){
+                      var promise2 = browser.driver.findElement(by.css('.wrapper h2')).getText();
+                      promise2.then(function(header) {
+                        console.log("buttonText "+header);
+                        expect(header).toMatch("qa_first qa_last");
+                      });                  
+                    }, 2000);   
+                });
             }, 2000);
-          }, 1000);          
+          }, 2000);          
         }, 2000);
       });
       setTimeout(function() {
