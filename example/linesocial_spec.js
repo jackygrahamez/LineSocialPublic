@@ -123,7 +123,7 @@ describe("Asynchronous specs", function() {
       });
       setTimeout(function() {
         flag = true;
-      }, 20000);
+      }, 10000);
     });
     waitsFor(function() {
       value++;
