@@ -93,16 +93,33 @@ describe("Asynchronous specs", function() {
             console.log("buttonText "+buttonText);
             expect(buttonText).toMatch("Register Now");
           });  
+          setTimeout(function(){
+            browser.driver.findElement(By.css(".wrapper input[name='firstName']")).sendKeys(firstname);
+            browser.driver.findElement(By.css(".wrapper input[name='lastName']")).sendKeys(lastname);
+            browser.driver.findElement(By.css(".wrapper input[name='username']")).sendKeys(username);
+            browser.driver.findElement(By.css(".wrapper input[name='email']")).sendKeys(email);
+            browser.driver.findElement(By.css(".wrapper input[name='cemail']")).sendKeys(email);
+            browser.driver.findElement(By.css(".wrapper input[name='password']")).sendKeys(password);
+            browser.driver.findElement(By.css(".wrapper input[name='cpassword']")).sendKeys(password); 
+            browser.driver.executeScript("$('#terms').prop('checked', true);");
+            browser.driver.executeScript("$(\".wrapper #submit\").click()");                                             
+            setTimeout(function(){
+              browser.driver.findElement(By.id("inputEmail")).sendKeys(email);
+              browser.driver.findElement(By.id("inputPassword")).sendKeys(password);              
+              browser.driver.findElement(By.id("submit")).click();
+
+            }, 2000);
+          }, 1000);          
         }, 2000);
       });
       setTimeout(function() {
         flag = true;
-      }, 4000);
+      }, 20000);
     });
     waitsFor(function() {
       value++;
       return flag;
-    }, "The Value should be incremented", 5000);
+    }, "The Value should be incremented", 60000);
     runs(function() {
       expect(value).toBeGreaterThan(0);
     });
