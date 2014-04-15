@@ -4,7 +4,7 @@ var passport = require('passport'),
 
 /* FACEBOOK AUTHENTICATION */
 var FACEBOOK_APP_ID = "698217933545116"
-var FACEBOOK_APP_SECRET = "7f8e2e6662a925a67b26d56063f3577e";
+var FACEBOOK_APP_SECRET = "xxxxx";
 
 
 // Passport session setup.
@@ -31,7 +31,7 @@ console.log("about to use passport");
 passport.use(new FacebookStrategy({
     clientID: FACEBOOK_APP_ID,
     clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: "https://alpha.linesocial.mobi/auth/facebook/callback"
+    callbackURL: "https://alpha.xxxxx/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
 	 console.log("passport callback function");

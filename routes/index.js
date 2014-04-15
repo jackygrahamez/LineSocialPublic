@@ -5,20 +5,10 @@ var mongoose = require('mongoose'),
 	findOrCreate = require('mongoose-findorcreate');
 
 
-//mongoose.connect('mongodb://localhost/LineSocial');
-//mongoose.connect('mongodb://heroku_app19397517:1kmoc0c3kdcib1g9v7hpejr8up@ds053678.mongolab.com:53678/heroku_app19397517');
-//MONGOLAB_URI: mongodb://heroku_app22073819:a68ool5kcg8eshvbvdopub6slt@ds033029-a0.mongolab.com:33029/heroku_app22073819
-mongoose.connect('mongodb://heroku_app22073819:a68ool5kcg8eshvbvdopub6slt@ds033029-a0.mongolab.com:33029/heroku_app22073819');
-
-//mongo ds033029-a0.mongolab.com:33029/heroku_app22073819 -u heroku_app22073819 -p a68ool5kcg8eshvbvdopub6slt
-
-//mongoose.connect('mongodb://heroku_app19413190:suf1uaaio2mr0jn4jlpbpdpgud@ds029589-a0.mongolab.com:29589/heroku_app19413190');
-//mongodb://<dbuser>:<dbpassword>@ds029589-a0.mongolab.com:29589/
-//mongodb://heroku_app19413190:suf1uaaio2mr0jn4jlpbpdpgud@ds029589-a0.mongolab.com:29589/
-//var db = mongoose.connection;
+mongoose.connect('mongodb://xxxxxx');
 
 // foursquare
-var foursquare = (require('foursquarevenues'))('Q3Q5R5RIYDOJDS2ACP3XL1WKK5W1RR3SNJULY2VDU2PXNKAB', 'UWBQRUXO0NGPQGZGFFV2WLJGEUTRABRGZKGC5LC25SAUGYDJ');
+var foursquare = (require('foursquarevenues'))('xxxx', 'xxxx');
 
 exports.index = function(req, res){
 	  var shapes = ['triangle', 'x', 'rectangle', 'circle', 'check', 'caret', 'zigzag', 'arrow', 'leftbracket', 'rightbracket', 'v', 'delete', 'star', 'pigtail'];
@@ -615,19 +605,17 @@ exports.pokes = function(data) {
 					if (JSON.stringify(doc.telephone) != undefined) {
 						if (doc.telephone.length > 5) {
 							// Twilio Credentials 
-							var accountSid = 'AC024a4372dfdb9fafe0e7fd9d51cf4c78'; 
-							var authToken = '19c22aab1c46228b020ace358f7989cb'; 
+							var accountSid = 'xxxx'; 
+							var authToken = 'xxxxx'; 
 							var telephone = doc.telephone.replace(/ /g,'');
 							var username = doc.username;
-							var notification_url = "https://linesocial.mobi/"+username+"?pagename=user_notifications";
+							var notification_url = "https://xxxxx/"+username+"?pagename=user_notifications";
 							//require the Twilio module and create a REST client 
 							var client = require('twilio')(accountSid, authToken); 
 							client.messages.create({  
 								to: telephone, 
-								from: "+12024172791", 
+								from: "+xxxxx", 
 								body: "You received a line poke "+notification_url,
-								//mediaUrl: "https://linesocial.mobi",
-								//mediaUrl: "https://linesocial.mobi/"+username+"?pagename=user_notifications",    
 							}, function(err, message) { 
 								console.log(message.sid); 
 							});	
@@ -794,25 +782,25 @@ exports.send_invite = function(req, res) {
 				if (foundEmail.length < 1) {
 				  //encodeURIComponent(myUrl)  
 			    var code = encodeURIComponent(id);
-				var link = "http://alpha.linesocial.mobi/?invite_code="+code;
+				var link = "http://xxxxx/?invite_code="+code;
 
 		    	var message = "You recieved an invite to LineSocial&#8482; from "+
 		    	full_name + "<br /><br />" + link + "<br /><br />" + 
-		    	"<a href='http://alpha.linesocial.mobi/?unsubscribe="+to_email+"'>Unsubscribe</a>";
+		    	"<a href='http://xxxxx/?unsubscribe="+to_email+"'>Unsubscribe</a>";
 		    	
 				var nodemailer = require("../node_modules/nodemailer");
 				// create reusable transport method (opens pool of SMTP connections)
 				var smtpTransport = nodemailer.createTransport("SMTP",{
 				    service: "Gmail",
 				    auth: {
-				        user: "webmaster@linesocial.mobi",
-				        pass: "Tgifkfc123"
+				        user: "webmaster@xxxxx",
+				        pass: "xxxxx"
 				    }
 				});
 				// setup e-mail data with unicode symbols
 				var mailOptions = {
 				    to: name+ " <"+to_email+">", // sender address
-				    from: "Webmaster <webmaster@linesocial.mobi>", // list of receivers
+				    from: "Webmaster <webmaster@xxxx.mobi>", // list of receivers
 				    subject: "LineSocial Invitation", // Subject line
 				    text: message+" ", // plaintext body
 				    html: "<b>"+message+" </b>" // html body
@@ -907,21 +895,19 @@ exports.send_validate_phone = function(req, res) {
 			account.savePhoneValidationCode(id, code, function(doc) {
 
 				// Twilio Credentials 
-				var accountSid = 'AC024a4372dfdb9fafe0e7fd9d51cf4c78'; 
-				var authToken = '19c22aab1c46228b020ace358f7989cb'; 
+				var accountSid = 'xxxx'; 
+				var authToken = 'xxxxx'; 
 				telephone = user.telephone.replace(/ /g,'');
 				console.log("username "+username);
 				console.log("telephone "+telephone);
-				var notification_url = "https://alpha.linesocial.mobi/?telephone_validation="+code;
+				var notification_url = "https://xxxxx/?telephone_validation="+code;
 				console.log("notification_url "+notification_url); 
 				//require the Twilio module and create a REST client 
 				var client = require('twilio')(accountSid, authToken); 
 				client.messages.create({  
 					to: telephone, 
-					from: "+12024172791", 
+					from: "+xxxxx", 
 					body: "Your LineSocial telephone validation code is "+code+" click her to validate"+notification_url,
-					//mediaUrl: "https://linesocial.mobi",
-					//mediaUrl: "https://linesocial.mobi/"+username+"?pagename=user_notifications",    
 				}, function(err, message) { 
 					console.log(message.sid); 
 			        res.render('send_validate_phone', {
@@ -1122,21 +1108,21 @@ exports.send_validate_email = function(req, res) {
 		    	"paste it in the email validation code box " +
 		    	"on your profile page. Otherwise please click "+
 		    	"the following hyper link. <br /><br /> "+
-		    	"https://alpha.linesocial.mobi/?email_validation="+code;
+		    	"https://alpha.xxxxx/?email_validation="+code;
 		    	
 				var nodemailer = require("../node_modules/nodemailer");
 				// create reusable transport method (opens pool of SMTP connections)
 				var smtpTransport = nodemailer.createTransport("SMTP",{
 				    service: "Gmail",
 				    auth: {
-				        user: "webmaster@linesocial.mobi",
-				        pass: "Tgifkfc123"
+				        user: "webmaster@xxxxx",
+				        pass: "xxxxx"
 				    }
 				});
 				// setup e-mail data with unicode symbols
 				var mailOptions = {
 				    to: name+ " <"+email+">", // sender address
-				    from: "Webmaster <webmaster@linesocial.mobi>", // list of receivers
+				    from: "Webmaster <webmaster@xxxxx>", // list of receivers
 				    subject: "LineSocial Email Validation ", // Subject line
 				    text: message+" ", // plaintext body
 				    html: "<b>"+message+" </b>" // html body
@@ -1224,15 +1210,15 @@ exports.contact = function(req, res) {
 		var smtpTransport = nodemailer.createTransport("SMTP",{
 		    service: "Gmail",
 		    auth: {
-		        user: "webmaster@linesocial.mobi",
-		        pass: "Tgifkfc123"
+		        user: "webmaster@xxxxx",
+		        pass: "xxxxx"
 		    }
 		});
 
 		// setup e-mail data with unicode symbols
 		var mailOptions = {
 		    from: name+ " ✔ <"+email+">", // sender address
-		    to: "Webmaster ✔ <webmaster@linesocial.mobi>", // list of receivers
+		    to: "Webmaster ✔ <webmaster@xxxxx>", // list of receivers
 		    subject: "LineSocial Contact ✔", // Subject line
 		    text: message+" ✔", // plaintext body
 		    html: "<b>"+message+" ✔</b>" // html body
@@ -1278,7 +1264,7 @@ function deg2rad(deg) {
 function makeid()
 {
     var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var possible = "xxxxxx";
 
     for( var i=0; i < 10; i++ )
         text += possible.charAt(Math.floor(Math.random() * possible.length));

@@ -48,11 +48,11 @@ app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
 app.use(express.session({
 	store: new session({
-	      db: 'heroku_app22073819',
-	      host: 'ds033029-a0.mongolab.com',
+	      db: 'xxxxxxx',
+	      host: 'xxxxxx',
 	      port: 33029,  // optional, default: 27017
-	      username: 'heroku_app22073819', // optional
-	      password: 'a68ool5kcg8eshvbvdopub6slt' // optional      
+	      username: 'xxxxxxx', // optional
+	      password: 'XXXXX' // optional      
 	    }),	
 		secret: 'keyboard cat',
 	    cookie: {
@@ -77,8 +77,8 @@ app.use(express.static(path.join(__dirname, 'prod')));
 });
 
 /* FACEBOOK AUTHENTICATION */
-var FACEBOOK_APP_ID = "698217933545116"
-var FACEBOOK_APP_SECRET = "7f8e2e6662a925a67b26d56063f3577e";
+var FACEBOOK_APP_ID = "xxxxx"
+var FACEBOOK_APP_SECRET = "xxxxxx";
 
 
 // Passport session setup.
@@ -104,7 +104,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new FacebookStrategy({
     clientID: FACEBOOK_APP_ID,
     clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: "https://alpha.linesocial.mobi/auth/facebook/callback"
+    callbackURL: "xxxxxxx"
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
@@ -130,14 +130,14 @@ app.use(express.static(__dirname));
 
 // example nodemailer config here
 var forgot = require('password-reset-nodemailer')({
-  uri: 'https://alpha.linesocial.mobi/password_reset',
-  from: 'webmater@linesocial.mobi',
+  uri: 'xx',
+  from: 'xxxxx',
   transportType: 'SMTP',
   transportOptions: {
     service: "Gmail",
     auth: {
-        user: "webmaster@linesocial.mobi",
-        pass: "Tgifkfc123"
+        user: "xxxx",
+        pass: "xxxx"
     }
   }
 });

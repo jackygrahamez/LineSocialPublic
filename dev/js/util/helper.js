@@ -4,7 +4,7 @@ function googleAnalytics(){
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
   
-    ga('create', 'UA-46446487-2', 'linesocial.mobi');
+    ga('create', 'UA-46446487-2', 'xxxxx');
     ga('send', 'pageview');  
 }
 
@@ -222,7 +222,7 @@ function showError(error)
   switch(error.code) 
     {
     case error.PERMISSION_DENIED:
-          $("header p.invalid").replaceWith("<p class='invalid'>Please enable location services for https://alpha.linesocial.mobi in your browser settings.</p>");
+          $("header p.invalid").replaceWith("<p class='invalid'>Please enable location services for https://alpha.xxxxx in your browser settings.</p>");
           $(".loader").remove();
           $("canvas").remove();
           break;
@@ -1221,10 +1221,10 @@ function getCookie(cname)
 function redirectDomain() {
   if ((location.href.indexOf("alpha.") < 0) && ((location.href.indexOf("localhost") < 0))) {
     if (page && path) {
-      location.replace("https://alpha.linesocial.mobi/"+location.pathname+"?"+page);      
+      location.replace("https://alpha.xxxxx/"+location.pathname+"?"+page);      
       
     } else {
-      location.replace("https://alpha.linesocial.mobi");      
+      location.replace("https://alpha.xxxxx");      
     }
   }
 }
